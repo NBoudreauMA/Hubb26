@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,35 +11,61 @@
             font-family: Arial, sans-serif;
             text-align: center;
         }
-        table {
+        .table-container {
             width: 90%;
             margin: 20px auto;
+            overflow: auto;
+            max-height: 600px;
+            border: 1px solid black;
+            position: relative;
+        }
+        table {
+            width: 100%;
             border-collapse: collapse;
+            position: relative;
         }
         th, td {
             border: 1px solid black;
             padding: 10px;
             text-align: left;
+            white-space: nowrap;
         }
         th {
             background-color: #2d6a4f;
             color: white;
+            position: sticky;
+            top: 0;
+            z-index: 2;
         }
-        tr:nth-child(even) {
+        tr:first-child th {
+            position: sticky;
+            top: 0;
+            z-index: 3;
+        }
+        td:first-child, th:first-child {
+            position: sticky;
+            left: 0;
+            background-color: #2d6a4f;
+            color: white;
+            z-index: 2;
+        }
+        tbody tr:nth-child(even) {
             background-color: #f2f2f2;
         }
     </style>
 </head>
 <body>
     <h1>Budget Data</h1>
-    <table id="budgetTable">
-        <thead>
-            <tr id="tableHeader"></tr>
-        </thead>
-        <tbody id="tableBody">
-            <tr><td colspan="100%">Loading budget data...</td></tr>
-        </tbody>
-    </table>
+    <div class="table-container">
+        <table id="budgetTable">
+            <thead>
+                <tr id="tableHeader"></tr>
+            </thead>
+            <tbody id="tableBody">
+                <tr><td colspan="100%">Loading budget data...</td></tr>
+            </tbody>
+        </table>
+    </div>
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -67,14 +94,15 @@
                 return;
             }
 
-            // Set table headers
+            // Set table headers (first row is frozen)
             tableHeader.innerHTML = Object.keys(data[0])
                 .map(key => `<th>${key}</th>`)
                 .join("");
 
-            // Populate table body
+            // Populate table body (first column is frozen)
             tableBody.innerHTML = data.map(row => 
-                `<tr>${Object.values(row).map(value => `<td>${value}</td>`).join("")}</tr>`
+                `<tr>${Object.values(row).map((value, index) => 
+                    `<td${index === 0 ? ' style="font-weight:bold;"' : ''}>${value}</td>`).join("")}</tr>`
             ).join("");
         }
     </script>
