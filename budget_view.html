@@ -7,7 +7,6 @@
     <title>Budget View</title>
     <link rel="stylesheet" href="styles.css"> 
     <style>
-        /* General Styles */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -24,7 +23,6 @@
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        /* Navbar */
         .navbar {
             background-color: #2d6a4f;
             padding: 15px 20px;
@@ -62,7 +60,6 @@
             border-radius: 8px;
         }
 
-        /* Search and Filter Section */
         .search-container {
             display: flex;
             justify-content: space-between;
@@ -77,7 +74,6 @@
             width: 48%;
         }
 
-        /* Table Styles */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -116,84 +112,78 @@
 
     <div class="container">
         <h1>Budget View</h1>
-        
+
         <div class="search-container">
             <input type="text" id="searchInput" placeholder="Search budget..." onkeyup="filterTable()">
             <select id="departmentFilter" onchange="filterTable()">
                 <option value="">All Departments</option>
-                <option value="Public Safety">Public Safety</option>
-                <option value="Education">Education</option>
-                <option value="DPW">DPW</option>
-                <option value="Administration">Administration</option>
-                <option value="Other">Other</option>
             </select>
         </div>
 
         <table id="budgetTable">
             <thead>
-                <tr>
-                    <th>Department</th>
-                    <th>Category</th>
-                    <th>Expenditure</th>
-                    <th>Amount</th>
+                <tr id="tableHeader">
                 </tr>
             </thead>
             <tbody id="budgetBody">
-                <!-- Budget data will be dynamically inserted here -->
             </tbody>
         </table>
     </div>
 
     <script>
-        // Sample Budget Data (Replace with actual CSV fetch in live environment)
-        const budgetData = [
-            { department: "Public Safety", category: "Police Equipment", expenditure: "Vehicle Maintenance", amount: "$50,000" },
-            { department: "Education", category: "School Programs", expenditure: "Teacher Salaries", amount: "$200,000" },
-            { department: "DPW", category: "Infrastructure", expenditure: "Road Repairs", amount: "$75,000" },
-            { department: "Administration", category: "Town Hall", expenditure: "Office Supplies", amount: "$10,000" },
-            { department: "Other", category: "Community Services", expenditure: "Library Funding", amount: "$25,000" }
-        ];
+        async function loadBudgetData() {
+            const response = await fetch('budget2.csv');  // Load actual CSV file
+            const data = await response.text();
 
-        // Function to populate the table with budget data
-        function loadBudgetData() {
+            const rows = data.split("\n").map(row => row.split(","));
+            const headers = rows[0];
+
+            // Populate the table header
+            document.getElementById("tableHeader").innerHTML = headers.map(header => `<th>${header}</th>`).join("");
+
+            // Populate the table body
             const tableBody = document.getElementById("budgetBody");
             tableBody.innerHTML = "";
-            budgetData.forEach(row => {
-                let tr = `<tr>
-                    <td>${row.department}</td>
-                    <td>${row.category}</td>
-                    <td>${row.expenditure}</td>
-                    <td>${row.amount}</td>
-                </tr>`;
-                tableBody.innerHTML += tr;
+            
+            let departmentSet = new Set(); // Collect departments for dropdown
+
+            for (let i = 1; i < rows.length; i++) {
+                let row = rows[i];
+                if (row.length === headers.length) {
+                    let department = row[0].trim(); // Assuming department is in the first column
+                    if (department) departmentSet.add(department);
+
+                    let tr = `<tr>${row.map(cell => `<td>${cell}</td>`).join("")}</tr>`;
+                    tableBody.innerHTML += tr;
+                }
+            }
+
+            // Populate department dropdown filter
+            let departmentFilter = document.getElementById("departmentFilter");
+            departmentSet.forEach(dept => {
+                let option = document.createElement("option");
+                option.value = dept;
+                option.textContent = dept;
+                departmentFilter.appendChild(option);
             });
         }
 
-        // Function to filter the table based on search and dropdown selection
         function filterTable() {
             let searchQuery = document.getElementById("searchInput").value.toLowerCase();
             let departmentFilter = document.getElementById("departmentFilter").value;
-            const tableBody = document.getElementById("budgetBody");
+            let rows = document.getElementById("budgetBody").getElementsByTagName("tr");
 
-            tableBody.innerHTML = ""; // Clear table
+            for (let row of rows) {
+                let text = row.innerText.toLowerCase();
+                let department = row.cells[0].innerText.trim();
 
-            budgetData.forEach(row => {
-                let matchesSearch = row.expenditure.toLowerCase().includes(searchQuery) || row.category.toLowerCase().includes(searchQuery);
-                let matchesDepartment = departmentFilter === "" || row.department === departmentFilter;
+                let matchesSearch = text.includes(searchQuery);
+                let matchesDepartment = departmentFilter === "" || department === departmentFilter;
 
-                if (matchesSearch && matchesDepartment) {
-                    let tr = `<tr>
-                        <td>${row.department}</td>
-                        <td>${row.category}</td>
-                        <td>${row.expenditure}</td>
-                        <td>${row.amount}</td>
-                    </tr>`;
-                    tableBody.innerHTML += tr;
-                }
-            });
+                row.style.display = (matchesSearch && matchesDepartment) ? "" : "none";
+            }
         }
 
-        // Load data when page is ready
         window.onload = loadBudgetData;
     </script>
 
