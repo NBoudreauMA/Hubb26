@@ -17,40 +17,36 @@
             overflow-y: auto;
         }
         .navbar {
-            background-color: #2d6a4f;
-            padding: 15px 20px;
+            background: linear-gradient(90deg, rgba(34, 139, 34, 0.9), rgba(0, 100, 0, 0.9));
+            padding: 15px;
+            text-align: center;
             display: flex;
-            justify-content: center;
+            justify-content: space-around;
             align-items: center;
             position: fixed;
-            top: 0;
             width: 100%;
+            top: 0;
+            left: 0;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             z-index: 1000;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
         }
-        .navbar ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-        }
-        .navbar ul li {
-            margin: 0 15px;
-        }
-        .navbar ul li a {
+        .navbar a {
             color: white;
+            margin: 0 20px;
             text-decoration: none;
-            font-size: 16px;
+            font-size: 22px;
             font-weight: bold;
-            padding: 10px;
-            display: inline-block;
+            text-transform: uppercase;
+            transition: 0.3s ease-in-out;
         }
-        .navbar ul li a:hover, .navbar ul li a.active {
-            background-color: #1b4633;
-            border-radius: 8px;
+        .navbar a:hover {
+            text-decoration: underline;
+            transform: scale(1.1);
+            color: #FFD700;
         }
         .content-container {
-            margin-top: 250px;
+            margin-top: 300px;
             padding: 30px;
             max-width: 900px;
             margin: auto;
@@ -65,11 +61,6 @@
             display: flex;
             justify-content: center;
             margin: 20px 0;
-        }
-        canvas {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            padding: 10px;
         }
         .button-container {
             text-align: center;
@@ -96,13 +87,11 @@
 <body>
     <header>
         <nav class="navbar">
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="revenue.html">Revenue</a></li>
-                <li><a href="expenditures_final_adjusted.html" class="active">Expenditures</a></li>
-                <li><a href="capital_plan.html">Capital Plan</a></li>
-                <li><a href="citizens_guide.html">Citizen's Guide</a></li>
-            </ul>
+            <a href="index.html">Home</a>
+            <a href="revenue.html">Revenue</a>
+            <a href="expenditures.html" class="active">Expenditures</a>
+            <a href="capital_plan.html">Capital Plan</a>
+            <a href="citizens_guide.html">Citizen's Guide</a>
         </nav>
     </header>
 
