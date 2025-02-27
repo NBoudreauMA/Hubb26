@@ -8,13 +8,14 @@
     <style>
         /* Ensures the table fits the page correctly without overflow */
         table {
-            width: 100%;
+            width: 90%;  /* Reduced table width for better fit */
+            margin: 0 auto;  /* Center the table */
             border-collapse: collapse;
             margin-bottom: 20px;
         }
 
         th, td {
-            padding: 12px;
+            padding: 8px;  /* Reduced padding for a more compact table */
             text-align: left;
             border: 1px solid #ddd;
         }
@@ -22,10 +23,12 @@
         th {
             background-color: #4CAF50;
             color: white;
+            font-size: 14px;  /* Smaller font size */
         }
 
         td {
             background-color: rgba(255, 255, 255, 0.8);
+            font-size: 12px;  /* Smaller font size */
         }
 
         /* Ensures that the container has enough space around the content */
@@ -59,7 +62,7 @@
             color: white;
             margin: 0 20px;
             text-decoration: none;
-            font-size: 22px;
+            font-size: 18px;
             font-weight: bold;
             text-transform: uppercase;
             transition: 0.3s ease-in-out;
@@ -287,6 +290,38 @@
                     <td></td>
                     <td>$275,000</td>
                 </tr>
+                <tr>
+                    <td>COA</td>
+                    <td>Slade Building Renovations</td>
+                    <td>Renovations to improve functionality and safety of the Slade Building for community programs.</td>
+                    <td>$500,000</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>$500,000</td>
+                </tr>
+                <tr>
+                    <td>LIBRARY</td>
+                    <td>Library ADA-Compliant Elevator</td>
+                    <td>Installation of an ADA-compliant elevator to improve accessibility for all patrons at Hubbardston Public Library.</td>
+                    <td></td>
+                    <td>$183,500</td>
+                    <td>$183,500</td>
+                    <td>$183,500</td>
+                    <td>$550,500</td>
+                </tr>
+                <tr>
+                    <td>ADMIN</td>
+                    <td>High Street Corridor Reconstruction</td>
+                    <td>Reconstruction to enhance safety, accessibility, and durability of High Street.</td>
+                    <td>$850,000</td>
+                    <td>$850,000</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>$1,700,000</td>
+                </tr>
             </tbody>
         </table>
 
@@ -306,8 +341,8 @@
 </html>
 """
 
-# Saving the updated content to a file for download
-file_path = "/mnt/data/capital_plan_full_updated_layout.html"
+# Saving the content to a file for download
+file_path = "/mnt/data/capital_plan_full_updated_layout_v3.html"
 with open(file_path, "w") as file:
     file.write(updated_html_content)
 
