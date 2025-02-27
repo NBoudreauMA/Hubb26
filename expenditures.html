@@ -6,17 +6,108 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hubbardston FY26 Expenditures</title>
     <link rel="stylesheet" href="styles.css"> 
+    <style>
+        /* Ensure body allows scrolling */
+        html, body {
+            height: auto;
+            overflow: auto;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navigation bar styling */
+        .navbar {
+            background-color: #2d6a4f;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
+        /* Background overlay for readability */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.45); 
+            backdrop-filter: blur(4px); 
+            z-index: -1;
+        }
+
+        /* Adjusting content so it fully clears the navbar */
+        .content-container {
+            position: relative;
+            margin-top: 190px; /* Increased margin to fully clear the navbar */
+            padding: 40px;
+            max-width: 900px;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.15); 
+            border-radius: 12px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        h1, h2, h3, p, ul {
+            position: relative;
+            z-index: 1;
+            color: #f1f1f1; /* Make text more readable against the background */
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .button {
+            background-color: #2d6a4f;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: 0.3s;
+            display: inline-block;
+            margin: 10px;
+        }
+
+        .button:hover {
+            background-color: #1b4633;
+            transform: scale(1.05);
+        }
+
+    </style>
 </head>
 <body>
 
-    <nav>
+    <div class="navbar">
+        <a href="index.html">Home</a>
         <a href="revenue.html">Revenue</a>
-        <a href="expenditures_updated_nav.html">Expenditures</a>
-        <a href="capital_plan.html">Capital Improvement Plan</a>
+        <a href="expenditures_final_fix.html">Expenditures</a>
+        <a href="capital_plan.html">Capital Plan</a>
         <a href="citizens_guide.html">Citizen's Guide</a>
-    </nav>
+    </div>
 
-    <div class="container">
+    <div class="content-container">
         <h1>Fiscal Year 2026 Expenditures</h1>
 
         <p>The Fiscal Year 2026 budget reflects the Town of Hubbardston's commitment to maintaining essential services while strategically allocating resources for future growth and efficiency. This year's expenditures address personnel adjustments, infrastructure investments, and operational efficiencies, balancing fiscal responsibility with the town's evolving needs.</p>
