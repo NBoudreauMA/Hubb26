@@ -4,29 +4,80 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Revenue Data</title>
+    <link rel="stylesheet" href="styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
     <style>
+        /* General Styling */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navbar */
+        nav {
+            background: #2d6a4f;
+            padding: 15px;
             text-align: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
         }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 10px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        /* Page Header */
+        h1 {
+            text-align: center;
+            margin-top: 100px;
+            font-size: 24px;
+            color: #2d6a4f;
+        }
+
+        /* Table Container */
         .table-container {
-            width: 90%;
+            width: 95%;
             margin: 20px auto;
-            overflow-y: auto;
+            overflow-x: auto;
             max-height: 600px;
-            border: 1px solid black;
-            position: relative;
+            border: 1px solid #ddd;
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
         }
+
+        /* Table Styling */
         table {
             width: 100%;
             border-collapse: collapse;
+            font-size: 14px;
+            min-width: 800px;
         }
+
         th, td {
-            border: 1px solid black;
-            padding: 10px;
+            border: 1px solid #ddd;
+            padding: 8px;
             text-align: left;
         }
+
         th {
             background-color: #2d6a4f;
             color: white;
@@ -34,20 +85,60 @@
             top: 0;
             z-index: 3;
         }
-        tbody tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
+
         .section-header {
             background-color: #74c69d;
             font-weight: bold;
             position: sticky;
             top: 30px;
             z-index: 2;
+            text-transform: uppercase;
+        }
+
+        /* Formatting Dollar & Percentage Columns */
+        .currency, .percentage {
+            text-align: left;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .table-container {
+                width: 100%;
+                margin-top: 20px;
+                max-height: none;
+            }
+
+            table {
+                font-size: 12px;
+            }
+
+            th, td {
+                padding: 6px;
+            }
+
+            nav {
+                flex-direction: column;
+                padding: 10px;
+            }
+
+            nav a {
+                font-size: 14px;
+                padding: 5px;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Revenue Data</h1>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="revenue.html">Revenue</a>
+        <a href="expenditures.html">Expenditures</a>
+        <a href="capital_plan.html">Capital Plan</a>
+        <a href="citizens_guide.html">Citizen's Guide</a>
+    </nav>
+
+    <h1>Proposed Revenue</h1>
+
     <div class="table-container">
         <table id="revenueTable">
             <thead>
@@ -71,6 +162,10 @@
                 });
         });
 
+        function formatNumber(value) {
+            return parseFloat(value).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
         function populateTable(data) {
             const tableHeader = document.getElementById("tableHeader");
             const tableBody = document.getElementById("tableBody");
@@ -80,6 +175,7 @@
                 return;
             }
 
+            // Generate table headers
             tableHeader.innerHTML = Object.keys(data[0])
                 .map(key => `<th>${key}</th>`)
                 .join("");
@@ -91,7 +187,20 @@
                     lastSection = row["Section"];
                     sectionRow = `<tr class='section-header'><td colspan='100%'>${lastSection}</td></tr>`;
                 }
-                return sectionRow + `<tr>${Object.values(row).map(value => `<td>${value}</td>`).join("")}</tr>`;
+
+                // Format values properly
+                const formattedRow = Object.entries(row)
+                    .map(([key, value]) => {
+                        if (key.includes("Actual") || key.includes("Projected") || key.includes("Change ($)")) {
+                            return `<td class='currency'>$${formatNumber(value)}</td>`;
+                        } else if (key.includes("Change (%)")) {
+                            return `<td class='percentage'>${parseFloat(value).toFixed(0)}%</td>`;
+                        }
+                        return `<td>${value}</td>`;
+                    })
+                    .join("");
+
+                return sectionRow + `<tr>${formattedRow}</tr>`;
             }).join("");
         }
     </script>
