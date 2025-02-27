@@ -7,6 +7,15 @@
     <title>Hubbardston FY26 Expenditures</title>
     <link rel="stylesheet" href="styles.css"> 
     <style>
+        /* Enable scrolling */
+        html, body {
+            height: 100%;
+            overflow-y: auto;
+            margin: 0;
+            padding: 0;
+            background-color: #1b1b1b;
+        }
+
         /* Navbar Styling */
         .navbar {
             background-color: #2d6a4f;
@@ -46,13 +55,13 @@
             border-radius: 8px;
         }
 
-        /* Adjusting content to clear navbar and add space */
+        /* Content container with adjusted margin & lighter background */
         .content-container {
-            margin-top: 140px; /* Increased spacing for better readability */
+            margin-top: 160px; /* Moves content further down */
             padding: 40px;
             max-width: 900px;
             margin: auto;
-            background: rgba(20, 20, 20, 0.85); /* Strong contrast for readability */
+            background: rgba(30, 30, 30, 0.9); /* Slightly lighter for better readability */
             border-radius: 12px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
         }
@@ -94,7 +103,7 @@
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="revenue.html">Revenue</a></li>
-                <li><a href="expenditures_final_spaced.html" class="active">Expenditures</a></li>
+                <li><a href="expenditures_final_adjusted.html" class="active">Expenditures</a></li>
                 <li><a href="capital_plan.html">Capital Plan</a></li>
                 <li><a href="citizens_guide.html">Citizen's Guide</a></li>
             </ul>
