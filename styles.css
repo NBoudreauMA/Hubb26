@@ -59,4 +59,22 @@ nav a:hover {
 .container:hover {
     transform: scale(1.02);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.8);
+    .float-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #4bc0c0;
+    color: white;
+    padding: 15px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+}
+
+.float-btn:hover {
+    background-color: #36a2eb;
+    transform: scale(1.1);
 }
