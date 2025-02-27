@@ -43,10 +43,18 @@
             text-decoration: underline;
         }
 
+        /* Page Header */
+        h1 {
+            text-align: center;
+            margin-top: 100px;
+            font-size: 24px;
+            color: #2d6a4f;
+        }
+
         /* Table Container */
         .table-container {
             width: 95%;
-            margin: 80px auto 20px;
+            margin: 20px auto;
             overflow-x: auto;
             max-height: 600px;
             border: 1px solid #ddd;
@@ -88,11 +96,7 @@
         }
 
         /* Formatting Dollar & Percentage Columns */
-        .currency {
-            text-align: left;
-        }
-
-        .percentage {
+        .currency, .percentage {
             text-align: left;
         }
 
@@ -100,7 +104,7 @@
         @media (max-width: 768px) {
             .table-container {
                 width: 100%;
-                margin-top: 100px;
+                margin-top: 20px;
                 max-height: none;
             }
 
@@ -133,6 +137,8 @@
         <a href="citizens_guide.html">Citizen's Guide</a>
     </nav>
 
+    <h1>Proposed Expenditures</h1>
+
     <div class="table-container">
         <table id="budgetTable">
             <thead>
@@ -155,6 +161,10 @@
                     document.getElementById("tableBody").innerHTML = `<tr><td colspan="100%">${error.message}</td></tr>`;
                 });
         });
+
+        function formatNumber(value) {
+            return parseFloat(value).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
 
         function populateTable(data) {
             const tableHeader = document.getElementById("tableHeader");
@@ -182,7 +192,7 @@
                 const formattedRow = Object.entries(row)
                     .map(([key, value]) => {
                         if (key.includes("Actual") || key.includes("Proposed") || key.includes("Change ($)")) {
-                            return `<td class='currency'>$${parseFloat(value).toFixed(2)}</td>`;
+                            return `<td class='currency'>$${formatNumber(value)}</td>`;
                         } else if (key.includes("Change (%)")) {
                             return `<td class='percentage'>${parseFloat(value).toFixed(0)}%</td>`;
                         }
