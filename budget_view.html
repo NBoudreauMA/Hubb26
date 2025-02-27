@@ -11,6 +11,17 @@
             font-family: Arial, sans-serif;
             text-align: center;
         }
+        .search-container {
+            margin: 10px auto;
+            width: 90%;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
         .table-container {
             width: 90%;
             margin: 20px auto;
@@ -56,6 +67,11 @@
 </head>
 <body>
     <h1>Budget Data</h1>
+    
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search budget data..." onkeyup="filterTable()">
+    </div>
+    
     <div class="table-container">
         <table id="budgetTable">
             <thead>
@@ -104,6 +120,16 @@
                 `<tr>${Object.values(row).map((value, index) => 
                     `<td${index === 0 ? ' style="font-weight:bold;"' : ''}>${value}</td>`).join("")}</tr>`
             ).join("");
+        }
+
+        function filterTable() {
+            const input = document.getElementById("searchInput").value.toLowerCase();
+            const rows = document.querySelectorAll("#budgetTable tbody tr");
+
+            rows.forEach(row => {
+                const text = row.innerText.toLowerCase();
+                row.style.display = text.includes(input) ? "" : "none";
+            });
         }
     </script>
 </body>
