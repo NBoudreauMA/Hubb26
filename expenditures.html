@@ -1,113 +1,88 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Expenditures - Hubbardston Budget</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="styles.css">
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            background: rgba(255, 255, 255, 0.9);
-            color: black;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        th, td {
-            padding: 10px;
-            border: 1px solid black;
-            text-align: left;
-        }
-        th {
-            background: #228B22;
-            color: white;
-        }
-        tr:nth-child(even) {
-            background: #f2f2f2;
-        }
-        #search {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            font-size: 16px;
-        }
-        .hidden {
-            display: none;
-        }
-    </style>
 </head>
 <body>
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="revenue.html">Revenue</a>
-        <a href="expenditures.html">Expenditures</a>
-        <a href="capital_plan.html">Capital Improvement Plan</a>
-        <a href="citizens_guide.html">Citizen's Guide</a>
-    </nav>
-    
-    <div class="container">
-        <h1>Expenditures</h1>
-        <p>Search for a department or line item:</p>
-        <input type="text" id="search" onkeyup="searchTable()" placeholder="Search department or item...">
-        
+    <h1>Expenditures Breakdown</h1>
+    <div class="chart-container">
+        <canvas id="budgetChart"></canvas>
+    </div>
+
+    <div class="full-budget-container">
+        <h2>Full Budget Details</h2>
         <table id="budgetTable">
             <thead>
-                <tr>
-                    <th>Subcategory</th>
-                    <th>Department</th>
-                    <th>Line Item</th>
-                    <th>FY24 Actual</th>
-                    <th>FY25 Requested</th>
-                    <th>FY25 Actual</th>
-                    <th>FY26 Dept</th>
-                    <th>FY26 Proposed</th>
-                    <th>Change ($)</th>
-                    <th>Change (%)</th>
-                </tr>
+                <tr id="tableHeader"></tr>
             </thead>
             <tbody>
-                <!-- Data rows will be dynamically inserted here -->
+                <tr><td colspan="100%">Loading budget data...</td></tr>
             </tbody>
         </table>
     </div>
 
     <script>
-        const budgetData = [
-            {subcategory: "GENERAL GOVERNMENT", department: "Moderator", lineitem: "Stipend", fy24: 100, fy25r: 100, fy25a: 100, fy26d: 100, fy26p: 100, change_d: 0, change_p: "0%"},
-            {subcategory: "GENERAL GOVERNMENT", department: "Select Board", lineitem: "Executive Assistant", fy24: 28111, fy25r: 28673, fy25a: 28673, fy26d: 36870, fy26p: 31894, change_d: 3221, change_p: "11%"},
-            {subcategory: "GENERAL GOVERNMENT", department: "Select Board", lineitem: "Expenses", fy24: 800, fy25r: 800, fy25a: 800, fy26d: 800, fy26p: 800, change_d: 0, change_p: "0%"},
-            {subcategory: "GENERAL GOVERNMENT", department: "Select Board", lineitem: "Advertising", fy24: 1500, fy25r: 1500, fy25a: 1500, fy26d: 1500, fy26p: 500, change_d: -1000, change_p: "-67%"}
-        ];
+        document.addEventListener("DOMContentLoaded", function () {
+            renderChart();
+            loadBudgetData();
+        });
 
-        function populateTable() {
-            const tbody = document.querySelector("#budgetTable tbody");
-            budgetData.forEach(row => {
-                const tr = document.createElement("tr");
-                tr.innerHTML = `<td>${row.subcategory}</td>
-                                <td>${row.department}</td>
-                                <td>${row.lineitem}</td>
-                                <td>${row.fy24}</td>
-                                <td>${row.fy25r}</td>
-                                <td>${row.fy25a}</td>
-                                <td>${row.fy26d}</td>
-                                <td>${row.fy26p}</td>
-                                <td>${row.change_d}</td>
-                                <td>${row.change_p}</td>`;
-                tbody.appendChild(tr);
+        function renderChart() {
+            const ctx = document.getElementById('budgetChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ["General Government", "Public Safety", "Public Works", "Education"],
+                    datasets: [{
+                        data: [731340, 1581842, 920184, 7294874],
+                        backgroundColor: ['#2d6a4f', '#52b788', '#74c69d', '#95d5b2']
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
             });
         }
 
-        function searchTable() {
-            const input = document.getElementById("search").value.toLowerCase();
-            const rows = document.querySelectorAll("#budgetTable tbody tr");
-            rows.forEach(row => {
-                row.style.display = row.innerText.toLowerCase().includes(input) ? "" : "none";
-            });
+        async function loadBudgetData() {
+            const csvUrl = "budget2.csv"; // Adjusted for GitHub repository
+            try {
+                const response = await fetch(csvUrl);
+                if (!response.ok) throw new Error("Failed to load budget data.");
+                const data = await response.text();
+                populateBudgetTable(data);
+            } catch (error) {
+                displayError(error.message);
+            }
         }
 
-        document.addEventListener("DOMContentLoaded", populateTable);
+        function populateBudgetTable(csvText) {
+            const tableHeader = document.querySelector("#tableHeader");
+            const tableBody = document.querySelector("#budgetTable tbody");
+
+            const rows = csvText.trim().split("\n").map(row => row.split(","));
+            if (rows.length < 2) {
+                displayError("No valid budget data available.");
+                return;
+            }
+
+            // Populate table header
+            tableHeader.innerHTML = rows[0]
+                .map(header => `<th>${header.trim()}</th>`)
+                .join("");
+
+            // Populate table body
+            tableBody.innerHTML = rows.slice(1)
+                .map(row => `<tr>${row.map(cell => `<td>${cell.trim()}</td>`).join("")}</tr>`)
+                .join("");
+        }
+
+        function displayError(message) {
+            document.querySelector("#budgetTable tbody").innerHTML = `<tr><td colspan="100%">${message}</td></tr>`;
+        }
     </script>
 </body>
 </html>
