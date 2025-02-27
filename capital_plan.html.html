@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +5,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Capital Improvement Plan - Hubbardston</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Ensures the table fits the page correctly without overflow */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        td {
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Ensures that the container has enough space around the content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.75);
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+        }
+
+        /* Adjusts the navigation bar style */
+        nav {
+            background: linear-gradient(90deg, rgba(34, 139, 34, 0.9), rgba(0, 100, 0, 0.9));
+            padding: 15px;
+            text-align: center;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        nav a {
+            color: white;
+            margin: 0 20px;
+            text-decoration: none;
+            font-size: 22px;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: 0.3s ease-in-out;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+            transform: scale(1.2);
+            color: #FFD700;
+        }
+    </style>
 </head>
 <body>
     <nav>
@@ -222,38 +287,6 @@
                     <td></td>
                     <td>$275,000</td>
                 </tr>
-                <tr>
-                    <td>COA</td>
-                    <td>Slade Building Renovations</td>
-                    <td>Renovations to improve functionality and safety of the Slade Building for community programs.</td>
-                    <td>$500,000</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>$500,000</td>
-                </tr>
-                <tr>
-                    <td>LIBRARY</td>
-                    <td>Library ADA-Compliant Elevator</td>
-                    <td>Installation of an ADA-compliant elevator to improve accessibility for all patrons at Hubbardston Public Library.</td>
-                    <td></td>
-                    <td>$183,500</td>
-                    <td>$183,500</td>
-                    <td>$183,500</td>
-                    <td>$550,500</td>
-                </tr>
-                <tr>
-                    <td>ADMIN</td>
-                    <td>High Street Corridor Reconstruction</td>
-                    <td>Reconstruction to enhance safety, accessibility, and durability of High Street.</td>
-                    <td>$850,000</td>
-                    <td>$850,000</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>$1,700,000</td>
-                </tr>
             </tbody>
         </table>
 
@@ -271,3 +304,11 @@
     </div>
 </body>
 </html>
+"""
+
+# Saving the updated content to a file for download
+file_path = "/mnt/data/capital_plan_full_updated_layout.html"
+with open(file_path, "w") as file:
+    file.write(updated_html_content)
+
+file_path
