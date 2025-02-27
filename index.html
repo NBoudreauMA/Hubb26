@@ -8,12 +8,26 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         /* Additional styles for the enhanced homepage - will work alongside your styles.css */
+        body {
+            background-image: url('/api/placeholder/1200/800');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        
+        .container {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            margin-top: 60px;
+            color: white;
+        }
+        
         .letter-container {
             background: rgba(30, 30, 30, 0.95);
             border-radius: 12px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-            padding: 30px;
-            margin-bottom: 30px;
+            padding: 20px;
+            margin-bottom: 20px;
             position: relative;
             overflow: hidden;
             color: white;
@@ -25,7 +39,7 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 10px;
+            height: 5px;
             background: linear-gradient(90deg, #2d6a4f, #4bc0c0);
         }
         
@@ -33,7 +47,7 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         
         .letter-title {
@@ -43,19 +57,21 @@
         .letter-title h1 {
             color: #4bc0c0;
             margin-bottom: 5px;
+            font-size: 1.5rem;
         }
         
         .letter-title h2 {
             color: #cccccc;
             font-weight: normal;
-            font-size: 1.2rem;
+            font-size: 1rem;
             margin-top: 0;
         }
         
         .letter-text {
-            line-height: 1.6;
-            margin-bottom: 30px;
+            line-height: 1.4;
+            margin-bottom: 15px;
             text-align: justify;
+            font-size: 0.9rem;
         }
         
         .signature {
@@ -85,17 +101,17 @@
         .budget-highlights {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             flex-wrap: wrap;
         }
         
         .highlight-card {
             background: rgba(45, 106, 79, 0.7);
-            border-radius: 12px;
-            padding: 20px;
+            border-radius: 8px;
+            padding: 15px;
             flex: 1;
-            min-width: 250px;
-            margin: 10px;
+            min-width: 200px;
+            margin: 5px;
             text-align: center;
             transition: transform 0.3s ease, background 0.3s ease;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -103,32 +119,33 @@
         }
         
         .highlight-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-5px);
             background: rgba(45, 106, 79, 0.9);
         }
         
         .highlight-card h3 {
             color: #FFD700;
             margin-top: 0;
+            font-size: 1rem;
         }
         
         .highlight-card .amount {
-            font-size: 2rem;
+            font-size: 1.5rem;
             font-weight: bold;
-            margin: 15px 0;
+            margin: 10px 0;
             color: white;
         }
         
         .highlight-card .description {
             color: #cccccc;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
         
         .content-section {
             background: rgba(30, 30, 30, 0.95);
             border-radius: 12px;
-            padding: 30px;
-            margin-bottom: 30px;
+            padding: 20px;
+            margin-bottom: 20px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
             color: white;
         }
@@ -138,6 +155,7 @@
             border-bottom: 2px solid #2d6a4f;
             padding-bottom: 10px;
             margin-top: 0;
+            font-size: 1.3rem;
         }
         
         .budget-breakdown {
@@ -149,23 +167,24 @@
         .chart-container {
             flex: 1;
             min-width: 300px;
-            height: 400px;
+            height: 300px;
             position: relative;
-            margin: 20px 0;
+            margin: 10px 0;
         }
         
         .department-list {
             flex: 1;
             min-width: 300px;
-            margin: 20px 0 20px 20px;
+            margin: 10px 0 10px 10px;
         }
         
         .department-item {
             display: flex;
             justify-content: space-between;
-            padding: 10px;
+            padding: 8px;
             border-bottom: 1px solid #333;
             transition: background 0.2s ease;
+            font-size: 0.9rem;
         }
         
         .department-item:hover {
@@ -173,8 +192,8 @@
         }
         
         .department-color {
-            width: 20px;
-            height: 20px;
+            width: 15px;
+            height: 15px;
             border-radius: 50%;
             margin-right: 10px;
         }
@@ -192,8 +211,8 @@
             background: #FFD700;
             color: #333;
             border-radius: 20px;
-            padding: 3px 8px;
-            font-size: 0.8rem;
+            padding: 2px 6px;
+            font-size: 0.7rem;
             margin-left: 10px;
         }
         
@@ -201,16 +220,16 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
-            margin-top: 20px;
+            margin-top: 15px;
         }
         
         .investment-card {
             background: rgba(45, 106, 79, 0.3);
             border-radius: 8px;
-            padding: 20px;
-            margin: 10px 0;
+            padding: 15px;
+            margin: 5px 0;
             flex: 1 0 45%;
-            min-width: 250px;
+            min-width: 200px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease;
         }
@@ -223,33 +242,36 @@
         .investment-card h3 {
             color: #FFD700;
             margin-top: 0;
+            margin-bottom: 8px;
+            font-size: 1rem;
         }
         
         .investment-card ul {
             padding-left: 20px;
             margin-bottom: 0;
+            font-size: 0.9rem;
         }
         
         .investment-card li {
-            margin-bottom: 10px;
+            margin-bottom: 5px;
         }
         
         .button-container {
             text-align: center;
-            margin-top: 30px;
+            margin-top: 20px;
         }
         
         .button {
             background-color: #2d6a4f;
             color: white;
-            padding: 12px 24px;
+            padding: 8px 16px;
             text-decoration: none;
-            border-radius: 8px;
-            font-size: 16px;
+            border-radius: 6px;
+            font-size: 14px;
             font-weight: bold;
             transition: 0.3s;
             display: inline-block;
-            margin: 10px;
+            margin: 5px;
         }
         
         .button:hover {
@@ -313,15 +335,7 @@
                 
                 <h3>Investing in Our Workforce & Strengthening Constituent Services</h3>
                 
-                <p>Hubbardston's dedicated staff are the foundation of our municipal operations, ensuring efficient service delivery and a responsive town government. This budget prioritizes workforce investments, enhances direct constituent services, and strengthens operational efficiencies town-wide.</p>
-                
-                <p><strong>Public Safety</strong> – Investments in police and fire services ensure that our first responders have the training, equipment, and operational support necessary to serve the community effectively. The Fire Department has expanded emergency medical response capabilities, while the Police Department continues its commitment to proactive community engagement and public safety initiatives.</p>
-                
-                <p><strong>Public Works & Infrastructure</strong> – The Department of Public Works (DPW) budget includes necessary increases for road maintenance, winter operations, and equipment investments, addressing long-term infrastructure needs while maintaining cost efficiency.</p>
-                
-                <p><strong>Planning & Land Use</strong> – The part-time Town Planner position has already proven to be a major asset, helping to secure grants, improve permitting processes, and guide land-use planning efforts. The town has already benefited from increased grant applications and stronger regulatory processes, leading to long-term financial benefits and more organized growth.</p>
-                
-                <p><strong>Modernizing Town Operations & Constituent Services</strong> – Hubbardston continues to make strides in efficiency and accessibility through investments in the Administrative Services Coordinator and Executive Assistant positions, which have been instrumental in e-permitting, workflow automation, customer service improvements, and resident engagement.</p>
+                <p>This budget prioritizes workforce investments, enhances direct constituent services, and strengthens operational efficiencies town-wide, focusing on Public Safety, Public Works & Infrastructure, Planning & Land Use, and Town Operations modernization.</p>
             </div>
         </section>
         
@@ -493,17 +507,7 @@
             <div class="letter-text">
                 <h3>Strategic Use of Free Cash ($131,478)</h3>
                 
-                <p>This year, Hubbardston has further reduced its reliance on free cash, ensuring that one-time expenses critical to operations, infrastructure, and resident services are fully funded while maintaining fiscal responsibility. These funds are being applied strategically to maintain service levels, sustain necessary investments, and support town operations, reducing the likelihood of service disruptions or deferred maintenance that could create larger costs in future budgets.</p>
-                
-                <p>The $131,478 in free cash supports a combination of personnel investments, infrastructure improvements, contractual obligations, and service enhancements, allowing the town to continue operating efficiently without impacting core services.</p>
-                
-                <p><strong>Investments in Staff & Operational Efficiency</strong> – Supporting ongoing municipal modernization efforts, service delivery improvements, and ensuring essential functions remain effective. This includes continued funding for the part-time Town Planner, who has been instrumental in securing grants, enhancing land-use planning, and improving permitting processes.</p>
-                
-                <p><strong>Public Works & Infrastructure</strong> – Addressing roadway maintenance, seasonal operations, and facility upkeep, helping to prevent costly long-term repairs. This includes funding for road materials, DPW equipment, and facility maintenance, ensuring the town remains proactive in infrastructure management.</p>
-                
-                <p><strong>Contractual & Service Agreements</strong> – Meeting pre-existing obligations to avoid financial risk while sustaining critical technology and public safety needs. This includes funding for contractual wage increases, technology improvements, and public safety equipment purchases to maintain essential services.</p>
-                
-                <p><strong>Community & Resident Services</strong> – Maintaining and improving access to library resources, senior services, and recreational facilities, ensuring residents continue to receive valuable town services. These investments help sustain community engagement and accessibility for all residents.</p>
+                <p>Free cash is applied strategically to maintain service levels, sustain necessary investments, and support town operations. This includes investments in staff efficiency, public works, contractual obligations, and community services.</p>
                 
                 <h3>Key Considerations & Fiscal Oversight</h3>
                 
@@ -514,9 +518,7 @@
                     <li>While revenues are growing at 5.75%, expenses continue to outpace revenue growth at 6.32%. This budget gap must be addressed through continued financial discipline.</li>
                 </ul>
                 
-                <p>The FY26 budget prioritizes responsible fiscal management, service continuity, and long-term sustainability. While we continue to navigate rising costs, Hubbardston remains in a stronger financial position than many neighboring communities, thanks to careful planning, strategic investments, and efficiency gains from initiatives like Hubb Connect and workflow automation.</p>
-                
-                <p>With continued oversight, expanded resident services, and proactive financial management, Hubbardston is positioned to thrive in the coming fiscal year and beyond.</p>
+                <p>The FY26 budget prioritizes responsible fiscal management, service continuity, and long-term sustainability. With continued oversight and proactive financial management, Hubbardston is positioned to thrive in the coming fiscal year and beyond.</p>
             </div>
             
             <div class="button-container">
