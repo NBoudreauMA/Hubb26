@@ -1,23 +1,201 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Revenue - Hubbardston Budget</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Budget View</title>
+    <link rel="stylesheet" href="styles.css"> 
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 80px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #2d6a4f;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .navbar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+
+        .navbar ul li {
+            margin: 0 20px;
+        }
+
+        .navbar ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 10px 15px;
+            display: inline-block;
+        }
+
+        .navbar ul li a:hover, .navbar ul li a.active {
+            background-color: #1b4633;
+            border-radius: 8px;
+        }
+
+        /* Search and Filter Section */
+        .search-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .search-container input, .search-container select {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 48%;
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background: #2d6a4f;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f2f2f2;
+        }
+    </style>
 </head>
 <body>
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="revenue.html">Revenue</a>
-        <a href="expenditures.html">Expenditures</a>
-        <a href="capital_plan.html">Capital Improvement Plan</a>
-        <a href="citizens_guide.html">Citizen's Guide</a>
-    </nav>
+
+    <header>
+        <nav class="navbar">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="revenue.html">Revenue</a></li>
+                <li><a href="expenditures_final_adjusted.html">Expenditures</a></li>
+                <li><a href="capital_plan.html">Capital Plan</a></li>
+                <li><a href="citizens_guide.html">Citizen's Guide</a></li>
+            </ul>
+        </nav>
+    </header>
+
     <div class="container">
-        <h1>Revenue</h1>
-        <p>Detailed information about Hubbardston's revenue sources.</p>
-        <a href="downloads/revenue.pdf" class="download-link">Download Revenue Report</a>
+        <h1>Budget View</h1>
+        
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search budget..." onkeyup="filterTable()">
+            <select id="departmentFilter" onchange="filterTable()">
+                <option value="">All Departments</option>
+                <option value="Public Safety">Public Safety</option>
+                <option value="Education">Education</option>
+                <option value="DPW">DPW</option>
+                <option value="Administration">Administration</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+
+        <table id="budgetTable">
+            <thead>
+                <tr>
+                    <th>Department</th>
+                    <th>Category</th>
+                    <th>Expenditure</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody id="budgetBody">
+                <!-- Budget data will be dynamically inserted here -->
+            </tbody>
+        </table>
     </div>
+
+    <script>
+        // Sample Budget Data (Replace with actual CSV fetch in live environment)
+        const budgetData = [
+            { department: "Public Safety", category: "Police Equipment", expenditure: "Vehicle Maintenance", amount: "$50,000" },
+            { department: "Education", category: "School Programs", expenditure: "Teacher Salaries", amount: "$200,000" },
+            { department: "DPW", category: "Infrastructure", expenditure: "Road Repairs", amount: "$75,000" },
+            { department: "Administration", category: "Town Hall", expenditure: "Office Supplies", amount: "$10,000" },
+            { department: "Other", category: "Community Services", expenditure: "Library Funding", amount: "$25,000" }
+        ];
+
+        // Function to populate the table with budget data
+        function loadBudgetData() {
+            const tableBody = document.getElementById("budgetBody");
+            tableBody.innerHTML = "";
+            budgetData.forEach(row => {
+                let tr = `<tr>
+                    <td>${row.department}</td>
+                    <td>${row.category}</td>
+                    <td>${row.expenditure}</td>
+                    <td>${row.amount}</td>
+                </tr>`;
+                tableBody.innerHTML += tr;
+            });
+        }
+
+        // Function to filter the table based on search and dropdown selection
+        function filterTable() {
+            let searchQuery = document.getElementById("searchInput").value.toLowerCase();
+            let departmentFilter = document.getElementById("departmentFilter").value;
+            const tableBody = document.getElementById("budgetBody");
+
+            tableBody.innerHTML = ""; // Clear table
+
+            budgetData.forEach(row => {
+                let matchesSearch = row.expenditure.toLowerCase().includes(searchQuery) || row.category.toLowerCase().includes(searchQuery);
+                let matchesDepartment = departmentFilter === "" || row.department === departmentFilter;
+
+                if (matchesSearch && matchesDepartment) {
+                    let tr = `<tr>
+                        <td>${row.department}</td>
+                        <td>${row.category}</td>
+                        <td>${row.expenditure}</td>
+                        <td>${row.amount}</td>
+                    </tr>`;
+                    tableBody.innerHTML += tr;
+                }
+            });
+        }
+
+        // Load data when page is ready
+        window.onload = loadBudgetData;
+    </script>
+
 </body>
 </html>
