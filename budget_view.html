@@ -13,7 +13,7 @@
         .table-container {
             width: 90%;
             margin: 20px auto;
-            overflow: hidden;
+            overflow-y: auto;
             max-height: 600px;
             border: 1px solid black;
             position: relative;
@@ -32,10 +32,17 @@
             color: white;
             position: sticky;
             top: 0;
-            z-index: 2;
+            z-index: 3;
         }
         tbody tr:nth-child(even) {
             background-color: #f2f2f2;
+        }
+        .dept-header {
+            background-color: #74c69d;
+            font-weight: bold;
+            position: sticky;
+            top: 30px;
+            z-index: 2;
         }
     </style>
 </head>
@@ -77,43 +84,15 @@
                 .map(key => `<th>${key}</th>`)
                 .join("");
 
-            tableBody.innerHTML = data.map(row => 
-                `<tr data-dept='${row["Department"] || ""}'>${Object.values(row).map(value => `<td>${value}</td>`).join("")}</tr>`
-            ).join("");
-
-            autoScrollTable();
-        }
-
-        function autoScrollTable() {
-            const tableBody = document.getElementById("tableBody");
-            const rows = Array.from(tableBody.getElementsByTagName("tr"));
-            let currentIndex = 0;
-
-            function scrollToNextDepartment() {
-                if (currentIndex >= rows.length) currentIndex = 0;
-                let startDept = rows[currentIndex].dataset.dept;
-                let nextIndex = currentIndex;
-
-                while (nextIndex < rows.length && rows[nextIndex].dataset.dept === startDept) {
-                    nextIndex++;
+            let lastDept = "";
+            tableBody.innerHTML = data.map(row => {
+                let deptRow = "";
+                if (row["Department"] && row["Department"] !== lastDept) {
+                    lastDept = row["Department"];
+                    deptRow = `<tr class='dept-header'><td colspan='100%'>${lastDept}</td></tr>`;
                 }
-                
-                tableBody.style.transition = "transform 1s ease-in-out";
-                tableBody.style.transform = `translateY(-${rows[currentIndex].offsetTop}px)`;
-                
-                let observer = new IntersectionObserver(entries => {
-                    entries.forEach(entry => {
-                        if (!entry.isIntersecting) {
-                            setTimeout(scrollToNextDepartment, 1000);
-                        }
-                    });
-                }, { root: document.querySelector(".table-container"), threshold: 0.1 });
-                
-                observer.observe(rows[currentIndex]);
-                currentIndex = nextIndex;
-            }
-
-            scrollToNextDepartment();
+                return deptRow + `<tr>${Object.values(row).map(value => `<td>${value}</td>`).join("")}</tr>`;
+            }).join("");
         }
     </script>
 </body>
