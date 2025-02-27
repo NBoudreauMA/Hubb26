@@ -3,21 +3,163 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Revenue - Hubbardston Budget</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Hubbardston FY26 Revenue</title>
+    <link rel="stylesheet" href="styles.css"> 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        html, body {
+            height: auto;
+            min-height: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: #1b1b1b;
+            font-family: Arial, sans-serif;
+            overflow-y: auto;
+        }
+        .navbar {
+            background-color: #2d6a4f;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .navbar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+        .navbar ul li {
+            margin: 0 15px;
+        }
+        .navbar ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 10px;
+            display: inline-block;
+        }
+        .navbar ul li a:hover, .navbar ul li a.active {
+            background-color: #1b4633;
+            border-radius: 8px;
+        }
+        .content-container {
+            margin-top: 300px; /* Pushed way down */
+            padding: 20px;
+            max-width: 900px;
+            margin: auto;
+            background: rgba(30, 30, 30, 0.95);
+            border-radius: 12px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            color: white;
+            text-align: justify;
+            line-height: 1.6;
+        }
+        h1, h2, h3, p, ul {
+            color: #ffffff;
+            text-align: justify;
+        }
+        .chart-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+            background: rgba(30, 30, 30, 0.8);
+            padding: 15px;
+            border-radius: 8px;
+        }
+        canvas {
+            max-width: 300px;
+            max-height: 300px;
+        }
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .button {
+            background-color: #2d6a4f;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            transition: 0.3s;
+            display: inline-block;
+            margin: 5px;
+        }
+        .button:hover {
+            background-color: #1b4633;
+            transform: scale(1.05);
+        }
+    </style>
 </head>
 <body>
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="revenue.html">Revenue</a>
-        <a href="expenditures.html">Expenditures</a>
-        <a href="capital_plan.html">Capital Improvement Plan</a>
-        <a href="citizens_guide.html">Citizen's Guide</a>
-    </nav>
-    <div class="container">
-        <h1>Revenue</h1>
-        <p>Detailed information about Hubbardston's revenue sources.</p>
-        <a href="downloads/revenue.pdf" class="download-link">Download Revenue Report</a>
+    <header>
+        <nav class="navbar">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="revenue.html" class="active">Revenue</a></li>
+                <li><a href="expenditures_final_adjusted.html">Expenditures</a></li>
+                <li><a href="capital_plan.html">Capital Plan</a></li>
+                <li><a href="citizens_guide.html">Citizen's Guide</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="content-container">
+        <h1>Fiscal Year 2026 Revenue</h1>
+        <p>The FY26 budget outlines Hubbardston’s revenue sources, ensuring financial stability while funding essential services and community priorities.</p>
+
+        <h2>Revenue Sources</h2>
+        <div class="chart-container">
+            <canvas id="revenueChart"></canvas>
+        </div>
+
+        <h2>Conclusion</h2>
+        <p>Hubbardston’s revenue streams reflect a strategic approach to balancing growth and fiscal responsibility.</p>
+
+        <div class="button-container">
+            <a href="revenue_view.html" class="button">View Revenue Data</a>
+            <a href="https://nboudreauMA.github.io/Hubb26/revenue.pdf" class="button" download>Download Revenue Report (PDF)</a>
+        </div>
     </div>
+
+    <script>
+        const ctx = document.getElementById('revenueChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Tax Levy', 'State Aid', 'Local Receipts'],
+                datasets: [{
+                    data: [9281259.79, 733227.13, 1632503],
+                    backgroundColor: ['#2d6a4f', '#40916c', '#52b788'],
+                    borderWidth: 1,
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'bottom', labels: { color: 'white' } },
+                    tooltip: {
+                        callbacks: {
+                            label: function (tooltipItem) {
+                                const values = [9281259.79, 733227.13, 1632503];
+                                const total = values.reduce((a, b) => a + b, 0);
+                                const percentage = ((values[tooltipItem.dataIndex] / total) * 100).toFixed(1);
+                                return `${tooltipItem.label}: ${percentage}%`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 </html>
