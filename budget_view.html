@@ -4,23 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Budget Data</title>
+    <link rel="stylesheet" href="styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-        }
         .table-container {
             width: 90%;
-            margin: 20px auto;
+            margin: 120px auto 20px; /* Adjusted for navbar */
             overflow-y: auto;
             max-height: 600px;
             border: 1px solid black;
             position: relative;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
         }
         table {
             width: 100%;
             border-collapse: collapse;
+            background: white;
+            color: black;
         }
         th, td {
             border: 1px solid black;
@@ -34,9 +36,6 @@
             top: 0;
             z-index: 3;
         }
-        tbody tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
         .dept-header {
             background-color: #74c69d;
             font-weight: bold;
@@ -47,6 +46,14 @@
     </style>
 </head>
 <body>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="revenue.html">Revenue</a>
+        <a href="expenditures.html">Expenditures</a>
+        <a href="capital_plan.html">Capital Improvement Plan</a>
+        <a href="citizens_guide.html">Citizen's Guide</a>
+    </nav>
+
     <h1>Budget Data</h1>
     <div class="table-container">
         <table id="budgetTable">
