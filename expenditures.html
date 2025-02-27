@@ -50,8 +50,8 @@
             border-radius: 8px;
         }
         .content-container {
-            margin-top: 220px; /* Increased to push content further down */
-            padding: 20px;
+            margin-top: 250px;
+            padding: 30px;
             max-width: 900px;
             margin: auto;
             background: rgba(30, 30, 30, 0.95);
@@ -61,38 +61,31 @@
             text-align: justify;
             line-height: 1.6;
         }
-        h1, h2, h3, p, ul {
-            color: #ffffff;
-            text-align: justify;
-        }
         .chart-container {
             display: flex;
             justify-content: center;
-            align-items: center;
-            margin-top: 20px;
-            background: rgba(30, 30, 30, 0.8);
-            padding: 15px;
-            border-radius: 8px;
+            margin: 20px 0;
         }
         canvas {
-            max-width: 300px;
-            max-height: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 10px;
         }
         .button-container {
             text-align: center;
-            margin-top: 20px;
+            margin-top: 30px;
         }
         .button {
             background-color: #2d6a4f;
             color: white;
-            padding: 10px 20px;
+            padding: 12px 24px;
             text-decoration: none;
             border-radius: 8px;
-            font-size: 14px;
+            font-size: 16px;
             font-weight: bold;
             transition: 0.3s;
             display: inline-block;
-            margin: 5px;
+            margin: 10px;
         }
         .button:hover {
             background-color: #1b4633;
@@ -115,7 +108,7 @@
 
     <div class="content-container">
         <h1>Fiscal Year 2026 Expenditures</h1>
-        <p>The FY26 budget reflects the Town of Hubbardston's commitment to maintaining essential services while strategically allocating resources for future growth and efficiency</p>
+        <p>The FY26 budget reflects the Town of Hubbardston's commitment to maintaining essential services while strategically allocating resources for future growth and efficiency.</p>
 
         <h2>Expenditures by Category</h2>
         <div class="chart-container">
@@ -127,28 +120,27 @@
 
         <div class="button-container">
             <a href="budget_view.html" class="button">View Raw Budget Data</a>
-            <a href="https://nboudreauMA.github.io/Hubb26/budget.pdf" class="button" download>Download Budget Report (PDF)</a>
+            <a href="budget.pdf" class="button" download>Download Budget Report (PDF)</a>
         </div>
     </div>
 
     <script>
-        const ctx = document.getElementById('expendituresChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: ['General Government', 'Public Safety', 'Education', 'Public Works', 'Human Services', 'Culture & Recreation', 'Debt Service', 'Liabilities & Assessments'],
-                datasets: [{
-                    data: [724886, 1595193, 7334563, 920184, 35800, 94290, 146862, 999455],
-                    backgroundColor: ['#2d6a4f', '#40916c', '#52b788', '#74c69d', '#95d5b2', '#b7e4c7', '#d8f3dc', '#1b4633'],
-                    borderWidth: 1,
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: { position: 'bottom', labels: { color: 'white' } }
+        document.addEventListener("DOMContentLoaded", function() {
+            var ctx = document.getElementById('expendituresChart').getContext('2d');
+            var expendituresChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Public Safety', 'Education', 'Public Works', 'General Government', 'Debt Service'],
+                    datasets: [{
+                        data: [30, 40, 15, 10, 5],
+                        backgroundColor: ['#ff6384', '#36a2eb', '#ffce56', '#4bc0c0', '#9966ff'],
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
                 }
-            }
+            });
         });
     </script>
 </body>
