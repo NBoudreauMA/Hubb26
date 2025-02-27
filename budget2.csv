@@ -1,5 +1,5 @@
 Department,Category,Description,FY24 Actual,FY25 Actual,FY26 Proposed,Change ($),Change (%)
-"GENERAL GOVERNMENT",,,,,,,,
+"GENERAL GOVERNMENT",,,,,,,
 "Town Moderator","Personnel","Stipend",100,100,100,0,0%
 ,,"TOTAL",100,100,100,0,0%
 "Select Board","Personnel","Executive Assistant",28111,28673,31894,3221,11%
@@ -53,7 +53,7 @@ Department,Category,Description,FY24 Actual,FY25 Actual,FY26 Proposed,Change ($)
 ,,"Phone",6500,6500,5500,-1000,-15%
 ,,"TOTAL",47640,47843,62361,14518,30%
 ,,"SUBTOTAL",669598,688408,724886,36478,5%
-"PUBLIC SAFETY",,,,,,,,
+"PUBLIC SAFETY",,,,,,,
 "Police Department","Personnel","Chief Salary",96500,98430,101383,2953,3%
 ,,"Officer Wages",525636,505000,510050,5050,1%
 ,,"Administrative Assistant",16699,21026,21423,397,2%
@@ -99,13 +99,13 @@ Department,Category,Description,FY24 Actual,FY25 Actual,FY26 Proposed,Change ($)
 "Dispatch Services","Services","Rutland Regional Dispatch",125000,149000,158238,9238,6%
 ,,"TOTAL",125000,149000,158238,9238,6%
 ,,"SUBTOTAL",1529052,1550547,1595193,44646,3%
-"EDUCATION",,,,,,,,
+"EDUCATION",,,,,,,
 "School Assessment","Other","Quabbin Regional School District",5820063,6370641,6880292,509651,8%
 ,,"QRSD Debt Service",30225,56318,57444,1126,2%
 ,,"Montachusett Technical School",447411,357138,396826,39688,11%
 ,,"TOTAL",6297699,6784097,7334563,550466,8%
 ,,"SUBTOTAL",6297699,6784097,7334563,550466,8%
-"PUBLIC WORKS",,,,,,,,
+"PUBLIC WORKS",,,,,,,
 "Highway Department","Personnel","Director Salary",87519,89269,94402,5133,6%
 ,,"Staff Wages",280368,280368,285975,5607,2%
 ,,"Administrative Assistant",15201,18166,18529,363,2%
@@ -135,7 +135,7 @@ Department,Category,Description,FY24 Actual,FY25 Actual,FY26 Proposed,Change ($)
 "Cemetery Maintenance","Supplies","Equipment & Maintenance",1300,1300,1300,0,0%
 ,,"TOTAL",1300,1300,1300,0,0%
 ,,"SUBTOTAL",915346,904481,920184,15703,2%
-"HUMAN SERVICES",,,,,,,,
+"HUMAN SERVICES",,,,,,,
 "Council on Aging","Personnel","Director Salary",16867,17204,22550,5346,31%
 ,"Services","Program Services",2500,2500,2500,0,0%
 ,"Supplies","Office & Program Supplies",1900,1900,1900,0,0%
@@ -148,7 +148,7 @@ Department,Category,Description,FY24 Actual,FY25 Actual,FY26 Proposed,Change ($)
 ,"Other","Veterans Benefits",20000,2000,1000,-1000,-50%
 ,,"TOTAL",27850,9850,8850,-1000,-10%
 ,,"SUBTOTAL",49117,31454,35800,4346,14%
-"CULTURE & RECREATION",,,,,,,,
+"CULTURE & RECREATION",,,,,,,
 "Public Library","Personnel","Director Salary",31644,32435,33084,649,2%
 ,,"Assistant Wages",17403,17403,18500,1097,6%
 ,"Employee Support","Association Dues",310,310,310,0,0%
@@ -162,7 +162,7 @@ Department,Category,Description,FY24 Actual,FY25 Actual,FY26 Proposed,Change ($)
 "Historical Commission","Supplies","General Expenses",200,200,200,0,0%
 ,,"TOTAL",200,200,200,0,0%
 ,,"SUBTOTAL",91753,92544,94290,1746,2%
-"DEBT SERVICE",,,,,,,,
+"DEBT SERVICE",,,,,,,
 "Short-Term Interest","Short-Term Interest","Inside Levy",14485,14485,20000,5515,38%
 ,,"Outside Levy",0,0,0,0,0%
 "Short-Term Principal","Short-Term Principal","Principal Payment",150000,50000,25000,-25000,-50%
@@ -171,7 +171,7 @@ Department,Category,Description,FY24 Actual,FY25 Actual,FY26 Proposed,Change ($)
 "School Roof Interest","School Roof Interest","Short Term Outside Levy",25000,25000,52862,27862,111%
 ,,"Secondary Payment",37625,57377,49000,-8377,-15%
 ,,"SUBTOTAL",412998,146862,146862,0,0%
-"LIABILITIES & ASSESSMENTS",,,,,,,,
+"LIABILITIES & ASSESSMENTS",,,,,,,
 "Cherry Sheet Assessments","State Assessments","Air Pollution",1285,1400,1400,0,0%
 ,,"Regional Transit",6667,6800,6800,0,0%
 ,,"Registry of Motor Vehicles",2000,4080,4080,0,0%
@@ -190,4 +190,4 @@ Department,Category,Description,FY24 Actual,FY25 Actual,FY26 Proposed,Change ($)
 ,,"Tax Overlay",60000,66144,60000,-6144,-9%
 ,,"TOTAL",68627,78909,72765,-6144,-8%
 ,,"SUBTOTAL",878950,948485,999455,50970,5%
-"GRAND TOTAL",,,,10844514,11146879,11851233,704354,6.32%
+"GRAND TOTAL",,,10844514,11146879,11851233,704354,6.32%
