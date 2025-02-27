@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Data</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #2d6a4f;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Budget Data</h1>
+    <table id="budgetTable">
+        <thead>
+            <tr id="tableHeader"></tr>
+        </thead>
+        <tbody id="tableBody">
+            <tr><td colspan="100%">Loading budget data...</td></tr>
+        </tbody>
+    </table>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const csvUrl = "budget2.csv"; // Ensure budget2.csv is in the same directory
+
+            fetch(csvUrl)
+                .then(response => {
+                    if (!response.ok) throw new Error("Failed to load CSV.");
+                    return response.text();
+                })
+                .then(csvText => {
+                    const parsedData = Papa.parse(csvText, { header: true, skipEmptyLines: true });
+                    populateTable(parsedData.data);
+                })
+                .catch(error => {
+                    document.getElementById("tableBody").innerHTML = `<tr><td colspan="100%">${error.message}</td></tr>`;
+                });
+        });
+
+        function populateTable(data) {
+            const tableHeader = document.getElementById("tableHeader");
+            const tableBody = document.getElementById("tableBody");
+
+            if (data.length === 0) {
+                tableBody.innerHTML = "<tr><td colspan='100%'>No data available.</td></tr>";
+                return;
+            }
+
+            // Set table headers
+            tableHeader.innerHTML = Object.keys(data[0])
+                .map(key => `<th>${key}</th>`)
+                .join("");
+
+            // Populate table body
+            tableBody.innerHTML = data.map(row => 
+                `<tr>${Object.values(row).map(value => `<td>${value}</td>`).join("")}</tr>`
+            ).join("");
+        }
+    </script>
+</body>
+</html>
