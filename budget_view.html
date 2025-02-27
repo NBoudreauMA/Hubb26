@@ -4,133 +4,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Budget Data</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+    <title>Hubbardston FY26 Expenditure Overview</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            padding: 20px;
+            max-width: 900px;
+            margin: auto;
+            background-color: #f8f9fa;
+        }
+        h1, h2 {
             text-align: center;
+            color: #2d6a4f;
         }
-        .search-container {
-            margin: 10px auto;
-            width: 90%;
-        }
-        input {
-            width: 100%;
-            padding: 10px;
+        p {
             margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
         }
-        .table-container {
-            width: 90%;
-            margin: 20px auto;
-            overflow: auto;
-            max-height: 600px;
-            border: 1px solid black;
-            position: relative;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            position: relative;
-        }
-        th, td {
-            border: 1px solid black;
-            padding: 10px;
+        .content {
             text-align: left;
-            white-space: nowrap;
         }
-        th {
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .button {
             background-color: #2d6a4f;
             color: white;
-            position: sticky;
-            top: 0;
-            z-index: 2;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+            margin: 10px;
         }
-        tr:first-child th {
-            position: sticky;
-            top: 0;
-            z-index: 3;
+        .button:hover {
+            background-color: #1b4633;
         }
-        td:first-child, th:first-child {
-            position: sticky;
-            left: 0;
-            background-color: #2d6a4f;
-            color: white;
-            z-index: 2;
+        .chart-container {
+            text-align: center;
+            margin: 20px 0;
         }
-        tbody tr:nth-child(even) {
-            background-color: #f2f2f2;
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        ul {
+            padding-left: 20px;
         }
     </style>
 </head>
 <body>
-    <h1>Budget Data</h1>
-    
-    <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Search budget data..." onkeyup="filterTable()">
+
+    <h1>Fiscal Year 2026 Expenditure Overview</h1>
+
+    <p class="content">The Fiscal Year 2026 budget reflects the Town of Hubbardston's commitment to maintaining essential services while strategically allocating resources for future growth and efficiency. This year's expenditures address personnel adjustments, infrastructure investments, and operational efficiencies, balancing fiscal responsibility with the town's evolving needs.</p>
+
+    <h2>Key Budgetary Decisions</h2>
+
+    <h3>Personnel Adjustments</h3>
+    <ul>
+        <li>Increase in Executive Assistant salary (+11%) to better align with responsibilities and market rates.</li>
+        <li>Town Administrator salary adjusted for a cost-of-living increase (+3%).</li>
+        <li>Expanded custodial services (+63%) to support facility maintenance across town buildings.</li>
+        <li>Select Board budget modifications include reallocations for postage (+300%) and advertising (-67%).</li>
+    </ul>
+
+    <h3>Technology & Security Investments</h3>
+    <ul>
+        <li>IT maintenance funding increased (+9%) to support cybersecurity enhancements and modernized infrastructure.</li>
+        <li>Website funding maintained to ensure continued resident engagement and digital accessibility.</li>
+    </ul>
+
+    <h3>Education & Public Safety</h3>
+    <ul>
+        <li>Quabbin Regional School District assessment increased (+8%) due to rising enrollment and operating costs.</li>
+        <li>Dispatch services funding increased (+6%) to maintain 911 and emergency response capabilities.</li>
+        <li>Investment in police equipment (+176%) to modernize and ensure officer safety.</li>
+    </ul>
+
+    <h3>Infrastructure & Maintenance</h3>
+    <ul>
+        <li>Road materials budget increased (+10%) to accommodate higher costs and maintenance needs.</li>
+        <li>Expansion of municipal building maintenance funding (+30%) to address deferred maintenance.</li>
+        <li>Elimination of longevity program (-$2,000) as part of personnel compensation restructuring.</li>
+    </ul>
+
+    <h3>Public Services & Human Resources</h3>
+    <ul>
+        <li>Council on Aging Director hours expanded (+31%) to enhance senior services and outreach.</li>
+        <li>Reduction in veteran benefits (-50%) based on historical trends while maintaining essential support programs.</li>
+        <li>Library staff wage adjustments (+6%) to support extended programming hours.</li>
+    </ul>
+
+    <h2>Opportunities for Fiscal Efficiency</h2>
+    <ul>
+        <li><strong>Debt Management:</strong> The town continues to pay down short-term obligations, reducing principal debt costs (-50%) while maintaining financial flexibility for future needs.</li>
+        <li><strong>Cost-Saving Measures:</strong> Strategic reductions in advertising, office supplies, and operational expenses across departments help mitigate cost increases.</li>
+        <li><strong>Interdepartmental Collaboration:</strong> Aligning facility maintenance efforts and consolidating service contracts offer opportunities for streamlined expenditures.</li>
+        <li><strong>Technology-Driven Efficiencies:</strong> Investments in digital tools, automation, and data tracking (Hubb Connect) will enhance operational efficiency and reduce administrative overhead.</li>
+    </ul>
+
+    <h2>Expenditure Breakdown</h2>
+    <div class="chart-container">
+        <img src="fy26_expenditure_pie_chart.png" alt="FY26 Expenditures Pie Chart">
     </div>
-    
-    <div class="table-container">
-        <table id="budgetTable">
-            <thead>
-                <tr id="tableHeader"></tr>
-            </thead>
-            <tbody id="tableBody">
-                <tr><td colspan="100%">Loading budget data...</td></tr>
-            </tbody>
-        </table>
+
+    <h2>Conclusion</h2>
+    <p class="content">The FY26 budget prioritizes financial stability while addressing essential service needs and long-term sustainability. By balancing investments in personnel, infrastructure, and technology, Hubbardston is well-positioned to navigate upcoming challenges while fostering responsible fiscal management. The proposed budget reflects careful planning to ensure continued service excellence and prudent financial stewardship.</p>
+
+    <div class="button-container">
+        <a href="budget_view_search.html" class="button">View Raw Budget Data</a>
+        <a href="budget_report.pdf" class="button">Download Full Budget Report (PDF)</a>
     </div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const csvUrl = "budget2.csv"; // Ensure budget2.csv is in the same directory
-
-            fetch(csvUrl)
-                .then(response => {
-                    if (!response.ok) throw new Error("Failed to load CSV.");
-                    return response.text();
-                })
-                .then(csvText => {
-                    const parsedData = Papa.parse(csvText, { header: true, skipEmptyLines: true });
-                    populateTable(parsedData.data);
-                })
-                .catch(error => {
-                    document.getElementById("tableBody").innerHTML = `<tr><td colspan="100%">${error.message}</td></tr>`;
-                });
-        });
-
-        function populateTable(data) {
-            const tableHeader = document.getElementById("tableHeader");
-            const tableBody = document.getElementById("tableBody");
-
-            if (data.length === 0) {
-                tableBody.innerHTML = "<tr><td colspan='100%'>No data available.</td></tr>";
-                return;
-            }
-
-            // Set table headers (first row is frozen)
-            tableHeader.innerHTML = Object.keys(data[0])
-                .map(key => `<th>${key}</th>`)
-                .join("");
-
-            // Populate table body (first column is frozen)
-            tableBody.innerHTML = data.map(row => 
-                `<tr>${Object.values(row).map((value, index) => 
-                    `<td${index === 0 ? ' style="font-weight:bold;"' : ''}>${value}</td>`).join("")}</tr>`
-            ).join("");
-        }
-
-        function filterTable() {
-            const input = document.getElementById("searchInput").value.toLowerCase();
-            const rows = document.querySelectorAll("#budgetTable tbody tr");
-
-            rows.forEach(row => {
-                const text = row.innerText.toLowerCase();
-                row.style.display = text.includes(input) ? "" : "none";
-            });
-        }
-    </script>
 </body>
 </html>
