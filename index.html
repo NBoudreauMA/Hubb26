@@ -3,19 +3,658 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hubbardston Budget</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Hubbardston Budget Portal</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        html, body {
+            height: auto;
+            min-height: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: #1b1b1b;
+            font-family: Arial, sans-serif;
+            overflow-y: auto;
+            color: white;
+        }
+        
+        .navbar {
+            background: linear-gradient(90deg, rgba(34, 139, 34, 0.9), rgba(0, 100, 0, 0.9));
+            padding: 15px;
+            text-align: center;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+        
+        .navbar a {
+            color: white;
+            margin: 0 20px;
+            text-decoration: none;
+            font-size: 22px;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: 0.3s ease-in-out;
+        }
+        
+        .navbar a:hover {
+            text-decoration: underline;
+            transform: scale(1.1);
+            color: #FFD700;
+        }
+        
+        .page-container {
+            padding-top: 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-bottom: 40px;
+        }
+        
+        .letter-container {
+            background: rgba(30, 30, 30, 0.95);
+            border-radius: 12px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .letter-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(90deg, #2d6a4f, #4bc0c0);
+        }
+        
+        .letter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        
+        .letter-title {
+            flex: 1;
+        }
+        
+        .letter-title h1 {
+            color: #4bc0c0;
+            margin-bottom: 5px;
+        }
+        
+        .letter-title h2 {
+            color: #cccccc;
+            font-weight: normal;
+            font-size: 1.2rem;
+            margin-top: 0;
+        }
+        
+        .letter-text {
+            line-height: 1.6;
+            margin-bottom: 30px;
+            text-align: justify;
+        }
+        
+        .signature {
+            text-align: right;
+            font-style: italic;
+        }
+        
+        .signature img {
+            max-width: 200px;
+            margin-top: 10px;
+        }
+        
+        .budget-highlights {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .highlight-card {
+            background: rgba(45, 106, 79, 0.7);
+            border-radius: 12px;
+            padding: 20px;
+            flex: 1;
+            min-width: 250px;
+            margin: 10px;
+            text-align: center;
+            transition: transform 0.3s ease, background 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .highlight-card:hover {
+            transform: translateY(-10px);
+            background: rgba(45, 106, 79, 0.9);
+        }
+        
+        .highlight-card h3 {
+            color: #FFD700;
+            margin-top: 0;
+        }
+        
+        .highlight-card .amount {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 15px 0;
+            color: white;
+        }
+        
+        .highlight-card .description {
+            color: #cccccc;
+            font-size: 0.9rem;
+        }
+        
+        .content-section {
+            background: rgba(30, 30, 30, 0.95);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .content-section h2 {
+            color: #4bc0c0;
+            border-bottom: 2px solid #2d6a4f;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        
+        .budget-breakdown {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        
+        .chart-container {
+            flex: 1;
+            min-width: 300px;
+            height: 400px;
+            position: relative;
+            margin: 20px 0;
+        }
+        
+        .department-list {
+            flex: 1;
+            min-width: 300px;
+            margin: 20px 0 20px 20px;
+        }
+        
+        .department-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #333;
+            transition: background 0.2s ease;
+        }
+        
+        .department-item:hover {
+            background: rgba(45, 106, 79, 0.2);
+        }
+        
+        .department-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        .department-name {
+            flex: 1;
+        }
+        
+        .department-amount {
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        
+        .percent-badge {
+            background: #FFD700;
+            color: #333;
+            border-radius: 20px;
+            padding: 3px 8px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+        }
+        
+        .strategic-investments {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        .investment-card {
+            background: rgba(45, 106, 79, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 10px 0;
+            flex: 1 0 45%;
+            min-width: 250px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .investment-card:hover {
+            transform: translateY(-5px);
+            background: rgba(45, 106, 79, 0.5);
+        }
+        
+        .investment-card h3 {
+            color: #FFD700;
+            margin-top: 0;
+        }
+        
+        .investment-card ul {
+            padding-left: 20px;
+            margin-bottom: 0;
+        }
+        
+        .investment-card li {
+            margin-bottom: 10px;
+        }
+        
+        .button-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .button {
+            background-color: #2d6a4f;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: 0.3s;
+            display: inline-block;
+            margin: 10px;
+        }
+        
+        .button:hover {
+            background-color: #1b4633;
+            transform: scale(1.05);
+        }
+        
+        @media (max-width: 768px) {
+            .budget-highlights {
+                flex-direction: column;
+            }
+            
+            .highlight-card {
+                margin: 10px 0;
+            }
+            
+            .budget-breakdown {
+                flex-direction: column;
+            }
+            
+            .department-list {
+                margin-left: 0;
+            }
+            
+            .strategic-investments {
+                flex-direction: column;
+            }
+            
+            .letter-header {
+                flex-direction: column;
+            }
+        }
+    </style>
 </head>
 <body>
-    <nav>
+    <nav class="navbar">
+        <a href="index.html" class="active">Home</a>
         <a href="revenue.html">Revenue</a>
         <a href="expenditures.html">Expenditures</a>
-        <a href="capital_plan.html">Capital Improvement Plan</a>
+        <a href="capital_plan.html">Capital Plan</a>
         <a href="citizens_guide.html">Citizen's Guide</a>
     </nav>
-    <div class="container">
-        <h1>Welcome to the Hubbardston Budget Portal</h1>
-        <p>Explore transparent and detailed financial information about Hubbardston.</p>
+    
+    <div class="page-container">
+        <section class="letter-container">
+            <div class="letter-header">
+                <div class="letter-title">
+                    <h1>FY26 Budget Proposal & Strategic Financial Outlook</h1>
+                    <h2>A Message from the Town Administrator</h2>
+                </div>
+            </div>
+            
+            <div class="letter-text">
+                <p>Dear Select Board, Finance Committee, and Residents of Hubbardston,</p>
+                
+                <p>I am pleased to submit the Fiscal Year 2026 (FY26) budget for your review and consideration. This budget reflects our ongoing commitment to responsible financial stewardship, strategic investments, and long-term sustainability, ensuring essential services remain strong while modernizing town operations and constituent services.</p>
+                
+                <p>Hubbardston continues to position itself for financial and operational strength, leveraging careful planning, operational efficiencies, and innovative solutions to improve services while maintaining fiscal discipline.</p>
+                
+                <p>The FY26 budget totals $11,851,233, reflecting a 6.32% increase over FY25, with projected revenues of $11,719,755 increasing by 5.75%. This budget strategically uses $131,478 in free cash to balance the budget while funding infrastructure, public safety, and resident services, ensuring we continue to modernize and enhance local government operations.</p>
+                
+                <h3>Investing in Our Workforce & Strengthening Constituent Services</h3>
+                
+                <p>Hubbardston's dedicated staff are the foundation of our municipal operations, ensuring efficient service delivery and a responsive town government. This budget prioritizes workforce investments, enhances direct constituent services, and strengthens operational efficiencies town-wide.</p>
+                
+                <p><strong>Public Safety</strong> – Investments in police and fire services ensure that our first responders have the training, equipment, and operational support necessary to serve the community effectively. The Fire Department has expanded emergency medical response capabilities, while the Police Department continues its commitment to proactive community engagement and public safety initiatives.</p>
+                
+                <p><strong>Public Works & Infrastructure</strong> – The Department of Public Works (DPW) budget includes necessary increases for road maintenance, winter operations, and equipment investments, addressing long-term infrastructure needs while maintaining cost efficiency.</p>
+                
+                <p><strong>Planning & Land Use</strong> – The part-time Town Planner position has already proven to be a major asset, helping to secure grants, improve permitting processes, and guide land-use planning efforts. The town has already benefited from increased grant applications and stronger regulatory processes, leading to long-term financial benefits and more organized growth.</p>
+                
+                <p><strong>Modernizing Town Operations & Constituent Services</strong> – Hubbardston continues to make strides in efficiency and accessibility through investments in the Administrative Services Coordinator and Executive Assistant positions, which have been instrumental in e-permitting, workflow automation, customer service improvements, and resident engagement.</p>
+                
+                <div class="signature">
+                    <p>Respectfully submitted,</p>
+                    <p>Nathan Boudreau<br>Town Administrator<br>Town of Hubbardston</p>
+                    <img src="/api/placeholder/200/100" alt="Signature" />
+                </div>
+            </div>
+        </section>
+        
+        <div class="budget-highlights">
+            <div class="highlight-card">
+                <h3>Total FY26 Budget</h3>
+                <div class="amount">$11,851,233</div>
+                <p class="description">6.32% increase from FY25</p>
+            </div>
+            
+            <div class="highlight-card">
+                <h3>Total FY26 Revenue</h3>
+                <div class="amount">$11,719,755</div>
+                <p class="description">5.75% increase from FY25</p>
+            </div>
+            
+            <div class="highlight-card">
+                <h3>Education</h3>
+                <div class="amount">$7,334,563</div>
+                <p class="description">61.9% of total budget</p>
+            </div>
+            
+            <div class="highlight-card">
+                <h3>Free Cash Used</h3>
+                <div class="amount">$131,478</div>
+                <p class="description">To balance budget</p>
+            </div>
+        </div>
+        
+        <section class="content-section">
+            <h2>FY26 Budget Breakdown</h2>
+            
+            <div class="budget-breakdown">
+                <div class="chart-container">
+                    <canvas id="budgetPieChart"></canvas>
+                </div>
+                
+                <div class="department-list">
+                    <div class="department-item">
+                        <div class="department-color" style="background-color: #4bc0c0;"></div>
+                        <div class="department-name">Education</div>
+                        <div class="department-amount">$7,334,563</div>
+                        <div class="percent-badge">61.9%</div>
+                    </div>
+                    <div class="department-item">
+                        <div class="department-color" style="background-color: #ff6384;"></div>
+                        <div class="department-name">Public Safety</div>
+                        <div class="department-amount">$1,595,193</div>
+                        <div class="percent-badge">13.5%</div>
+                    </div>
+                    <div class="department-item">
+                        <div class="department-color" style="background-color: #ffce56;"></div>
+                        <div class="department-name">Liabilities & Assessments</div>
+                        <div class="department-amount">$999,455</div>
+                        <div class="percent-badge">8.4%</div>
+                    </div>
+                    <div class="department-item">
+                        <div class="department-color" style="background-color: #36a2eb;"></div>
+                        <div class="department-name">Public Works</div>
+                        <div class="department-amount">$920,184</div>
+                        <div class="percent-badge">7.8%</div>
+                    </div>
+                    <div class="department-item">
+                        <div class="department-color" style="background-color: #9966ff;"></div>
+                        <div class="department-name">General Government</div>
+                        <div class="department-amount">$724,886</div>
+                        <div class="percent-badge">6.1%</div>
+                    </div>
+                    <div class="department-item">
+                        <div class="department-color" style="background-color: #ff9f40;"></div>
+                        <div class="department-name">Debt Service</div>
+                        <div class="department-amount">$146,862</div>
+                        <div class="percent-badge">1.2%</div>
+                    </div>
+                    <div class="department-item">
+                        <div class="department-color" style="background-color: #c9cbcf;"></div>
+                        <div class="department-name">Culture & Recreation</div>
+                        <div class="department-amount">$94,290</div>
+                        <div class="percent-badge">0.8%</div>
+                    </div>
+                    <div class="department-item">
+                        <div class="department-color" style="background-color: #4bc050;"></div>
+                        <div class="department-name">Human Services</div>
+                        <div class="department-amount">$35,800</div>
+                        <div class="percent-badge">0.3%</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="content-section">
+            <h2>Revenue Sources & Strategic Investments</h2>
+            
+            <div class="budget-breakdown">
+                <div class="chart-container">
+                    <canvas id="revenueChart"></canvas>
+                </div>
+                
+                <div class="department-list">
+                    <div class="department-item">
+                        <div class="department-color" style="background-color: #36a2eb;"></div>
+                        <div class="department-name">Tax Levy</div>
+                        <div class="department-amount">$9,198,883</div>
+                    </div>
+                    <div class="department-item">
+                        <div class="department-color" style="background-color: #ffce56;"></div>
+                        <div class="department-name">Local Receipts</div>
+                        <div class="department-amount">$1,632,503</div>
+                    </div>
+                    <div class="department-item">
+                        <div class="department-color" style="background-color: #4bc0c0;"></div>
+                        <div class="department-name">State Aid</div>
+                        <div class="department-amount">$733,227</div>
+                    </div>
+                    <div class="department-item">
+                        <div class="department-color" style="background-color: #ff6384;"></div>
+                        <div class="department-name">Other/Exempt</div>
+                        <div class="department-amount">$155,142</div>
+                    </div>
+                </div>
+            </div>
+            
+            <p class="budget-highlight">The FY26 budget reflects strategic investments in key areas to ensure Hubbardston continues to provide high-quality services while preparing for future growth and efficiency.</p>
+            
+            <div class="strategic-investments">
+                <div class="investment-card">
+                    <h3>Public Safety</h3>
+                    <ul>
+                        <li>Enhanced training and equipment for police and fire services</li>
+                        <li>Expanded emergency medical response capabilities</li>
+                        <li>Community engagement and public safety initiatives</li>
+                    </ul>
+                </div>
+                
+                <div class="investment-card">
+                    <h3>Infrastructure</h3>
+                    <ul>
+                        <li>Road maintenance and winter operations</li>
+                        <li>Equipment investments for long-term efficiency</li>
+                        <li>Proactive infrastructure management</li>
+                    </ul>
+                </div>
+                
+                <div class="investment-card">
+                    <h3>Town Planning</h3>
+                    <ul>
+                        <li>Part-time Town Planner position</li>
+                        <li>Increased grant applications</li>
+                        <li>Improved permitting processes</li>
+                        <li>Strategic land-use planning</li>
+                    </ul>
+                </div>
+                
+                <div class="investment-card">
+                    <h3>Modernization</h3>
+                    <ul>
+                        <li>Investments in Administrative Services</li>
+                        <li>E-permitting and workflow automation</li>
+                        <li>Technology improvements</li>
+                        <li>Updated fee structures</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <section class="content-section">
+            <h2>Conclusion & Future Outlook</h2>
+            
+            <div class="letter-text">
+                <h3>Strategic Use of Free Cash ($131,478)</h3>
+                
+                <p>This year, Hubbardston has further reduced its reliance on free cash, ensuring that one-time expenses critical to operations, infrastructure, and resident services are fully funded while maintaining fiscal responsibility. These funds are being applied strategically to maintain service levels, sustain necessary investments, and support town operations, reducing the likelihood of service disruptions or deferred maintenance that could create larger costs in future budgets.</p>
+                
+                <p>The $131,478 in free cash supports a combination of personnel investments, infrastructure improvements, contractual obligations, and service enhancements, allowing the town to continue operating efficiently without impacting core services.</p>
+                
+                <p><strong>Investments in Staff & Operational Efficiency</strong> – Supporting ongoing municipal modernization efforts, service delivery improvements, and ensuring essential functions remain effective. This includes continued funding for the part-time Town Planner, who has been instrumental in securing grants, enhancing land-use planning, and improving permitting processes.</p>
+                
+                <p><strong>Public Works & Infrastructure</strong> – Addressing roadway maintenance, seasonal operations, and facility upkeep, helping to prevent costly long-term repairs. This includes funding for road materials, DPW equipment, and facility maintenance, ensuring the town remains proactive in infrastructure management.</p>
+                
+                <p><strong>Contractual & Service Agreements</strong> – Meeting pre-existing obligations to avoid financial risk while sustaining critical technology and public safety needs. This includes funding for contractual wage increases, technology improvements, and public safety equipment purchases to maintain essential services.</p>
+                
+                <p><strong>Community & Resident Services</strong> – Maintaining and improving access to library resources, senior services, and recreational facilities, ensuring residents continue to receive valuable town services. These investments help sustain community engagement and accessibility for all residents.</p>
+                
+                <h3>Key Considerations & Fiscal Oversight</h3>
+                
+                <ul>
+                    <li>Education costs remain the largest financial risk. The Quabbin assessment may exceed current estimates, requiring potential mid-year adjustments.</li>
+                    <li>Revenue tracking is essential. Local receipts ($1,632,503) and state aid ($733,227) should be closely monitored.</li>
+                    <li>Free cash use of $131,478 is needed to balance the budget, and the town will continue working toward minimizing reliance on these funds.</li>
+                    <li>While revenues are growing at 5.75%, expenses continue to outpace revenue growth at 6.32%. This budget gap must be addressed through continued financial discipline.</li>
+                </ul>
+                
+                <p>The FY26 budget prioritizes responsible fiscal management, service continuity, and long-term sustainability. While we continue to navigate rising costs, Hubbardston remains in a stronger financial position than many neighboring communities, thanks to careful planning, strategic investments, and efficiency gains from initiatives like Hubb Connect and workflow automation.</p>
+                
+                <p>With continued oversight, expanded resident services, and proactive financial management, Hubbardston is positioned to thrive in the coming fiscal year and beyond.</p>
+            </div>
+            
+            <div class="button-container">
+                <a href="expenditures.html" class="button">Explore Expenditures</a>
+                <a href="revenue.html" class="button">View Revenue Sources</a>
+                <a href="budget.pdf" class="button" download>Download Full Budget (PDF)</a>
+            </div>
+        </section>
     </div>
+    
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Budget Pie Chart
+        var budgetCtx = document.getElementById('budgetPieChart').getContext('2d');
+        var budgetChart = new Chart(budgetCtx, {
+            type: 'pie',
+            data: {
+                labels: ['Education', 'Public Safety', 'Liabilities & Assessments', 'Public Works', 'General Government', 'Debt Service', 'Culture & Recreation', 'Human Services'],
+                datasets: [{
+                    data: [61.9, 13.5, 8.4, 7.8, 6.1, 1.2, 0.8, 0.3],
+                    backgroundColor: [
+                        '#4bc0c0', // Education
+                        '#ff6384', // Public Safety
+                        '#ffce56', // Liabilities
+                        '#36a2eb', // Public Works
+                        '#9966ff', // General Government
+                        '#ff9f40', // Debt Service
+                        '#c9cbcf', // Culture
+                        '#4bc050'  // Human Services
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right',
+                        labels: {
+                            color: 'white',
+                            font: {
+                                size: 14
+                            }
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.label + ': ' + context.raw + '%';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Revenue Chart
+        var revenueCtx = document.getElementById('revenueChart').getContext('2d');
+        var revenueChart = new Chart(revenueCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Tax Levy', 'Local Receipts', 'State Aid', 'Other/Exempt'],
+                datasets: [{
+                    data: [9198883, 1632503, 733227, 155142],
+                    backgroundColor: [
+                        '#36a2eb', // Tax Levy
+                        '#ffce56', // Local Receipts
+                        '#4bc0c0', // State Aid
+                        '#ff6384'  // Other/Exempt
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right',
+                        labels: {
+                            color: 'white',
+                            font: {
+                                size: 14
+                            }
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const value = context.raw;
+                                const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                const percentage = ((value / total) * 100).toFixed(1);
+                                return context.label + ': $' + value.toLocaleString() + ' (' + percentage + '%)';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    });
+    </script>
 </body>
 </html>
