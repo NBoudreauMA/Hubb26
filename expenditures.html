@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +6,85 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hubbardston FY26 Expenditures</title>
     <link rel="stylesheet" href="styles.css"> 
+    <style>
+        /* Navigation bar styling to match index.html */
+        .navbar {
+            background-color: #2d6a4f;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+
+        .navbar ul li {
+            margin: 0 20px;
+        }
+
+        .navbar ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 10px 15px;
+            display: inline-block;
+        }
+
+        .navbar ul li a:hover, .navbar ul li a.active {
+            background-color: #1b4633;
+            border-radius: 8px;
+        }
+
+        /* Adjusting content to clear navbar */
+        .content-container {
+            margin-top: 80px; /* Adjusted for fixed navbar */
+            padding: 40px;
+            max-width: 900px;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.15); 
+            border-radius: 12px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        h1, h2, h3, p, ul {
+            color: #f1f1f1; /* Better contrast for readability */
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .button {
+            background-color: #2d6a4f;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: 0.3s;
+            display: inline-block;
+            margin: 10px;
+        }
+
+        .button:hover {
+            background-color: #1b4633;
+            transform: scale(1.05);
+        }
+
+    </style>
 </head>
 <body>
 
@@ -15,8 +93,8 @@
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="revenue.html">Revenue</a></li>
-                <li><a href="expenditures_final_navbar.html" class="active">Expenditures</a></li>
-                <li><a href="capital_plan.html">Capital Improvement Plan</a></li>
+                <li><a href="expenditures_final_correct_navbar.html" class="active">Expenditures</a></li>
+                <li><a href="capital_plan.html">Capital Plan</a></li>
                 <li><a href="citizens_guide.html">Citizen's Guide</a></li>
             </ul>
         </nav>
