@@ -6,8 +6,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hubbardston FY26 Expenditure Overview</title>
     <link rel="stylesheet" href="styles.css"> 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <style>
+        /* Ensure body allows scrolling */
+        html, body {
+            height: auto;
+            overflow: auto;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navigation bar styling */
+        .navbar {
+            background-color: #2d6a4f;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
         /* Background overlay for readability */
         body::before {
             content: "";
@@ -21,36 +54,21 @@
             z-index: -1;
         }
 
+        /* Adjusting content so it fully clears the navbar */
         .content-container {
             position: relative;
-            padding: 30px;
+            margin-top: 165px; /* FINAL final adjustment for perfect spacing */
+            padding: 40px;
             max-width: 900px;
             margin: auto;
             background: rgba(255, 255, 255, 0.12); 
             border-radius: 12px;
-            padding: 30px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
         }
 
         h1, h2, h3, p, ul {
             position: relative;
             z-index: 1;
-        }
-
-        .chart-container {
-            text-align: center;
-            margin: 30px 0;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 12px;
-            box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 10px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         .button-container {
@@ -76,28 +94,19 @@
             transform: scale(1.05);
         }
 
-        /* Fancy transitions for elements */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 1s ease-out forwards;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
     </style>
 </head>
 <body>
 
-    <div class="content-container fade-in">
+    <div class="navbar">
+        <a href="index.html">Home</a>
+        <a href="revenue.html">Revenue</a>
+        <a href="expenditure_review_final_adjustment.html">Expenditures</a>
+        <a href="capital_plan.html">Capital Plan</a>
+        <a href="citizens_guide.html">Citizen's Guide</a>
+    </div>
+
+    <div class="content-container">
         <h1>Fiscal Year 2026 Expenditure Overview</h1>
 
         <p class="content">The Fiscal Year 2026 budget reflects the Town of Hubbardston's commitment to maintaining essential services while strategically allocating resources for future growth and efficiency. This year's expenditures address personnel adjustments, infrastructure investments, and operational efficiencies, balancing fiscal responsibility with the town's evolving needs.</p>
@@ -139,23 +148,10 @@
             <li>Library staff wage adjustments (+6%) to support extended programming hours.</li>
         </ul>
 
-        <h2>Opportunities for Fiscal Efficiency</h2>
-        <ul>
-            <li><strong>Debt Management:</strong> The town continues to pay down short-term obligations, reducing principal debt costs (-50%) while maintaining financial flexibility for future needs.</li>
-            <li><strong>Cost-Saving Measures:</strong> Strategic reductions in advertising, office supplies, and operational expenses across departments help mitigate cost increases.</li>
-            <li><strong>Interdepartmental Collaboration:</strong> Aligning facility maintenance efforts and consolidating service contracts offer opportunities for streamlined expenditures.</li>
-            <li><strong>Technology-Driven Efficiencies:</strong> Investments in digital tools, automation, and data tracking (Hubb Connect) will enhance operational efficiency and reduce administrative overhead.</li>
-        </ul>
-
-        <h2>Expenditure Breakdown</h2>
-        <div class="chart-container fade-in">
-            <img src="fy26_expenditure_pie_chart.png" alt="FY26 Expenditures Pie Chart">
-        </div>
-
         <h2>Conclusion</h2>
         <p class="content">The FY26 budget prioritizes financial stability while addressing essential service needs and long-term sustainability. By balancing investments in personnel, infrastructure, and technology, Hubbardston is well-positioned to navigate upcoming challenges while fostering responsible fiscal management. The proposed budget reflects careful planning to ensure continued service excellence and prudent financial stewardship.</p>
 
-        <div class="button-container fade-in">
+        <div class="button-container">
             <a href="budget_view_search.html" class="button">View Raw Budget Data</a>
             <a href="budget_report.pdf" class="button">Download Full Budget Report (PDF)</a>
         </div>
