@@ -7,63 +7,91 @@
     <link rel="stylesheet" href="styles.css">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
+            font-family: 'Poppins', sans-serif;
+            background: url('hubbardston_bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
             margin: 0;
             padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            overflow: auto;
         }
-        .navbar {
-            background-color: #2d6a4f;
+        nav {
+            background: linear-gradient(90deg, rgba(34, 139, 34, 0.9), rgba(0, 100, 0, 0.9));
             padding: 15px;
             text-align: center;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
         }
-        .navbar a {
+        nav a {
             color: white;
+            margin: 0 20px;
             text-decoration: none;
-            padding: 10px 20px;
-            display: inline-block;
+            font-size: 20px;
             font-weight: bold;
+            text-transform: uppercase;
+            transition: 0.3s ease-in-out;
         }
-        .navbar a:hover {
-            background-color: #1b4633;
-            border-radius: 5px;
+        nav a:hover {
+            text-decoration: underline;
+            transform: scale(1.1);
+            color: #FFD700;
         }
         .container {
             max-width: 900px;
-            margin: auto;
-            background: white;
+            margin: 150px auto 50px;
             padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-            margin-top: 20px;
+            background: rgba(0, 0, 0, 0.85);
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            text-align: left;
+            transition: 0.4s ease-in-out;
+        }
+        .container:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.8);
         }
         h1, h2, h3 {
-            color: #2d6a4f;
+            color: #FFD700;
         }
         .highlight {
-            background-color: #e8f5e9;
+            background-color: rgba(255, 215, 0, 0.2);
             padding: 10px;
-            border-left: 5px solid #2d6a4f;
+            border-left: 5px solid #FFD700;
             margin: 20px 0;
         }
         .footer {
             text-align: center;
-            padding: 10px;
-            background-color: #2d6a4f;
+            padding: 20px;
+            background-color: rgba(34, 139, 34, 0.9);
             color: white;
             margin-top: 20px;
+            font-weight: bold;
+            font-size: 18px;
         }
     </style>
 </head>
 <body>
-    <div class="navbar">
+    <nav>
         <a href="index.html">Home</a>
         <a href="revenue.html">Revenue</a>
         <a href="expenditures.html">Expenditures</a>
         <a href="capital_plan.html">Capital Plan</a>
         <a href="citizens_guide.html" class="active">Citizen's Guide</a>
-    </div>
+    </nav>
     
     <div class="container">
         <h1>Understanding Hubbardston's Budget Process</h1>
@@ -73,13 +101,14 @@
         <p>The town budget is the <strong>annual financial plan</strong> that allocates resources to schools, public safety, infrastructure, and more. It reflects Hubbardston’s values and long-term planning.</p>
         
         <h2>How the Budget is Created</h2>
-        <p>The budget process follows a structured timeline:</p>
-        <ol>
-            <li><strong>Department Requests (Fall):</strong> Each town department submits a funding request based on needs and priorities.</li>
-            <li><strong>Town Administrator Review (Winter):</strong> The Town Administrator evaluates requests and drafts a proposed budget.</li>
-            <li><strong>Finance Committee & Select Board Review (Spring):</strong> These boards analyze the budget, make adjustments, and prepare for Town Meeting.</li>
-            <li><strong>Town Meeting Approval (June):</strong> Residents vote on the final budget, determining funding for services and projects.</li>
-        </ol>
+        <div class="highlight">
+            <ol>
+                <li><strong>Fall:</strong> Departments submit funding requests.</li>
+                <li><strong>Winter:</strong> Town Administrator drafts the proposed budget.</li>
+                <li><strong>Spring:</strong> Finance Committee & Select Board review the plan.</li>
+                <li><strong>June:</strong> Residents <strong>vote at Town Meeting</strong> to finalize the budget.</li>
+            </ol>
+        </div>
         
         <h2>Key Budget Documents</h2>
         <ul>
@@ -100,11 +129,11 @@
             <li><strong>Vote at Town Meeting:</strong> Have a direct say in the final budget decisions.</li>
         </ul>
         
-        <p>For detailed budget documents, visit the <a href="https://www.hubbardstonma.gov/town-administrator/pages/budget-and-finance" target="_blank">Hubbardston Budget & Finance Page</a>.</p>
+        <p><strong>Learn More:</strong> Visit the <a href="https://www.hubbardstonma.gov/town-administrator/pages/budget-and-finance" target="_blank">Hubbardston Budget & Finance Page</a> for full details.</p>
     </div>
     
     <div class="footer">
-        <p>&copy; 2025 Town of Hubbardston. All rights reserved.</p>
+        <p>&copy; 2025 Town of Hubbardston - Working Together for a Stronger Community</p>
     </div>
 </body>
 </html>
