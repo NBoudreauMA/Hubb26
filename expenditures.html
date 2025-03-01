@@ -1,4 +1,354 @@
-<!DOCTYPE html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Budget dollar visualization
+            function createDollarSegments() {
+                const categories = [
+                    { 
+                        percentage: 62.0, 
+                        color: 'rgba(52, 152, 219, 0.75)', 
+                        label: '62.0¢',
+                        name: 'Education'
+                    },
+                    { 
+                        percentage: 13.5, 
+                        color: 'rgba(231, 76, 60, 0.75)', 
+                        label: '13.5¢',
+                        name: 'Public Safety'
+                    },
+                    { 
+                        percentage: 7.8, 
+                        color: 'rgba(26, 188, 156, 0.75)', 
+                        label: '7.8¢',
+                        name: 'Public Works'
+                    },
+                    { 
+                        percentage: 6.1, 
+                        color: 'rgba(241, 196, 15, 0.75)', 
+                        label: '6.1¢',
+                        name: 'Administration'
+                    },
+                    { 
+                        percentage: 8.4, 
+                        color: 'rgba(155, 89, 182, 0.75)', 
+                        label: '8.4¢',
+                        name: 'Benefits & Insurance'
+                    },
+                    { 
+                        percentage: 2.2, 
+                        color: 'rgba(52, 73, 94, 0.75)', 
+                        label: '2.2¢',
+                        name: 'Other Services'
+                    }
+                ];
+
+                const segmentsContainer = document.getElementById("segments-container");
+                const legendContainer = document.getElementById("dollar-legend-container");
+                
+                if (!segmentsContainer || !legendContainer) return;
+                
+                // Clear existing content
+                segmentsContainer.innerHTML = '';
+                legendContainer.innerHTML = '';
+                
+                // Create segments for dollar visualization
+                categories.forEach(cat => {
+                    // Create segment
+                    const segment = document.createElement("div");
+                    segment.className = "segment";
+                    segment.style.width = `${cat.percentage}%`;
+                    segment.style.backgroundColor = cat.color;
+                    
+                    // Create label
+                    const label = document.createElement("div");
+                    label.className = "segment-label";
+                    label.innerText = `${cat.name}: ${cat.label}`;
+                    
+                    segment.appendChild(label);
+                    segmentsContainer.appendChild(segment);
+                    
+                    // Create legend item
+                    const legendItem = document.createElement("div");
+                    legendItem.className = "dollar-legend-item";
+                    
+                    const colorBox = document.createElement("div");
+                    colorBox.className = "dollar-legend-color";
+                    colorBox.style.backgroundColor = cat.color;
+                    
+                    const text = document.createElement("span");
+                    text.innerText = `${cat.name}: ${cat.label}`;
+                    text.style.color = "white";
+                    
+                    legendItem.appendChild(colorBox);
+                    legendItem.appendChild(text);
+                    legendContainer.appendChild(legendItem);
+                });
+            }
+            
+            // Initialize dollar visualization
+            createDollarSegments();
+            
+            // Handle window resize for responsiveness
+            window.addEventListener('resize', createDollarSegments);
+
+            // Set consistent colors for department categories
+            const departmentColors = {
+                education: '#3498db',
+                publicSafety: '#e74c3c',
+                liabilities: '#9b59b6',
+                publicWorks: '#1abc9c',
+                generalGov: '#f1c40f',
+                debt: '#e67e22',
+                culture: '#00bcd4',
+                humanServices: '#ff80ab'
+            };
+
+            // Department Expenditures Chart
+            const deptCtx = document.getElementById('departmentChart').getContext('2d');
+            new Chart(deptCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Education', 'Public Safety', 'Liabilities & Assessments', 'Public Works', 'General Government', 'Debt Service', 'Culture & Recreation', 'Human Services'],
+                    datasets: [{
+                        data: [7334563, 1595193, 999455, 920184, 724886, 146862, 94290, 26950],
+                        backgroundColor: [
+                            departmentColors.education,
+                            departmentColors.publicSafety,
+                            departmentColors.liabilities,
+                            departmentColors.publicWorks, 
+                            departmentColors.generalGov,
+                            departmentColors.debt,
+                            departmentColors.culture,
+                            departmentColors.humanServices
+                        ],
+                        borderWidth: 0,
+                        hoverOffset: 10
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const value = context.raw;
+                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                    const percentage = Math.round((value / total * 100) * 10) / 10;
+                                    const formattedValue = new Intl.NumberFormat('en-US', {
+                                        style: 'currency',
+                                        currency: 'USD',
+                                        maximumFractionDigits: 0
+                                    }).format(value);
+                                    return `${context.label}: ${formattedValue} (${percentage}%)`;
+                                }
+                            }
+                        }
+                    },
+                    cutout: '60%',
+                    animation: {
+                        animateScale: true,
+                        animateRotate: true
+                    }
+                }
+            });
+
+            // Year-over-Year Changes Chart
+            const changesCtx = document.getElementById('changesChart').getContext('2d');
+            new Chart(changesCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Education', 'Public Safety', 'Liabilities', 'Public Works', 'General Gov'],
+                    datasets: [{
+                        label: 'FY26 Increase',
+                        data: [550333, 50902, 36801, 34142, 25306],
+                        backgroundColor: [
+                            departmentColors.education,
+                            departmentColors.publicSafety,
+                            departmentColors.liabilities,
+                            departmentColors.publicWorks,
+                            departmentColors.generalGov
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#ffffff',
+                                callback: function(value) {
+                                    return value.toLocaleString();
+                                }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                color: '#ffffff'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const value = context.raw;
+                                    const formattedValue = new Intl.NumberFormat('en-US', {
+                                        style: 'currency',
+                                        currency: 'USD',
+                                        maximumFractionDigits: 0
+                                    }).format(value);
+                                    return `Increase: ${formattedValue}`;
+                                }
+                            }
+                        }
+                    },
+                    animation: {
+                        animateScale: true
+                    }
+                }
+            });
+
+            // Five-Year Forecast Chart
+            const forecastCtx = document.getElementById('forecastChart').getContext('2d');
+            new Chart(forecastCtx, {
+                type: 'line',
+                data: {
+                    labels: ['FY25', 'FY26', 'FY27', 'FY28', 'FY29', 'FY30'],
+                    datasets: [
+                        {
+                            label: 'Education',
+                            data: [6784230, 7334563, 7566285, 7937654, 8327402, 8736444],
+                            borderColor: departmentColors.education,
+                            backgroundColor: 'rgba(52, 152, 219, 0.1)',
+                            fill: true,
+                            tension: 0.4,
+                            borderWidth: 3
+                        },
+                        {
+                            label: 'Personnel',
+                            data: [2156210, 2214752, 2275757, 2338489, 2402998, 2469542],
+                            borderColor: departmentColors.publicSafety,
+                            backgroundColor: 'rgba(231, 76, 60, 0.1)',
+                            fill: true,
+                            tension: 0.4,
+                            borderWidth: 3
+                        },
+                        {
+                            label: 'Liabilities',
+                            data: [1036256, 999455, 1138701, 1186745, 1236966, 1289466],
+                            borderColor: departmentColors.liabilities,
+                            backgroundColor: 'rgba(155, 89, 182, 0.1)',
+                            fill: true,
+                            tension: 0.4,
+                            borderWidth: 3
+                        },
+                        {
+                            label: 'Facilities & Supplies',
+                            data: [755459, 766099, 786171, 806815, 828049, 850107],
+                            borderColor: departmentColors.publicWorks,
+                            backgroundColor: 'rgba(26, 188, 156, 0.1)',
+                            fill: true,
+                            tension: 0.4,
+                            borderWidth: 3
+                        },
+                        {
+                            label: 'Total Budget',
+                            data: [11047636, 11851233, 12098956, 12607597, 13139288, 13695787],
+                            borderColor: '#4bc0c0',
+                            backgroundColor: 'rgba(75, 192, 192, 0.1)',
+                            borderDash: [5, 5],
+                            borderWidth: 3,
+                            fill: false,
+                            tension: 0.4,
+                            pointRadius: 5,
+                            pointHoverRadius: 8
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#ffffff',
+                                callback: function(value) {
+                                    if (value >= 1000000) {
+                                        return (value / 1000000).toFixed(1) + 'M';
+                                    }
+                                    return value.toLocaleString();
+                                }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#ffffff'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                color: '#ffffff',
+                                font: {
+                                    family: 'Poppins',
+                                    size: 12
+                                },
+                                boxWidth: 12
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const value = context.raw;
+                                    const formattedValue = new Intl.NumberFormat('en-US', {
+                                        style: 'currency',
+                                        currency: 'USD',
+                                        maximumFractionDigits: 0
+                                    }).format(value);
+                                    return `${context.dataset.label}: ${formattedValue}`;
+                                }
+                            }
+                        }
+                    },
+                    interaction: {
+                        mode: 'index',
+                        intersect: false
+                    },
+                    hover: {
+                        mode: 'nearest',
+                        intersect: false
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -10,7 +360,7 @@
             font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
-            background: url('hubbardston_bg.jpg') no-repeat center center fixed;
+            background: #005030;
             background-size: cover;
             color: white;
         }
@@ -173,11 +523,8 @@
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
             max-width: 100%;
             margin-bottom: 20px;
-        }
-
-        .dollar-image {
-            width: 100%;
-            display: block;
+            height: 50px;
+            background-color: #004020;
         }
 
         .segments-container {
@@ -188,7 +535,6 @@
             height: 100%;
             display: flex;
             flex-direction: row;
-            pointer-events: none;
         }
 
         .segment {
@@ -684,201 +1030,9 @@
             <div class="budget-dollar-container">
                 <h3 class="chart-title">Where Your Tax Dollar Goes</h3>
                 <div class="dollar-visualization" id="dollar-visualization">
-                    <img src="HUBBARDSTON.png" alt="Hubbardston Dollar" class="dollar-image" id="dollar-image">
                     <div class="segments-container" id="segments-container"></div>
                 </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Budget dollar visualization
-            function createDollarSegments() {
-                const categories = [
-                    { 
-                        percentage: 62.0, 
-                        color: 'rgba(52, 152, 219, 0.75)', 
-                        label: '62.0¢',
-                        name: 'Education'
-                    },
-                    { 
-                        percentage: 13.5, 
-                        color: 'rgba(231, 76, 60, 0.75)', 
-                        label: '13.5¢',
-                        name: 'Public Safety'
-                    },
-                    { 
-                        percentage: 7.8, 
-                        color: 'rgba(26, 188, 156, 0.75)', 
-                        label: '7.8¢',
-                        name: 'Public Works'
-                    },
-                    { 
-                        percentage: 6.1, 
-                        color: 'rgba(241, 196, 15, 0.75)', 
-                        label: '6.1¢',
-                        name: 'Administration'
-                    },
-                    { 
-                        percentage: 8.4, 
-                        color: 'rgba(155, 89, 182, 0.75)', 
-                        label: '8.4¢',
-                        name: 'Benefits & Insurance'
-                    },
-                    { 
-                        percentage: 2.2, 
-                        color: 'rgba(52, 73, 94, 0.75)', 
-                        label: '2.2¢',
-                        name: 'Other Services'
-                    }
-                ];
-
-                const segmentsContainer = document.getElementById("segments-container");
-                const legendContainer = document.getElementById("dollar-legend-container");
-                
-                if (!segmentsContainer || !legendContainer) return;
-                
-                // Clear existing content
-                segmentsContainer.innerHTML = '';
-                legendContainer.innerHTML = '';
-                
-                // Create segments for dollar visualization
-                categories.forEach(cat => {
-                    // Create segment
-                    const segment = document.createElement("div");
-                    segment.className = "segment";
-                    segment.style.width = `${cat.percentage}%`;
-                    segment.style.backgroundColor = cat.color;
-                    
-                    // Create label
-                    const label = document.createElement("div");
-                    label.className = "segment-label";
-                    label.innerText = `${cat.name}: ${cat.label}`;
-                    
-                    segment.appendChild(label);
-                    segmentsContainer.appendChild(segment);
-                    
-                    // Create legend item
-                    const legendItem = document.createElement("div");
-                    legendItem.className = "dollar-legend-item";
-                    
-                    const colorBox = document.createElement("div");
-                    colorBox.className = "dollar-legend-color";
-                    colorBox.style.backgroundColor = cat.color;
-                    
-                    const text = document.createElement("span");
-                    text.innerText = `${cat.name}: ${cat.label}`;
-                    text.style.color = "white";
-                    
-                    legendItem.appendChild(colorBox);
-                    legendItem.appendChild(text);
-                    legendContainer.appendChild(legendItem);
-                });
-            }
-            
-            // Initialize dollar visualization
-            createDollarSegments();
-            
-            // Handle window resize for responsiveness
-            window.addEventListener('resize', createDollarSegments);
-
-            // Set consistent colors for department categories
-            const departmentColors = {
-                education: '#3498db',
-                publicSafety: '#e74c3c',
-                liabilities: '#9b59b6',
-                publicWorks: '#1abc9c',
-                generalGov: '#f1c40f',
-                debt: '#e67e22',
-                culture: '#00bcd4',
-                humanServices: '#ff80ab'
-            };
-
-            // Department Expenditures Chart
-            const deptCtx = document.getElementById('departmentChart').getContext('2d');
-            new Chart(deptCtx, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Education', 'Public Safety', 'Liabilities & Assessments', 'Public Works', 'General Government', 'Debt Service', 'Culture & Recreation', 'Human Services'],
-                    datasets: [{
-                        data: [7334563, 1595193, 999455, 920184, 724886, 146862, 94290, 26950],
-                        backgroundColor: [
-                            departmentColors.education,
-                            departmentColors.publicSafety,
-                            departmentColors.liabilities,
-                            departmentColors.publicWorks, 
-                            departmentColors.generalGov,
-                            departmentColors.debt,
-                            departmentColors.culture,
-                            departmentColors.humanServices
-                        ],
-                        borderWidth: 0,
-                        hoverOffset: 10
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    const value = context.raw;
-                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
-                                    const percentage = Math.round((value / total * 100) * 10) / 10;
-                                    const formattedValue = new Intl.NumberFormat('en-US', {
-                                        style: 'currency',
-                                        currency: 'USD',
-                                        maximumFractionDigits: 0
-                                    }).format(value);
-                                    return `${context.label}: ${formattedValue} (${percentage}%)`;
-                                }
-                            }
-                        }
-                    },
-                    cutout: '60%',
-                    animation: {
-                        animateScale: true,
-                        animateRotate: true
-                    }
-                }
-            });
-
-            // Year-over-Year Changes Chart
-            const changesCtx = document.getElementById('changesChart').getContext('2d');
-            new Chart(changesCtx, {
-                type: 'bar',
-                data: {
-                    labels: ['Education', 'Public Safety', 'Liabilities', 'Public Works', 'General Gov'],
-                    datasets: [{
-                        label: 'FY26 Increase',
-                        data: [550333, 50902, 36801, 34142, 25306],
-                        backgroundColor: [
-                            departmentColors.education,
-                            departmentColors.publicSafety,
-                            departmentColors.liabilities,
-                            departmentColors.publicWorks,
-                            departmentColors.generalGov
-                        ],
-                        borderWidth: 0
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.1)'
-                            },
-                            ticks: {
-                                color: '#ffffff',
-                                callback: function(value) {
-                                    return '
-                <div class="budget-total">Total Budget: $11,842,383.18</div>
+                <div class="budget-total">Total Budget: $11,851,233</div>
                 
                 <div class="dollar-legend" id="dollar-legend-container"></div>
             </div>
@@ -1007,6 +1161,18 @@
 
             <!-- Department Details -->
             <div class="department-grid">
+                <div class="department-card">
+                    <h3 class="department-title">Public Safety</h3>
+                    <div class="department-amount">$1,595,193</div>
+                    <p class="department-text">Includes funding for Police and Fire Departments, Emergency Management, and Animal Control. The FY26 increases support equipment upgrades, training, and staffing adjustments to ensure adequate emergency response capabilities.</p>
+                </div>
+
+                <div class="department-card">
+                    <h3 class="department-title">Education</h3>
+                    <div class="department-amount">$7,334,563</div>
+                    <p class="department-text">Our largest expenditure category supports the Quabbin Regional School District, covering educational services, operations, and special education requirements. The FY26 budget includes funding for educational programming, maintenance, and the district assessment.</p>
+                </div>
+
                 <div class="department-card">
                     <h3 class="department-title">Liabilities & Assessments</h3>
                     <div class="department-amount">$999,455</div>
@@ -1153,7 +1319,7 @@
 
             <!-- Download Buttons -->
             <div class="button-container">
-                <a href="budget.pdf" target="_blank" class="download-button">
+                <a href="#" class="download-button">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="button-icon">
                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                         <polyline points="7 10 12 15 17 10"></polyline>
@@ -1162,7 +1328,7 @@
                     Download Budget Report
                 </a>
 
-                <a href="budget_view.html" target="_blank" class="download-button">
+                <a href="#" class="download-button">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="button-icon">
                         <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
                         <line x1="9" y1="3" x2="9" y2="21"></line>
@@ -1174,1100 +1340,4 @@
                 </a>
             </div>
         </div>
-    </div>card">
-                    <h3 class="department-title">Public Safety</h3>
-                    <div class="department-amount">$1,595,193</div>
-                    <p class="department-text">Includes funding for Police and Fire Departments, Emergency Management, and Animal Control. The FY26 increases support equipment upgrades, training, and staffing adjustments to ensure adequate emergency response capabilities.</p>
-                </div>
-
-                <div class="department-card">
-                    <h3 class="department-title">Education</h3>
-                    <div class="department-amount">$7,334,563</div>
-                    <p class="department-text">Our largest expenditure category supports the Quabbin Regional School District, covering educational services, operations, and special education requirements. The FY26 budget includes funding for educational programming, maintenance, and the district assessment.</p>
-                </div>
-
-                <div class="department- + value.toLocaleString();
-                                }
-                            }
-                        },
-                        x: {
-                            grid: {
-                                display: false
-                            },
-                            ticks: {
-                                color: '#ffffff'
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    const value = context.raw;
-                                    const formattedValue = new Intl.NumberFormat('en-US', {
-                                        style: 'currency',
-                                        currency: 'USD',
-                                        maximumFractionDigits: 0
-                                    }).format(value);
-                                    return `Increase: ${formattedValue}`;
-                                }
-                            }
-                        }
-                    },
-                    animation: {
-                        animateScale: true
-                    }
-                }
-            });
-
-            // Five-Year Forecast Chart
-            const forecastCtx = document.getElementById('forecastChart').getContext('2d');
-            new Chart(forecastCtx, {
-                type: 'line',
-                data: {
-                    labels: ['FY25', 'FY26', 'FY27', 'FY28', 'FY29', 'FY30'],
-                    datasets: [
-                        {
-                            label: 'Education',
-                            data: [6784230, 7334563, 7566285, 7937654, 8327402, 8736444],
-                            borderColor: departmentColors.education,
-                            backgroundColor: 'rgba(52, 152, 219, 0.1)',
-                            fill: true,
-                            tension: 0.4,
-                            borderWidth: 3
-                        },
-                        {
-                            label: 'Personnel',
-                            data: [2156210, 2214752, 2275757, 2338489, 2402998, 2469542],
-                            borderColor: departmentColors.publicSafety,
-                            backgroundColor: 'rgba(231, 76, 60, 0.1)',
-                            fill: true,
-                            tension: 0.4,
-                            borderWidth: 3
-                        },
-                        {
-                            label: 'Liabilities',
-                            data: [1036256, 999455, 1138701, 1186745, 1236966, 1289466],
-                            borderColor: departmentColors.liabilities,
-                            backgroundColor: 'rgba(155, 89, 182, 0.1)',
-                            fill: true,
-                            tension: 0.4,
-                            borderWidth: 3
-                        },
-                        {
-                            label: 'Facilities & Supplies',
-                            data: [755459, 766099, 786171, 806815, 828049, 850107],
-                            borderColor: departmentColors.publicWorks,
-                            backgroundColor: 'rgba(26, 188, 156, 0.1)',
-                            fill: true,
-                            tension: 0.4,
-                            borderWidth: 3
-                        },
-                        {
-                            label: 'Total Budget',
-                            data: [11047636, 11851233, 12098956, 12607597, 13139288, 13695787],
-                            borderColor: '#4bc0c0',
-                            backgroundColor: 'rgba(75, 192, 192, 0.1)',
-                            borderDash: [5, 5],
-                            borderWidth: 3,
-                            fill: false,
-                            tension: 0.4,
-                            pointRadius: 5,
-                            pointHoverRadius: 8
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.1)'
-                            },
-                            ticks: {
-                                color: '#ffffff',
-                                callback: function(value) {
-                                    if (value >= 1000000) {
-                                        return '
-                <div class="budget-total">Total Budget: $11,842,383.18</div>
-                
-                <div class="dollar-legend" id="dollar-legend-container"></div>
-            </div>
-
-            <div class="expenditures-header">
-                <h3 class="expenditures-title">Expenditures Overview</h3>
-
-                <div class="expenditures-content">
-                    <p>The FY26 budget reflects Hubbardston's commitment to responsible fiscal management while addressing key community needs. Total expenditures for FY26 amount to <span class="highlight-number">$11,851,233</span>, representing a carefully planned 6.32% increase over the previous fiscal year.</p>
-
-                    <p>This budget prioritizes education, public safety, and infrastructure while maintaining essential services across all departments. Strategic investments in key areas will enable improvements in service delivery while maintaining long-term fiscal sustainability.</p>
-                </div>
-            </div>
-
-            <!-- Expenditures Chart Section -->
-            <div class="charts-section">
-                <div class="chart-box">
-                    <h3 class="chart-title">Expenditures By Department</h3>
-                    <div class="chart-display">
-                        <canvas id="departmentChart"></canvas>
-                    </div>
-
-                    <div class="chart-legend">
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #3498db;"></div>
-                            <div class="legend-text">Education</div>
-                            <div class="legend-value">$7,334,563</div>
-                            <div class="legend-percent">61.9%</div>
-                        </div>
-
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #e74c3c;"></div>
-                            <div class="legend-text">Public Safety</div>
-                            <div class="legend-value">$1,595,193</div>
-                            <div class="legend-percent">13.5%</div>
-                        </div>
-
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #9b59b6;"></div>
-                            <div class="legend-text">Liabilities & Assessments</div>
-                            <div class="legend-value">$999,455</div>
-                            <div class="legend-percent">8.4%</div>
-                        </div>
-
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #1abc9c;"></div>
-                            <div class="legend-text">Public Works</div>
-                            <div class="legend-value">$920,184</div>
-                            <div class="legend-percent">7.8%</div>
-                        </div>
-
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #f1c40f;"></div>
-                            <div class="legend-text">General Government</div>
-                            <div class="legend-value">$724,886</div>
-                            <div class="legend-percent">6.1%</div>
-                        </div>
-
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #e67e22;"></div>
-                            <div class="legend-text">Debt Service</div>
-                            <div class="legend-value">$146,862</div>
-                            <div class="legend-percent">1.2%</div>
-                        </div>
-
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #00bcd4;"></div>
-                            <div class="legend-text">Culture & Recreation</div>
-                            <div class="legend-value">$94,290</div>
-                            <div class="legend-percent">0.8%</div>
-                        </div>
-
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #ff80ab;"></div>
-                            <div class="legend-text">Human Services</div>
-                            <div class="legend-value">$26,950</div>
-                            <div class="legend-percent">0.2%</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="chart-box">
-                    <h3 class="chart-title">Year-Over-Year Changes</h3>
-                    <div class="chart-display">
-                        <canvas id="changesChart"></canvas>
-                    </div>
-
-                    <div class="chart-legend">
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #3498db;"></div>
-                            <div class="legend-text">Education</div>
-                            <div class="legend-value">+$550,333</div>
-                            <div class="legend-percent">+8.1%</div>
-                        </div>
-
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #e74c3c;"></div>
-                            <div class="legend-text">Public Safety</div>
-                            <div class="legend-value">+$50,902</div>
-                            <div class="legend-percent">+3.3%</div>
-                        </div>
-
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #9b59b6;"></div>
-                            <div class="legend-text">Liabilities & Assessments</div>
-                            <div class="legend-value">+$36,801</div>
-                            <div class="legend-percent">+3.8%</div>
-                        </div>
-
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #1abc9c;"></div>
-                            <div class="legend-text">Public Works</div>
-                            <div class="legend-value">+$34,142</div>
-                            <div class="legend-percent">+3.8%</div>
-                        </div>
-
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #f1c40f;"></div>
-                            <div class="legend-text">General Government</div>
-                            <div class="legend-value">+$25,306</div>
-                            <div class="legend-percent">+3.6%</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Department Details -->
-            <div class="department-grid">
-                <div class="department-card">
-                    <h3 class="department-title">Liabilities & Assessments</h3>
-                    <div class="department-amount">$999,455</div>
-                    <p class="department-text">Covers employee benefits, insurance, and other municipal liabilities. This category includes health insurance, retirement contributions, and other post-employment benefits (OPEB) funding to address long-term obligations.</p>
-                </div>
-
-                <div class="department-card">
-                    <h3 class="department-title">Public Works</h3>
-                    <div class="department-amount">$920,184</div>
-                    <p class="department-text">Funds road maintenance, snow removal, equipment maintenance, and other infrastructure needs. The FY26 budget includes increased investments in road repair materials and equipment replacements.</p>
-                </div>
-            </div>
-
-            <!-- Budget Comparison -->
-            <div class="budget-comparison">
-                <h3 class="comparison-title">Budget Comparison: FY25 vs. FY26</h3>
-
-                <div class="comparison-container">
-                    <div class="comparison-card">
-                        <div class="year-label">FY25 Budget</div>
-                        <div class="amount-label">$11,146,879</div>
-                    </div>
-
-                    <div class="comparison-card">
-                        <div class="year-label">FY26 Budget</div>
-                        <div class="amount-label">$11,851,233</div>
-                        <div class="change-label">+6.32%</div>
-                    </div>
-
-                    <div class="comparison-card">
-                        <div class="year-label">Net Increase</div>
-                        <div class="amount-label">$704,354</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Budget Forecast -->
-            <div class="budget-forecast">
-                <h3 class="forecast-title">Five-Year Budget Forecast (FY26-FY30)</h3>
-
-                <div class="forecast-chart">
-                    <canvas id="forecastChart"></canvas>
-                </div>
-
-                <div class="forecast-table">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Category</th>
-                                <th>FY25</th>
-                                <th>FY26</th>
-                                <th>FY27</th>
-                                <th>FY28</th>
-                                <th>FY29</th>
-                                <th>FY30</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="category-name">Personnel (Town)</td>
-                                <td>$2,156,210</td>
-                                <td>$2,214,752</td>
-                                <td>$2,275,757</td>
-                                <td>$2,338,489</td>
-                                <td>$2,402,998</td>
-                                <td>$2,469,542</td>
-                            </tr>
-                            <tr>
-                                <td class="category-name">Services (Town)</td>
-                                <td>$168,618</td>
-                                <td>$171,729</td>
-                                <td>$174,362</td>
-                                <td>$177,059</td>
-                                <td>$179,821</td>
-                                <td>$182,896</td>
-                            </tr>
-                            <tr>
-                                <td class="category-name">Facilities, Utilities, Gear, Supplies, and Capital</td>
-                                <td>$755,459</td>
-                                <td>$766,099</td>
-                                <td>$786,171</td>
-                                <td>$806,815</td>
-                                <td>$828,049</td>
-                                <td>$850,107</td>
-                            </tr>
-                            <tr>
-                                <td class="category-name">Education</td>
-                                <td>$6,784,230</td>
-                                <td>$7,334,563</td>
-                                <td>$7,566,285</td>
-                                <td>$7,937,654</td>
-                                <td>$8,327,402</td>
-                                <td>$8,736,444</td>
-                            </tr>
-                            <tr>
-                                <td class="category-name">Liabilities (Insurances and Assessments)</td>
-                                <td>$1,036,256</td>
-                                <td>$999,455</td>
-                                <td>$1,138,701</td>
-                                <td>$1,186,745</td>
-                                <td>$1,236,966</td>
-                                <td>$1,289,466</td>
-                            </tr>
-                            <tr>
-                                <td class="category-name">Debt</td>
-                                <td>$146,862</td>
-                                <td>$146,862</td>
-                                <td>$157,681</td>
-                                <td>$160,834</td>
-                                <td>$164,051</td>
-                                <td>$167,332</td>
-                            </tr>
-                            <tr class="total-row">
-                                <td class="category-name">TOTAL</td>
-                                <td>$11,047,636</td>
-                                <td>$11,851,233</td>
-                                <td>$12,098,956</td>
-                                <td>$12,607,597</td>
-                                <td>$13,139,288</td>
-                                <td>$13,695,787</td>
-                            </tr>
-                            <tr class="diff-row">
-                                <td class="category-name">Annual Increase</td>
-                                <td>-</td>
-                                <td>$803,597</td>
-                                <td>$247,723</td>
-                                <td>$508,640</td>
-                                <td>$531,692</td>
-                                <td>$556,498</td>
-                            </tr>
-                            <tr class="diff-row">
-                                <td class="category-name">Annual % Increase</td>
-                                <td>-</td>
-                                <td>7.27%</td>
-                                <td>2.09%</td>
-                                <td>4.20%</td>
-                                <td>4.22%</td>
-                                <td>4.23%</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- Download Buttons -->
-            <div class="button-container">
-                <a href="budget.pdf" target="_blank" class="download-button">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="button-icon">
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                        <polyline points="7 10 12 15 17 10"></polyline>
-                        <line x1="12" y1="15" x2="12" y2="3"></line>
-                    </svg>
-                    Download Budget Report
-                </a>
-
-                <a href="budget_view.html" target="_blank" class="download-button">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="button-icon">
-                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                        <line x1="9" y1="3" x2="9" y2="21"></line>
-                        <line x1="15" y1="3" x2="15" y2="21"></line>
-                        <line x1="3" y1="9" x2="21" y2="9"></line>
-                        <line x1="3" y1="15" x2="21" y2="15"></line>
-                    </svg>
-                    Review Budget Spreadsheet
-                </a>
-            </div>
-        </div>
-    </div>card">
-                    <h3 class="department-title">Public Safety</h3>
-                    <div class="department-amount">$1,595,193</div>
-                    <p class="department-text">Includes funding for Police and Fire Departments, Emergency Management, and Animal Control. The FY26 increases support equipment upgrades, training, and staffing adjustments to ensure adequate emergency response capabilities.</p>
-                </div>
-
-                <div class="department-card">
-                    <h3 class="department-title">Education</h3>
-                    <div class="department-amount">$7,334,563</div>
-                    <p class="department-text">Our largest expenditure category supports the Quabbin Regional School District, covering educational services, operations, and special education requirements. The FY26 budget includes funding for educational programming, maintenance, and the district assessment.</p>
-                </div>
-
-                <div class="department- + (value / 1000000).toFixed(1) + 'M';
-                                    }
-                                    return '
-                <div class="budget-total">Total Budget: $11,842,383.18</div>
-                
-                <div class="dollar-legend" id="dollar-legend-container"></div>
-            </div>
-
-            <div class="expenditures-header">
-                <h3 class="expenditures-title">Expenditures Overview</h3>
-
-                <div class="expenditures-content">
-                    <p>The FY26 budget reflects Hubbardston's commitment to responsible fiscal management while addressing key community needs. Total expenditures for FY26 amount to <span class="highlight-number">$11,851,233</span>, representing a carefully planned 6.32% increase over the previous fiscal year.</p>
-
-                    <p>This budget prioritizes education, public safety, and infrastructure while maintaining essential services across all departments. Strategic investments in key areas will enable improvements in service delivery while maintaining long-term fiscal sustainability.</p>
-                </div>
-            </div>
-
-            <!-- Expenditures Chart Section -->
-            <div class="charts-section">
-                <div class="chart-box">
-                    <h3 class="chart-title">Expenditures By Department</h3>
-                    <div class="chart-display">
-                        <canvas id="departmentChart"></canvas>
-                    </div>
-
-                    <div class="chart-legend">
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #3498db;"></div>
-                            <div class="legend-text">Education</div>
-                            <div class="legend-value">$7,334,563</div>
-                            <div class="legend-percent">61.9%</div>
-                        </div>
-
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #e74c3c;"></div>
-                            <div class="legend-text">Public Safety</div>
-                            <div class="legend-value">$1,595,193</div>
-                            <div class="legend-percent">13.5%</div>
-                        </div>
-
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #9b59b6;"></div>
-                            <div class="legend-text">Liabilities & Assessments</div>
-                            <div class="legend-value">$999,455</div>
-                            <div class="legend-percent">8.4%</div>
-                        </div>
-
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #1abc9c;"></div>
-                            <div class="legend-text">Public Works</div>
-                            <div class="legend-value">$920,184</div>
-                            <div class="legend-percent">7.8%</div>
-                        </div>
-
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #f1c40f;"></div>
-                            <div class="legend-text">General Government</div>
-                            <div class="legend-value">$724,886</div>
-                            <div class="legend-percent">6.1%</div>
-                        </div>
-
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #e67e22;"></div>
-                            <div class="legend-text">Debt Service</div>
-                            <div class="legend-value">$146,862</div>
-                            <div class="legend-percent">1.2%</div>
-                        </div>
-
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #00bcd4;"></div>
-                            <div class="legend-text">Culture & Recreation</div>
-                            <div class="legend-value">$94,290</div>
-                            <div class="legend-percent">0.8%</div>
-                        </div>
-
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #ff80ab;"></div>
-                            <div class="legend-text">Human Services</div>
-                            <div class="legend-value">$26,950</div>
-                            <div class="legend-percent">0.2%</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="chart-box">
-                    <h3 class="chart-title">Year-Over-Year Changes</h3>
-                    <div class="chart-display">
-                        <canvas id="changesChart"></canvas>
-                    </div>
-
-                    <div class="chart-legend">
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #3498db;"></div>
-                            <div class="legend-text">Education</div>
-                            <div class="legend-value">+$550,333</div>
-                            <div class="legend-percent">+8.1%</div>
-                        </div>
-
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #e74c3c;"></div>
-                            <div class="legend-text">Public Safety</div>
-                            <div class="legend-value">+$50,902</div>
-                            <div class="legend-percent">+3.3%</div>
-                        </div>
-
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #9b59b6;"></div>
-                            <div class="legend-text">Liabilities & Assessments</div>
-                            <div class="legend-value">+$36,801</div>
-                            <div class="legend-percent">+3.8%</div>
-                        </div>
-
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #1abc9c;"></div>
-                            <div class="legend-text">Public Works</div>
-                            <div class="legend-value">+$34,142</div>
-                            <div class="legend-percent">+3.8%</div>
-                        </div>
-
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #f1c40f;"></div>
-                            <div class="legend-text">General Government</div>
-                            <div class="legend-value">+$25,306</div>
-                            <div class="legend-percent">+3.6%</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Department Details -->
-            <div class="department-grid">
-                <div class="department-card">
-                    <h3 class="department-title">Liabilities & Assessments</h3>
-                    <div class="department-amount">$999,455</div>
-                    <p class="department-text">Covers employee benefits, insurance, and other municipal liabilities. This category includes health insurance, retirement contributions, and other post-employment benefits (OPEB) funding to address long-term obligations.</p>
-                </div>
-
-                <div class="department-card">
-                    <h3 class="department-title">Public Works</h3>
-                    <div class="department-amount">$920,184</div>
-                    <p class="department-text">Funds road maintenance, snow removal, equipment maintenance, and other infrastructure needs. The FY26 budget includes increased investments in road repair materials and equipment replacements.</p>
-                </div>
-            </div>
-
-            <!-- Budget Comparison -->
-            <div class="budget-comparison">
-                <h3 class="comparison-title">Budget Comparison: FY25 vs. FY26</h3>
-
-                <div class="comparison-container">
-                    <div class="comparison-card">
-                        <div class="year-label">FY25 Budget</div>
-                        <div class="amount-label">$11,146,879</div>
-                    </div>
-
-                    <div class="comparison-card">
-                        <div class="year-label">FY26 Budget</div>
-                        <div class="amount-label">$11,851,233</div>
-                        <div class="change-label">+6.32%</div>
-                    </div>
-
-                    <div class="comparison-card">
-                        <div class="year-label">Net Increase</div>
-                        <div class="amount-label">$704,354</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Budget Forecast -->
-            <div class="budget-forecast">
-                <h3 class="forecast-title">Five-Year Budget Forecast (FY26-FY30)</h3>
-
-                <div class="forecast-chart">
-                    <canvas id="forecastChart"></canvas>
-                </div>
-
-                <div class="forecast-table">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Category</th>
-                                <th>FY25</th>
-                                <th>FY26</th>
-                                <th>FY27</th>
-                                <th>FY28</th>
-                                <th>FY29</th>
-                                <th>FY30</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="category-name">Personnel (Town)</td>
-                                <td>$2,156,210</td>
-                                <td>$2,214,752</td>
-                                <td>$2,275,757</td>
-                                <td>$2,338,489</td>
-                                <td>$2,402,998</td>
-                                <td>$2,469,542</td>
-                            </tr>
-                            <tr>
-                                <td class="category-name">Services (Town)</td>
-                                <td>$168,618</td>
-                                <td>$171,729</td>
-                                <td>$174,362</td>
-                                <td>$177,059</td>
-                                <td>$179,821</td>
-                                <td>$182,896</td>
-                            </tr>
-                            <tr>
-                                <td class="category-name">Facilities, Utilities, Gear, Supplies, and Capital</td>
-                                <td>$755,459</td>
-                                <td>$766,099</td>
-                                <td>$786,171</td>
-                                <td>$806,815</td>
-                                <td>$828,049</td>
-                                <td>$850,107</td>
-                            </tr>
-                            <tr>
-                                <td class="category-name">Education</td>
-                                <td>$6,784,230</td>
-                                <td>$7,334,563</td>
-                                <td>$7,566,285</td>
-                                <td>$7,937,654</td>
-                                <td>$8,327,402</td>
-                                <td>$8,736,444</td>
-                            </tr>
-                            <tr>
-                                <td class="category-name">Liabilities (Insurances and Assessments)</td>
-                                <td>$1,036,256</td>
-                                <td>$999,455</td>
-                                <td>$1,138,701</td>
-                                <td>$1,186,745</td>
-                                <td>$1,236,966</td>
-                                <td>$1,289,466</td>
-                            </tr>
-                            <tr>
-                                <td class="category-name">Debt</td>
-                                <td>$146,862</td>
-                                <td>$146,862</td>
-                                <td>$157,681</td>
-                                <td>$160,834</td>
-                                <td>$164,051</td>
-                                <td>$167,332</td>
-                            </tr>
-                            <tr class="total-row">
-                                <td class="category-name">TOTAL</td>
-                                <td>$11,047,636</td>
-                                <td>$11,851,233</td>
-                                <td>$12,098,956</td>
-                                <td>$12,607,597</td>
-                                <td>$13,139,288</td>
-                                <td>$13,695,787</td>
-                            </tr>
-                            <tr class="diff-row">
-                                <td class="category-name">Annual Increase</td>
-                                <td>-</td>
-                                <td>$803,597</td>
-                                <td>$247,723</td>
-                                <td>$508,640</td>
-                                <td>$531,692</td>
-                                <td>$556,498</td>
-                            </tr>
-                            <tr class="diff-row">
-                                <td class="category-name">Annual % Increase</td>
-                                <td>-</td>
-                                <td>7.27%</td>
-                                <td>2.09%</td>
-                                <td>4.20%</td>
-                                <td>4.22%</td>
-                                <td>4.23%</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- Download Buttons -->
-            <div class="button-container">
-                <a href="budget.pdf" target="_blank" class="download-button">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="button-icon">
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                        <polyline points="7 10 12 15 17 10"></polyline>
-                        <line x1="12" y1="15" x2="12" y2="3"></line>
-                    </svg>
-                    Download Budget Report
-                </a>
-
-                <a href="budget_view.html" target="_blank" class="download-button">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="button-icon">
-                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                        <line x1="9" y1="3" x2="9" y2="21"></line>
-                        <line x1="15" y1="3" x2="15" y2="21"></line>
-                        <line x1="3" y1="9" x2="21" y2="9"></line>
-                        <line x1="3" y1="15" x2="21" y2="15"></line>
-                    </svg>
-                    Review Budget Spreadsheet
-                </a>
-            </div>
-        </div>
-    </div>card">
-                    <h3 class="department-title">Public Safety</h3>
-                    <div class="department-amount">$1,595,193</div>
-                    <p class="department-text">Includes funding for Police and Fire Departments, Emergency Management, and Animal Control. The FY26 increases support equipment upgrades, training, and staffing adjustments to ensure adequate emergency response capabilities.</p>
-                </div>
-
-                <div class="department-card">
-                    <h3 class="department-title">Education</h3>
-                    <div class="department-amount">$7,334,563</div>
-                    <p class="department-text">Our largest expenditure category supports the Quabbin Regional School District, covering educational services, operations, and special education requirements. The FY26 budget includes funding for educational programming, maintenance, and the district assessment.</p>
-                </div>
-
-                <div class="department- + value.toLocaleString();
-                                }
-                            }
-                        },
-                        x: {
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.1)'
-                            },
-                            ticks: {
-                                color: '#ffffff'
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                            labels: {
-                                color: '#ffffff',
-                                font: {
-                                    family: 'Poppins',
-                                    size: 12
-                                },
-                                boxWidth: 12
-                            }
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    const value = context.raw;
-                                    const formattedValue = new Intl.NumberFormat('en-US', {
-                                        style: 'currency',
-                                        currency: 'USD',
-                                        maximumFractionDigits: 0
-                                    }).format(value);
-                                    return `${context.dataset.label}: ${formattedValue}`;
-                                }
-                            }
-                        }
-                    },
-                    interaction: {
-                        mode: 'index',
-                        intersect: false
-                    }
-                }
-            });
-        });
-    </script>
-</body>
-</html>
-                <div class="budget-total">Total Budget: $11,842,383.18</div>
-                
-                <div class="dollar-legend" id="dollar-legend-container"></div>
-            </div>
-
-            <div class="expenditures-header">
-                <h3 class="expenditures-title">Expenditures Overview</h3>
-
-                <div class="expenditures-content">
-                    <p>The FY26 budget reflects Hubbardston's commitment to responsible fiscal management while addressing key community needs. Total expenditures for FY26 amount to <span class="highlight-number">$11,851,233</span>, representing a carefully planned 6.32% increase over the previous fiscal year.</p>
-
-                    <p>This budget prioritizes education, public safety, and infrastructure while maintaining essential services across all departments. Strategic investments in key areas will enable improvements in service delivery while maintaining long-term fiscal sustainability.</p>
-                </div>
-            </div>
-
-            <!-- Expenditures Chart Section -->
-            <div class="charts-section">
-                <div class="chart-box">
-                    <h3 class="chart-title">Expenditures By Department</h3>
-                    <div class="chart-display">
-                        <canvas id="departmentChart"></canvas>
-                    </div>
-
-                    <div class="chart-legend">
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #3498db;"></div>
-                            <div class="legend-text">Education</div>
-                            <div class="legend-value">$7,334,563</div>
-                            <div class="legend-percent">61.9%</div>
-                        </div>
-
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #e74c3c;"></div>
-                            <div class="legend-text">Public Safety</div>
-                            <div class="legend-value">$1,595,193</div>
-                            <div class="legend-percent">13.5%</div>
-                        </div>
-
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #9b59b6;"></div>
-                            <div class="legend-text">Liabilities & Assessments</div>
-                            <div class="legend-value">$999,455</div>
-                            <div class="legend-percent">8.4%</div>
-                        </div>
-
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #1abc9c;"></div>
-                            <div class="legend-text">Public Works</div>
-                            <div class="legend-value">$920,184</div>
-                            <div class="legend-percent">7.8%</div>
-                        </div>
-
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #f1c40f;"></div>
-                            <div class="legend-text">General Government</div>
-                            <div class="legend-value">$724,886</div>
-                            <div class="legend-percent">6.1%</div>
-                        </div>
-
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #e67e22;"></div>
-                            <div class="legend-text">Debt Service</div>
-                            <div class="legend-value">$146,862</div>
-                            <div class="legend-percent">1.2%</div>
-                        </div>
-
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #00bcd4;"></div>
-                            <div class="legend-text">Culture & Recreation</div>
-                            <div class="legend-value">$94,290</div>
-                            <div class="legend-percent">0.8%</div>
-                        </div>
-
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #ff80ab;"></div>
-                            <div class="legend-text">Human Services</div>
-                            <div class="legend-value">$26,950</div>
-                            <div class="legend-percent">0.2%</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="chart-box">
-                    <h3 class="chart-title">Year-Over-Year Changes</h3>
-                    <div class="chart-display">
-                        <canvas id="changesChart"></canvas>
-                    </div>
-
-                    <div class="chart-legend">
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #3498db;"></div>
-                            <div class="legend-text">Education</div>
-                            <div class="legend-value">+$550,333</div>
-                            <div class="legend-percent">+8.1%</div>
-                        </div>
-
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #e74c3c;"></div>
-                            <div class="legend-text">Public Safety</div>
-                            <div class="legend-value">+$50,902</div>
-                            <div class="legend-percent">+3.3%</div>
-                        </div>
-
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #9b59b6;"></div>
-                            <div class="legend-text">Liabilities & Assessments</div>
-                            <div class="legend-value">+$36,801</div>
-                            <div class="legend-percent">+3.8%</div>
-                        </div>
-
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #1abc9c;"></div>
-                            <div class="legend-text">Public Works</div>
-                            <div class="legend-value">+$34,142</div>
-                            <div class="legend-percent">+3.8%</div>
-                        </div>
-
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #f1c40f;"></div>
-                            <div class="legend-text">General Government</div>
-                            <div class="legend-value">+$25,306</div>
-                            <div class="legend-percent">+3.6%</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Department Details -->
-            <div class="department-grid">
-                <div class="department-card">
-                    <h3 class="department-title">Liabilities & Assessments</h3>
-                    <div class="department-amount">$999,455</div>
-                    <p class="department-text">Covers employee benefits, insurance, and other municipal liabilities. This category includes health insurance, retirement contributions, and other post-employment benefits (OPEB) funding to address long-term obligations.</p>
-                </div>
-
-                <div class="department-card">
-                    <h3 class="department-title">Public Works</h3>
-                    <div class="department-amount">$920,184</div>
-                    <p class="department-text">Funds road maintenance, snow removal, equipment maintenance, and other infrastructure needs. The FY26 budget includes increased investments in road repair materials and equipment replacements.</p>
-                </div>
-            </div>
-
-            <!-- Budget Comparison -->
-            <div class="budget-comparison">
-                <h3 class="comparison-title">Budget Comparison: FY25 vs. FY26</h3>
-
-                <div class="comparison-container">
-                    <div class="comparison-card">
-                        <div class="year-label">FY25 Budget</div>
-                        <div class="amount-label">$11,146,879</div>
-                    </div>
-
-                    <div class="comparison-card">
-                        <div class="year-label">FY26 Budget</div>
-                        <div class="amount-label">$11,851,233</div>
-                        <div class="change-label">+6.32%</div>
-                    </div>
-
-                    <div class="comparison-card">
-                        <div class="year-label">Net Increase</div>
-                        <div class="amount-label">$704,354</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Budget Forecast -->
-            <div class="budget-forecast">
-                <h3 class="forecast-title">Five-Year Budget Forecast (FY26-FY30)</h3>
-
-                <div class="forecast-chart">
-                    <canvas id="forecastChart"></canvas>
-                </div>
-
-                <div class="forecast-table">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Category</th>
-                                <th>FY25</th>
-                                <th>FY26</th>
-                                <th>FY27</th>
-                                <th>FY28</th>
-                                <th>FY29</th>
-                                <th>FY30</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="category-name">Personnel (Town)</td>
-                                <td>$2,156,210</td>
-                                <td>$2,214,752</td>
-                                <td>$2,275,757</td>
-                                <td>$2,338,489</td>
-                                <td>$2,402,998</td>
-                                <td>$2,469,542</td>
-                            </tr>
-                            <tr>
-                                <td class="category-name">Services (Town)</td>
-                                <td>$168,618</td>
-                                <td>$171,729</td>
-                                <td>$174,362</td>
-                                <td>$177,059</td>
-                                <td>$179,821</td>
-                                <td>$182,896</td>
-                            </tr>
-                            <tr>
-                                <td class="category-name">Facilities, Utilities, Gear, Supplies, and Capital</td>
-                                <td>$755,459</td>
-                                <td>$766,099</td>
-                                <td>$786,171</td>
-                                <td>$806,815</td>
-                                <td>$828,049</td>
-                                <td>$850,107</td>
-                            </tr>
-                            <tr>
-                                <td class="category-name">Education</td>
-                                <td>$6,784,230</td>
-                                <td>$7,334,563</td>
-                                <td>$7,566,285</td>
-                                <td>$7,937,654</td>
-                                <td>$8,327,402</td>
-                                <td>$8,736,444</td>
-                            </tr>
-                            <tr>
-                                <td class="category-name">Liabilities (Insurances and Assessments)</td>
-                                <td>$1,036,256</td>
-                                <td>$999,455</td>
-                                <td>$1,138,701</td>
-                                <td>$1,186,745</td>
-                                <td>$1,236,966</td>
-                                <td>$1,289,466</td>
-                            </tr>
-                            <tr>
-                                <td class="category-name">Debt</td>
-                                <td>$146,862</td>
-                                <td>$146,862</td>
-                                <td>$157,681</td>
-                                <td>$160,834</td>
-                                <td>$164,051</td>
-                                <td>$167,332</td>
-                            </tr>
-                            <tr class="total-row">
-                                <td class="category-name">TOTAL</td>
-                                <td>$11,047,636</td>
-                                <td>$11,851,233</td>
-                                <td>$12,098,956</td>
-                                <td>$12,607,597</td>
-                                <td>$13,139,288</td>
-                                <td>$13,695,787</td>
-                            </tr>
-                            <tr class="diff-row">
-                                <td class="category-name">Annual Increase</td>
-                                <td>-</td>
-                                <td>$803,597</td>
-                                <td>$247,723</td>
-                                <td>$508,640</td>
-                                <td>$531,692</td>
-                                <td>$556,498</td>
-                            </tr>
-                            <tr class="diff-row">
-                                <td class="category-name">Annual % Increase</td>
-                                <td>-</td>
-                                <td>7.27%</td>
-                                <td>2.09%</td>
-                                <td>4.20%</td>
-                                <td>4.22%</td>
-                                <td>4.23%</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- Download Buttons -->
-            <div class="button-container">
-                <a href="budget.pdf" target="_blank" class="download-button">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="button-icon">
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                        <polyline points="7 10 12 15 17 10"></polyline>
-                        <line x1="12" y1="15" x2="12" y2="3"></line>
-                    </svg>
-                    Download Budget Report
-                </a>
-
-                <a href="budget_view.html" target="_blank" class="download-button">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="button-icon">
-                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                        <line x1="9" y1="3" x2="9" y2="21"></line>
-                        <line x1="15" y1="3" x2="15" y2="21"></line>
-                        <line x1="3" y1="9" x2="21" y2="9"></line>
-                        <line x1="3" y1="15" x2="21" y2="15"></line>
-                    </svg>
-                    Review Budget Spreadsheet
-                </a>
-            </div>
-        </div>
-    </div>card">
-                    <h3 class="department-title">Public Safety</h3>
-                    <div class="department-amount">$1,595,193</div>
-                    <p class="department-text">Includes funding for Police and Fire Departments, Emergency Management, and Animal Control. The FY26 increases support equipment upgrades, training, and staffing adjustments to ensure adequate emergency response capabilities.</p>
-                </div>
-
-                <div class="department-card">
-                    <h3 class="department-title">Education</h3>
-                    <div class="department-amount">$7,334,563</div>
-                    <p class="department-text">Our largest expenditure category supports the Quabbin Regional School District, covering educational services, operations, and special education requirements. The FY26 budget includes funding for educational programming, maintenance, and the district assessment.</p>
-                </div>
-
-                <div class="department-
+    </div>
