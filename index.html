@@ -337,66 +337,137 @@ font-family: 'Poppins', sans-serif;
             </div>
             
 <!-- Replace the existing donut-container or charts-container section with this code -->
+<!-- Replace the existing charts-container section with this modern version -->
 <div class="charts-container">
     <!-- Revenue by Category Chart -->
     <div class="chart-section">
         <h3 class="chart-title">FY26 Revenue by Category</h3>
         <div class="chart-flex">
             <div class="chart">
-                <svg width="300" height="300" viewBox="0 0 300 300">
-                    <!-- Base circle -->
-                    <circle cx="150" cy="150" r="100" fill="rgba(0,0,0,0.5)" />
+                <!-- Modern SVG Pie Chart for Revenue -->
+                <svg width="320" height="320" viewBox="0 0 320 320">
+                    <defs>
+                        <!-- Gradient Definitions -->
+                        <linearGradient id="taxGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#3498db" />
+                            <stop offset="100%" stop-color="#2980b9" />
+                        </linearGradient>
+                        <linearGradient id="receiptsGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#f1c40f" />
+                            <stop offset="100%" stop-color="#f39c12" />
+                        </linearGradient>
+                        <linearGradient id="stateGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#1abc9c" />
+                            <stop offset="100%" stop-color="#16a085" />
+                        </linearGradient>
+                        <linearGradient id="cashGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#e67e22" />
+                            <stop offset="100%" stop-color="#d35400" />
+                        </linearGradient>
+                        
+                        <!-- Shadow Filter -->
+                        <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+                            <feDropShadow dx="0" dy="3" stdDeviation="5" flood-opacity="0.3" />
+                        </filter>
+                    </defs>
                     
-                    <!-- Property Tax (blue) - largest segment ~78.5% -->
-                    <path d="M 150 50 A 100 100 0 1 1 55 180 L 150 150 Z" fill="#36a2eb" />
+                    <!-- Base circle with subtle background -->
+                    <circle cx="160" cy="160" r="120" fill="#232323" filter="url(#shadow)" />
                     
-                    <!-- Local Receipts (yellow) ~14% -->
-                    <path d="M 55 180 A 100 100 0 0 1 80 65 L 150 150 Z" fill="#ffce56" />
+                    <!-- Tax Levy slice - 78.5% -->
+                    <path d="M 160 40 
+                         A 120 120 0 1 1 48.72 207.76 
+                         L 160 160 Z" 
+                         fill="url(#taxGradient)" 
+                         filter="url(#shadow)"
+                         class="pie-slice"
+                         data-value="$9,198,883" 
+                         data-name="Tax Levy" />
                     
-                    <!-- State Aid (green) ~6.3% -->
-                    <path d="M 80 65 A 100 100 0 0 1 145 51 L 150 150 Z" fill="#4bc0c0" />
+                    <!-- Local Receipts slice - 14% -->
+                    <path d="M 48.72 207.76 
+                         A 120 120 0 0 1 76 64.28 
+                         L 160 160 Z" 
+                         fill="url(#receiptsGradient)" 
+                         filter="url(#shadow)"
+                         class="pie-slice"
+                         data-value="$1,632,503" 
+                         data-name="Local Receipts" />
                     
-                    <!-- Free Cash (orange) ~1.1% -->
-                    <path d="M 145 51 A 100 100 0 0 1 150 50 L 150 150 Z" fill="#ff9f40" />
+                    <!-- State Aid slice - 6.3% -->
+                    <path d="M 76 64.28 
+                         A 120 120 0 0 1 154 41.12 
+                         L 160 160 Z" 
+                         fill="url(#stateGradient)" 
+                         filter="url(#shadow)"
+                         class="pie-slice"
+                         data-value="$733,227" 
+                         data-name="State Aid" />
                     
-                    <!-- Center circle to create donut hole -->
-                    <circle cx="150" cy="150" r="60" fill="rgba(0,0,0,0.7)" />
+                    <!-- Free Cash slice - 1.1% -->
+                    <path d="M 154 41.12 
+                         A 120 120 0 0 1 160 40 
+                         L 160 160 Z" 
+                         fill="url(#cashGradient)" 
+                         filter="url(#shadow)"
+                         class="pie-slice"
+                         data-value="$131,478" 
+                         data-name="Free Cash" />
+                    
+                    <!-- Center circle to create donut hole with subtle inner shadow -->
+                    <circle cx="160" cy="160" r="80" fill="#181818" filter="url(#shadow)" />
+                    
+                    <!-- Center Text -->
+                    <text x="160" y="150" text-anchor="middle" font-size="24" fill="#4bc0c0" font-weight="bold" class="chart-center-text">$11.7M</text>
+                    <text x="160" y="178" text-anchor="middle" font-size="14" fill="#ffffff" class="chart-center-subtext">Total Revenue</text>
                 </svg>
             </div>
             
-            <div class="legend">
-                <div class="legend-item">
-                    <div class="legend-color" style="background-color: #36a2eb;"></div>
+            <div class="legend modern-legend">
+                <div class="legend-item" onmouseover="highlightSlice('Tax Levy')" onmouseout="resetSlices()">
+                    <div class="legend-color" style="background-image: linear-gradient(to right, #3498db, #2980b9);"></div>
                     <div class="legend-text">
-                        <span>Tax Levy (Base+Growth+Exempt)</span>
-                        <span>$9,198,883</span>
+                        <div class="legend-label">Tax Levy</div>
+                        <div class="legend-details">
+                            <span class="legend-value">$9,198,883</span>
+                            <span class="legend-percent">78.5%</span>
+                        </div>
                     </div>
                 </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background-color: #ffce56;"></div>
+                <div class="legend-item" onmouseover="highlightSlice('Local Receipts')" onmouseout="resetSlices()">
+                    <div class="legend-color" style="background-image: linear-gradient(to right, #f1c40f, #f39c12);"></div>
                     <div class="legend-text">
-                        <span>Local Receipts</span>
-                        <span>$1,632,503</span>
+                        <div class="legend-label">Local Receipts</div>
+                        <div class="legend-details">
+                            <span class="legend-value">$1,632,503</span>
+                            <span class="legend-percent">13.9%</span>
+                        </div>
                     </div>
                 </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background-color: #4bc0c0;"></div>
+                <div class="legend-item" onmouseover="highlightSlice('State Aid')" onmouseout="resetSlices()">
+                    <div class="legend-color" style="background-image: linear-gradient(to right, #1abc9c, #16a085);"></div>
                     <div class="legend-text">
-                        <span>State Aid</span>
-                        <span>$733,227</span>
+                        <div class="legend-label">State Aid</div>
+                        <div class="legend-details">
+                            <span class="legend-value">$733,227</span>
+                            <span class="legend-percent">6.3%</span>
+                        </div>
                     </div>
                 </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background-color: #ff9f40;"></div>
+                <div class="legend-item" onmouseover="highlightSlice('Free Cash')" onmouseout="resetSlices()">
+                    <div class="legend-color" style="background-image: linear-gradient(to right, #e67e22, #d35400);"></div>
                     <div class="legend-text">
-                        <span>Free Cash</span>
-                        <span>$131,478</span>
+                        <div class="legend-label">Free Cash</div>
+                        <div class="legend-details">
+                            <span class="legend-value">$131,478</span>
+                            <span class="legend-percent">1.1%</span>
+                        </div>
                     </div>
                 </div>
                 <div class="legend-total">
                     <div class="legend-text">
-                        <span><strong>Total Revenue</strong></span>
-                        <span><strong>$11,719,755</strong></span>
+                        <div class="legend-label">Total</div>
+                        <span class="legend-value">$11,719,755</span>
                     </div>
                 </div>
             </div>
@@ -408,100 +479,221 @@ font-family: 'Poppins', sans-serif;
         <h3 class="chart-title">FY26 Expenditures by Department</h3>
         <div class="chart-flex">
             <div class="chart">
-                <svg width="300" height="300" viewBox="0 0 300 300">
-                    <!-- Base circle -->
-                    <circle cx="150" cy="150" r="100" fill="rgba(0,0,0,0.5)" />
+                <!-- Modern SVG Pie Chart for Expenditures -->
+                <svg width="320" height="320" viewBox="0 0 320 320">
+                    <defs>
+                        <!-- Gradient Definitions for Expenditures -->
+                        <linearGradient id="educationGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#3498db" />
+                            <stop offset="100%" stop-color="#2980b9" />
+                        </linearGradient>
+                        <linearGradient id="safetyGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#e74c3c" />
+                            <stop offset="100%" stop-color="#c0392b" />
+                        </linearGradient>
+                        <linearGradient id="liabilitiesGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#9b59b6" />
+                            <stop offset="100%" stop-color="#8e44ad" />
+                        </linearGradient>
+                        <linearGradient id="worksGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#1abc9c" />
+                            <stop offset="100%" stop-color="#16a085" />
+                        </linearGradient>
+                        <linearGradient id="govGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#f1c40f" />
+                            <stop offset="100%" stop-color="#f39c12" />
+                        </linearGradient>
+                        <linearGradient id="debtGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#e67e22" />
+                            <stop offset="100%" stop-color="#d35400" />
+                        </linearGradient>
+                        <linearGradient id="cultureGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#00bcd4" />
+                            <stop offset="100%" stop-color="#0097a7" />
+                        </linearGradient>
+                        <linearGradient id="humanGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#ff80ab" />
+                            <stop offset="100%" stop-color="#ec407a" />
+                        </linearGradient>
+                    </defs>
                     
-                    <!-- Education (blue) - largest segment ~61.9% -->
-                    <path d="M 150 50 A 100 100 0 1 0 60 195 L 150 150 Z" fill="#36a2eb" />
+                    <!-- Base circle with subtle background -->
+                    <circle cx="160" cy="160" r="120" fill="#232323" filter="url(#shadow)" />
                     
-                    <!-- Public Safety (red) ~13.5% -->
-                    <path d="M 60 195 A 100 100 0 0 0 110 235 L 150 150 Z" fill="#ff6384" />
+                    <!-- Education slice - 61.9% -->
+                    <path d="M 160 40 
+                         A 120 120 0 1 0 40 160 
+                         L 160 160 Z" 
+                         fill="url(#educationGradient)" 
+                         filter="url(#shadow)"
+                         class="pie-slice"
+                         data-value="$7,334,563" 
+                         data-name="Education" />
                     
-                    <!-- Liabilities & Assessments (purple) ~8.4% -->
-                    <path d="M 110 235 A 100 100 0 0 0 190 235 L 150 150 Z" fill="#9966ff" />
+                    <!-- Public Safety slice - 13.5% -->
+                    <path d="M 40 160 
+                         A 120 120 0 0 0 110 265 
+                         L 160 160 Z" 
+                         fill="url(#safetyGradient)" 
+                         filter="url(#shadow)"
+                         class="pie-slice"
+                         data-value="$1,595,193" 
+                         data-name="Public Safety" />
                     
-                    <!-- Public Works (green) ~7.8% -->
-                    <path d="M 190 235 A 100 100 0 0 0 235 190 L 150 150 Z" fill="#4bc0c0" />
+                    <!-- Liabilities & Assessments slice - 8.4% -->
+                    <path d="M 110 265 
+                         A 120 120 0 0 0 210 265 
+                         L 160 160 Z" 
+                         fill="url(#liabilitiesGradient)" 
+                         filter="url(#shadow)"
+                         class="pie-slice"
+                         data-value="$999,455" 
+                         data-name="Liabilities" />
                     
-                    <!-- General Government (yellow) ~6.1% -->
-                    <path d="M 235 190 A 100 100 0 0 0 240 100 L 150 150 Z" fill="#ffce56" />
+                    <!-- Public Works slice - 7.8% -->
+                    <path d="M 210 265 
+                         A 120 120 0 0 0 260 215 
+                         L 160 160 Z" 
+                         fill="url(#worksGradient)" 
+                         filter="url(#shadow)"
+                         class="pie-slice"
+                         data-value="$920,184" 
+                         data-name="Public Works" />
                     
-                    <!-- Debt (orange) ~1.2% -->
-                    <path d="M 240 100 A 100 100 0 0 0 215 75 L 150 150 Z" fill="#ff9f40" />
+                    <!-- General Government slice - 6.1% -->
+                    <path d="M 260 215 
+                         A 120 120 0 0 0 280 120 
+                         L 160 160 Z" 
+                         fill="url(#govGradient)" 
+                         filter="url(#shadow)"
+                         class="pie-slice"
+                         data-value="$724,886" 
+                         data-name="General Government" />
                     
-                    <!-- Culture & Recreation (light blue) ~0.8% -->
-                    <path d="M 215 75 A 100 100 0 0 0 180 60 L 150 150 Z" fill="#00d8ff" />
+                    <!-- Debt slice - 1.2% -->
+                    <path d="M 280 120 
+                         A 120 120 0 0 0 265 85 
+                         L 160 160 Z" 
+                         fill="url(#debtGradient)" 
+                         filter="url(#shadow)"
+                         class="pie-slice"
+                         data-value="$146,862" 
+                         data-name="Debt" />
                     
-                    <!-- Human Services (pink) ~0.2% -->
-                    <path d="M 180 60 A 100 100 0 0 0 150 50 L 150 150 Z" fill="#ff99cc" />
+                    <!-- Culture & Recreation slice - 0.8% -->
+                    <path d="M 265 85 
+                         A 120 120 0 0 0 210 55 
+                         L 160 160 Z" 
+                         fill="url(#cultureGradient)" 
+                         filter="url(#shadow)"
+                         class="pie-slice"
+                         data-value="$94,290" 
+                         data-name="Culture & Recreation" />
                     
-                    <!-- Center circle to create donut hole -->
-                    <circle cx="150" cy="150" r="60" fill="rgba(0,0,0,0.7)" />
+                    <!-- Human Services slice - 0.2% -->
+                    <path d="M 210 55 
+                         A 120 120 0 0 0 160 40 
+                         L 160 160 Z" 
+                         fill="url(#humanGradient)" 
+                         filter="url(#shadow)"
+                         class="pie-slice"
+                         data-value="$26,950" 
+                         data-name="Human Services" />
+                    
+                    <!-- Center circle to create donut hole with subtle inner shadow -->
+                    <circle cx="160" cy="160" r="80" fill="#181818" filter="url(#shadow)" />
+                    
+                    <!-- Center Text -->
+                    <text x="160" y="150" text-anchor="middle" font-size="24" fill="#4bc0c0" font-weight="bold" class="chart-center-text">$11.8M</text>
+                    <text x="160" y="178" text-anchor="middle" font-size="14" fill="#ffffff" class="chart-center-subtext">Total Spending</text>
                 </svg>
             </div>
             
-            <div class="legend">
-                <div class="legend-item">
-                    <div class="legend-color" style="background-color: #36a2eb;"></div>
+            <div class="legend modern-legend">
+                <div class="legend-item" onmouseover="highlightSlice('Education')" onmouseout="resetSlices()">
+                    <div class="legend-color" style="background-image: linear-gradient(to right, #3498db, #2980b9);"></div>
                     <div class="legend-text">
-                        <span>Education</span>
-                        <span>$7,334,563</span>
+                        <div class="legend-label">Education</div>
+                        <div class="legend-details">
+                            <span class="legend-value">$7,334,563</span>
+                            <span class="legend-percent">61.9%</span>
+                        </div>
                     </div>
                 </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background-color: #ff6384;"></div>
+                <div class="legend-item" onmouseover="highlightSlice('Public Safety')" onmouseout="resetSlices()">
+                    <div class="legend-color" style="background-image: linear-gradient(to right, #e74c3c, #c0392b);"></div>
                     <div class="legend-text">
-                        <span>Public Safety</span>
-                        <span>$1,595,193</span>
+                        <div class="legend-label">Public Safety</div>
+                        <div class="legend-details">
+                            <span class="legend-value">$1,595,193</span>
+                            <span class="legend-percent">13.5%</span>
+                        </div>
                     </div>
                 </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background-color: #9966ff;"></div>
+                <div class="legend-item" onmouseover="highlightSlice('Liabilities')" onmouseout="resetSlices()">
+                    <div class="legend-color" style="background-image: linear-gradient(to right, #9b59b6, #8e44ad);"></div>
                     <div class="legend-text">
-                        <span>Liabilities & Assessments</span>
-                        <span>$999,455</span>
+                        <div class="legend-label">Liabilities & Assessments</div>
+                        <div class="legend-details">
+                            <span class="legend-value">$999,455</span>
+                            <span class="legend-percent">8.4%</span>
+                        </div>
                     </div>
                 </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background-color: #4bc0c0;"></div>
+                <div class="legend-item" onmouseover="highlightSlice('Public Works')" onmouseout="resetSlices()">
+                    <div class="legend-color" style="background-image: linear-gradient(to right, #1abc9c, #16a085);"></div>
                     <div class="legend-text">
-                        <span>Public Works</span>
-                        <span>$920,184</span>
+                        <div class="legend-label">Public Works</div>
+                        <div class="legend-details">
+                            <span class="legend-value">$920,184</span>
+                            <span class="legend-percent">7.8%</span>
+                        </div>
                     </div>
                 </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background-color: #ffce56;"></div>
+                <div class="legend-item" onmouseover="highlightSlice('General Government')" onmouseout="resetSlices()">
+                    <div class="legend-color" style="background-image: linear-gradient(to right, #f1c40f, #f39c12);"></div>
                     <div class="legend-text">
-                        <span>General Government</span>
-                        <span>$724,886</span>
+                        <div class="legend-label">General Government</div>
+                        <div class="legend-details">
+                            <span class="legend-value">$724,886</span>
+                            <span class="legend-percent">6.1%</span>
+                        </div>
                     </div>
                 </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background-color: #ff9f40;"></div>
+                <div class="legend-item mini-legend">
+                    <div class="legend-color" style="background-image: linear-gradient(to right, #e67e22, #d35400);"></div>
                     <div class="legend-text">
-                        <span>Debt</span>
-                        <span>$146,862</span>
+                        <div class="legend-label">Debt</div>
+                        <div class="legend-details">
+                            <span class="legend-value">$146,862</span>
+                            <span class="legend-percent">1.2%</span>
+                        </div>
                     </div>
                 </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background-color: #00d8ff;"></div>
+                <div class="legend-item mini-legend">
+                    <div class="legend-color" style="background-image: linear-gradient(to right, #00bcd4, #0097a7);"></div>
                     <div class="legend-text">
-                        <span>Culture & Recreation</span>
-                        <span>$94,290</span>
+                        <div class="legend-label">Culture & Recreation</div>
+                        <div class="legend-details">
+                            <span class="legend-value">$94,290</span>
+                            <span class="legend-percent">0.8%</span>
+                        </div>
                     </div>
                 </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background-color: #ff99cc;"></div>
+                <div class="legend-item mini-legend">
+                    <div class="legend-color" style="background-image: linear-gradient(to right, #ff80ab, #ec407a);"></div>
                     <div class="legend-text">
-                        <span>Human Services</span>
-                        <span>$26,950</span>
+                        <div class="legend-label">Human Services</div>
+                        <div class="legend-details">
+                            <span class="legend-value">$26,950</span>
+                            <span class="legend-percent">0.2%</span>
+                        </div>
                     </div>
                 </div>
                 <div class="legend-total">
                     <div class="legend-text">
-                        <span><strong>Total Expenditures</strong></span>
-                        <span><strong>$11,851,233</strong></span>
+                        <div class="legend-label">Total</div>
+                        <span class="legend-value">$11,851,233</span>
                     </div>
                 </div>
             </div>
@@ -509,36 +701,77 @@ font-family: 'Poppins', sans-serif;
     </div>
 </div>
 
+<script>
+// Add interaction to the pie charts
+function highlightSlice(name) {
+    // Dim all slices
+    const slices = document.querySelectorAll('.pie-slice');
+    slices.forEach(slice => {
+        slice.style.opacity = '0.5';
+        slice.style.transition = 'all 0.3s ease';
+    });
+    
+    // Highlight the hovered slice
+    const targetSlices = document.querySelectorAll(`.pie-slice[data-name="${name}"]`);
+    targetSlices.forEach(slice => {
+        slice.style.opacity = '1';
+        slice.style.transform = 'translateX(-5px) translateY(-5px)';
+    });
+}
+
+function resetSlices() {
+    const slices = document.querySelectorAll('.pie-slice');
+    slices.forEach(slice => {
+        slice.style.opacity = '1';
+        slice.style.transform = 'none';
+    });
+}
+</script>
+
 <!-- Add these CSS styles to your existing <style> section -->
 <style>
     .charts-container {
         display: flex;
         flex-direction: column;
-        gap: 40px;
-        margin: 40px 0;
+        gap: 60px;
+        margin: 60px 0;
     }
     
     .chart-section {
-        background: rgba(0, 0, 0, 0.5);
-        padding: 25px;
-        border-radius: 10px;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-        transition: all 0.3s ease;
+        background: rgba(0, 0, 0, 0.7);
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        transition: all 0.4s ease;
+        position: relative;
+        overflow: hidden;
     }
     
     .chart-section:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    }
+    
+    .chart-section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #36a2eb, #4bc0c0, #ffce56);
+        border-radius: 4px 4px 0 0;
     }
     
     .chart-title {
         color: #4bc0c0;
         text-align: center;
-        margin-bottom: 25px;
-        font-size: 24px;
+        margin-bottom: 30px;
+        font-size: 28px;
         font-weight: 600;
+        letter-spacing: 1px;
         position: relative;
-        padding-bottom: 10px;
+        padding-bottom: 15px;
     }
     
     .chart-title:after {
@@ -547,9 +780,10 @@ font-family: 'Poppins', sans-serif;
         bottom: 0;
         left: 50%;
         transform: translateX(-50%);
-        width: 80px;
+        width: 100px;
         height: 3px;
-        background: linear-gradient(90deg, rgba(34, 139, 34, 0.5), #4bc0c0);
+        background: linear-gradient(90deg, rgba(75, 192, 192, 0.2), rgba(75, 192, 192, 0.8), rgba(75, 192, 192, 0.2));
+        border-radius: 3px;
     }
     
     .chart-flex {
@@ -559,15 +793,126 @@ font-family: 'Poppins', sans-serif;
         flex-wrap: wrap;
     }
     
-    .legend-total {
-        margin-top: 15px;
-        padding-top: 15px;
-        border-top: 1px solid rgba(255, 255, 255, 0.2);
-        font-size: 18px;
+    .chart {
+        position: relative;
+        padding: 10px;
+        transition: all 0.3s ease;
     }
     
-    .legend-total .legend-text {
+    .chart:hover {
+        transform: scale(1.02);
+    }
+    
+    .chart-center-text {
+        font-family: 'Poppins', sans-serif;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+    
+    .chart-center-subtext {
+        font-family: 'Poppins', sans-serif;
+        opacity: 0.8;
+    }
+    
+    .modern-legend {
+        background: rgba(24, 24, 24, 0.7);
+        padding: 25px;
+        border-radius: 12px;
+        max-width: 350px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    }
+    
+    .legend-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 18px;
+        padding: 10px 15px;
+        transition: all 0.3s ease;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+    
+    .legend-item:hover {
+        background: rgba(75, 192, 192, 0.1);
+        transform: translateX(5px);
+    }
+    
+    .legend-color {
+        width: 20px;
+        height: 20px;
+        border-radius: 6px;
+        margin-right: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+    
+    .legend-text {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .legend-label {
+        font-weight: 500;
+        font-size: 16px;
+        margin-bottom: 5px;
+        color: #ffffff;
+    }
+    
+    .legend-details {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+    
+    .legend-value {
+        font-size: 15px;
+        color: #dddddd;
+    }
+    
+    .legend-percent {
+        font-size: 15px;
+        font-weight: 500;
         color: #4bc0c0;
+    }
+    
+    .mini-legend {
+        margin-bottom: 10px;
+        padding: 8px 15px;
+    }
+    
+    .mini-legend .legend-label {
+        font-size: 14px;
+    }
+    
+    .mini-legend .legend-value,
+    .mini-legend .legend-percent {
+        font-size: 13px;
+    }
+    
+    .legend-total {
+        margin-top: 20px;
+        padding-top: 15px;
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .legend-total .legend-label {
+        font-size: 18px;
+        font-weight: 600;
+        color: #4bc0c0;
+    }
+    
+    .legend-total .legend-value {
+        font-size: 18px;
+        font-weight: 600;
+        color: #ffffff;
+    }
+    
+    .pie-slice {
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    
+    .pie-slice:hover {
+        transform: translateX(-5px) translateY(-5px);
     }
     
     @media (max-width: 768px) {
@@ -578,6 +923,10 @@ font-family: 'Poppins', sans-serif;
         .chart, .legend {
             width: 100%;
             margin-bottom: 30px;
+        }
+        
+        .modern-legend {
+            max-width: none;
         }
     }
 </style>
