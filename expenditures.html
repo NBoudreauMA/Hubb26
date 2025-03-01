@@ -1,261 +1,4 @@
-<!-- Dollar Visualization -->
-<div class="budget-dollar-container">
-    <h3 class="chart-title">Where Your Tax Dollar Goes</h3>
-    <img src="HUBBARDSTON.png" alt="Hubbardston" style="width: 100%; height: 50px; object-fit: cover; display: block; margin: 0 auto 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
-    <div class="dollar-visualization" id="dollar-visualization">
-        <div class="segments-container" id="segments-container"></div>
-    </div>
-    <div class="budget-total">Total Budget: $11,851,233</div>
-    
-    <div class="dollar-legend" id="dollar-legend-container"></div>
-</div>
-
-            // Department Expenditures Chart
-            const deptCtx = document.getElementById('departmentChart').getContext('2d');
-            new Chart(deptCtx, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Education', 'Public Safety', 'Liabilities & Assessments', 'Public Works', 'General Government', 'Debt Service', 'Culture & Recreation', 'Human Services'],
-                    datasets: [{
-                        data: [7334563, 1595193, 999455, 920184, 724886, 146862, 94290, 26950],
-                        backgroundColor: [
-                            departmentColors.education,
-                            departmentColors.publicSafety,
-                            departmentColors.liabilities,
-                            departmentColors.publicWorks, 
-                            departmentColors.generalGov,
-                            departmentColors.debt,
-                            departmentColors.culture,
-                            departmentColors.humanServices
-                        ],
-                        borderWidth: 0,
-                        hoverOffset: 10
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    const value = context.raw;
-                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
-                                    const percentage = Math.round((value / total * 100) * 10) / 10;
-                                    const formattedValue = new Intl.NumberFormat('en-US', {
-                                        style: 'currency',
-                                        currency: 'USD',
-                                        maximumFractionDigits: 0
-                                    }).format(value);
-                                    return `${context.label}: ${formattedValue} (${percentage}%)`;
-                                }
-                            }
-                        }
-                    },
-                    cutout: '60%',
-                    animation: {
-                        animateScale: true,
-                        animateRotate: true
-                    }
-                }
-            });
-
-            // Year-over-Year Changes Chart
-            const changesCtx = document.getElementById('changesChart').getContext('2d');
-            new Chart(changesCtx, {
-                type: 'bar',
-                data: {
-                    labels: ['Education', 'Public Safety', 'Liabilities', 'Public Works', 'General Gov'],
-                    datasets: [{
-                        label: 'FY26 Increase',
-                        data: [550333, 50902, 36801, 34142, 25306],
-                        backgroundColor: [
-                            departmentColors.education,
-                            departmentColors.publicSafety,
-                            departmentColors.liabilities,
-                            departmentColors.publicWorks,
-                            departmentColors.generalGov
-                        ],
-                        borderWidth: 0
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.1)'
-                            },
-                            ticks: {
-                                color: '#ffffff',
-                                callback: function(value) {
-                                    return value.toLocaleString();
-                                }
-                            }
-                        },
-                        x: {
-                            grid: {
-                                display: false
-                            },
-                            ticks: {
-                                color: '#ffffff'
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    const value = context.raw;
-                                    const formattedValue = new Intl.NumberFormat('en-US', {
-                                        style: 'currency',
-                                        currency: 'USD',
-                                        maximumFractionDigits: 0
-                                    }).format(value);
-                                    return `Increase: ${formattedValue}`;
-                                }
-                            }
-                        }
-                    },
-                    animation: {
-                        animateScale: true
-                    }
-                }
-            });
-
-            // Five-Year Forecast Chart
-            const forecastCtx = document.getElementById('forecastChart').getContext('2d');
-            new Chart(forecastCtx, {
-                type: 'line',
-                data: {
-                    labels: ['FY25', 'FY26', 'FY27', 'FY28', 'FY29', 'FY30'],
-                    datasets: [
-                        {
-                            label: 'Education',
-                            data: [6784230, 7334563, 7566285, 7937654, 8327402, 8736444],
-                            borderColor: departmentColors.education,
-                            backgroundColor: 'rgba(52, 152, 219, 0.1)',
-                            fill: true,
-                            tension: 0.4,
-                            borderWidth: 3
-                        },
-                        {
-                            label: 'Personnel',
-                            data: [2156210, 2214752, 2275757, 2338489, 2402998, 2469542],
-                            borderColor: departmentColors.publicSafety,
-                            backgroundColor: 'rgba(231, 76, 60, 0.1)',
-                            fill: true,
-                            tension: 0.4,
-                            borderWidth: 3
-                        },
-                        {
-                            label: 'Liabilities',
-                            data: [1036256, 999455, 1138701, 1186745, 1236966, 1289466],
-                            borderColor: departmentColors.liabilities,
-                            backgroundColor: 'rgba(155, 89, 182, 0.1)',
-                            fill: true,
-                            tension: 0.4,
-                            borderWidth: 3
-                        },
-                        {
-                            label: 'Facilities & Supplies',
-                            data: [755459, 766099, 786171, 806815, 828049, 850107],
-                            borderColor: departmentColors.publicWorks,
-                            backgroundColor: 'rgba(26, 188, 156, 0.1)',
-                            fill: true,
-                            tension: 0.4,
-                            borderWidth: 3
-                        },
-                        {
-                            label: 'Total Budget',
-                            data: [11047636, 11851233, 12098956, 12607597, 13139288, 13695787],
-                            borderColor: '#4bc0c0',
-                            backgroundColor: 'rgba(75, 192, 192, 0.1)',
-                            borderDash: [5, 5],
-                            borderWidth: 3,
-                            fill: false,
-                            tension: 0.4,
-                            pointRadius: 5,
-                            pointHoverRadius: 8
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.1)'
-                            },
-                            ticks: {
-                                color: '#ffffff',
-                                callback: function(value) {
-                                    if (value >= 1000000) {
-                                        return (value / 1000000).toFixed(1) + 'M';
-                                    }
-                                    return value.toLocaleString();
-                                }
-                            }
-                        },
-                        x: {
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.1)'
-                            },
-                            ticks: {
-                                color: '#ffffff'
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                            labels: {
-                                color: '#ffffff',
-                                font: {
-                                    family: 'Poppins',
-                                    size: 12
-                                },
-                                boxWidth: 12
-                            }
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    const value = context.raw;
-                                    const formattedValue = new Intl.NumberFormat('en-US', {
-                                        style: 'currency',
-                                        currency: 'USD',
-                                        maximumFractionDigits: 0
-                                    }).format(value);
-                                    return `${context.dataset.label}: ${formattedValue}`;
-                                }
-                            }
-                        }
-                    },
-                    interaction: {
-                        mode: 'index',
-                        intersect: false
-                    },
-                    hover: {
-                        mode: 'nearest',
-                        intersect: false
-                    }
-                }
-            });
-        });
-    </script>
-</body>
-</html><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -936,6 +679,7 @@
             <!-- Dollar Visualization -->
             <div class="budget-dollar-container">
                 <h3 class="chart-title">Where Your Tax Dollar Goes</h3>
+                <img src="HUBBARDSTON.png" alt="Hubbardston" style="width: 100%; height: 50px; object-fit: contain; border-radius: 8px; margin-bottom: 10px;">
                 <div class="dollar-visualization" id="dollar-visualization">
                     <div class="segments-container" id="segments-container"></div>
                 </div>
@@ -1116,7 +860,7 @@
                 </div>
             </div>
 
-            <!-- Budget Forecast -->
+           <!-- Budget Forecast -->
             <div class="budget-forecast">
                 <h3 class="forecast-title">Five-Year Budget Forecast (FY26-FY30)</h3>
 
@@ -1248,3 +992,355 @@
             </div>
         </div>
     </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Budget dollar visualization
+            function createDollarSegments() {
+                const categories = [
+                    { 
+                        percentage: 62.0, 
+                        color: 'rgba(52, 152, 219, 0.75)', 
+                        label: '62.0¢',
+                        name: 'Education'
+                    },
+                    { 
+                        percentage: 13.5, 
+                        color: 'rgba(231, 76, 60, 0.75)', 
+                        label: '13.5¢',
+                        name: 'Public Safety'
+                    },
+                    { 
+                        percentage: 7.8, 
+                        color: 'rgba(26, 188, 156, 0.75)', 
+                        label: '7.8¢',
+                        name: 'Public Works'
+                    },
+                    { 
+                        percentage: 6.1, 
+                        color: 'rgba(241, 196, 15, 0.75)', 
+                        label: '6.1¢',
+                        name: 'Administration'
+                    },
+                    { 
+                        percentage: 8.4, 
+                        color: 'rgba(155, 89, 182, 0.75)', 
+                        label: '8.4¢',
+                        name: 'Benefits & Insurance'
+                    },
+                    { 
+                        percentage: 2.2, 
+                        color: 'rgba(52, 73, 94, 0.75)', 
+                        label: '2.2¢',
+                        name: 'Other Services'
+                    }
+                ];
+
+                const segmentsContainer = document.getElementById("segments-container");
+                const legendContainer = document.getElementById("dollar-legend-container");
+                
+                if (!segmentsContainer || !legendContainer) return;
+                
+                // Clear existing content
+                segmentsContainer.innerHTML = '';
+                legendContainer.innerHTML = '';
+                
+                // Create segments for dollar visualization
+                categories.forEach(cat => {
+                    // Create segment
+                    const segment = document.createElement("div");
+                    segment.className = "segment";
+                    segment.style.width = `${cat.percentage}%`;
+                    segment.style.backgroundColor = cat.color;
+                    
+                    // Create label
+                    const label = document.createElement("div");
+                    label.className = "segment-label";
+                    label.innerText = `${cat.name}: ${cat.label}`;
+                    
+                    segment.appendChild(label);
+                    segmentsContainer.appendChild(segment);
+                    
+                    // Create legend item
+                    const legendItem = document.createElement("div");
+                    legendItem.className = "dollar-legend-item";
+                    
+                    const colorBox = document.createElement("div");
+                    colorBox.className = "dollar-legend-color";
+                    colorBox.style.backgroundColor = cat.color;
+                    
+                    const text = document.createElement("span");
+                    text.innerText = `${cat.name}: ${cat.label}`;
+                    text.style.color = "white";
+                    
+                    legendItem.appendChild(colorBox);
+                    legendItem.appendChild(text);
+                    legendContainer.appendChild(legendItem);
+                });
+            }
+            
+            // Initialize dollar visualization
+            createDollarSegments();
+            
+            // Handle window resize for responsiveness
+            window.addEventListener('resize', createDollarSegments);
+
+            // Set consistent colors for department categories
+            const departmentColors = {
+                education: '#3498db',
+                publicSafety: '#e74c3c',
+                liabilities: '#9b59b6',
+                publicWorks: '#1abc9c',
+                generalGov: '#f1c40f',
+                debt: '#e67e22',
+                culture: '#00bcd4',
+                humanServices: '#ff80ab'
+            };
+
+            // Department Expenditures Chart
+            const deptCtx = document.getElementById('departmentChart').getContext('2d');
+            new Chart(deptCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Education', 'Public Safety', 'Liabilities & Assessments', 'Public Works', 'General Government', 'Debt Service', 'Culture & Recreation', 'Human Services'],
+                    datasets: [{
+                        data: [7334563, 1595193, 999455, 920184, 724886, 146862, 94290, 26950],
+                        backgroundColor: [
+                            departmentColors.education,
+                            departmentColors.publicSafety,
+                            departmentColors.liabilities,
+                            departmentColors.publicWorks, 
+                            departmentColors.generalGov,
+                            departmentColors.debt,
+                            departmentColors.culture,
+                            departmentColors.humanServices
+                        ],
+                        borderWidth: 0,
+                        hoverOffset: 10
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const value = context.raw;
+                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                    const percentage = Math.round((value / total * 100) * 10) / 10;
+                                    const formattedValue = new Intl.NumberFormat('en-US', {
+                                        style: 'currency',
+                                        currency: 'USD',
+                                        maximumFractionDigits: 0
+                                    }).format(value);
+                                    return `${context.label}: ${formattedValue} (${percentage}%)`;
+                                }
+                            }
+                        }
+                    },
+                    cutout: '60%',
+                    animation: {
+                        animateScale: true,
+                        animateRotate: true
+                    }
+                }
+            });
+
+            // Year-over-Year Changes Chart
+            const changesCtx = document.getElementById('changesChart').getContext('2d');
+            new Chart(changesCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Education', 'Public Safety', 'Liabilities', 'Public Works', 'General Gov'],
+                    datasets: [{
+                        label: 'FY26 Increase',
+                        data: [550333, 50902, 36801, 34142, 25306],
+                        backgroundColor: [
+                            departmentColors.education,
+                            departmentColors.publicSafety,
+                            departmentColors.liabilities,
+                            departmentColors.publicWorks,
+                            departmentColors.generalGov
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#ffffff',
+                                callback: function(value) {
+                                    return value.toLocaleString();
+                                }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                color: '#ffffff'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const value = context.raw;
+                                    const formattedValue = new Intl.NumberFormat('en-US', {
+                                        style: 'currency',
+                                        currency: 'USD',
+                                        maximumFractionDigits: 0
+                                    }).format(value);
+                                    return `Increase: ${formattedValue}`;
+                                }
+                            }
+                        }
+                    },
+                    animation: {
+                        animateScale: true
+                    }
+                }
+            });
+
+            // Five-Year Forecast Chart
+            const forecastCtx = document.getElementById('forecastChart').getContext('2d');
+            new Chart(forecastCtx, {
+                type: 'line',
+                data: {
+                    labels: ['FY25', 'FY26', 'FY27', 'FY28', 'FY29', 'FY30'],
+                    datasets: [
+                        {
+                            label: 'Education',
+                            data: [6784230, 7334563, 7566285, 7937654, 8327402, 8736444],
+                            borderColor: departmentColors.education,
+                            backgroundColor: 'rgba(52, 152, 219, 0.1)',
+                            fill: true,
+                            tension: 0.4,
+                            borderWidth: 3
+                        },
+                        {
+                            label: 'Personnel',
+                            data: [2156210, 2214752, 2275757, 2338489, 2402998, 2469542],
+                            borderColor: departmentColors.publicSafety,
+                            backgroundColor: 'rgba(231, 76, 60, 0.1)',
+                            fill: true,
+                            tension: 0.4,
+                            borderWidth: 3
+                        },
+                        {
+                            label: 'Liabilities',
+                            data: [1036256, 999455, 1138701, 1186745, 1236966, 1289466],
+                            borderColor: departmentColors.liabilities,
+                            backgroundColor: 'rgba(155, 89, 182, 0.1)',
+                            fill: true,
+                            tension: 0.4,
+                            borderWidth: 3
+                        },
+                        {
+                            label: 'Facilities & Supplies',
+                            data: [755459, 766099, 786171, 806815, 828049, 850107],
+                            borderColor: departmentColors.publicWorks,
+                            backgroundColor: 'rgba(26, 188, 156, 0.1)',
+                            fill: true,
+                            tension: 0.4,
+                            borderWidth: 3
+                        },
+                        {
+                            label: 'Total Budget',
+                            data: [11047636, 11851233, 12098956, 12607597, 13139288, 13695787],
+                            borderColor: '#4bc0c0',
+                            backgroundColor: 'rgba(75, 192, 192, 0.1)',
+                            borderDash: [5, 5],
+                            borderWidth: 3,
+                            fill: false,
+                            tension: 0.4,
+                            pointRadius: 5,
+                            pointHoverRadius: 8
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#ffffff',
+                                callback: function(value) {
+                                    if (value >= 1000000) {
+                                        return (value / 1000000).toFixed(1) + 'M';
+                                    }
+                                    return value.toLocaleString();
+                                }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#ffffff'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                color: '#ffffff',
+                                font: {
+                                    family: 'Poppins',
+                                    size: 12
+                                },
+                                boxWidth: 12
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const value = context.raw;
+                                    const formattedValue = new Intl.NumberFormat('en-US', {
+                                        style: 'currency',
+                                        currency: 'USD',
+                                        maximumFractionDigits: 0
+                                    }).format(value);
+                                    return `${context.dataset.label}: ${formattedValue}`;
+                                }
+                            }
+                        }
+                    },
+                    interaction: {
+                        mode: 'index',
+                        intersect: false
+                    },
+                    hover: {
+                        mode: 'nearest',
+                        intersect: false
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
