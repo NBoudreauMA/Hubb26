@@ -46,7 +46,6 @@
             padding: 12px 15px;
             text-align: left;
             font-size: 16px;
-            white-space: nowrap;
         }
         th {
             background: linear-gradient(135deg, #4bc0c0, #358a8a);
@@ -54,9 +53,9 @@
             font-weight: 600;
             text-transform: uppercase;
             padding: 15px;
+            white-space: nowrap;
         }
         td {
-            white-space: normal;
             word-wrap: break-word;
             max-width: 300px;
         }
@@ -98,10 +97,10 @@
     <script>
         function formatCurrency(value) {
             let num = parseFloat(value.replace(/[^0-9.-]+/g, ""));
-            if (!isNaN(num)) {
+            if (!isNaN(num) && num !== 0) {
                 return `$${num.toLocaleString("en-US", { minimumFractionDigits: 2 })}`;
             }
-            return value;
+            return "-";
         }
 
         function cleanCSVRow(row) {
