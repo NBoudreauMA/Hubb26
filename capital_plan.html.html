@@ -88,14 +88,22 @@
     
     <script>
         function formatCurrency(value) {
-            return value.startsWith("$") ? value : `$${parseFloat(value).toLocaleString("en-US", {minimumFractionDigits: 2})}`;
+            let num = parseFloat(value.replace(/[^0-9.-]+/g, ""));
+            if (!isNaN(num)) {
+                return `$${num.toLocaleString("en-US", { minimumFractionDigits: 2 })}`;
+            }
+            return value;
+        }
+
+        function cleanCSVRow(row) {
+            return row.map(cell => cell.trim().replace(/^"|"$/g, ""));
         }
 
         function fetchAndDisplayCSV(filePath, tableId) {
             fetch(filePath)
                 .then(response => response.text())
                 .then(csvText => {
-                    let rows = csvText.split("\n").map(row => row.split(","));
+                    let rows = csvText.split("\n").map(row => cleanCSVRow(row.split(",")));
                     let table = document.getElementById(tableId);
                     
                     let thead = table.querySelector("thead");
