@@ -339,14 +339,12 @@ font-family: 'Poppins', sans-serif;
         <p>What’s new? We’re taking a <strong>modernized approach to budget engagement</strong>. This new web-based portal provides <strong>real-time access to financial data, spending priorities, and insights</strong> into how Hubbardston is planning for a sustainable future. Our commitment remains clear: <strong>ensuring long-term financial health while delivering high-quality services that enhance our community</strong>.</p>
         
         <p>Thank you for taking the time to engage with this process—we encourage residents to explore the budget, provide feedback, and be part of shaping Hubbardston’s future.</p>
-    </div>
-
-    <div class="signature-container">
-        <div class="signature" style="text-align: left;">
+    
+        <div class="signature-container">
             <p>Respectfully submitted,</p>
-            <div style="display: flex; align-items: center; margin-top: 10px;">
+            <div style="display: flex; align-items: center; margin-top: 20px;">
                 <img src="https://media.licdn.com/dms/image/v2/D4E03AQEW5_btYizZyg/profile-displayphoto-shrink_800_800/B4EZSZ4lygHcAg-/0/1737748537903?e=1746057600&v=beta&t=XTnr389QfOgZDSn6qDefjutosLHGQC4pdlCWbHNn8n4" 
-                     alt="Nathan Boudreau" style="width: 85px; height: 85px; border-radius: 50%; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); margin-right: 15px;">
+                     alt="Nathan Boudreau" style="width: 90px; height: 90px; border-radius: 50%; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); margin-right: 15px;">
                 <div>
                     <strong>Nathan Boudreau</strong><br>
                     Town Administrator<br>
@@ -391,6 +389,7 @@ font-family: 'Poppins', sans-serif;
         border-left: 4px solid #4bc0c0;
         margin: 35px 0;
         backdrop-filter: blur(5px);
+        position: relative;
     }
     
     .executive-summary h3 {
@@ -411,24 +410,26 @@ font-family: 'Poppins', sans-serif;
         margin-top: 30px;
         padding-top: 20px;
         border-top: 2px solid rgba(255, 255, 255, 0.2);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
-    
-    .signature p {
+
+    .signature-container p {
         font-size: 18px;
-        margin-bottom: 8px;
+        margin-bottom: 10px;
     }
 
     @media (max-width: 900px) {
-        .signature {
+        .signature-container {
             text-align: center;
         }
-        .signature img {
-            margin: 0 auto 10px;
+        .signature-container img {
+            margin-bottom: 10px;
         }
     }
 </style>
 
-    
     <div class="button-container" style="text-align: center; margin-top: 20px;">
         <a href="budget_view.html" class="budget-button">📊 View Budget Overview</a>
         <a href="revenue_view.html" class="budget-button">💰 View Revenue Details</a>
