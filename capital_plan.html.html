@@ -55,6 +55,15 @@
             text-transform: uppercase;
             padding: 15px;
         }
+        td {
+            white-space: normal;
+            word-wrap: break-word;
+            max-width: 300px;
+        }
+        .number-col {
+            text-align: right;
+            white-space: nowrap;
+        }
         tr:nth-child(even) td {
             background: rgba(255, 255, 255, 0.05);
         }
@@ -123,6 +132,7 @@
                         row.forEach((cell, index) => {
                             let td = document.createElement("td");
                             td.textContent = index > 2 ? formatCurrency(cell) : cell;
+                            if (index > 2) td.classList.add("number-col");
                             tr.appendChild(td);
                         });
                         tbody.appendChild(tr);
