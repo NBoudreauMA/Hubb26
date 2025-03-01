@@ -566,13 +566,32 @@
         }
 
         /* Tax Dollar Image */
-        .tax-dollar-image {
-            display: block;
-            width: 100%;
-            max-width: 500%;
-            height: auto;
-            margin: 5px auto 5px;
-            border-radius: 8px;
+    /* Tax Dollar Image - Remove all space */
+.tax-dollar-image {
+    display: block;
+    width: 100%;
+    max-width: 500%;
+    height: auto;
+    margin: 0; /* No space above or below */
+    border-radius: 8px;
+}
+
+/* Reduce space below heading */
+.budget-dollar-container h2 {
+    margin-bottom: 0; /* Removes extra gap between heading and image */
+}
+
+/* Remove top margin of the next section */
+.dollar-visualization {
+    margin-top: 0; /* Ensures the next section touches the image */
+}
+
+/* Reduce container spacing */
+.budget-dollar-container {
+    padding: 0; /* Adjust padding to remove extra space */
+    margin: 0 auto; /* Centered without extra spacing */
+}
+
         }
 
         /* Dollar Visualization Bar */
