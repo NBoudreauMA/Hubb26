@@ -279,33 +279,37 @@
             }
             
             .cip-tab-btn {
-                background: rgba(0, 80, 60, 0.8);
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+                background: linear-gradient(135deg, #4bc0c0, #358a8a);
                 color: white;
                 border: none;
-                padding: 15px 30px;
-                border-radius: 30px;
+                padding: 12px 25px;
                 font-size: 18px;
                 font-weight: 600;
+                border-radius: 8px;
                 cursor: pointer;
-                transition: all 0.3s;
-                min-width: 180px;
-                text-transform: uppercase;
-                letter-spacing: 1px;
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-                border: 2px solid transparent;
+                transition: all 0.3s ease;
+                text-decoration: none;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
             }
             
             .cip-tab-btn:hover {
-                background: rgba(0, 120, 100, 0.9);
                 transform: translateY(-3px);
                 box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
-                border: 2px solid rgba(75, 192, 192, 0.4);
+                background: linear-gradient(135deg, #55d0d0, #409a9a);
             }
             
             .cip-tab-btn.active {
-                background: #4bc0c0;
-                box-shadow: 0 4px 15px rgba(75, 192, 192, 0.5);
-                border: 2px solid white;
+                background: linear-gradient(135deg, #36a0a0, #257575);
+                box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
+                transform: translateY(1px);
+            }
+            
+            .tab-icon {
+                font-size: 20px;
             }
         
         .tab-content {
