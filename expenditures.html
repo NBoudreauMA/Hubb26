@@ -646,59 +646,229 @@
                             <div class="legend-percent">0.8%</div>
                         </div>
                         
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #ff80ab;"></div>
-                            <div class="legend-text">Human Services</div>
-                            <div class="legend-value">$26,950</div>
-                            <div class="legend-percent">0.2%</div>
-                        </div>
+                       import React, { useState, useEffect } from 'react';
+
+const HubbardstonBudgetVisualization = () => {
+  // Budget data
+  const budgetData = [
+    { name: 'General Government', value: 724886.38, displayValue: '$724,886.38' },
+    { name: 'Public Safety', value: 1595193.23, displayValue: '$1,595,193.23' },
+    { name: 'Public Works', value: 920184.29, displayValue: '$920,184.29' },
+    { name: 'Education', value: 7334562.64, displayValue: '$7,334,562.64' },
+    { name: 'Human Services', value: 26950.00, displayValue: '$26,950.00' },
+    { name: 'Culture and Recreation', value: 94289.70, displayValue: '$94,289.70' },
+    { name: 'Debt', value: 146862.00, displayValue: '$146,862.00' },
+    { name: 'Liabilities and Assessments', value: 999454.94, displayValue: '$999,454.94' }
+  ];
+
+  // Calculate total budget
+  const totalBudget = budgetData.reduce((sum, item) => sum + item.value, 0);
+
+  // Calculate percentages and cents per dollar
+  const dataWithPercentage = budgetData.map(item => ({
+    ...item,
+    percentage: (item.value / totalBudget) * 100,
+    centsPerDollar: (item.value / totalBudget)
+  }));
+
+  // Sort data by value (highest to lowest)
+  const sortedData = [...dataWithPercentage].sort((a, b) => b.value - a.value);
+
+  // Colors for the segments (vibrant colors with good contrast)
+  const COLORS = [
+    '#E74C3C', '#3498DB', '#27AE60', '#9B59B6', '#F39C12', 
+    '#16A085', '#2980B9', '#C0392B'
+  ];
+
+  // Format as currency
+  const formatCurrency = (value) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 2
+    }).format(value);
+  };
+
+  // Format as percentage
+  const formatPercentage = (value) => {
+    return value.toFixed(1) + '%';
+  };
+
+  // Format as cents
+  const formatCents = (value) => {
+    return (value * 100).toFixed(1) + '¢';
+  };
+
+  const [hoveredSegment, setHoveredSegment] = useState(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check viewport width for responsive design
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+    };
+  }, []);
+
+  return (
+    <div className="w-full max-w-4xl mx-auto p-4">
+      <div className="text-center mb-6">
+        <h2 className="text-2xl font-bold mb-2">Town of Hubbardston Budget Breakdown</h2>
+        <p className="text-gray-600">Total Budget: {formatCurrency(totalBudget)}</p>
+      </div>
+
+      {/* Custom visualization with Hubbardston image */}
+      <div className="relative mb-8 mx-auto" style={{ maxWidth: "700px" }}>
+        <div className="relative rounded-lg overflow-hidden shadow-2xl" style={{ aspectRatio: "16/9" }}>
+          {/* Hubbardston image background */}
+          <img 
+            src="https://github.com/NBoudreauMA/Hubb26/blob/main/HUBBARDSTON.png?raw=true" 
+            alt="Town of Hubbardston" 
+            className="absolute inset-0 w-full h-full object-cover"
+            style={{
+              filter: "contrast(1.05) brightness(1.05)"
+            }}
+          />
+          
+          {/* Semi-transparent overlay to make segments more visible */}
+          <div className="absolute inset-0 bg-white opacity-60"></div>
+          
+          {/* Budget data visualization */}
+          <div className="absolute inset-0 p-4">
+            <div className="h-full w-full rounded-md overflow-hidden shadow-inner border border-gray-300 bg-white bg-opacity-70 flex">
+              {sortedData.map((item, index) => (
+                <div 
+                  key={index}
+                  className="h-full transition-all duration-200 flex items-center justify-center relative cursor-pointer"
+                  style={{ 
+                    width: `${item.percentage}%`,
+                    backgroundColor: hoveredSegment === index 
+                      ? `${COLORS[index % COLORS.length]}dd` 
+                      : `${COLORS[index % COLORS.length]}33`,
+                    borderLeft: index > 0 ? '1px solid rgba(0,0,0,0.2)' : 'none',
+                  }}
+                  onMouseEnter={() => setHoveredSegment(index)}
+                  onMouseLeave={() => setHoveredSegment(null)}
+                >
+                  {/* Department label for larger segments */}
+                  {item.percentage > 8 && (
+                    <div className={`text-center font-bold transition-all duration-200 ${hoveredSegment === index ? 'text-white scale-110' : 'text-gray-800'}`}>
+                      <div className="text-sm md:text-base">{formatCents(item.centsPerDollar)}</div>
+                      {item.percentage > 15 && (
+                        <div className="text-xs hidden md:block">{item.name}</div>
+                      )}
                     </div>
+                  )}
                 </div>
-                
-                <div class="chart-box">
-                    <h3 class="chart-title">Year-Over-Year Changes</h3>
-                    <div class="chart-display">
-                        <canvas id="changesChart"></canvas>
-                    </div>
-                    
-                    <div class="chart-legend">
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #3498db;"></div>
-                            <div class="legend-text">Education</div>
-                            <div class="legend-value">+$550,333</div>
-                            <div class="legend-percent">+8.1%</div>
-                        </div>
-                        
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #e74c3c;"></div>
-                            <div class="legend-text">Public Safety</div>
-                            <div class="legend-value">+$50,902</div>
-                            <div class="legend-percent">+3.3%</div>
-                        </div>
-                        
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #9b59b6;"></div>
-                            <div class="legend-text">Liabilities & Assessments</div>
-                            <div class="legend-value">+$36,801</div>
-                            <div class="legend-percent">+3.8%</div>
-                        </div>
-                        
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #1abc9c;"></div>
-                            <div class="legend-text">Public Works</div>
-                            <div class="legend-value">+$34,142</div>
-                            <div class="legend-percent">+3.8%</div>
-                        </div>
-                        
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #f1c40f;"></div>
-                            <div class="legend-text">General Government</div>
-                            <div class="legend-value">+$25,306</div>
-                            <div class="legend-percent">+3.6%</div>
-                        </div>
-                    </div>
-                </div>
+              ))}
             </div>
+            
+            {/* Top badge showing "Your Tax Dollar" */}
+            <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-blue-600 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg">
+              Your Tax Dollar
+            </div>
+          </div>
+          
+          {/* Tooltip on hover */}
+          {hoveredSegment !== null && (
+            <div className="absolute top-full mt-2 left-1/2 transform -translate-x-1/2 bg-white p-3 rounded-lg shadow-xl z-30 text-sm" style={{ maxWidth: "280px" }}>
+              <div 
+                className="w-full h-1 mb-2 rounded-full" 
+                style={{ backgroundColor: COLORS[hoveredSegment % COLORS.length] }}
+              ></div>
+              <div className="font-bold text-base">{sortedData[hoveredSegment].name}</div>
+              <div className="grid grid-cols-2 gap-1 mt-1">
+                <div className="text-gray-600">Budget amount:</div>
+                <div className="font-medium text-right">{formatCurrency(sortedData[hoveredSegment].value)}</div>
+                <div className="text-gray-600">Percentage:</div>
+                <div className="font-medium text-right">{formatPercentage(sortedData[hoveredSegment].percentage)}</div>
+                <div className="text-gray-600">Of each dollar:</div>
+                <div className="font-medium text-right">{formatCents(sortedData[hoveredSegment].centsPerDollar)}</div>
+              </div>
+            </div>
+          )}
+        </div>
+        <div className="text-center text-sm text-gray-500 mt-2">
+          Hover/tap on segments to see department details
+        </div>
+      </div>
+
+      {/* Color-coded legend */}
+      <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 mb-8">
+        {sortedData.map((item, index) => (
+          <div 
+            key={index}
+            className={`flex items-center gap-2 cursor-pointer transition-all duration-200 p-1 rounded ${hoveredSegment === index ? 'bg-gray-100 scale-110' : ''}`}
+            onMouseEnter={() => setHoveredSegment(index)}
+            onMouseLeave={() => setHoveredSegment(null)}
+          >
+            <div 
+              className="w-5 h-5 rounded shadow-sm" 
+              style={{ backgroundColor: COLORS[index % COLORS.length] }}
+            ></div>
+            <div className="text-sm">
+              <span className="font-medium">{item.name}</span>
+              <span className="text-gray-600 ml-1">({formatCents(item.centsPerDollar)})</span>
+            </div>
+          </div>
+        ))}
+      </div>
+        
+      {/* Budget breakdown table */}
+      <div className="mx-auto rounded-lg overflow-hidden shadow-lg border border-gray-200" style={{ maxWidth: "700px" }}>
+        <table className="min-w-full divide-y divide-gray-200">
+          <thead className="bg-gray-50">
+            <tr>
+              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Department</th>
+              <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+              <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Percentage</th>
+              <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">¢ per $</th>
+            </tr>
+          </thead>
+          <tbody className="bg-white divide-y divide-gray-200">
+            {sortedData.map((item, index) => (
+              <tr 
+                key={index} 
+                className={`hover:bg-gray-50 ${hoveredSegment === index ? 'bg-gray-100' : ''}`}
+                onMouseEnter={() => setHoveredSegment(index)}
+                onMouseLeave={() => setHoveredSegment(null)}
+              >
+                <td className="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900">
+                  <div className="flex items-center">
+                    <div 
+                      className="w-4 h-4 rounded-sm mr-2 shadow-sm" 
+                      style={{ backgroundColor: COLORS[index % COLORS.length] }}
+                    ></div>
+                    {item.name}
+                  </div>
+                </td>
+                <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-500 text-right">{formatCurrency(item.value)}</td>
+                <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-500 text-right">{formatPercentage(item.percentage)}%</td>
+                <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-500 text-right font-medium">{formatCents(item.centsPerDollar)}</td>
+              </tr>
+            ))}
+          </tbody>
+          <tfoot className="bg-gray-50">
+            <tr>
+              <td className="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Total</td>
+              <td className="px-4 py-3 text-right text-xs font-medium text-gray-700 uppercase tracking-wider">{formatCurrency(totalBudget)}</td>
+              <td className="px-4 py-3 text-right text-xs font-medium text-gray-700 uppercase tracking-wider">100.0%</td>
+              <td className="px-4 py-3 text-right text-xs font-medium text-gray-700 uppercase tracking-wider">$1.00</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  );
+};
+
+export default HubbardstonBudgetVisualization;
             
             <!-- Department Details -->
             <div class="department-grid">
