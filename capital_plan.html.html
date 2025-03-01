@@ -1,12 +1,13 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Capital Improvement Plan - Hubbardston</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
-        /* Core Styles using your provided CSS */
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
@@ -46,117 +47,192 @@
         nav a:hover {
             text-decoration: underline;
             transform: scale(1.2);
-            color: #FFD700;
+            color: white;
+            background-color: rgba(0, 100, 0, 0.7);
+            border-radius: 5px;
         }
-
+        
         nav a.active {
-            color: #FFD700;
-            border-bottom: 3px solid #FFD700;
+            color: white;
+            text-decoration: underline;
+            background-color: rgba(0, 100, 0, 0.7);
+            padding: 8px 15px;
+            border-radius: 5px;
         }
 
         .container {
             max-width: 1200px;
-            margin: 120px auto 50px;
+            margin: 120px auto 40px;
             padding: 30px;
             background: rgba(0, 0, 0, 0.75);
             border-radius: 15px;
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(5px);
+        }
+        
+        /* Header Styling */
+        .plan-header {
+            background: linear-gradient(135deg, rgba(0, 60, 30, 0.85), rgba(0, 90, 70, 0.75));
+            border-radius: 12px;
+            padding: 35px 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border-left: 4px solid #4bc0c0;
+            margin: 0 0 35px 0;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+        }
+        
+        .plan-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top right, rgba(75, 192, 192, 0.1), transparent 60%);
+            z-index: 0;
+        }
+        
+        .plan-title {
+            color: #4bc0c0;
+            text-align: center;
+            font-size: 34px;
+            margin-bottom: 20px;
+            font-weight: 600;
+            position: relative;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .plan-description {
+            color: white;
+            font-size: 17px;
+            line-height: 1.8;
+            position: relative;
+            text-align: center;
+        }
+        
+        /* Section Styling */
+        .content-section {
+            margin-bottom: 40px;
             transition: 0.4s ease-in-out;
+            padding: 20px;
+            border-radius: 10px;
+            background: rgba(20, 20, 20, 0.5);
+        }
+        
+        .content-section:hover {
+            transform: scale(1.01);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
         }
 
-        /* Enhanced Header */
-        header {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/api/placeholder/1200/400');
-            background-size: cover;
-            background-position: center;
-            height: 300px;
-            position: relative;
+        h2 {
+            color: #4bc0c0;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 32px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 30px;
-            border-radius: 10px;
-            overflow: hidden;
         }
-
-        header h1 {
-            color: white;
-            font-size: 3.5rem;
-            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
-            margin: 0;
-            text-align: center;
-        }
-
-        /* Section Styling */
-        section {
-            margin-bottom: 40px;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-        }
-
-        section h2 {
-            color: #FFD700;
-            border-bottom: 2px solid #FFD700;
-            padding-bottom: 10px;
-            margin-top: 0;
-            font-size: 2rem;
-            display: flex;
-            align-items: center;
-        }
-
-        section h2 i {
+        
+        h2 i {
             margin-right: 15px;
         }
-
-        section p {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            margin-bottom: 20px;
+        
+        /* Info Card Styling */
+        .info-card {
+            background: linear-gradient(135deg, rgba(0, 60, 30, 0.85), rgba(0, 90, 70, 0.75));
+            border-radius: 12px;
+            padding: 25px 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            border-left: 4px solid #4bc0c0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top right, rgba(75, 192, 192, 0.1), transparent 70%);
+            z-index: 0;
+        }
+        
+        .info-card h3 {
+            color: #4bc0c0;
+            font-size: 24px;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .info-card p {
+            position: relative;
+            z-index: 1;
+            margin-bottom: 15px;
+            font-size: 16px;
+            line-height: 1.7;
         }
 
-        /* Improved Table Styling */
+        /* Table Styling */
         .table-container {
             overflow-x: auto;
             margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 20px;
             background: rgba(0, 0, 0, 0.5);
         }
 
         th, td {
             padding: 12px 15px;
             text-align: left;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         th {
-            background: rgba(76, 175, 80, 0.7);
+            background: rgba(75, 192, 192, 0.5);
             color: white;
-            font-weight: bold;
+            font-weight: 600;
             position: sticky;
             top: 0;
         }
 
         tr:nth-child(even) td {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.03);
         }
 
         tr:hover td {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(75, 192, 192, 0.1);
+            transition: background 0.3s ease;
         }
 
         /* Value Columns */
         .value-col {
             text-align: right;
-            font-family: 'Courier New', monospace;
+            font-family: 'Poppins', monospace;
+            font-weight: 500;
+        }
+        
+        tr.total-row {
             font-weight: bold;
+            background: rgba(75, 192, 192, 0.2);
+        }
+        
+        tr.total-row td {
+            border-top: 2px solid rgba(75, 192, 192, 0.5);
         }
 
         /* Footer */
@@ -165,11 +241,22 @@
             text-align: center;
             padding: 20px;
             margin-top: 50px;
-            width: 100%;
+            border-radius: 10px 10px 0 0;
+        }
+        
+        .footer a {
+            color: #4bc0c0;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer a:hover {
+            color: white;
+            text-decoration: underline;
         }
 
-        /* Responsive adjustments */
-        @media screen and (max-width: 768px) {
+        /* Responsive Design */
+        @media (max-width: 900px) {
             nav {
                 flex-direction: column;
                 padding: 10px 0;
@@ -180,13 +267,22 @@
                 font-size: 18px;
             }
             
-            header h1 {
-                font-size: 2.5rem;
-            }
-            
             .container {
                 padding: 15px;
                 margin-top: 160px;
+            }
+            
+            .plan-title {
+                font-size: 26px;
+            }
+            
+            h2 {
+                font-size: 24px;
+            }
+            
+            .plan-header, 
+            .info-card {
+                padding: 20px 15px;
             }
         }
     </style>
@@ -194,23 +290,30 @@
 <body>
     <!-- Navigation Bar -->
     <nav>
-        <a href="index.html">Home</a>
-        <a href="revenue.html">Revenue</a>
-        <a href="expenditures.html">Expenditures</a>
-        <a href="capital_plan.html" class="active">Capital Improvement Plan</a>
-        <a href="citizens_guide.html">Citizen's Guide</a>
+        <a href="index.html">HOME</a>
+        <a href="revenue.html">REVENUE</a>
+        <a href="expenditures.html">EXPENDITURES</a>
+        <a href="capital_plan.html" class="active">CAPITAL PLAN</a>
+        <a href="citizens_guide.html">CITIZEN'S GUIDE</a>
     </nav>
 
     <div class="container">
-        <!-- Hero Header -->
-        <header>
-            <h1>Capital Improvement Plan (FY26-30)</h1>
-        </header>
+        <!-- Header Section -->
+        <div class="plan-header">
+            <h1 class="plan-title">Capital Improvement Plan (FY26-30)</h1>
+            <div class="plan-description">
+                <p>This five-year plan outlines Hubbardston's strategic investments in infrastructure, equipment, and facilities. These improvements ensure the town continues to provide high-quality services while maintaining fiscal responsibility and planning for future needs.</p>
+            </div>
+        </div>
 
         <!-- Annual Projects Section -->
-        <section>
+        <div class="content-section">
             <h2><i class="fas fa-table"></i> Annual Projects (Free Cash)</h2>
-            <p>These projects are funded primarily through Free Cash allocations and represent the Town's annual capital improvements. The total five-year investment for these projects is $1,146,000.</p>
+            
+            <div class="info-card">
+                <h3>Annual Capital Investments</h3>
+                <p>These projects are funded primarily through Free Cash allocations and represent the Town's annual capital improvements. The total five-year investment for these projects is $1,146,000, ensuring continuous improvement of town services and infrastructure without creating long-term debt obligations.</p>
+            </div>
             
             <div class="table-container">
                 <table>
@@ -361,7 +464,7 @@
                             <td class="value-col">$68,000</td>
                             <td>FREE CASH</td>
                         </tr>
-                        <tr style="font-weight: bold; background: rgba(76, 175, 80, 0.3);">
+                        <tr class="total-row">
                             <td colspan="3">TOTAL</td>
                             <td class="value-col">$281,000</td>
                             <td class="value-col">$265,000</td>
@@ -374,12 +477,16 @@
                     </tbody>
                 </table>
             </div>
-        </section>
+        </div>
         
         <!-- Strategic Investments Section -->
-        <section>
+        <div class="content-section">
             <h2><i class="fas fa-chart-line"></i> Strategic Investments</h2>
-            <p>Strategic investments represent significant capital expenditures that typically require debt exclusion, grant funding, or other special financing mechanisms. These projects total $13,620,500 over the five-year plan period.</p>
+            
+            <div class="info-card">
+                <h3>Long-Term Community Investments</h3>
+                <p>Strategic investments represent significant capital expenditures that typically require debt exclusion, grant funding, or other special financing mechanisms. These projects total $13,620,500 over the five-year plan period and reflect Hubbardston's commitment to improving essential infrastructure, enhancing public services, and ensuring sustainable growth for generations to come.</p>
+            </div>
             
             <div class="table-container">
                 <table>
@@ -584,7 +691,7 @@
                             <td class="value-col">$100,000</td>
                             <td>SEEK GRANT FUNDING</td>
                         </tr>
-                        <tr style="font-weight: bold; background: rgba(76, 175, 80, 0.3);">
+                        <tr class="total-row">
                             <td colspan="3">TOTAL</td>
                             <td class="value-col">$11,100,000</td>
                             <td class="value-col">$1,668,500</td>
@@ -596,13 +703,166 @@
                     </tbody>
                 </table>
             </div>
-        </section>
+        </div>
+        
+        <!-- Plan Impact Section -->
+        <div class="content-section">
+            <h2><i class="fas fa-balance-scale"></i> Financial Impact & Benefits</h2>
+            
+            <div class="info-card">
+                <h3>Understanding the Financial Impact</h3>
+                <p>The Capital Improvement Plan represents a balanced approach to addressing Hubbardston's infrastructure needs while maintaining fiscal responsibility. The plan is designed to:</p>
+                
+                <ul style="list-style: none; padding: 0; margin: 20px 0; position: relative; z-index: 1;">
+                    <li style="display: flex; margin-bottom: 20px;">
+                        <div style="flex-shrink: 0; width: 40px; height: 40px; background: rgba(75, 192, 192, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px; color: #4bc0c0;">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <div style="flex: 1;">
+                            <h4 style="color: white; margin: 0 0 10px; font-size: 18px; font-weight: 600;">Distribute Costs Strategically</h4>
+                            <p style="margin: 0; font-size: 15px; line-height: 1.6; color: rgba(255, 255, 255, 0.9);">The plan spreads major investments across multiple fiscal years to prevent dramatic tax increases in any single year.</p>
+                        </div>
+                    </li>
+                    <li style="display: flex; margin-bottom: 20px;">
+                        <div style="flex-shrink: 0; width: 40px; height: 40px; background: rgba(75, 192, 192, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px; color: #4bc0c0;">
+                            <i class="fas fa-hand-holding-usd"></i>
+                        </div>
+                        <div style="flex: 1;">
+                            <h4 style="color: white; margin: 0 0 10px; font-size: 18px; font-weight: 600;">Leverage Outside Funding</h4>
+                            <p style="margin: 0; font-size: 15px; line-height: 1.6; color: rgba(255, 255, 255, 0.9);">Many projects are structured to maximize grant opportunities, reducing the direct cost to Hubbardston taxpayers.</p>
+                        </div>
+                    </li>
+                    <li style="display: flex; margin-bottom: 20px;">
+                        <div style="flex-shrink: 0; width: 40px; height: 40px; background: rgba(75, 192, 192, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px; color: #4bc0c0;">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <div style="flex: 1;">
+                            <h4 style="color: white; margin: 0 0 10px; font-size: 18px; font-weight: 600;">Prioritize Critical Infrastructure</h4>
+                            <p style="margin: 0; font-size: 15px; line-height: 1.6; color: rgba(255, 255, 255, 0.9);">The plan addresses the most urgent needs first, focusing on public safety, accessibility, and infrastructure that affects the most residents.</p>
+                        </div>
+                    </li>
+                    <li style="display: flex;">
+                        <div style="flex-shrink: 0; width: 40px; height: 40px; background: rgba(75, 192, 192, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px; color: #4bc0c0;">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <div style="flex: 1;">
+                            <h4 style="color: white; margin: 0 0 10px; font-size: 18px; font-weight: 600;">Include Sustainability Measures</h4>
+                            <p style="margin: 0; font-size: 15px; line-height: 1.6; color: rgba(255, 255, 255, 0.9);">The plan incorporates environmental considerations such as reduced salt usage (brine applicator) and energy-efficient lighting (Main Street project).</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="info-card">
+                <h3>Community Benefits</h3>
+                <p>The Capital Improvement Plan represents more than just expenses—it's an investment in Hubbardston's future that will yield tangible benefits for residents:</p>
+                
+                <ul style="list-style: none; padding: 0; margin: 20px 0; position: relative; z-index: 1;">
+                    <li style="display: flex; margin-bottom: 20px;">
+                        <div style="flex-shrink: 0; width: 40px; height: 40px; background: rgba(75, 192, 192, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px; color: #4bc0c0;">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div style="flex: 1;">
+                            <h4 style="color: white; margin: 0 0 10px; font-size: 18px; font-weight: 600;">Enhanced Public Safety</h4>
+                            <p style="margin: 0; font-size: 15px; line-height: 1.6; color: rgba(255, 255, 255, 0.9);">Investments in fire equipment, road improvements, and the municipal complex will significantly improve emergency response capabilities.</p>
+                        </div>
+                    </li>
+                    <li style="display: flex; margin-bottom: 20px;">
+                        <div style="flex-shrink: 0; width: 40px; height: 40px; background: rgba(75, 192, 192, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px; color: #4bc0c0;">
+                            <i class="fas fa-universal-access"></i>
+                        </div>
+                        <div style="flex: 1;">
+                            <h4 style="color: white; margin: 0 0 10px; font-size: 18px; font-weight: 600;">Improved Accessibility</h4>
+                            <p style="margin: 0; font-size: 15px; line-height: 1.6; color: rgba(255, 255, 255, 0.9);">ADA improvements at the library and Slade Building will make town facilities more accessible to all residents.</p>
+                        </div>
+                    </li>
+                    <li style="display: flex; margin-bottom: 20px;">
+                        <div style="flex-shrink: 0; width: 40px; height: 40px; background: rgba(75, 192, 192, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px; color: #4bc0c0;">
+                            <i class="fas fa-road"></i>
+                        </div>
+                        <div style="flex: 1;">
+                            <h4 style="color: white; margin: 0 0 10px; font-size: 18px; font-weight: 600;">Better Infrastructure</h4>
+                            <p style="margin: 0; font-size: 15px; line-height: 1.6; color: rgba(255, 255, 255, 0.9);">Road improvements, culvert assessments, and drainage projects will reduce maintenance costs and improve quality of life for residents.</p>
+                        </div>
+                    </li>
+                    <li style="display: flex;">
+                        <div style="flex-shrink: 0; width: 40px; height: 40px; background: rgba(75, 192, 192, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px; color: #4bc0c0;">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div style="flex: 1;">
+                            <h4 style="color: white; margin: 0 0 10px; font-size: 18px; font-weight: 600;">Enhanced Community Spaces</h4>
+                            <p style="margin: 0; font-size: 15px; line-height: 1.6; color: rgba(255, 255, 255, 0.9);">Investments in recreational facilities, library spaces, and community areas will strengthen Hubbardston's sense of community and provide more opportunities for residents.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Get Involved Section -->
+        <div style="background: linear-gradient(135deg, rgba(0, 60, 30, 0.85), rgba(0, 90, 70, 0.75)); border-radius: 12px; padding: 35px; text-align: center; margin: 40px 0; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); border-left: 4px solid #4bc0c0; position: relative; overflow: hidden;">
+            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at top right, rgba(75, 192, 192, 0.1), transparent 60%); z-index: 0;"></div>
+            
+            <h3 style="color: #4bc0c0; font-size: 28px; margin-bottom: 20px; position: relative; z-index: 1;">Get Involved in the Capital Planning Process</h3>
+            
+            <p style="max-width: 800px; margin: 0 auto 30px; font-size: 17px; line-height: 1.8; position: relative; z-index: 1;">Your input is valuable in shaping Hubbardston's future. Town meetings, public hearings, and committee meetings provide opportunities to share your thoughts on capital projects and priorities.</p>
+            
+            <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; position: relative; z-index: 1;">
+                <a href="#" style="display: flex; align-items: center; gap: 10px; background: rgba(75, 192, 192, 0.7); color: white; text-decoration: none; padding: 12px 24px; border-radius: 30px; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);">
+                    <i class="fas fa-calendar-alt"></i>
+                    View Meeting Schedule
+                </a>
+                <a href="#" style="display: flex; align-items: center; gap: 10px; background: rgba(75, 192, 192, 0.2); color: white; text-decoration: none; padding: 12px 24px; border-radius: 30px; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);">
+                    <i class="fas fa-file-pdf"></i>
+                    Download Full CIP Document
+                </a>
+                <a href="#" style="display: flex; align-items: center; gap: 10px; background: rgba(75, 192, 192, 0.2); color: white; text-decoration: none; padding: 12px 24px; border-radius: 30px; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);">
+                    <i class="fas fa-envelope"></i>
+                    Contact Town Administrator
+                </a>
+            </div>
+        </div>
     </div>
 
     <!-- Footer Section -->
     <div class="footer">
-        <p>For questions or additional information, please contact the Town Administrator's Office at (555) 123-4567 or <a href="mailto:admin@hubbardston.gov" style="color: #FFD700;">admin@hubbardston.gov</a></p>
+        <p>For questions or additional information, please contact the Town Administrator's Office at (555) 123-4567 or <a href="mailto:admin@hubbardston.gov">admin@hubbardston.gov</a></p>
         <p>&copy; 2025 Town of Hubbardston | Last Updated: February 27, 2025</p>
     </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add hover effects for buttons
+            const actionButtons = document.querySelectorAll('a[style*="border-radius: 30px"]');
+            actionButtons.forEach(button => {
+                button.addEventListener('mouseover', function() {
+                    this.style.transform = 'translateY(-3px)';
+                    this.style.boxShadow = '0 6px 15px rgba(0, 0, 0, 0.3)';
+                    
+                    if (this.style.background.includes('0.7')) {
+                        this.style.background = 'rgba(75, 192, 192, 0.9)';
+                    } else {
+                        this.style.background = 'rgba(75, 192, 192, 0.4)';
+                    }
+                });
+                
+                button.addEventListener('mouseout', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.2)';
+                    
+                    if (this.style.background.includes('0.9')) {
+                        this.style.background = 'rgba(75, 192, 192, 0.7)';
+                    } else {
+                        this.style.background = 'rgba(75, 192, 192, 0.2)';
+                    }
+                });
+            });
+            
+            // Add smooth transitions for tables
+            const tableRows = document.querySelectorAll('tbody tr');
+            tableRows.forEach(row => {
+                row.style.transition = 'background 0.3s ease';
+            });
+        });
+    </script>
 </body>
 </html>
