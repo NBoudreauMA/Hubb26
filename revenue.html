@@ -674,44 +674,390 @@
             </a>
             
             <!-- Historical Revenue Timeline -->
-            <div class="revenue-timeline">
-                <h3 class="timeline-title">Historical Revenue Growth</h3>
+           <!-- Enhanced Historical Revenue Section -->
+<div class="revenue-history">
+    <h3 class="section-title">Historical Revenue Analysis</h3>
+    
+    <div class="history-container">
+        <!-- Revenue Growth Chart -->
+        <div class="history-chart">
+            <h4 class="subsection-title">FY20-FY26 Revenue Growth</h4>
+            <svg width="100%" height="300" viewBox="0 0 600 300">
+                <!-- Background grid -->
+                <line x1="50" y1="250" x2="550" y2="250" stroke="#444" stroke-width="1" />
+                <line x1="50" y1="200" x2="550" y2="200" stroke="#444" stroke-width="1" stroke-dasharray="4" />
+                <line x1="50" y1="150" x2="550" y2="150" stroke="#444" stroke-width="1" stroke-dasharray="4" />
+                <line x1="50" y1="100" x2="550" y2="100" stroke="#444" stroke-width="1" stroke-dasharray="4" />
+                <line x1="50" y1="50" x2="550" y2="50" stroke="#444" stroke-width="1" stroke-dasharray="4" />
                 
-                <div class="timeline-container">
-                    <div class="timeline-item">
-                        <div class="timeline-year">FY26 (Projected)</div>
-                        <div class="timeline-content">
-                            <div class="timeline-amount">$11,719,755</div>
-                            <p class="timeline-text">Projected 5.75% increase with strategic investments in tax base growth and local receipts optimization.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="timeline-item">
-                        <div class="timeline-year">FY25</div>
-                        <div class="timeline-content">
-                            <div class="timeline-amount">$11,082,404</div>
-                            <p class="timeline-text">5.1% increase from FY24, featuring improved excise tax collection and new growth.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="timeline-item">
-                        <div class="timeline-year">FY24</div>
-                        <div class="timeline-content">
-                            <div class="timeline-amount">$10,540,649</div>
-                            <p class="timeline-text">Marked increased state aid allocation and stronger local receipts from fee updates.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="timeline-item">
-                        <div class="timeline-year">FY23</div>
-                        <div class="timeline-content">
-                            <div class="timeline-amount">$9,957,882</div>
-                            <p class="timeline-text">Post-pandemic recovery year featuring renewed growth in permits and licenses.</p>
-                        </div>
-                    </div>
-                </div>
+                <!-- Y-axis labels -->
+                <text x="45" y="255" text-anchor="end" font-size="12" fill="#aaa">$9M</text>
+                <text x="45" y="205" text-anchor="end" font-size="12" fill="#aaa">$10M</text>
+                <text x="45" y="155" text-anchor="end" font-size="12" fill="#aaa">$11M</text>
+                <text x="45" y="105" text-anchor="end" font-size="12" fill="#aaa">$12M</text>
+                <text x="45" y="55" text-anchor="end" font-size="12" fill="#aaa">$13M</text>
+                
+                <!-- X-axis labels -->
+                <text x="100" y="270" text-anchor="middle" font-size="12" fill="#aaa">FY20</text>
+                <text x="183" y="270" text-anchor="middle" font-size="12" fill="#aaa">FY21</text>
+                <text x="266" y="270" text-anchor="middle" font-size="12" fill="#aaa">FY22</text>
+                <text x="349" y="270" text-anchor="middle" font-size="12" fill="#aaa">FY23</text>
+                <text x="432" y="270" text-anchor="middle" font-size="12" fill="#aaa">FY24</text>
+                <text x="515" y="270" text-anchor="middle" font-size="12" fill="#aaa">FY25</text>
+                
+                <!-- Revenue Bars (scaled to fit 9M-13M range) -->
+                <!-- FY20: $9,334,811 (height: ~84px) -->
+                <rect x="75" y="166" width="50" height="84" fill="url(#barGradient)" />
+                <text x="100" y="158" text-anchor="middle" font-size="12" fill="#fff">$9.33M</text>
+                
+                <!-- FY21: $9,750,036 (height: ~125px) -->
+                <rect x="158" y="125" width="50" height="125" fill="url(#barGradient)" />
+                <text x="183" y="117" text-anchor="middle" font-size="12" fill="#fff">$9.75M</text>
+                
+                <!-- FY22: $10,199,265 (height: ~170px) -->
+                <rect x="241" y="80" width="50" height="170" fill="url(#barGradient)" />
+                <text x="266" y="72" text-anchor="middle" font-size="12" fill="#fff">$10.20M</text>
+                
+                <!-- FY23: $10,271,623 (height: ~177px) -->
+                <rect x="324" y="73" width="50" height="177" fill="url(#barGradient)" />
+                <text x="349" y="65" text-anchor="middle" font-size="12" fill="#fff">$10.27M</text>
+                
+                <!-- FY24: $10,540,649 (height: ~204px) -->
+                <rect x="407" y="46" width="50" height="204" fill="url(#barGradient)" />
+                <text x="432" y="38" text-anchor="middle" font-size="12" fill="#fff">$10.54M</text>
+                
+                <!-- FY25: $11,046,935 (height: ~255px) -->
+                <rect x="490" y="0" width="50" height="250" fill="url(#barGradient)" />
+                <text x="515" y="-8" text-anchor="middle" font-size="12" fill="#fff">$11.05M</text>
+                
+                <!-- Trend line -->
+                <path d="M 100 166 L 183 125 L 266 80 L 349 73 L 432 46 L 515 0" 
+                      fill="none" stroke="#4bc0c0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                
+                <!-- Data points -->
+                <circle cx="100" cy="166" r="5" fill="#4bc0c0" />
+                <circle cx="183" cy="125" r="5" fill="#4bc0c0" />
+                <circle cx="266" cy="80" r="5" fill="#4bc0c0" />
+                <circle cx="349" cy="73" r="5" fill="#4bc0c0" />
+                <circle cx="432" cy="46" r="5" fill="#4bc0c0" />
+                <circle cx="515" cy="0" r="5" fill="#4bc0c0" />
+                
+                <!-- Gradient definitions -->
+                <defs>
+                    <linearGradient id="barGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stop-color="#1abc9c" />
+                        <stop offset="100%" stop-color="rgba(0, 60, 30, 0.7)" />
+                    </linearGradient>
+                </defs>
+            </svg>
+        </div>
+        
+        <!-- Revenue Composition Table -->
+        <div class="history-table">
+            <h4 class="subsection-title">Revenue Composition by Year</h4>
+            <div class="table-wrapper">
+                <table class="revenue-table">
+                    <thead>
+                        <tr>
+                            <th>Component</th>
+                            <th>FY25</th>
+                            <th>Growth</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Base Tax Levy</td>
+                            <td>$8,425,343</td>
+                            <td class="growth positive">+3.8%</td>
+                        </tr>
+                        <tr>
+                            <td>Prop 2.5 Increase</td>
+                            <td>$210,634</td>
+                            <td class="growth positive">+2.5%</td>
+                        </tr>
+                        <tr>
+                            <td>New Growth</td>
+                            <td>$130,000</td>
+                            <td class="growth neutral">0.0%</td>
+                        </tr>
+                        <tr>
+                            <td>Exempt Debt</td>
+                            <td>$82,377</td>
+                            <td class="growth neutral">0.0%</td>
+                        </tr>
+                        <tr>
+                            <td>State Aid</td>
+                            <td>$695,617</td>
+                            <td class="growth positive">+2.3%</td>
+                        </tr>
+                        <tr>
+                            <td>Local Receipts</td>
+                            <td>$1,502,964</td>
+                            <td class="growth positive">+5.4%</td>
+                        </tr>
+                        <tr class="total-row">
+                            <td>Total Revenue</td>
+                            <td>$11,046,935</td>
+                            <td class="growth positive">+4.8%</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
-</body>
-</html>
+    
+    <div class="six-year-summary">
+        <h4 class="subsection-title">Six-Year Revenue Summary</h4>
+        <div class="year-boxes">
+            <div class="year-box">
+                <div class="year">FY20</div>
+                <div class="amount">$9,334,811</div>
+                <div class="percent">Base Year</div>
+            </div>
+            <div class="year-box">
+                <div class="year">FY21</div>
+                <div class="amount">$9,750,036</div>
+                <div class="percent">+4.4%</div>
+            </div>
+            <div class="year-box">
+                <div class="year">FY22</div>
+                <div class="amount">$10,199,265</div>
+                <div class="percent">+4.6%</div>
+            </div>
+            <div class="year-box">
+                <div class="year">FY23</div>
+                <div class="amount">$10,271,623</div>
+                <div class="percent">+0.7%</div>
+            </div>
+            <div class="year-box">
+                <div class="year">FY24</div>
+                <div class="amount">$10,540,649</div>
+                <div class="percent">+2.6%</div>
+            </div>
+            <div class="year-box">
+                <div class="year">FY25</div>
+                <div class="amount">$11,046,935</div>
+                <div class="percent">+4.8%</div>
+            </div>
+            <div class="year-box highlight">
+                <div class="year">FY26</div>
+                <div class="amount">$11,719,755</div>
+                <div class="percent">+6.1%</div>
+            </div>
+        </div>
+        
+        <div class="trend-summary">
+            <h4>Trend Analysis</h4>
+            <p>Since FY20, Hubbardston's revenue has grown by <span class="highlight-text">$2,384,944</span>, representing a <span class="highlight-text">25.5%</span> increase over six years. This growth has been driven primarily by tax levy increases and expanded local receipts. The FY26 budget continues this trend with the strongest year-over-year growth in the period.</p>
+            <p>Looking ahead, the town's revenue management strategies focus on sustainable growth through new development, optimized fee structures, and careful management of tax impacts on residents.</p>
+        </div>
+    </div>
+</div>
+
+<style>
+    .revenue-history {
+        margin-top: 50px;
+        padding: 30px;
+        background: linear-gradient(135deg, rgba(0, 60, 30, 0.85), rgba(0, 90, 70, 0.75));
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        border-left: 4px solid #4bc0c0;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .revenue-history::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at top right, rgba(75, 192, 192, 0.1), transparent 60%);
+        z-index: 0;
+    }
+    
+    .section-title {
+        color: #4bc0c0;
+        text-align: center;
+        font-size: 28px;
+        margin-bottom: 30px;
+        font-weight: 600;
+        position: relative;
+        z-index: 1;
+    }
+    
+    .subsection-title {
+        color: #fff;
+        font-size: 20px;
+        margin-bottom: 20px;
+        position: relative;
+        z-index: 1;
+        text-align: center;
+    }
+    
+    .history-container {
+        display: flex;
+        gap: 30px;
+        margin-bottom: 40px;
+        position: relative;
+        z-index: 1;
+    }
+    
+    .history-chart, .history-table {
+        flex: 1;
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+        padding: 20px;
+    }
+    
+    /* Table Styling */
+    .table-wrapper {
+        overflow-x: auto;
+    }
+    
+    .revenue-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    
+    .revenue-table th {
+        background: rgba(0, 0, 0, 0.3);
+        color: #4bc0c0;
+        text-align: left;
+        padding: 12px 15px;
+        font-weight: 600;
+    }
+    
+    .revenue-table td {
+        padding: 10px 15px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        color: #fff;
+    }
+    
+    .revenue-table .total-row {
+        background: rgba(75, 192, 192, 0.1);
+        font-weight: 600;
+    }
+    
+    .revenue-table .growth {
+        text-align: right;
+        font-weight: 500;
+    }
+    
+    .revenue-table .positive {
+        color: #2ecc71;
+    }
+    
+    .revenue-table .negative {
+        color: #e74c3c;
+    }
+    
+    .revenue-table .neutral {
+        color: #f1c40f;
+    }
+    
+    /* Six Year Summary */
+    .six-year-summary {
+        position: relative;
+        z-index: 1;
+    }
+    
+    .year-boxes {
+        display: flex;
+        justify-content: space-between;
+        gap: 15px;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+    }
+    
+    .year-box {
+        flex: 1;
+        min-width: 120px;
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 8px;
+        padding: 15px;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+    
+    .year-box:hover {
+        transform: translateY(-5px);
+        background: rgba(0, 0, 0, 0.3);
+    }
+    
+    .year-box.highlight {
+        background: rgba(75, 192, 192, 0.2);
+        border: 1px solid rgba(75, 192, 192, 0.5);
+    }
+    
+    .year-box .year {
+        font-size: 18px;
+        font-weight: 600;
+        color: #4bc0c0;
+        margin-bottom: 5px;
+    }
+    
+    .year-box .amount {
+        font-size: 16px;
+        color: #fff;
+        margin-bottom: 5px;
+    }
+    
+    .year-box .percent {
+        font-size: 14px;
+        color: #2ecc71;
+        font-weight: 500;
+    }
+    
+    .trend-summary {
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+    }
+    
+    .trend-summary h4 {
+        color: #4bc0c0;
+        margin-bottom: 15px;
+        font-size: 18px;
+    }
+    
+    .trend-summary p {
+        color: #fff;
+        line-height: 1.7;
+        margin-bottom: 15px;
+    }
+    
+    .highlight-text {
+        color: #4bc0c0;
+        font-weight: 600;
+        position: relative;
+        padding: 0 2px;
+    }
+    
+    .highlight-text::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background-color: rgba(75, 192, 192, 0.4);
+    }
+    
+    @media (max-width: 900px) {
+        .history-container {
+            flex-direction: column;
+        }
+        
+        .year-boxes {
+            justify-content: center;
+        }
+        
+        .year-box {
+            min-width: 130px;
+            margin-bottom: 10px;
+        }
+    }
+</style>
