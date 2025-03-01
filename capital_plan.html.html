@@ -1,7 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <script>
+        function showTab(tabId) {
+            // Hide all tabs
+            const tabContents = document.getElementsByClassName('tab-content');
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove('active');
+            }
+            
+            // Show the selected tab
+            document.getElementById(tabId).classList.add('active');
+            
+            // Update tab buttons
+            const tabButtons = document.getElementsByClassName('tab-button');
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove('active');
+            }
+            
+            // Find the clicked button and make it active
+            const buttons = document.querySelectorAll('.tab-button');
+            buttons.forEach(button => {
+                if (button.onclick.toString().includes(tabId)) {
+                    button.classList.add('active');
+                }
+            });
+        }
+    </script><meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hubbardston Budget Portal - Capital Improvement Plan</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -73,38 +98,103 @@
             color: #4bc0c0;
             text-transform: uppercase;
             font-weight: 600;
-            margin-top: 20px;
             margin-bottom: 25px;
-            font-size: 32px;
-            letter-spacing: 1px;
         }
         
-        .intro-text {
-            text-align: center; 
-            font-size: 18px; 
-            max-width: 900px; 
-            margin: auto; 
+        h1 {
+            font-size: 32px;
+            margin-top: 10px;
+            letter-spacing: 1px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        h1:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, #4bc0c0, transparent);
+        }
+        
+        p.intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 30px;
             line-height: 1.6;
+            font-size: 18px;
+            color: #e0e0e0;
+        }
+        
+        .cip-image {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            margin: 0 auto 30px;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+        
+        .tabs {
+            display: flex;
+            justify-content: center;
             margin-bottom: 30px;
+        }
+        
+        .tab-button {
+            background: rgba(34, 139, 34, 0.3);
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            margin: 0 10px;
+        }
+        
+        .tab-button:hover {
+            background: rgba(34, 139, 34, 0.5);
+            transform: translateY(-2px);
+        }
+        
+        .tab-button.active {
+            background: linear-gradient(135deg, #4bc0c0, #358a8a);
+            box-shadow: 0 4px 12px rgba(75, 192, 192, 0.3);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 40px;
-            background: rgba(20, 20, 20, 0.7);
-            color: white;
+            margin-bottom: 30px;
+            background: rgba(20, 20, 20, 0.5);
             border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
         }
         
         th, td {
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 14px 15px;
+            padding: 15px;
             text-align: left;
-            font-size: 16px;
-            word-wrap: break-word;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         th {
@@ -112,22 +202,140 @@
             color: white;
             font-weight: 600;
             text-transform: uppercase;
-            padding: 15px;
+            font-size: 14px;
+            position: sticky;
+            top: 0;
+        }
+        
+        td {
             font-size: 15px;
+        }
+        
+        tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        tr:hover td {
+            background: rgba(75, 192, 192, 0.1);
+            transition: background 0.3s ease;
         }
         
         .number-col {
             text-align: right;
             white-space: nowrap;
+            font-family: 'Courier New', monospace;
+            font-weight: 500;
         }
         
-        tr:nth-child(even) td {
-            background: rgba(255, 255, 255, 0.05);
+        .priority-high {
+            color: #ff7675;
+            font-weight: 600;
         }
         
-        tr:hover td {
-            background: rgba(75, 192, 192, 0.15);
-            transition: background 0.3s ease;
+        .priority-medium {
+            color: #fdcb6e;
+            font-weight: 600;
+        }
+        
+        .priority-low {
+            color: #74b9ff;
+            font-weight: 600;
+        }
+        
+        .table-footer {
+            text-align: center;
+            margin-top: 20px;
+            font-style: italic;
+            color: #aaa;
+        }
+        
+        .table-container {
+            max-height: 600px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            padding: 1px;
+            background: rgba(0, 0, 0, 0.2);
+        }
+        
+        .table-container::-webkit-scrollbar {
+            width: 12px;
+        }
+        
+        .table-container::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+        
+        .table-container::-webkit-scrollbar-thumb {
+            background: rgba(75, 192, 192, 0.5);
+            border-radius: 10px;
+        }
+        
+        .table-container::-webkit-scrollbar-thumb:hover {
+            background: rgba(75, 192, 192, 0.7);
+        }
+        
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        
+        .download-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #4bc0c0, #358a8a);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .download-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+            background: linear-gradient(135deg, #55d0d0, #409a9a);
+        }
+        
+        .download-icon {
+            font-size: 20px;
+        }
+        
+        .notes-cell {
+            color: #e67e22;
+            font-style: italic;
+        }
+        
+        /* Footer style */
+        .footer {
+            background: linear-gradient(90deg, rgba(34, 139, 34, 0.9), rgba(0, 100, 0, 0.9));
+            text-align: center;
+            padding: 20px;
+            width: 100%;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
+            margin-top: 40px;
+        }
+        
+        .footer p {
+            margin: 10px 0;
+            font-size: 16px;
+            color: white;
+        }
+        
+        .footer a {
+            color: #4bc0c0;
+            text-decoration: none;
         }
         
         .cip-section {
@@ -153,78 +361,21 @@
             line-height: 1.7;
         }
         
-        .loading {
-            text-align: center;
-            padding: 20px;
-            font-style: italic;
-            color: #4bc0c0;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
-        
-        .error-message {
-            color: #e74c3c;
-            text-align: center;
-            padding: 15px;
-            background-color: rgba(231, 76, 60, 0.2);
-            border-radius: 8px;
-            margin: 20px 0;
-            display: none;
-        }
-        
-        .button-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
-            margin: 30px 0;
-        }
-        
-        .cip-button {
-            display: inline-block;
-            padding: 12px 20px;
-            background: rgba(0, 130, 100, 0.7);
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        }
-        
-        .cip-button:hover {
-            background: rgba(0, 150, 120, 0.9);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-        }
-        
-        /* Footer style */
-        .footer {
-            background: linear-gradient(90deg, rgba(34, 139, 34, 0.9), rgba(0, 100, 0, 0.9));
-            text-align: center;
-            padding: 20px;
-            width: 100%;
-            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
-            margin-top: 40px;
-        }
-        
-        .footer p {
-            margin: 10px 0;
-            font-size: 16px;
-            color: white;
-        }
-        
-        .footer a {
-            color: #4bc0c0;
-            text-decoration: none;
-        }
-        
-        /* Responsive adjustments */
         @media (max-width: 768px) {
             .container {
-                padding: 20px;
+                padding: 20px 15px;
                 margin: 100px 15px 30px;
+            }
+            
+            .tabs {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .tab-button {
+                width: 100%;
+                margin: 5px 0;
             }
             
             th, td {
@@ -232,10 +383,8 @@
                 font-size: 14px;
             }
             
-            nav a {
-                font-size: 16px;
-                margin: 0 10px;
-                padding: 5px;
+            .table-container {
+                max-height: 400px;
             }
             
             .button-container {
@@ -243,9 +392,15 @@
                 align-items: center;
             }
             
-            .cip-button {
+            .download-button {
                 width: 100%;
                 text-align: center;
+            }
+            
+            nav a {
+                font-size: 16px;
+                margin: 0 10px;
+                padding: 5px;
             }
         }
     </style>
@@ -261,55 +416,329 @@
     
     <div class="container">
         <h1>Capital Improvement Plan (FY26-30)</h1>
-        <p class="intro-text">This five-year plan outlines Hubbardston's strategic investments in infrastructure, equipment, and facilities to ensure high-quality services and fiscal responsibility.</p>
+        <p class="intro">This five-year plan outlines Hubbardston's strategic investments in infrastructure, equipment, and facilities to ensure high-quality services and fiscal responsibility.</p>
+        
+        <img src="https://www.hubbardstonma.gov/sites/g/files/vyhlif3276/f/styles/news_image/public/news/2026_-_2030_cip_12132024.png" alt="Hubbardston Capital Improvement Plan" class="cip-image">
         
         <div class="cip-section">
             <h3>Capital Planning Overview</h3>
             <p>Hubbardston's Capital Improvement Plan is a comprehensive framework that identifies and prioritizes the town's capital projects over the next five fiscal years (FY26-30). This planning approach ensures that critical infrastructure needs are addressed in a fiscally responsible manner, avoiding deferred maintenance costs and unexpected emergency repairs.</p>
-            <p>Projects are evaluated based on several criteria, including public safety impact, service improvements, cost-effectiveness, and alignment with the town's strategic goals. Each project is assigned a priority level to guide funding decisions within our available resources.</p>
+            <p>Projects are evaluated based on several criteria, including public safety impact, service improvements, cost-effectiveness, and alignment with the town's strategic goals. Funding strategies include grants, debt exclusions, and free cash allocations to minimize direct impact on taxpayers while maintaining essential infrastructure.</p>
+        </div>
+        
+        <div class="tabs">
+            <button class="tab-button active" onclick="showTab('oneYear')">One-Year CIP</button>
+            <button class="tab-button" onclick="showTab('strategic')">Strategic CIP</button>
+        </div>
+        
+        <!-- One Year CIP Tab -->
+        <div id="oneYear" class="tab-content active">
+            <h2>One-Year Capital Improvement Plan (FY26)</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Department</th>
+                            <th>Project</th>
+                            <th>FY26</th>
+                            <th>Funding Source</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>ADMIN</td>
+                            <td>Annual Roads Improvement</td>
+                            <td class="number-col">$100,000</td>
+                            <td class="notes-cell">FREE CASH</td>
+                        </tr>
+                        <tr>
+                            <td>FIRE</td>
+                            <td>SCBA Replacement</td>
+                            <td class="number-col">$20,000</td>
+                            <td class="notes-cell">FREE CASH</td>
+                        </tr>
+                        <tr>
+                            <td>TECH</td>
+                            <td>Annual Technology Infrastructure Support</td>
+                            <td class="number-col">$20,000</td>
+                            <td class="notes-cell">FREE CASH</td>
+                        </tr>
+                        <tr>
+                            <td>DPW</td>
+                            <td>Brush Mower Replacement</td>
+                            <td class="number-col">$30,000</td>
+                            <td class="notes-cell">7-Year Lease Commitment (FREE CASH)</td>
+                        </tr>
+                        <tr>
+                            <td>DPW</td>
+                            <td>Storm Brine Applicator</td>
+                            <td class="number-col">$18,000</td>
+                            <td class="notes-cell">FREE CASH</td>
+                        </tr>
+                        <tr>
+                            <td>FIRE</td>
+                            <td>Fire Pickup Truck Replacement</td>
+                            <td class="number-col">$65,000</td>
+                            <td class="notes-cell">FREE CASH</td>
+                        </tr>
+                        <tr>
+                            <td>ADMIN</td>
+                            <td>Brigham Street Conceptual Design</td>
+                            <td class="number-col">$28,000</td>
+                            <td class="notes-cell">FREE CASH</td>
+                        </tr>
+                        <tr>
+                            <td><strong>TOTAL</strong></td>
+                            <td></td>
+                            <td class="number-col"><strong>$281,000</strong></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="table-footer">
+                One-Year Capital Improvement Plan focuses on immediate infrastructure and equipment needs funded primarily through free cash.
+            </div>
+        </div>
+        
+        <!-- Strategic CIP Tab -->
+        <div id="strategic" class="tab-content">
+            <h2>Strategic Capital Improvement Plan (FY26-30)</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Department</th>
+                            <th>Project</th>
+                            <th>Project Summary</th>
+                            <th class="number-col">FY26</th>
+                            <th class="number-col">FY27</th>
+                            <th class="number-col">FY28</th>
+                            <th class="number-col">FY29</th>
+                            <th class="number-col">Total</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>FIRE</td>
+                            <td>Fire Engine 2 Replacement</td>
+                            <td>Replacement of the aging fire engine to enhance fire response capabilities and improve reliability in emergency scenes.</td>
+                            <td class="number-col">$1,000,000</td>
+                            <td class="number-col"></td>
+                            <td class="number-col"></td>
+                            <td class="number-col"></td>
+                            <td class="number-col">$1,000,000</td>
+                            <td class="notes-cell">SEEK DEBT EXCLUSION</td>
+                        </tr>
+                        <tr>
+                            <td>DPW</td>
+                            <td>Brush Mower Replacement</td>
+                            <td>Replacement of 27-year-old brush mower to manage overgrown areas and enhance safety.</td>
+                            <td class="number-col">$150,000</td>
+                            <td class="number-col"></td>
+                            <td class="number-col"></td>
+                            <td class="number-col"></td>
+                            <td class="number-col">$150,000</td>
+                            <td class="notes-cell">SEEK DEBT EXCLUSION</td>
+                        </tr>
+                        <tr>
+                            <td>Public Safety / Municipal Operations Complex</td>
+                            <td>48 Gardner Road Project</td>
+                            <td></td>
+                            <td class="number-col">$8,500,000</td>
+                            <td class="number-col"></td>
+                            <td class="number-col"></td>
+                            <td class="number-col"></td>
+                            <td class="number-col">$8,500,000</td>
+                            <td class="notes-cell">SEEK DEBT EXCLUSION</td>
+                        </tr>
+                        <tr>
+                            <td>DPW</td>
+                            <td>Dump Truck w/ Plow</td>
+                            <td>Replacement of the aging DPW dump truck with plow to enhance snow removal capabilities and improve reliability in maintaining road safety during critical operations.</td>
+                            <td class="number-col"></td>
+                            <td class="number-col">$275,000</td>
+                            <td class="number-col"></td>
+                            <td class="number-col"></td>
+                            <td class="number-col">$275,000</td>
+                            <td class="notes-cell">DEBT EXCLUSION / SEEK GRANT FUNDING / DEBT / LEASE</td>
+                        </tr>
+                        <tr>
+                            <td>COA</td>
+                            <td>Slade Building Renovations</td>
+                            <td></td>
+                            <td class="number-col">$500,000</td>
+                            <td class="number-col"></td>
+                            <td class="number-col"></td>
+                            <td class="number-col"></td>
+                            <td class="number-col">$500,000</td>
+                            <td class="notes-cell">SEEK DEBT EXCLUSION</td>
+                        </tr>
+                        <tr>
+                            <td>LIBRARY</td>
+                            <td>Library ADA-Compliant Elevator</td>
+                            <td>Installation of an ADA-compliant elevator to improve accessibility for all patrons at Hubbardston Public Library.</td>
+                            <td class="number-col"></td>
+                            <td class="number-col">$183,500</td>
+                            <td class="number-col">$183,500</td>
+                            <td class="number-col">$183,500</td>
+                            <td class="number-col">$550,500</td>
+                            <td class="notes-cell">SEEK EVENTUAL ADA OR OTHER STRATEGIC GRANT OPPORTUNITIES</td>
+                        </tr>
+                        <tr>
+                            <td>ADMIN</td>
+                            <td>High Street Corridor Reconstruction</td>
+                            <td>Reconstruction to enhance safety, accessibility, and durability of High Street.</td>
+                            <td class="number-col">$850,000</td>
+                            <td class="number-col">$850,000</td>
+                            <td class="number-col"></td>
+                            <td class="number-col"></td>
+                            <td class="number-col">$1,700,000</td>
+                            <td class="notes-cell">SPLIT / SEEK GRANTS IN FY26 / FY27</td>
+                        </tr>
+                        <tr>
+                            <td>ADMIN / EMD</td>
+                            <td>Generator Installation</td>
+                            <td>Install a generator to ensure the building remains safe and operational as an emergency center.</td>
+                            <td class="number-col"></td>
+                            <td class="number-col">$50,000</td>
+                            <td class="number-col">$50,000</td>
+                            <td class="number-col"></td>
+                            <td class="number-col">$100,000</td>
+                            <td class="notes-cell">SEEK FEMA GRANT FUNDING</td>
+                        </tr>
+                        <tr>
+                            <td>QRSD</td>
+                            <td>Booster Water Pumps</td>
+                            <td>Install booster water pumps to ensure consistent water pressure and availability throughout the school.</td>
+                            <td class="number-col"></td>
+                            <td class="number-col">$75,000</td>
+                            <td class="number-col"></td>
+                            <td class="number-col"></td>
+                            <td class="number-col">$75,000</td>
+                            <td class="notes-cell">SEEK GRANT FUNDING</td>
+                        </tr>
+                        <tr>
+                            <td>QRSD</td>
+                            <td>Paving</td>
+                            <td>Repave school parking lots and driveways to improve safety and accessibility.</td>
+                            <td class="number-col"></td>
+                            <td class="number-col">$50,000</td>
+                            <td class="number-col">$50,000</td>
+                            <td class="number-col">$50,000</td>
+                            <td class="number-col">$150,000</td>
+                            <td class="notes-cell">SPLIT/MOVED/SEEK GRANT FUNDING IF APPLICABLE/ PARTNER WITH QRSD</td>
+                        </tr>
+                        <tr>
+                            <td>QRSD</td>
+                            <td>Boiler Replacement #2</td>
+                            <td>Replace the aging boiler unit to improve heating efficiency and reliability.</td>
+                            <td class="number-col"></td>
+                            <td class="number-col">$50,000</td>
+                            <td class="number-col">$50,000</td>
+                            <td class="number-col"></td>
+                            <td class="number-col">$100,000</td>
+                            <td class="notes-cell">SEEK GRANT FUNDING</td>
+                        </tr>
+                        <tr>
+                            <td>LIBRARY</td>
+                            <td>Library Basement Remodel</td>
+                            <td>Renovation of Hubbardston Public Library basement to create functional space for programs, individual and group study areas, and enhanced collections. Includes site assessment, security audit, design, construction, and signage.</td>
+                            <td class="number-col"></td>
+                            <td class="number-col">$75,000</td>
+                            <td class="number-col">$75,000</td>
+                            <td class="number-col">$75,000</td>
+                            <td class="number-col">$225,000</td>
+                            <td class="notes-cell">SEEK CPA / DEBT/ GRANT FUNDING</td>
+                        </tr>
+                        <tr>
+                            <td>PARKS</td>
+                            <td>Skate Park</td>
+                            <td>Update Curtis Field skate park; potential grants available for funding improvements.</td>
+                            <td class="number-col">$25,000</td>
+                            <td class="number-col"></td>
+                            <td class="number-col"></td>
+                            <td class="number-col"></td>
+                            <td class="number-col">$25,000</td>
+                            <td class="notes-cell">SEEK GRANT FUNDING</td>
+                        </tr>
+                        <tr>
+                            <td>PARKS</td>
+                            <td>Walking Track</td>
+                            <td>Repair Curtis Rec field walking track due to pavement cracking from tree roots.</td>
+                            <td class="number-col">$75,000</td>
+                            <td class="number-col"></td>
+                            <td class="number-col"></td>
+                            <td class="number-col"></td>
+                            <td class="number-col">$75,000</td>
+                            <td class="notes-cell">SEEK CPA / GRANT FUNDING</td>
+                        </tr>
+                        <tr>
+                            <td>ADMIN</td>
+                            <td>Main Street Lighting</td>
+                            <td>Add dark sky-compliant LED lighting to enhance safety and aesthetics on Main Street.</td>
+                            <td class="number-col"></td>
+                            <td class="number-col">$35,000</td>
+                            <td class="number-col">$35,000</td>
+                            <td class="number-col"></td>
+                            <td class="number-col">$70,000</td>
+                            <td class="notes-cell">SEEK GRANT FUNDING</td>
+                        </tr>
+                        <tr>
+                            <td>ADMIN</td>
+                            <td>Town-Owned Land Feasibility</td>
+                            <td>Study to assess potential uses for town-owned land for community services or revenue.</td>
+                            <td class="number-col"></td>
+                            <td class="number-col">$25,000</td>
+                            <td class="number-col"></td>
+                            <td class="number-col"></td>
+                            <td class="number-col">$25,000</td>
+                            <td class="notes-cell">SEEK GRANT FUNDING</td>
+                        </tr>
+                        <tr>
+                            <td>ADMIN / PARKS / SP. EVENTS</td>
+                            <td>Flagpole Replacement & Community Space</td>
+                            <td>Create a multi-use community space with a new flagpole, holiday tree, and park area.</td>
+                            <td class="number-col"></td>
+                            <td class="number-col"></td>
+                            <td class="number-col"></td>
+                            <td class="number-col">$100,000</td>
+                            <td class="number-col">$100,000</td>
+                            <td class="notes-cell">SEEK GRANT FUNDING</td>
+                        </tr>
+                        <tr>
+                            <td><strong>TOTAL</strong></td>
+                            <td></td>
+                            <td></td>
+                            <td class="number-col"><strong>$11,100,000</strong></td>
+                            <td class="number-col"><strong>$1,668,500</strong></td>
+                            <td class="number-col"><strong>$443,500</strong></td>
+                            <td class="number-col"><strong>$408,500</strong></td>
+                            <td class="number-col"><strong>$13,620,500</strong></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="table-footer">
+                This strategic plan provides a framework for evaluating and prioritizing capital needs while pursuing debt exclusions and grant opportunities to minimize direct taxpayer impact.
+            </div>
         </div>
         
         <div class="button-container">
-            <a href="#one-year-plan" class="cip-button">📊 One-Year Plan Details</a>
-            <a href="#strategic-plan" class="cip-button">💰 Five-Year Strategic Plan</a>
-            <a href="cip_report.pdf" class="cip-button" target="_blank">📄 Download Complete CIP Report</a>
-        </div>
-        
-        <div id="errorMessage" class="error-message">
-            An error occurred while loading the capital improvement data. Please try again later.
-        </div>
-        
-        <h2 id="one-year-plan">One-Year Capital Improvement Plan</h2>
-        <div class="loading" id="oneYearLoading">Loading one-year plan data...</div>
-        <table id="oneYearCIPTable">
-            <thead></thead>
-            <tbody></tbody>
-        </table>
-        
-        <div class="cip-section">
-            <h3>Funding Strategy</h3>
-            <p>The one-year capital plan focuses on the most critical infrastructure and equipment needs for FY26. These investments are carefully balanced with operational funding needs to ensure budgetary stability while addressing essential capital requirements.</p>
-            <p>Funding sources include a combination of tax levy, enterprise funds, borrowing, and grants. Projects with high public safety impact or potential for significant cost avoidance have been prioritized in the current fiscal year.</p>
-        </div>
-        
-        <h2 id="strategic-plan">Strategic Capital Improvement Plan</h2>
-        <div class="loading" id="strategicLoading">Loading five-year strategic plan data...</div>
-        <table id="strategicCIPTable">
-            <thead></thead>
-            <tbody></tbody>
-        </table>
-        
-        <div class="cip-section">
-            <h3>Long-Term Planning Benefits</h3>
-            <p>This five-year capital improvement plan provides numerous benefits to Hubbardston:</p>
-            <ul>
-                <li>Creates a structured framework for evaluating competing capital needs</li>
-                <li>Allows for strategic planning of debt service and financing</li>
-                <li>Coordinates interdependent projects to maximize efficiency</li>
-                <li>Provides transparency to residents about upcoming infrastructure investments</li>
-                <li>Helps secure grants and alternative funding by demonstrating planning foresight</li>
-            </ul>
-            <p>The Capital Improvement Committee reviews and updates this plan annually in coordination with department heads and the Town Administrator to ensure it remains responsive to changing conditions and priorities.</p>
+            <a href="cip_one_year.pdf" class="download-button" download>
+                <span class="download-icon">📄</span>
+                Download One-Year CIP Report
+            </a>
+            <a href="cip_strategic.pdf" class="download-button" download>
+                <span class="download-icon">📄</span>
+                Download Strategic CIP Report
+            </a>
+            <a href="cip_full_report.pdf" class="download-button" download>
+                <span class="download-icon">📄</span>
+                Download Complete CIP Report
+            </a>
         </div>
     </div>
     
@@ -317,166 +746,3 @@
         <p>For questions or additional information about the Capital Improvement Plan, please contact the Town Administrator's Office at (978) 928-1400 X200 or <a href="mailto:admin@hubbardstonma.gov">admin@hubbardston.gov</a></p>
         <p>&copy; 2025 Town of Hubbardston | Last Updated: February 27, 2025</p>
     </div>
-    
-    <script>
-        // Sample data to use when CSV files can't be loaded
-        const sampleOneYearData = [
-            ["Department", "Project", "Priority", "FY26 Cost"],
-            ["DPW", "Road Repaving Project", "High", "$450,000.00"],
-            ["Fire", "New Pumper Truck", "High", "$625,000.00"],
-            ["Parks & Rec", "Playground Equipment", "Medium", "$75,000.00"],
-            ["Police", "Vehicle Replacement", "Medium", "$65,000.00"],
-            ["Town Hall", "HVAC System Upgrade", "Low", "$125,000.00"]
-        ];
-        
-        const sampleStrategicData = [
-            ["Department", "Project", "Priority", "FY26", "FY27", "FY28", "FY29", "FY30", "Total"],
-            ["DPW", "Road Infrastructure", "High", "$450,000.00", "$475,000.00", "$500,000.00", "$525,000.00", "$550,000.00", "$2,500,000.00"],
-            ["Fire", "Equipment Upgrades", "High", "$625,000.00", "$50,000.00", "$350,000.00", "$50,000.00", "$450,000.00", "$1,525,000.00"],
-            ["Parks & Rec", "Facilities Improvement", "Medium", "$75,000.00", "$80,000.00", "$85,000.00", "$90,000.00", "$95,000.00", "$425,000.00"],
-            ["Police", "Technology & Vehicles", "Medium", "$65,000.00", "$175,000.00", "$70,000.00", "$180,000.00", "$75,000.00", "$565,000.00"],
-            ["Town Hall", "Building Maintenance", "Low", "$125,000.00", "$50,000.00", "$200,000.00", "$50,000.00", "$150,000.00", "$575,000.00"]
-        ];
-
-        function formatCurrency(value) {
-            if (!value || value === "-") return "-";
-            
-            // Remove any existing formatting and convert to number
-            let num = typeof value === 'string' 
-                ? parseFloat(value.replace(/[^0-9.-]+/g, ""))
-                : parseFloat(value);
-                
-            if (isNaN(num)) return value;
-            
-            return new Intl.NumberFormat('en-US', { 
-                style: 'currency', 
-                currency: 'USD',
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2
-            }).format(num);
-        }
-
-        function cleanCSVRow(row) {
-            return row
-                .filter(cell => cell !== '') // Remove empty cells
-                .map(cell => {
-                    // Clean quotes and extra whitespace
-                    return String(cell).trim().replace(/^"|"$/g, "");
-                });
-        }
-        
-        function parseCSV(csvText) {
-            // Handle different line endings
-            csvText = csvText.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
-            
-            const lines = csvText.split('\n');
-            const result = [];
-            
-            // Process each line
-            for (const line of lines) {
-                if (!line.trim()) continue; // Skip empty lines
-                
-                // Simple CSV parsing (doesn't handle quoted commas)
-                const row = line.split(',');
-                result.push(cleanCSVRow(row));
-            }
-            
-            return result;
-        }
-
-        function populateTable(tableId, data, hasNumericColumns = true) {
-            const table = document.getElementById(tableId);
-            
-            // Clear existing content
-            const thead = table.querySelector("thead");
-            const tbody = table.querySelector("tbody");
-            thead.innerHTML = "";
-            tbody.innerHTML = "";
-            
-            // Create header row
-            const headerRow = document.createElement("tr");
-            data[0].forEach(header => {
-                const th = document.createElement("th");
-                th.textContent = header;
-                headerRow.appendChild(th);
-            });
-            thead.appendChild(headerRow);
-            
-            // Create data rows
-            data.slice(1).forEach(row => {
-                const tr = document.createElement("tr");
-                row.forEach((cell, index) => {
-                    const td = document.createElement("td");
-                    
-                    // Format numeric columns (usually starting from index 2 or 3)
-                    if (hasNumericColumns && index > 2) {
-                        td.textContent = formatCurrency(cell);
-                        td.classList.add("number-col");
-                    } else {
-                        td.textContent = cell;
-                    }
-                    
-                    tr.appendChild(td);
-                });
-                tbody.appendChild(tr);
-            });
-        }
-
-        function loadTableData(filePath, tableId, loadingId, backupData) {
-            const loadingElement = document.getElementById(loadingId);
-            
-            // Attempt to fetch the CSV file
-            fetch(filePath)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.text();
-                })
-                .then(csvText => {
-                    // Hide loading message
-                    loadingElement.style.display = 'none';
-                    
-                    // Parse and display CSV data
-                    const rows = parseCSV(csvText);
-                    populateTable(tableId, rows);
-                })
-                .catch(error => {
-                    console.warn(`Error loading CSV (${filePath}):`, error);
-                    
-                    // Hide loading message
-                    loadingElement.style.display = 'none';
-                    
-                    // Use backup data instead
-                    populateTable(tableId, backupData);
-                });
-        }
-        
-        // Initialize tables when the DOM is fully loaded
-        document.addEventListener("DOMContentLoaded", function() {
-            // Try to load CSV files, fall back to sample data if needed
-            loadTableData("one_year_CIP.csv", "oneYearCIPTable", "oneYearLoading", sampleOneYearData);
-            loadTableData("strategic_CIP.csv", "strategicCIPTable", "strategicLoading", sampleStrategicData);
-            
-            // Hide error message initially
-            document.getElementById("errorMessage").style.display = "none";
-            
-            // Smooth scrolling for anchor links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    const targetElement = document.querySelector(targetId);
-                    
-                    if (targetElement) {
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 100,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            });
-        });
-    </script>
-</body>
-</html>
