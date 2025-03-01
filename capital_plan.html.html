@@ -29,14 +29,16 @@
             text-transform: uppercase;
             font-weight: 600;
         }
+        .table-container {
+            overflow-y: auto;
+            max-height: 500px;
+        }
         table {
             width: 100%;
             border-collapse: collapse;
-            margin: 20px 0;
             background: rgba(255, 255, 255, 0.1);
             color: white;
             border-radius: 10px;
-            overflow: hidden;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
         }
         th, td {
@@ -44,6 +46,7 @@
             padding: 12px 15px;
             text-align: left;
             font-size: 16px;
+            white-space: nowrap;
         }
         th {
             background: linear-gradient(135deg, #4bc0c0, #358a8a);
@@ -67,19 +70,27 @@
         <p style="text-align: center; font-size: 18px; max-width: 900px; margin: auto; line-height: 1.6;">This five-year plan outlines Hubbardston's strategic investments in infrastructure, equipment, and facilities to ensure high-quality services and fiscal responsibility.</p>
         
         <h2>One-Year Capital Improvement Plan</h2>
-        <table id="oneYearCIPTable">
-            <thead></thead>
-            <tbody></tbody>
-        </table>
+        <div class="table-container">
+            <table id="oneYearCIPTable">
+                <thead></thead>
+                <tbody></tbody>
+            </table>
+        </div>
         
         <h2>Strategic Capital Improvement Plan</h2>
-        <table id="strategicCIPTable">
-            <thead></thead>
-            <tbody></tbody>
-        </table>
+        <div class="table-container">
+            <table id="strategicCIPTable">
+                <thead></thead>
+                <tbody></tbody>
+            </table>
+        </div>
     </div>
     
     <script>
+        function formatCurrency(value) {
+            return value.startsWith("$") ? value : `$${parseFloat(value).toLocaleString("en-US", {minimumFractionDigits: 2})}`;
+        }
+
         function fetchAndDisplayCSV(filePath, tableId) {
             fetch(filePath)
                 .then(response => response.text())
@@ -101,9 +112,9 @@
                     tbody.innerHTML = "";
                     rows.slice(1).forEach(row => {
                         let tr = document.createElement("tr");
-                        row.forEach(cell => {
+                        row.forEach((cell, index) => {
                             let td = document.createElement("td");
-                            td.textContent = cell;
+                            td.textContent = index > 2 ? formatCurrency(cell) : cell;
                             tr.appendChild(td);
                         });
                         tbody.appendChild(tr);
