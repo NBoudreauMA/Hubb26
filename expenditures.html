@@ -658,78 +658,156 @@
         <a href="citizens_guide.html">CITIZEN'S GUIDE</a>
     </nav>
 
-    <div class="container">
-        <div class="budget-dollar-section">
-            <h2 class="budget-dollar-title">HOW YOUR TAX DOLLAR IS SPENT</h2>
-            <p class="budget-total">Total Budget: $11,842,383.18</p>
-            
-            <div class="dollar-visualization">
-                <div class="dollar-container">
-                    <!-- Dollar image with overlay segments -->
-                    <img src="https://github.com/NBoudreauMA/Hubb26/blob/main/HUBBARDSTON.png?raw=true" alt="Hubbardston Dollar" class="dollar-image">
-                    
-                    <!-- Colored overlay segments -->
-                    <div class="segments-container">
-                        <!-- Education: 62.0% -->
-                        <div class="segment" style="width: 62.0%; background-color: rgba(52, 152, 219, 0.5);" onmouseover="showTooltip(this, 'Education', '$7,334,562.64', '62.0%', '62.0¢')" onmouseout="hideTooltip(this)">
-                            <div class="segment-label">Education<br>62.0¢</div>
-                        </div>
-                        
-                        <!-- Public Safety: 13.5% -->
-                        <div class="segment" style="width: 13.5%; background-color: rgba(231, 76, 60, 0.5);" onmouseover="showTooltip(this, 'Public Safety', '$1,595,193.23', '13.5%', '13.5¢')" onmouseout="hideTooltip(this)">
-                            <div class="segment-label">13.5¢</div>
-                        </div>
-                        
-                        <!-- Public Works: 7.8% -->
-                        <div class="segment" style="width: 7.8%; background-color: rgba(26, 188, 156, 0.5);" onmouseover="showTooltip(this, 'Public Works', '$920,184.29', '7.8%', '7.8¢')" onmouseout="hideTooltip(this)">
-                            <div class="segment-label">7.8¢</div>
-                        </div>
-                        
-                        <!-- General Government: 6.1% -->
-                        <div class="segment" style="width: 6.1%; background-color: rgba(241, 196, 15, 0.5);" onmouseover="showTooltip(this, 'General Government', '$724,886.38', '6.1%', '6.1¢')" onmouseout="hideTooltip(this)">
-                            <div class="segment-label">6.1¢</div>
-                        </div>
-                        
-                        <!-- Liabilities: 8.4% -->
-                        <div class="segment" style="width: 8.4%; background-color: rgba(155, 89, 182, 0.5);" onmouseover="showTooltip(this, 'Liabilities & Assessments', '$999,454.94', '8.4%', '8.4¢')" onmouseout="hideTooltip(this)">
-                            <div class="segment-label">8.4¢</div>
-                        </div>
-                        
-                        <!-- Debt: 1.2% -->
-                        <div class="segment" style="width: 1.2%; background-color: rgba(230, 126, 34, 0.5);" onmouseover="showTooltip(this, 'Debt', '$146,862.00', '1.2%', '1.2¢')" onmouseout="hideTooltip(this)">
-                            <div class="segment-label">1.2¢</div>
-                        </div>
-                        
-                        <!-- Culture & Recreation: 0.8% -->
-                        <div class="segment" style="width: 0.8%; background-color: rgba(0, 188, 212, 0.5);" onmouseover="showTooltip(this, 'Culture & Recreation', '$94,289.70', '0.8%', '0.8¢')" onmouseout="hideTooltip(this)">
-                            <div class="segment-label">0.8¢</div>
-                        </div>
-                        
-                        <!-- Human Services: 0.2% -->
-                        <div class="segment" style="width: 0.2%; background-color: rgba(255, 128, 171, 0.5);" onmouseover="showTooltip(this, 'Human Services', '$26,950.00', '0.2%', '0.2¢')" onmouseout="hideTooltip(this)">
-                            <div class="segment-label">0.2¢</div>
-                        </div>
-                    </div>
-                    
-                    <!-- Tooltip that appears on hover -->
-                    <div id="dollar-tooltip" class="dollar-tooltip">
-                        <div id="tooltip-title" class="tooltip-title"></div>
-                        <div class="tooltip-content">
-                            <div class="tooltip-label">Budget amount:</div>
-                            <div id="tooltip-amount" class="tooltip-value"></div>
-                            <div class="tooltip-label">Percentage:</div>
-                            <div id="tooltip-percent" class="tooltip-value"></div>
-                            <div class="tooltip-label">Of each dollar:</div>
-                            <div id="tooltip-cents" class="tooltip-value"></div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="dollar-info">
-                    Hover over dollar sections to see department details
-                </div>
-            </div>
+  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hubbardston Budget Dollar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4f4f4;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .budget-dollar-container {
+            width: 90%;
+            max-width: 600px;
+            background: rgba(0, 40, 20, 0.85);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+
+        .dollar-visualization {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dollar-image {
+            width: 100%;
+            display: block;
+            height: auto;
+            position: relative;
+        }
+
+        .segments-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: flex;
+            align-items: stretch;
+            pointer-events: none;
+            width: 100%;
+            height: 100%;
+        }
+
+        .segment {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            cursor: pointer;
+            transition: opacity 0.2s ease;
+            pointer-events: auto;
+        }
+
+        .segment:hover {
+            opacity: 0.85;
+        }
+
+        .segment-label {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            font-size: 12px;
+            padding: 3px;
+            z-index: 5;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+        }
+
+        .budget-total {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="budget-dollar-container">
+        <div class="dollar-visualization" id="dollar-visualization">
+            <img src="https://github.com/NBoudreauMA/Hubb26/blob/main/HUBBARDSTON.png?raw=true" alt="Hubbardston Dollar" class="dollar-image" id="dollar-image">
+            <div class="segments-container" id="segments-container"></div>
         </div>
+        <div class="budget-total">Total Budget: $11,842,383.18</div>
+    </div>
+
+    <script>
+        function adjustOverlay() {
+            const image = document.getElementById("dollar-image");
+            const segmentsContainer = document.getElementById("segments-container");
+
+            // Get exact width and height of the image
+            const rect = image.getBoundingClientRect();
+
+            // Ensure the container aligns exactly with the image
+            segmentsContainer.style.width = rect.width + "px";
+            segmentsContainer.style.height = rect.height + "px";
+            segmentsContainer.style.top = image.offsetTop + "px";
+            segmentsContainer.style.left = image.offsetLeft + "px";
+            segmentsContainer.style.position = "absolute";
+
+            segmentsContainer.innerHTML = ''; // Clear previous segments
+
+            const categories = [
+                { id: 'education', percentage: 62.0, color: 'rgba(52, 152, 219, 0.5)', label: '62.0¢' },
+                { id: 'safety', percentage: 13.5, color: 'rgba(231, 76, 60, 0.5)', label: '13.5¢' },
+                { id: 'works', percentage: 7.8, color: 'rgba(26, 188, 156, 0.5)', label: '7.8¢' },
+                { id: 'gov', percentage: 6.1, color: 'rgba(241, 196, 15, 0.5)', label: '6.1¢' },
+                { id: 'liabilities', percentage: 8.4, color: 'rgba(155, 89, 182, 0.5)', label: '8.4¢' },
+                { id: 'other', percentage: 2.2, color: 'rgba(52, 73, 94, 0.5)', label: '2.2¢' }
+            ];
+
+            let leftOffset = 0;
+            categories.forEach(cat => {
+                const segment = document.createElement("div");
+                segment.className = "segment";
+                segment.style.width = (cat.percentage / 100) * rect.width + "px";
+                segment.style.height = rect.height + "px";
+                segment.style.background = cat.color;
+                segment.style.position = "absolute";
+                segment.style.left = leftOffset + "px";
+
+                const label = document.createElement("div");
+                label.className = "segment-label";
+                label.innerText = cat.label;
+
+                segment.appendChild(label);
+                segmentsContainer.appendChild(segment);
+                leftOffset += (cat.percentage / 100) * rect.width;
+            });
+        }
+
+        window.onload = adjustOverlay;
+        window.onresize = adjustOverlay;
+    </script>
+</body>
+</html>
+
             
         <!-- Department Details -->
         <div class="department-grid">
