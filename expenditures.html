@@ -127,65 +127,27 @@
         }
         
         /* Dollar Visualization Section */
-        .budget-dollar-section {
-            background: linear-gradient(135deg, rgba(0, 60, 30, 0.85), rgba(0, 90, 70, 0.75));
-            border-radius: 12px;
-            padding: 35px 40px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            border-left: 4px solid #4bc0c0;
-            margin: 35px 0;
+   <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hubbardston Budget Dollar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .budget-dollar-container {
+            max-width: 700px;
+            margin: 0 auto;
             position: relative;
-            overflow: hidden;
-        }
-        
-        .budget-dollar-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at top right, rgba(75, 192, 192, 0.1), transparent 60%);
-            z-index: 0;
-        }
-        
-        .budget-dollar-title {
-            color: #4bc0c0;
-            text-align: center;
-            font-size: 32px;
-            margin-bottom: 20px;
-            font-weight: 600;
-            position: relative;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        
-        .budget-total {
-            color: white;
-            text-align: center;
-            font-size: 22px;
-            margin-bottom: 30px;
-            position: relative;
-            font-weight: 500;
+            font-family: 'Poppins', sans-serif;
         }
         
         .dollar-visualization {
             position: relative;
-            max-width: 700px;
-            margin: 0 auto 20px;
-            z-index: 1;
-        }
-        
-        .dollar-container {
-            position: relative;
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
-            transition: all 0.3s ease;
-        }
-        
-        .dollar-container:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            margin-bottom: 10px;
         }
         
         .dollar-image {
@@ -205,18 +167,10 @@
         .segment {
             height: 100%;
             position: relative;
-            transition: all 0.3s ease;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-right: 1px solid rgba(0, 0, 0, 0.3);
-        }
-        
-        .segment:hover {
-            transform: scale(1.02);
-            z-index: 10;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
         }
         
         .segment-label {
@@ -224,70 +178,85 @@
             font-weight: bold;
             text-align: center;
             text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
-            padding: 5px;
             font-size: 16px;
-            transition: all 0.3s ease;
-            opacity: 0;
-        }
-        
-        .segment:hover .segment-label {
-            opacity: 1;
-            transform: scale(1.1);
-        }
-        
-        .dollar-tooltip {
-            display: none;
-            position: absolute;
-            background: white;
-            color: #333;
-            border-radius: 10px;
-            padding: 15px;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.4);
-            z-index: 100;
-            min-width: 240px;
-            text-align: left;
-            top: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            margin-top: 15px;
-            animation: fadeIn 0.3s ease;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateX(-50%) translateY(-10px); }
-            to { opacity: 1; transform: translateX(-50%) translateY(0); }
-        }
-        
-        .tooltip-title {
-            font-weight: bold;
-            font-size: 18px;
-            margin-bottom: 10px;
-            color: #333;
-            border-bottom: 2px solid #4bc0c0;
-            padding-bottom: 8px;
-        }
-        
-        .tooltip-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-        }
-        
-        .tooltip-label {
-            color: #555;
-        }
-        
-        .tooltip-value {
-            font-weight: 500;
-            text-align: right;
-        }
-        
-        .dollar-info {
-            text-align: center;
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 16px;
-            margin: 10px 0 20px;
             position: relative;
+            z-index: 5;
+        }
+        
+        .segment-percent {
+            font-size: 24px;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .budget-total {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="budget-dollar-container">
+        <div class="dollar-visualization">
+            <!-- Dollar image -->
+            <img src="https://github.com/NBoudreauMA/Hubb26/blob/main/HUBBARDSTON.png?raw=true" alt="Hubbardston Dollar" class="dollar-image">
+            
+            <!-- Colored overlay segments -->
+            <div class="segments-container">
+                <!-- Education: 62.0% -->
+                <div class="segment" style="width: 62.0%; background-color: rgba(52, 152, 219, 0.5);">
+                    <div class="segment-label">
+                        <span>Education</span><br>
+                        <span class="segment-percent">62.0¢</span>
+                    </div>
+                </div>
+                
+                <!-- Public Safety: 13.5% -->
+                <div class="segment" style="width: 13.5%; background-color: rgba(231, 76, 60, 0.5);">
+                    <div class="segment-label">
+                        <span>Public Safety</span><br>
+                        <span class="segment-percent">13.5¢</span>
+                    </div>
+                </div>
+                
+                <!-- Public Works: 7.8% -->
+                <div class="segment" style="width: 7.8%; background-color: rgba(26, 188, 156, 0.5);">
+                    <div class="segment-label">
+                        <span>Public Works</span><br>
+                        <span class="segment-percent">7.8¢</span>
+                    </div>
+                </div>
+                
+                <!-- General Government: 6.1% -->
+                <div class="segment" style="width: 6.1%; background-color: rgba(241, 196, 15, 0.5);">
+                    <div class="segment-label">
+                        <span>General Gov</span><br>
+                        <span class="segment-percent">6.1¢</span>
+                    </div>
+                </div>
+                
+                <!-- Liabilities: 8.4% -->
+                <div class="segment" style="width: 8.4%; background-color: rgba(155, 89, 182, 0.5);">
+                    <div class="segment-label">
+                        <span>Liabilities</span><br>
+                        <span class="segment-percent">8.4¢</span>
+                    </div>
+                </div>
+                
+                <!-- Other: 2.2% combined for smaller categories -->
+                <div class="segment" style="width: 2.2%; background-color: rgba(52, 73, 94, 0.5);">
+                    <div class="segment-label">
+                        <span class="segment-percent">2.2¢</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="budget-total">Total Budget: $11,842,383.18</div>
+    </div>
+</body>
+</html>
         }
         
         /* Department Details */
