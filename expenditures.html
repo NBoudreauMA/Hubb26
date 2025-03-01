@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hubbardston Budget Portal - Expenditures</title>
+    <title>Hubbardston Budget Dollar - Expenditures</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -90,8 +90,8 @@
             text-transform: uppercase;
         }
         
-        /* Expenditures Header */
-        .expenditures-header {
+        /* Dollar Visualization Section */
+        .budget-dollar-section {
             background: linear-gradient(135deg, rgba(0, 60, 30, 0.85), rgba(0, 90, 70, 0.75));
             border-radius: 12px;
             padding: 35px 40px;
@@ -100,10 +100,9 @@
             margin: 35px 0;
             position: relative;
             overflow: hidden;
-            backdrop-filter: blur(5px);
         }
         
-        .expenditures-header::before {
+        .budget-dollar-section::before {
             content: '';
             position: absolute;
             top: 0;
@@ -114,453 +113,294 @@
             z-index: 0;
         }
         
-        .expenditures-title {
+        .budget-dollar-title {
             color: #4bc0c0;
             text-align: center;
-            font-size: 34px;
+            font-size: 28px;
             margin-bottom: 28px;
             font-weight: 600;
-            text-transform: none;
-            letter-spacing: 0;
             position: relative;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
         
-        .expenditures-content {
+        .budget-total {
             color: white;
-            font-size: 17px;
-            line-height: 1.8;
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 35px;
             position: relative;
         }
         
-        .expenditures-content p {
-            margin-bottom: 22px;
-            opacity: 0.95;
-        }
-        
-        .highlight-number {
-            color: #4bc0c0;
-            font-weight: 600;
+        .dollar-visualization {
             position: relative;
-            padding: 0 2px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            z-index: 1;
         }
         
-        .highlight-number::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
+        .dollar-container {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .dollar-image {
             width: 100%;
-            height: 1px;
-            background-color: rgba(75, 192, 192, 0.4);
+            display: block;
         }
         
-        /* Charts Section */
-        .charts-section {
+        .segments-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .segment {
+            height: 100%;
+            position: relative;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-right: 1px solid rgba(0, 0, 0, 0.3);
+        }
+        
+        .segment:hover {
+            transform: scale(1.02);
+            z-index: 2;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+        }
+        
+        .segment-label {
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+            padding: 5px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .segment:hover .segment-label {
+            transform: scale(1.1);
+        }
+        
+        .dollar-tooltip {
+            display: none;
+            position: absolute;
+            background: white;
+            color: #333;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            z-index: 100;
+            min-width: 220px;
+            text-align: left;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-top: 15px;
+        }
+        
+        .tooltip-title {
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #333;
+            border-bottom: 2px solid #4bc0c0;
+            padding-bottom: 5px;
+        }
+        
+        .tooltip-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        
+        .tooltip-label {
+            color: #555;
+        }
+        
+        .tooltip-value {
+            font-weight: 500;
+            text-align: right;
+        }
+        
+        .dollar-info {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 15px;
+            margin-top: 15px;
+            position: relative;
+        }
+        
+        /* Legend Section */
+        .dollar-legend {
             display: flex;
             flex-wrap: wrap;
-            gap: 30px;
-            margin-top: 40px;
-        }
-        
-        .chart-box {
-            flex: 1;
-            min-width: 45%;
-            background: linear-gradient(135deg, rgba(0, 60, 30, 0.85), rgba(0, 90, 70, 0.75));
-            border-radius: 12px;
-            padding: 30px;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            border-left: 4px solid #4bc0c0;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .chart-box::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at top right, rgba(75, 192, 192, 0.1), transparent 60%);
-            z-index: 0;
-        }
-        
-        .chart-title {
-            color: #4bc0c0;
-            font-size: 24px;
-            text-align: center;
-            margin-bottom: 25px;
-            position: relative;
-            z-index: 1;
-            font-weight: 600;
-        }
-        
-        .chart-display {
-            display: flex;
             justify-content: center;
-            align-items: center;
-            margin-bottom: 20px;
-            position: relative;
-            z-index: 1;
-            height: 300px;
-        }
-        
-        /* Department Details */
-        .department-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-top: 40px;
-        }
-        
-        .department-card {
-            background: linear-gradient(135deg, rgba(0, 60, 30, 0.85), rgba(0, 90, 70, 0.75));
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-            border-left: 4px solid #4bc0c0;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .department-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
-        }
-        
-        .department-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at top right, rgba(75, 192, 192, 0.1), transparent 70%);
-            z-index: 0;
-        }
-        
-        .department-title {
-            color: #4bc0c0;
-            font-size: 22px;
-            margin-bottom: 15px;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .department-amount {
-            font-size: 26px;
-            font-weight: 600;
-            color: white;
-            margin-bottom: 15px;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .department-text {
-            color: rgba(255, 255, 255, 0.9);
-            line-height: 1.6;
-            position: relative;
-            z-index: 1;
-        }
-        
-        /* Chart Legend Styling */
-        .chart-legend {
-            margin-top: 25px;
-            padding: 15px;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 10px;
+            gap: 12px;
+            margin: 30px 0;
             position: relative;
             z-index: 1;
         }
         
         .legend-item {
-            display: grid;
-            grid-template-columns: 24px 1fr auto auto;
-            gap: 15px;
+            display: flex;
             align-items: center;
-            padding: 12px 15px;
-            margin-bottom: 5px;
+            gap: 8px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 8px 12px;
             border-radius: 6px;
             transition: all 0.3s ease;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .legend-item:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
         }
         
         .legend-item:hover {
-            background: rgba(75, 192, 192, 0.1);
-            transform: translateX(5px);
+            background: rgba(75, 192, 192, 0.2);
+            transform: translateY(-2px);
         }
         
         .legend-color {
-            width: 18px;
-            height: 18px;
+            width: 16px;
+            height: 16px;
             border-radius: 4px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+            flex-shrink: 0;
         }
         
         .legend-text {
+            font-size: 14px;
             color: white;
-            font-weight: 500;
-            font-size: 16px;
         }
         
-        .legend-value {
-            color: #ffffff;
-            text-align: right;
-            font-size: 15px;
-        }
-        
-        .legend-percent {
+        .legend-cents {
             color: #4bc0c0;
-            text-align: right;
             font-weight: 600;
-            width: 60px;
-            font-size: 15px;
+            margin-left: 5px;
         }
         
-        /* Download Button */
-        .button-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin: 40px 0 20px;
-            flex-wrap: wrap;
-        }
-        
-        .download-button {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            background: rgba(0, 140, 110, 0.7);
-            color: white;
-            text-decoration: none;
-            padding: 14px 22px;
-            border-radius: 8px;
-            font-weight: 600;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-        }
-        
-        .download-button:hover {
-            background: rgba(0, 160, 130, 0.9);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-        }
-        
-        .download-button:active {
-            transform: translateY(1px);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        }
-        
-        .button-icon {
-            flex-shrink: 0;
-            transition: transform 0.3s ease;
-        }
-        
-        .download-button:hover .button-icon {
-            transform: translateY(-2px);
-        }
-        
-        /* Budget Comparison */
-        .budget-comparison {
-            margin-top: 50px;
-            background: linear-gradient(135deg, rgba(0, 60, 30, 0.85), rgba(0, 90, 70, 0.75));
-            border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            border-left: 4px solid #4bc0c0;
+        /* Departments Breakdown Table */
+        .department-breakdown {
             position: relative;
-        }
-        
-        .budget-comparison::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at top right, rgba(75, 192, 192, 0.1), transparent 60%);
-            z-index: 0;
-        }
-        
-        .comparison-title {
-            color: #4bc0c0;
-            font-size: 24px;
-            text-align: center;
-            margin-bottom: 30px;
-            position: relative;
-            font-weight: 600;
-        }
-        
-        .comparison-container {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-            position: relative;
-        }
-        
-        .comparison-card {
-            flex: 1;
-            min-width: 200px;
+            z-index: 1;
+            margin-top: 40px;
             background: rgba(0, 0, 0, 0.2);
             border-radius: 10px;
-            padding: 20px;
-            text-align: center;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
-        .year-label {
-            color: #4bc0c0;
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-        
-        .amount-label {
-            font-size: 24px;
-            color: white;
-            margin-bottom: 5px;
-        }
-        
-        .change-label {
-            font-size: 16px;
-            color: #2ecc71;
-            font-weight: 500;
-        }
-        
-        .change-label.negative {
-            color: #e74c3c;
-        }
-        
-        /* Budget Forecast Section */
-        .budget-forecast {
-            margin-top: 50px;
-            background: linear-gradient(135deg, rgba(0, 60, 30, 0.85), rgba(0, 90, 70, 0.75));
-            border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            border-left: 4px solid #4bc0c0;
-            position: relative;
-        }
-        
-        .budget-forecast::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at top right, rgba(75, 192, 192, 0.1), transparent 60%);
-            z-index: 0;
-        }
-        
-        .forecast-title {
-            color: #4bc0c0;
-            font-size: 24px;
-            text-align: center;
-            margin-bottom: 30px;
-            position: relative;
-            font-weight: 600;
-        }
-        
-        .forecast-chart {
-            height: 400px;
-            position: relative;
-            z-index: 1;
-            margin-bottom: 30px;
-        }
-        
-        .forecast-table {
-            overflow-x: auto;
-            position: relative;
-            z-index: 1;
-        }
-        
-        table {
+        .department-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
         }
         
-        th, td {
-            padding: 12px 15px;
+        .department-table th {
+            background: rgba(0, 0, 0, 0.3);
+            color: #4bc0c0;
+            font-weight: 600;
+            padding: 15px;
             text-align: left;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
         
-        th {
-            background-color: rgba(0, 0, 0, 0.3);
-            color: #4bc0c0;
-            font-weight: 600;
-            white-space: nowrap;
+        .department-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            vertical-align: middle;
         }
         
-        tr:hover {
-            background-color: rgba(75, 192, 192, 0.1);
+        .department-table tr:hover {
+            background: rgba(75, 192, 192, 0.1);
         }
         
-        .category-name {
+        .department-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+            display: inline-block;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        
+        .department-name {
             font-weight: 500;
         }
         
-        .total-row {
-            font-weight: 700;
+        .department-amount {
+            text-align: right;
+            font-weight: 500;
+        }
+        
+        .department-percent {
+            text-align: right;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .department-cents {
+            text-align: right;
+            color: #4bc0c0;
+            font-weight: 600;
+        }
+        
+        .department-table tfoot td {
             border-top: 2px solid rgba(255, 255, 255, 0.2);
-            background-color: rgba(0, 0, 0, 0.2);
-        }
-        
-        .diff-row {
-            font-style: italic;
-            color: rgba(255, 255, 255, 0.7);
-        }
-        
-        .increase {
-            color: #2ecc71;
+            background: rgba(0, 0, 0, 0.2);
+            font-weight: 600;
         }
         
         /* Responsive Design */
         @media (max-width: 900px) {
-            .charts-section, 
-            .department-grid,
-            .comparison-container {
-                flex-direction: column;
-            }
-            
-            .chart-box, 
-            .department-card {
-                min-width: 100%;
-            }
-            
-            .expenditures-header,
-            .chart-box,
-            .department-card {
+            .budget-dollar-section {
                 padding: 25px 20px;
             }
             
-            .expenditures-title {
-                font-size: 28px;
+            .budget-dollar-title {
+                font-size: 24px;
             }
             
+            .segment-label {
+                font-size: 10px;
+            }
+            
+            .legend-item {
+                padding: 6px 10px;
+            }
+            
+            .legend-text {
+                font-size: 12px;
+            }
+            
+            .department-table th, .department-table td {
+                padding: 10px;
+            }
+        }
+        
+        @media (max-width: 600px) {
             nav a {
                 font-size: 16px;
-                margin: 0 10px;
+                margin: 0 8px;
             }
             
-            .chart-display {
-                height: 250px;
+            .container {
+                padding: 20px 15px;
             }
             
-            .forecast-table {
-                overflow-x: scroll;
+            .budget-dollar-title {
+                font-size: 20px;
+            }
+            
+            .segment-label {
+                display: none;
+            }
+            
+            .legend-item {
+                flex-basis: calc(50% - 12px);
             }
         }
     </style>
@@ -574,447 +414,291 @@
         <a href="citizens_guide.html">CITIZEN'S GUIDE</a>
     </nav>
 
+    <div class="container">
+        <div class="budget-dollar-section">
+            <h2 class="budget-dollar-title">How Your Tax Dollar is Spent</h2>
+            <p class="budget-total">Total Budget: $11,842,383.18</p>
             
-            <!-- Department Details -->
-            <div class="department-grid">
-                <div class="department-card">
-                    <h3 class="department-title">Education</h3>
-                    <div class="department-amount">$7,334,563</div>
-                    <p class="department-text">Our largest expenditure category supports the Quabbin Regional School District, covering educational services, operations, and special education requirements. The FY26 budget includes funding for educational programming, maintenance, and the district assessment.</p>
-                </div>
-                
-                <div class="department-card">
-                    <h3 class="department-title">Public Safety</h3>
-                    <div class="department-amount">$1,595,193</div>
-                    <p class="department-text">Includes funding for Police and Fire Departments, Emergency Management, and Animal Control. The FY26 increases support equipment upgrades, training, and staffing adjustments to ensure adequate emergency response capabilities.</p>
-                </div>
-                
-                <div class="department-card">
-                    <h3 class="department-title">Liabilities & Assessments</h3>
-                    <div class="department-amount">$999,455</div>
-                    <p class="department-text">Covers employee benefits, insurance, and other municipal liabilities. This category includes health insurance, retirement contributions, and other post-employment benefits (OPEB) funding to address long-term obligations.</p>
-                </div>
-                
-                <div class="department-card">
-                    <h3 class="department-title">Public Works</h3>
-                    <div class="department-amount">$920,184</div>
-                    <p class="department-text">Funds road maintenance, snow removal, equipment maintenance, and other infrastructure needs. The FY26 budget includes increased investments in road repair materials and equipment replacements.</p>
-                </div>
-            </div>
-            
-            <!-- Budget Comparison -->
-            <div class="budget-comparison">
-                <h3 class="comparison-title">Budget Comparison: FY25 vs. FY26</h3>
-                
-                <div class="comparison-container">
-                    <div class="comparison-card">
-                        <div class="year-label">FY25 Budget</div>
-                        <div class="amount-label">$11,146,879</div>
+            <div class="dollar-visualization">
+                <div class="dollar-container">
+                    <!-- Dollar bill image -->
+                    <img src="https://github.com/NBoudreauMA/Hubb26/blob/main/HUBBARDSTON.png?raw=true" alt="Hubbardston Dollar" class="dollar-image">
+                    
+                    <!-- Budget segments overlay -->
+                    <div class="segments-container">
+                        <!-- Education: 62.0% -->
+                        <div class="segment" style="width: 62.0%; background-color: rgba(52, 152, 219, 0.65);" onmouseover="showTooltip(this, 'Education', '$7,334,562.64', '62.0%', '62.0¢')" onmouseout="hideTooltip(this)">
+                            <div class="segment-label">Education<br>62.0¢</div>
+                        </div>
+                        
+                        <!-- Public Safety: 13.5% -->
+                        <div class="segment" style="width: 13.5%; background-color: rgba(231, 76, 60, 0.65);" onmouseover="showTooltip(this, 'Public Safety', '$1,595,193.23', '13.5%', '13.5¢')" onmouseout="hideTooltip(this)">
+                            <div class="segment-label">13.5¢</div>
+                        </div>
+                        
+                        <!-- Public Works: 7.8% -->
+                        <div class="segment" style="width: 7.8%; background-color: rgba(26, 188, 156, 0.65);" onmouseover="showTooltip(this, 'Public Works', '$920,184.29', '7.8%', '7.8¢')" onmouseout="hideTooltip(this)">
+                            <div class="segment-label">7.8¢</div>
+                        </div>
+                        
+                        <!-- General Government: 6.1% -->
+                        <div class="segment" style="width: 6.1%; background-color: rgba(241, 196, 15, 0.65);" onmouseover="showTooltip(this, 'General Government', '$724,886.38', '6.1%', '6.1¢')" onmouseout="hideTooltip(this)">
+                            <div class="segment-label">6.1¢</div>
+                        </div>
+                        
+                        <!-- Liabilities: 8.4% -->
+                        <div class="segment" style="width: 8.4%; background-color: rgba(155, 89, 182, 0.65);" onmouseover="showTooltip(this, 'Liabilities & Assessments', '$999,454.94', '8.4%', '8.4¢')" onmouseout="hideTooltip(this)">
+                            <div class="segment-label">8.4¢</div>
+                        </div>
+                        
+                        <!-- Debt: 1.2% -->
+                        <div class="segment" style="width: 1.2%; background-color: rgba(230, 126, 34, 0.65);" onmouseover="showTooltip(this, 'Debt', '$146,862.00', '1.2%', '1.2¢')" onmouseout="hideTooltip(this)">
+                            <div class="segment-label">1.2¢</div>
+                        </div>
+                        
+                        <!-- Culture & Recreation: 0.8% -->
+                        <div class="segment" style="width: 0.8%; background-color: rgba(0, 188, 212, 0.65);" onmouseover="showTooltip(this, 'Culture & Recreation', '$94,289.70', '0.8%', '0.8¢')" onmouseout="hideTooltip(this)">
+                            <div class="segment-label">0.8¢</div>
+                        </div>
+                        
+                        <!-- Human Services: 0.2% -->
+                        <div class="segment" style="width: 0.2%; background-color: rgba(255, 128, 171, 0.65);" onmouseover="showTooltip(this, 'Human Services', '$26,950.00', '0.2%', '0.2¢')" onmouseout="hideTooltip(this)">
+                            <div class="segment-label">0.2¢</div>
+                        </div>
                     </div>
                     
-                    <div class="comparison-card">
-                        <div class="year-label">FY26 Budget</div>
-                        <div class="amount-label">$11,851,233</div>
-                        <div class="change-label">+6.32%</div>
+                    <!-- Tooltip -->
+                    <div id="dollar-tooltip" class="dollar-tooltip">
+                        <div id="tooltip-title" class="tooltip-title"></div>
+                        <div class="tooltip-content">
+                            <div class="tooltip-label">Budget amount:</div>
+                            <div id="tooltip-amount" class="tooltip-value"></div>
+                            <div class="tooltip-label">Percentage:</div>
+                            <div id="tooltip-percent" class="tooltip-value"></div>
+                            <div class="tooltip-label">Of each dollar:</div>
+                            <div id="tooltip-cents" class="tooltip-value"></div>
+                        </div>
                     </div>
-                    
-                    <div class="comparison-card">
-                        <div class="year-label">Net Increase</div>
-                        <div class="amount-label">$704,354</div>
-                    </div>
+                </div>
+                
+                <div class="dollar-info">
+                    Hover over segments to see department details
                 </div>
             </div>
             
-            <!-- Budget Forecast -->
-            <div class="budget-forecast">
-                <h3 class="forecast-title">Five-Year Budget Forecast (FY26-FY30)</h3>
-                
-                <div class="forecast-chart">
-                    <canvas id="forecastChart"></canvas>
+            <!-- Legend for dollar sections -->
+            <div class="dollar-legend">
+                <div class="legend-item" onmouseover="highlightSegment(0)" onmouseout="resetSegments()">
+                    <div class="legend-color" style="background-color: rgba(52, 152, 219, 0.9);"></div>
+                    <div class="legend-text">Education <span class="legend-cents">62.0¢</span></div>
                 </div>
                 
-                <div class="forecast-table">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Category</th>
-                                <th>FY25</th>
-                                <th>FY26</th>
-                                <th>FY27</th>
-                                <th>FY28</th>
-                                <th>FY29</th>
-                                <th>FY30</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="category-name">Personnel (Town)</td>
-                                <td>$2,156,210</td>
-                                <td>$2,214,752</td>
-                                <td>$2,275,757</td>
-                                <td>$2,338,489</td>
-                                <td>$2,402,998</td>
-                                <td>$2,469,542</td>
-                            </tr>
-                            <tr>
-                                <td class="category-name">Services (Town)</td>
-                                <td>$168,618</td>
-                                <td>$171,729</td>
-                                <td>$174,362</td>
-                                <td>$177,059</td>
-                                <td>$179,821</td>
-                                <td>$182,896</td>
-                            </tr>
-                            <tr>
-                                <td class="category-name">Facilities, Utilities, Gear, Supplies, and Capital</td>
-                                <td>$755,459</td>
-                                <td>$766,099</td>
-                                <td>$786,171</td>
-                                <td>$806,815</td>
-                                <td>$828,049</td>
-                                <td>$850,107</td>
-                            </tr>
-                            <tr>
-                                <td class="category-name">Education</td>
-                                <td>$6,784,230</td>
-                                <td>$7,334,563</td>
-                                <td>$7,566,285</td>
-                                <td>$7,937,654</td>
-                                <td>$8,327,402</td>
-                                <td>$8,736,444</td>
-                            </tr>
-                            <tr>
-                                <td class="category-name">Liabilities (Insurances and Assessments)</td>
-                                <td>$1,036,256</td>
-                                <td>$999,455</td>
-                                <td>$1,138,701</td>
-                                <td>$1,036,256</td>
-                                <td>$999,455</td>
-                                <td>$1,138,701</td>
-                                <td>$1,186,745</td>
-                                <td>$1,236,966</td>
-                                <td>$1,289,466</td>
-                            </tr>
-                            <tr>
-                                <td class="category-name">Debt</td>
-                                <td>$146,862</td>
-                                <td>$146,862</td>
-                                <td>$157,681</td>
-                                <td>$160,834</td>
-                                <td>$164,051</td>
-                                <td>$167,332</td>
-                            </tr>
-                            <tr class="total-row">
-                                <td class="category-name">TOTAL</td>
-                                <td>$11,047,636</td>
-                                <td>$11,851,233</td>
-                                <td>$12,098,956</td>
-                                <td>$12,607,597</td>
-                                <td>$13,139,288</td>
-                                <td>$13,695,787</td>
-                            </tr>
-                            <tr class="diff-row">
-                                <td class="category-name">Annual Increase</td>
-                                <td>-</td>
-                                <td>$803,597</td>
-                                <td>$247,723</td>
-                                <td>$508,640</td>
-                                <td>$531,692</td>
-                                <td>$556,498</td>
-                            </tr>
-                            <tr class="diff-row">
-                                <td class="category-name">Annual % Increase</td>
-                                <td>-</td>
-                                <td>7.27%</td>
-                                <td>2.09%</td>
-                                <td>4.20%</td>
-                                <td>4.22%</td>
-                                <td>4.23%</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="legend-item" onmouseover="highlightSegment(1)" onmouseout="resetSegments()">
+                    <div class="legend-color" style="background-color: rgba(231, 76, 60, 0.9);"></div>
+                    <div class="legend-text">Public Safety <span class="legend-cents">13.5¢</span></div>
+                </div>
+                
+                <div class="legend-item" onmouseover="highlightSegment(4)" onmouseout="resetSegments()">
+                    <div class="legend-color" style="background-color: rgba(155, 89, 182, 0.9);"></div>
+                    <div class="legend-text">Liabilities <span class="legend-cents">8.4¢</span></div>
+                </div>
+                
+                <div class="legend-item" onmouseover="highlightSegment(2)" onmouseout="resetSegments()">
+                    <div class="legend-color" style="background-color: rgba(26, 188, 156, 0.9);"></div>
+                    <div class="legend-text">Public Works <span class="legend-cents">7.8¢</span></div>
+                </div>
+                
+                <div class="legend-item" onmouseover="highlightSegment(3)" onmouseout="resetSegments()">
+                    <div class="legend-color" style="background-color: rgba(241, 196, 15, 0.9);"></div>
+                    <div class="legend-text">General Gov <span class="legend-cents">6.1¢</span></div>
+                </div>
+                
+                <div class="legend-item" onmouseover="highlightSegment(5)" onmouseout="resetSegments()">
+                    <div class="legend-color" style="background-color: rgba(230, 126, 34, 0.9);"></div>
+                    <div class="legend-text">Debt <span class="legend-cents">1.2¢</span></div>
+                </div>
+                
+                <div class="legend-item" onmouseover="highlightSegment(6)" onmouseout="resetSegments()">
+                    <div class="legend-color" style="background-color: rgba(0, 188, 212, 0.9);"></div>
+                    <div class="legend-text">Culture & Rec <span class="legend-cents">0.8¢</span></div>
+                </div>
+                
+                <div class="legend-item" onmouseover="highlightSegment(7)" onmouseout="resetSegments()">
+                    <div class="legend-color" style="background-color: rgba(255, 128, 171, 0.9);"></div>
+                    <div class="legend-text">Human Services <span class="legend-cents">0.2¢</span></div>
                 </div>
             </div>
             
-            <!-- Download Buttons -->
-            <div class="button-container">
-                <a href="budget.pdf" target="_blank" class="download-button">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="button-icon">
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                        <polyline points="7 10 12 15 17 10"></polyline>
-                        <line x1="12" y1="15" x2="12" y2="3"></line>
-                    </svg>
-                    Download Budget Report
-                </a>
-                
-                <a href="budget_view.html" target="_blank" class="download-button">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="button-icon">
-                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                        <line x1="9" y1="3" x2="9" y2="21"></line>
-                        <line x1="15" y1="3" x2="15" y2="21"></line>
-                        <line x1="3" y1="9" x2="21" y2="9"></line>
-                        <line x1="3" y1="15" x2="21" y2="15"></line>
-                    </svg>
-                    Review Budget Spreadsheet
-                </a>
+            <!-- Budget breakdown table -->
+            <div class="department-breakdown">
+                <table class="department-table">
+                    <thead>
+                        <tr>
+                            <th>Department</th>
+                            <th>Budget Amount</th>
+                            <th>Percentage</th>
+                            <th>¢ per Dollar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr onmouseover="highlightSegment(0)" onmouseout="resetSegments()">
+                            <td>
+                                <span class="department-color" style="background-color: rgba(52, 152, 219, 0.9);"></span>
+                                <span class="department-name">Education</span>
+                            </td>
+                            <td class="department-amount">$7,334,562.64</td>
+                            <td class="department-percent">62.0%</td>
+                            <td class="department-cents">62.0¢</td>
+                        </tr>
+                        <tr onmouseover="highlightSegment(1)" onmouseout="resetSegments()">
+                            <td>
+                                <span class="department-color" style="background-color: rgba(231, 76, 60, 0.9);"></span>
+                                <span class="department-name">Public Safety</span>
+                            </td>
+                            <td class="department-amount">$1,595,193.23</td>
+                            <td class="department-percent">13.5%</td>
+                            <td class="department-cents">13.5¢</td>
+                        </tr>
+                        <tr onmouseover="highlightSegment(4)" onmouseout="resetSegments()">
+                            <td>
+                                <span class="department-color" style="background-color: rgba(155, 89, 182, 0.9);"></span>
+                                <span class="department-name">Liabilities & Assessments</span>
+                            </td>
+                            <td class="department-amount">$999,454.94</td>
+                            <td class="department-percent">8.4%</td>
+                            <td class="department-cents">8.4¢</td>
+                        </tr>
+                        <tr onmouseover="highlightSegment(2)" onmouseout="resetSegments()">
+                            <td>
+                                <span class="department-color" style="background-color: rgba(26, 188, 156, 0.9);"></span>
+                                <span class="department-name">Public Works</span>
+                            </td>
+                            <td class="department-amount">$920,184.29</td>
+                            <td class="department-percent">7.8%</td>
+                            <td class="department-cents">7.8¢</td>
+                        </tr>
+                        <tr onmouseover="highlightSegment(3)" onmouseout="resetSegments()">
+                            <td>
+                                <span class="department-color" style="background-color: rgba(241, 196, 15, 0.9);"></span>
+                                <span class="department-name">General Government</span>
+                            </td>
+                            <td class="department-amount">$724,886.38</td>
+                            <td class="department-percent">6.1%</td>
+                            <td class="department-cents">6.1¢</td>
+                        </tr>
+                        <tr onmouseover="highlightSegment(5)" onmouseout="resetSegments()">
+                            <td>
+                                <span class="department-color" style="background-color: rgba(230, 126, 34, 0.9);"></span>
+                                <span class="department-name">Debt</span>
+                            </td>
+                            <td class="department-amount">$146,862.00</td>
+                            <td class="department-percent">1.2%</td>
+                            <td class="department-cents">1.2¢</td>
+                        </tr>
+                        <tr onmouseover="highlightSegment(6)" onmouseout="resetSegments()">
+                            <td>
+                                <span class="department-color" style="background-color: rgba(0, 188, 212, 0.9);"></span>
+                                <span class="department-name">Culture & Recreation</span>
+                            </td>
+                            <td class="department-amount">$94,289.70</td>
+                            <td class="department-percent">0.8%</td>
+                            <td class="department-cents">0.8¢</td>
+                        </tr>
+                        <tr onmouseover="highlightSegment(7)" onmouseout="resetSegments()">
+                            <td>
+                                <span class="department-color" style="background-color: rgba(255, 128, 171, 0.9);"></span>
+                                <span class="department-name">Human Services</span>
+                            </td>
+                            <td class="department-amount">$26,950.00</td>
+                            <td class="department-percent">0.2%</td>
+                            <td class="department-cents">0.2¢</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td class="department-name">Total</td>
+                            <td class="department-amount">$11,842,383.18</td>
+                            <td class="department-percent">100.0%</td>
+                            <td class="department-cents">$1.00</td>
+                        </tr>
+                    </tfoot>
+                </table>
             </div>
         </div>
     </div>
     
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Set consistent colors for department categories
-            const departmentColors = {
-                education: '#3498db',
-                publicSafety: '#e74c3c',
-                liabilities: '#9b59b6',
-                publicWorks: '#1abc9c',
-                generalGov: '#f1c40f',
-                debt: '#e67e22',
-                culture: '#00bcd4',
-                humanServices: '#ff80ab'
-            };
+        // Function to show tooltip on hover
+        function showTooltip(element, title, amount, percent, cents) {
+            const tooltip = document.getElementById('dollar-tooltip');
+            const titleElement = document.getElementById('tooltip-title');
             
-            // Department Expenditures Chart
-            const deptCtx = document.getElementById('departmentChart').getContext('2d');
-            new Chart(deptCtx, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Education', 'Public Safety', 'Liabilities & Assessments', 'Public Works', 'General Government', 'Debt Service', 'Culture & Recreation', 'Human Services'],
-                    datasets: [{
-                        data: [7334563, 1595193, 999455, 920184, 724886, 146862, 94290, 26950],
-                        backgroundColor: [
-                            departmentColors.education,
-                            departmentColors.publicSafety,
-                            departmentColors.liabilities,
-                            departmentColors.publicWorks, 
-                            departmentColors.generalGov,
-                            departmentColors.debt,
-                            departmentColors.culture,
-                            departmentColors.humanServices
-                        ],
-                        borderWidth: 0,
-                        hoverOffset: 10
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    const value = context.raw;
-                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
-                                    const percentage = Math.round((value / total * 100) * 10) / 10;
-                                    const formattedValue = new Intl.NumberFormat('en-US', {
-                                        style: 'currency',
-                                        currency: 'USD',
-                                        maximumFractionDigits: 0
-                                    }).format(value);
-                                    return `${context.label}: ${formattedValue} (${percentage}%)`;
-                                }
-                            }
-                        }
-                    },
-                    cutout: '60%',
-                    animation: {
-                        animateScale: true,
-                        animateRotate: true
-                    }
-                }
+            // Set tooltip content
+            titleElement.textContent = title;
+            document.getElementById('tooltip-amount').textContent = amount;
+            document.getElementById('tooltip-percent').textContent = percent;
+            document.getElementById('tooltip-cents').textContent = cents;
+            
+            // Position and show tooltip
+            tooltip.style.display = 'block';
+            
+            // Highlight the segment
+            element.style.opacity = '1';
+            element.style.transform = 'scale(1.02)';
+            element.style.zIndex = '10';
+            element.style.boxShadow = '0 0 15px rgba(0, 0, 0, 0.4)';
+        }
+        
+        // Function to hide tooltip
+        function hideTooltip(element) {
+            const tooltip = document.getElementById('dollar-tooltip');
+            tooltip.style.display = 'none';
+            
+            // Reset segment style
+            element.style.opacity = '';
+            element.style.transform = '';
+            element.style.zIndex = '';
+            element.style.boxShadow = '';
+        }
+        
+        // Function to highlight segment from legend or table
+        function highlightSegment(index) {
+            const segments = document.querySelectorAll('.segment');
+            if (segments[index]) {
+                const segment = segments[index];
+                segment.style.opacity = '1';
+                segment.style.transform = 'scale(1.02)';
+                segment.style.zIndex = '10';
+                segment.style.boxShadow = '0 0 15px rgba(0, 0, 0, 0.4)';
+                
+                // Show tooltip with segment data
+                const titles = ['Education', 'Public Safety', 'Public Works', 'General Government', 'Liabilities & Assessments', 'Debt', 'Culture & Recreation', 'Human Services'];
+                const amounts = ['$7,334,562.64', '$1,595,193.23', '$920,184.29', '$724,886.38', '$999,454.94', '$146,862.00', '$94,289.70', '$26,950.00'];
+                const percents = ['62.0%', '13.5%', '7.8%', '6.1%', '8.4%', '1.2%', '0.8%', '0.2%'];
+                const cents = ['62.0¢', '13.5¢', '7.8¢', '6.1¢', '8.4¢', '1.2¢', '0.8¢', '0.2¢'];
+                
+                const tooltip = document.getElementById('dollar-tooltip');
+                document.getElementById('tooltip-title').textContent = titles[index];
+                document.getElementById('tooltip-amount').textContent = amounts[index];
+                document.getElementById('tooltip-percent').textContent = percents[index];
+                document.getElementById('tooltip-cents').textContent = cents[index];
+                tooltip.style.display = 'block';
+            }
+        }
+        
+        // Function to reset all segments
+        function resetSegments() {
+            const segments = document.querySelectorAll('.segment');
+            segments.forEach(segment => {
+                segment.style.opacity = '';
+                segment.style.transform = '';
+                segment.style.zIndex = '';
+                segment.style.boxShadow = '';
             });
             
-            // Year-over-Year Changes Chart
-            const changesCtx = document.getElementById('changesChart').getContext('2d');
-            new Chart(changesCtx, {
-                type: 'bar',
-                data: {
-                    labels: ['Education', 'Public Safety', 'Liabilities', 'Public Works', 'General Gov'],
-                    datasets: [{
-                        label: 'FY26 Increase',
-                        data: [550333, 50902, 36801, 34142, 25306],
-                        backgroundColor: [
-                            departmentColors.education,
-                            departmentColors.publicSafety,
-                            departmentColors.liabilities,
-                            departmentColors.publicWorks,
-                            departmentColors.generalGov
-                        ],
-                        borderWidth: 0
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.1)'
-                            },
-                            ticks: {
-                                color: '#ffffff',
-                                callback: function(value) {
-                                    return '$' + value.toLocaleString();
-                                }
-                            }
-                        },
-                        x: {
-                            grid: {
-                                display: false
-                            },
-                            ticks: {
-                                color: '#ffffff'
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    const value = context.raw;
-                                    const formattedValue = new Intl.NumberFormat('en-US', {
-                                        style: 'currency',
-                                        currency: 'USD',
-                                        maximumFractionDigits: 0
-                                    }).format(value);
-                                    return `Increase: ${formattedValue}`;
-                                }
-                            }
-                        }
-                    },
-                    animation: {
-                        animateScale: true
-                    }
-                }
-            });
-            
-            // Five-Year Forecast Chart
-            const forecastCtx = document.getElementById('forecastChart').getContext('2d');
-            new Chart(forecastCtx, {
-                type: 'line',
-                data: {
-                    labels: ['FY25', 'FY26', 'FY27', 'FY28', 'FY29', 'FY30'],
-                    datasets: [
-                        {
-                            label: 'Education',
-                            data: [6784230, 7334563, 7566285, 7937654, 8327402, 8736444],
-                            borderColor: departmentColors.education,
-                            backgroundColor: 'rgba(52, 152, 219, 0.1)',
-                            fill: true,
-                            tension: 0.4,
-                            borderWidth: 3
-                        },
-                        {
-                            label: 'Personnel',
-                            data: [2156210, 2214752, 2275757, 2338489, 2402998, 2469542],
-                            borderColor: departmentColors.publicSafety,
-                            backgroundColor: 'rgba(231, 76, 60, 0.1)',
-                            fill: true,
-                            tension: 0.4,
-                            borderWidth: 3
-                        },
-                        {
-                            label: 'Liabilities',
-                            data: [1036256, 999455, 1138701, 1186745, 1236966, 1289466],
-                            borderColor: departmentColors.liabilities,
-                            backgroundColor: 'rgba(155, 89, 182, 0.1)',
-                            fill: true,
-                            tension: 0.4,
-                            borderWidth: 3
-                        },
-                        {
-                            label: 'Facilities & Supplies',
-                            data: [755459, 766099, 786171, 806815, 828049, 850107],
-                            borderColor: departmentColors.publicWorks,
-                            backgroundColor: 'rgba(26, 188, 156, 0.1)',
-                            fill: true,
-                            tension: 0.4,
-                            borderWidth: 3
-                        },
-                        {
-                            label: 'Total Budget',
-                            data: [11047636, 11851233, 12098956, 12607597, 13139288, 13695787],
-                            borderColor: '#4bc0c0',
-                            backgroundColor: 'rgba(75, 192, 192, 0.1)',
-                            borderDash: [5, 5],
-                            borderWidth: 3,
-                            fill: false,
-                            tension: 0.4,
-                            pointRadius: 5,
-                            pointHoverRadius: 8
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.1)'
-                            },
-                            ticks: {
-                                color: '#ffffff',
-                                callback: function(value) {
-                                    if (value >= 1000000) {
-                                        return '$' + (value / 1000000).toFixed(1) + 'M';
-                                    }
-                                    return '$' + value.toLocaleString();
-                                }
-                            }
-                        },
-                        x: {
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.1)'
-                            },
-                            ticks: {
-                                color: '#ffffff'
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                            labels: {
-                                color: '#ffffff',
-                                font: {
-                                    family: 'Poppins',
-                                    size: 12
-                                },
-                                boxWidth: 12
-                            }
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    const value = context.raw;
-                                    const formattedValue = new Intl.NumberFormat('en-US', {
-                                        style: 'currency',
-                                        currency: 'USD',
-                                        maximumFractionDigits: 0
-                                    }).format(value);
-                                    return `${context.dataset.label}: ${formattedValue}`;
-                                }
-                            }
-                        }
-                    },
-                    interaction: {
-                        mode: 'index',
-                        intersect: false
-                    }
-                }
-            });
-        });
+            // Hide tooltip
+            document.getElementById('dollar-tooltip').style.display = 'none';
+        }
     </script>
 </body>
 </html>
