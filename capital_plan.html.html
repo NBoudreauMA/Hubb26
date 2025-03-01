@@ -16,22 +16,19 @@
             min-height: 100vh;
         }
         .container {
-            max-width: 1200px;
+            max-width: 100%;
             margin: 80px auto 40px;
             padding: 30px;
             background: rgba(0, 0, 0, 0.85);
             border-radius: 15px;
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+            overflow-x: auto;
         }
         h1, h2 {
             text-align: center;
             color: #4bc0c0;
             text-transform: uppercase;
             font-weight: 600;
-        }
-        .table-container {
-            overflow-y: auto;
-            max-height: 500px;
         }
         table {
             width: 100%;
@@ -46,6 +43,7 @@
             padding: 12px 15px;
             text-align: left;
             font-size: 16px;
+            word-wrap: break-word;
         }
         th {
             background: linear-gradient(135deg, #4bc0c0, #358a8a);
@@ -53,11 +51,6 @@
             font-weight: 600;
             text-transform: uppercase;
             padding: 15px;
-            white-space: nowrap;
-        }
-        td {
-            word-wrap: break-word;
-            max-width: 300px;
         }
         .number-col {
             text-align: right;
@@ -78,29 +71,26 @@
         <p style="text-align: center; font-size: 18px; max-width: 900px; margin: auto; line-height: 1.6;">This five-year plan outlines Hubbardston's strategic investments in infrastructure, equipment, and facilities to ensure high-quality services and fiscal responsibility.</p>
         
         <h2>One-Year Capital Improvement Plan</h2>
-        <div class="table-container">
-            <table id="oneYearCIPTable">
-                <thead></thead>
-                <tbody></tbody>
-            </table>
-        </div>
+        <table id="oneYearCIPTable">
+            <thead></thead>
+            <tbody></tbody>
+        </table>
         
         <h2>Strategic Capital Improvement Plan</h2>
-        <div class="table-container">
-            <table id="strategicCIPTable">
-                <thead></thead>
-                <tbody></tbody>
-            </table>
-        </div>
+        <table id="strategicCIPTable">
+            <thead></thead>
+            <tbody></tbody>
+        </table>
     </div>
     
     <script>
         function formatCurrency(value) {
+            if (!value || value === "-") return "-";
             let num = parseFloat(value.replace(/[^0-9.-]+/g, ""));
-            if (!isNaN(num) && num !== 0) {
+            if (!isNaN(num)) {
                 return `$${num.toLocaleString("en-US", { minimumFractionDigits: 2 })}`;
             }
-            return "-";
+            return value;
         }
 
         function cleanCSVRow(row) {
