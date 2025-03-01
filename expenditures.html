@@ -156,6 +156,15 @@
         }
 
         /* Budget Dollar Visualization */
+       
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Dollar Visualization</title>
+    <style>
+        /* Budget Dollar Visualization */
         .budget-dollar-container {
             max-width: 600px;
             margin: 0 auto 40px;
@@ -166,12 +175,22 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
 
+        /* Tax Dollar Image - Matches Width of the Bar Chart */
+        .tax-dollar-image {
+            display: block;
+            width: 100%; /* Matches the width of the bar chart */
+            max-width: 100%;
+            height: auto;
+            margin: 10px auto;
+        }
+
+        /* Dollar Visualization Bar */
         .dollar-visualization {
             position: relative;
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-            max-width: 100%;
+            width: 100%;
             margin-bottom: 20px;
             height: 50px;
             background-color: #004020;
@@ -284,26 +303,40 @@
             background: radial-gradient(circle at top right, rgba(75, 192, 192, 0.1), transparent 60%);
             z-index: 0;
         }
+    </style>
+</head>
+<body>
 
-        .chart-title {
-            color: #4bc0c0;
-            font-size: 24px;
-            text-align: center;
-            margin-bottom: 25px;
-            position: relative;
-            z-index: 1;
-            font-weight: 600;
-        }
+    <div class="budget-dollar-container">
+        <h2 style="text-align: center; color: white;">Where Your Tax Dollar Goes</h2>
+        <img src="dollar-image.png" class="tax-dollar-image" alt="Dollar Image Placeholder">
+        
+        <div class="dollar-visualization">
+            <div class="segments-container">
+                <div class="segment" style="width: 62%; background-color: #007bff;"><span class="segment-label">Education</span></div>
+                <div class="segment" style="width: 13.5%; background-color: #dc3545;"><span class="segment-label">Public Safety</span></div>
+                <div class="segment" style="width: 7.8%; background-color: #28a745;"><span class="segment-label">Public Works</span></div>
+                <div class="segment" style="width: 6.1%; background-color: #ffc107;"><span class="segment-label">Administration</span></div>
+                <div class="segment" style="width: 8.4%; background-color: #6f42c1;"><span class="segment-label">Benefits & Insurance</span></div>
+                <div class="segment" style="width: 2.2%; background-color: #17a2b8;"><span class="segment-label">Other Services</span></div>
+            </div>
+        </div>
+        
+        <p class="budget-total">Total Budget: $11,851,233</p>
+        
+        <div class="dollar-legend">
+            <div class="dollar-legend-item"><div class="dollar-legend-color" style="background-color: #007bff;"></div> Education: 62¢</div>
+            <div class="dollar-legend-item"><div class="dollar-legend-color" style="background-color: #dc3545;"></div> Public Safety: 13.5¢</div>
+            <div class="dollar-legend-item"><div class="dollar-legend-color" style="background-color: #28a745;"></div> Public Works: 7.8¢</div>
+            <div class="dollar-legend-item"><div class="dollar-legend-color" style="background-color: #ffc107;"></div> Administration: 6.1¢</div>
+            <div class="dollar-legend-item"><div class="dollar-legend-color" style="background-color: #6f42c1;"></div> Benefits & Insurance: 8.4¢</div>
+            <div class="dollar-legend-item"><div class="dollar-legend-color" style="background-color: #17a2b8;"></div> Other Services: 2.2¢</div>
+        </div>
+    </div>
 
-        .chart-display {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 20px;
-            position: relative;
-            z-index: 1;
-            height: 300px;
-        }
+</body>
+</html>
+
 
         /* Department Details */
         .department-grid {
