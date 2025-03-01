@@ -156,6 +156,39 @@
             background-color: rgba(75, 192, 192, 0.4);
         }
         
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const buttons = document.querySelectorAll(".tab-button");
+        const contents = document.querySelectorAll(".tab-content");
+
+        buttons.forEach(button => {
+            button.addEventListener("click", function () {
+                // Remove 'active' class from all buttons and contents
+                buttons.forEach(btn => btn.classList.remove("active"));
+                contents.forEach(content => content.classList.remove("active"));
+
+                // Add 'active' class to clicked button and corresponding content
+                this.classList.add("active");
+                const targetTab = document.getElementById(this.dataset.tab);
+                if (targetTab) {
+                    targetTab.classList.add("active");
+                } else {
+                    console.error("Tab content not found for:", this.dataset.tab);
+                }
+            });
+        });
+
+        // Ensure first tab is shown by default if not already active
+        const defaultTab = document.querySelector(".tab-button.active");
+        if (defaultTab) {
+            const defaultContent = document.getElementById(defaultTab.dataset.tab);
+            if (defaultContent) {
+                defaultContent.classList.add("active");
+            }
+        }
+    });
+</script>
+        
         /* Tab Navigation */
         .tabs-container {
             margin-top: 40px;
