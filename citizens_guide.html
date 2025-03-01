@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -155,39 +156,6 @@
             height: 1px;
             background-color: rgba(75, 192, 192, 0.4);
         }
-        
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const buttons = document.querySelectorAll(".tab-button");
-        const contents = document.querySelectorAll(".tab-content");
-
-        buttons.forEach(button => {
-            button.addEventListener("click", function () {
-                // Remove 'active' class from all buttons and contents
-                buttons.forEach(btn => btn.classList.remove("active"));
-                contents.forEach(content => content.classList.remove("active"));
-
-                // Add 'active' class to clicked button and corresponding content
-                this.classList.add("active");
-                const targetTab = document.getElementById(this.dataset.tab);
-                if (targetTab) {
-                    targetTab.classList.add("active");
-                } else {
-                    console.error("Tab content not found for:", this.dataset.tab);
-                }
-            });
-        });
-
-        // Ensure first tab is shown by default if not already active
-        const defaultTab = document.querySelector(".tab-button.active");
-        if (defaultTab) {
-            const defaultContent = document.getElementById(defaultTab.dataset.tab);
-            if (defaultContent) {
-                defaultContent.classList.add("active");
-            }
-        }
-    });
-</script>
         
         /* Tab Navigation */
         .tabs-container {
@@ -736,6 +704,381 @@
                         <ul class="icon-list">
                             <li class="icon-list-item">
                                 <div class="icon-container">
+                                    <i class="fas fa-calendar"></i>
+                                </div>
+                                <div class="icon-content">
+                                    <h4>November-December: Budget Guidelines</h4>
+                                    <p>Select Board and Finance Committee establish budget guidelines and priorities. Department heads prepare budget requests.</p>
+                                </div>
+                            </li>
+                            <li class="icon-list-item">
+                                <div class="icon-container">
+                                    <i class="fas fa-calendar"></i>
+                                </div>
+                                <div class="icon-content">
+                                    <h4>January-February: Review & Adjustment</h4>
+                                    <p>Town Administrator reviews department requests, makes adjustments, and presents a proposed budget to the Select Board.</p>
+                                </div>
+                            </li>
+                            <li class="icon-list-item">
+                                <div class="icon-container">
+                                    <i class="fas fa-calendar"></i>
+                                </div>
+                                <div class="icon-content">
+                                    <h4>March-April: Public Review</h4>
+                                    <p>Finance Committee and Select Board hold public hearings. Residents can provide input on the budget proposal.</p>
+                                </div>
+                            </li>
+                            <li class="icon-list-item">
+                                <div class="icon-container">
+                                    <i class="fas fa-calendar"></i>
+                                </div>
+                                <div class="icon-content">
+                                    <h4>May: Town Meeting</h4>
+                                    <p>Residents vote on the proposed budget at the Annual Town Meeting. This is your most direct opportunity to influence the budget.</p>
+                                </div>
+                            </li>
+                            <li class="icon-list-item">
+                                <div class="icon-container">
+                                    <i class="fas fa-calendar"></i>
+                                </div>
+                                <div class="icon-content">
+                                    <h4>July 1: Implementation</h4>
+                                    <p>The approved budget takes effect for the new fiscal year.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Budget Breakdown Tab -->
+                <div id="breakdown" class="tab-content">
+                    <div class="info-card">
+                        <h3>Where Your Tax Dollars Go</h3>
+                        <p>The FY26 budget allocates funding to provide essential services and meet community needs. Here's a breakdown of how your tax dollars are distributed:</p>
+                    </div>
+                    
+                    <div class="breakdown-container">
+                        <div class="breakdown-card">
+                            <h4 class="breakdown-title">Major Expense Categories</h4>
+                            
+                            <div class="breakdown-item">
+                                <div class="item-label">Education (Quabbin Regional)</div>
+                                <div class="item-value">54.2%</div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 54.2%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="breakdown-item">
+                                <div class="item-label">Public Safety</div>
+                                <div class="item-value">12.8%</div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 12.8%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="breakdown-item">
+                                <div class="item-label">Public Works</div>
+                                <div class="item-value">10.5%</div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 10.5%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="breakdown-item">
+                                <div class="item-label">General Government</div>
+                                <div class="item-value">8.7%</div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 8.7%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="breakdown-item">
+                                <div class="item-label">Debt Service</div>
+                                <div class="item-value">5.4%</div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 5.4%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="breakdown-item">
+                                <div class="item-label">Health & Human Services</div>
+                                <div class="item-value">3.2%</div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 3.2%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="breakdown-item">
+                                <div class="item-label">Culture & Recreation</div>
+                                <div class="item-value">2.8%</div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 2.8%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="breakdown-item">
+                                <div class="item-label">Employee Benefits</div>
+                                <div class="item-value">2.4%</div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 2.4%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="breakdown-card">
+                            <h4 class="breakdown-title">Where the Money Comes From</h4>
+                            
+                            <div class="breakdown-item">
+                                <div class="item-label">Property Taxes</div>
+                                <div class="item-value">62.5%</div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 62.5%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="breakdown-item">
+                                <div class="item-label">State Aid</div>
+                                <div class="item-value">25.8%</div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 25.8%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="breakdown-item">
+                                <div class="item-label">Local Receipts</div>
+                                <div class="item-value">10.6%</div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 10.6%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="breakdown-item">
+                                <div class="item-label">Free Cash</div>
+                                <div class="item-value">1.1%</div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 1.1%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Budget Glossary Tab -->
+                <div id="glossary" class="tab-content">
+                    <div class="info-card">
+                        <h3>Understanding Budget Terminology</h3>
+                        <p>Budget discussions often involve specialized terms that can be confusing. This glossary explains common budget-related terminology to help you better understand Hubbardston's finances.</p>
+                    </div>
+                    
+                    <div class="glossary-container">
+                        <div class="glossary-item">
+                            <div class="glossary-term">Fiscal Year (FY)</div>
+                            <div class="glossary-definition">The 12-month period used for accounting purposes. Hubbardston's fiscal year runs from July 1 to June 30 and is labeled by the year in which it ends (e.g., FY26 runs from July 1, 2025, to June 30, 2026).</div>
+                        </div>
+                        
+                        <div class="glossary-item">
+                            <div class="glossary-term">Free Cash</div>
+                            <div class="glossary-definition">Unrestricted funds from operations of the previous fiscal year that are certified by the Massachusetts Department of Revenue and available for appropriation.</div>
+                        </div>
+                        
+                        <div class="glossary-item">
+                            <div class="glossary-term">Stabilization Fund</div>
+                            <div class="glossary-definition">A special reserve fund set aside to provide financial stability for the town and help offset the impact of extraordinary expenses or revenue shortfalls.</div>
+                        </div>
+                        
+                        <div class="glossary-item">
+                            <div class="glossary-term">Override</div>
+                            <div class="glossary-definition">A vote to increase the amount of property tax revenue a town can raise beyond the limits imposed by Proposition 2½.</div>
+                        </div>
+                        
+                        <div class="glossary-item">
+                            <div class="glossary-term">Proposition 2½</div>
+                            <div class="glossary-definition">A Massachusetts law that limits the amount by which a municipality can increase its property tax levy from year to year. The limit is 2.5% plus new growth.</div>
+                        </div>
+                        
+                        <div class="glossary-item">
+                            <div class="glossary-term">Capital Improvement Plan</div>
+                            <div class="glossary-definition">A multi-year plan outlining major infrastructure investments, equipment purchases, and other significant expenditures.</div>
+                        </div>
+                        
+                        <div class="glossary-item">
+                            <div class="glossary-term">Local Receipts</div>
+                            <div class="glossary-definition">Revenue from various local sources such as motor vehicle excise taxes, permits, licenses, and fees for services.</div>
+                        </div>
+                        
+                        <div class="glossary-item">
+                            <div class="glossary-term">Cherry Sheet</div>
+                            <div class="glossary-definition">The official notification from the Massachusetts Department of Revenue of the amount of state aid a municipality will receive and the charges assessed for state and county services.</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- FAQ Tab -->
+                <div id="faq" class="tab-content">
+                    <div class="info-card">
+                        <h3>Frequently Asked Questions</h3>
+                        <p>Here are answers to some common questions about Hubbardston's budget process and financial management.</p>
+                    </div>
+                    
+                    <div class="faq-container">
+                        <div class="accordion">
+                            <div class="accordion-header">
+                                How are my property taxes calculated?
+                                <div class="accordion-icon">
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                            </div>
+                            <div class="accordion-content">
+                                <p>Property taxes are calculated by multiplying the assessed value of your property by the tax rate. The tax rate is expressed as dollars per thousand of assessed valuation.</p>
+                                <p>For example, if your home is assessed at $350,000 and the residential tax rate is $16.75 per thousand, your annual property tax would be: $350,000 ÷ 1,000 × $16.75 = $5,862.50.</p>
+                                <p>The tax rate is determined annually based on the town's budget needs and total property valuation.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion">
+                            <div class="accordion-header">
+                                Why does the budget increase each year?
+                                <div class="accordion-icon">
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                            </div>
+                            <div class="accordion-content">
+                                <p>Budget increases typically reflect rising costs for goods and services, inflation, contractual obligations for employee salaries and benefits, and investments in infrastructure maintenance or improvement.</p>
+                                <p>The FY26 budget increase of 6.32% is driven by several factors, including:</p>
+                                <ul>
+                                    <li>Increased costs for essential services</li>
+                                    <li>Investments in road maintenance and infrastructure</li>
+                                    <li>Employee cost-of-living adjustments</li>
+                                    <li>Rising costs for health insurance and other benefits</li>
+                                    <li>Expanded public safety initiatives</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion">
+                            <div class="accordion-header">
+                                What is "Free Cash" and how is it used?
+                                <div class="accordion-icon">
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                            </div>
+                            <div class="accordion-content">
+                                <p>Free Cash is the unrestricted funds from operations of the previous fiscal year that are certified by the Massachusetts Department of Revenue. It's essentially the town's "surplus" from the previous year.</p>
+                                <p>This surplus can result from collecting more revenue than anticipated, spending less than budgeted, or a combination of both. Free Cash is typically used for:</p>
+                                <ul>
+                                    <li>One-time expenses rather than recurring operational costs</li>
+                                    <li>Capital improvements</li>
+                                    <li>Adding to stabilization funds (rainy day funds)</li>
+                                    <li>Reducing the tax rate</li>
+                                </ul>
+                                <p>For FY26, Hubbardston is using $131,478 in Free Cash to help balance the budget while maintaining financial stability.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion">
+                            <div class="accordion-header">
+                                How can I participate in the budget process?
+                                <div class="accordion-icon">
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                            </div>
+                            <div class="accordion-content">
+                                <p>There are several ways to participate in Hubbardston's budget process:</p>
+                                <ul>
+                                    <li>Attend public hearings on the budget held by the Select Board and Finance Committee in March and April</li>
+                                    <li>Provide input during public comment periods at Select Board and Finance Committee meetings</li>
+                                    <li>Contact your Select Board members or the Town Administrator with specific concerns or suggestions</li>
+                                    <li>Attend the Annual Town Meeting in May, where you can ask questions, propose amendments, and vote on the budget</li>
+                                    <li>Consider volunteering for town committees or boards that have input in the budget process</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion">
+                            <div class="accordion-header">
+                                Why does education make up such a large portion of the budget?
+                                <div class="accordion-icon">
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                            </div>
+                            <div class="accordion-content">
+                                <p>Education typically represents the largest expense category in municipal budgets across Massachusetts, including Hubbardston's. At 54.2% of the FY26 budget, education funding reflects:</p>
+                                <ul>
+                                    <li>Hubbardston's commitment to providing quality education</li>
+                                    <li>The inherent costs of maintaining school facilities, transportation, and educational programs</li>
+                                    <li>Contractual obligations for teacher and staff salaries and benefits</li>
+                                    <li>Hubbardston's assessment as part of the Quabbin Regional School District</li>
+                                </ul>
+                                <p>As a regional school district member, Hubbardston's assessment is determined by a formula that accounts for student enrollment and other factors. The town has representation on the regional school committee but must meet its obligated assessment.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="action-section">
+                <h3 class="action-title">Get Involved in Hubbardston's Budget Process</h3>
+                
+                <p class="action-text">Your participation in town government matters! By understanding the budget and getting involved in the process, you help ensure that Hubbardston's financial decisions reflect community priorities and needs.</p>
+                
+                <div class="action-buttons">
+                    <a href="#" class="action-button primary-button">
+                        <i class="fas fa-calendar-alt"></i>
+                        View Meeting Schedule
+                    </a>
+                    <a href="#" class="action-button">
+                        <i class="fas fa-file-pdf"></i>
+                        Download Full Budget
+                    </a>
+                    <a href="#" class="action-button">
+                        <i class="fas fa-envelope"></i>
+                        Contact Town Officials
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Tab navigation functionality
+            const buttons = document.querySelectorAll(".tab-button");
+            const contents = document.querySelectorAll(".tab-content");
+
+            buttons.forEach(button => {
+                button.addEventListener("click", function () {
+                    // Remove 'active' class from all buttons and contents
+                    buttons.forEach(btn => btn.classList.remove("active"));
+                    contents.forEach(content => content.classList.remove("active"));
+
+                    // Add 'active' class to clicked button and corresponding content
+                    this.classList.add("active");
+                    const targetTab = document.getElementById(this.dataset.tab);
+                    if (targetTab) {
+                        targetTab.classList.add("active");
+                    } else {
+                        console.error("Tab content not found for:", this.dataset.tab);
+                    }
+                });
+            });
+
+            // Accordion functionality for FAQ section
+            const accordions = document.querySelectorAll(".accordion");
+            
+            accordions.forEach(accordion => {
+                const header = accordion.querySelector(".accordion-header");
+                
+                header.addEventListener("click", function() {
+                    accordion.classList.toggle("active");
+                });
+            });
+        });
+    </script>
+</body>
+</html>item">
+                                <div class="icon-container">
                                     <i class="fas fa-check"></i>
                                 </div>
                                 <div class="icon-content">
@@ -860,9 +1203,4 @@
                                     <p>Town Administrator and department heads begin planning for the upcoming fiscal year, assessing needs and priorities.</p>
                                 </div>
                             </li>
-                            <li class="icon-list-item">
-                                <div class="icon-container">
-                                    <i class="fas fa-calendar"></i>
-                                </div>
-                                <div class="icon-content">
-                                    <h4>
+                            <li class="icon-list-
