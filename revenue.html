@@ -194,6 +194,7 @@
             margin-bottom: 25px;
             position: relative;
             z-index: 1;
+            font-weight: 600;
         }
         
         .chart-display {
@@ -203,6 +204,88 @@
             margin-bottom: 20px;
             position: relative;
             z-index: 1;
+        }
+        
+        /* Legend Styling */
+        .chart-legend {
+            margin-top: 25px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .legend-item {
+            display: grid;
+            grid-template-columns: 24px 1fr auto auto;
+            gap: 15px;
+            align-items: center;
+            padding: 12px 15px;
+            margin-bottom: 5px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .legend-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        
+        .legend-item:hover {
+            background: rgba(75, 192, 192, 0.1);
+            transform: translateX(5px);
+        }
+        
+        .legend-color {
+            width: 18px;
+            height: 18px;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+        }
+        
+        .legend-text {
+            color: white;
+            font-weight: 500;
+            font-size: 16px;
+        }
+        
+        .legend-value {
+            color: #ffffff;
+            text-align: right;
+            font-size: 15px;
+        }
+        
+        .legend-percent {
+            color: #4bc0c0;
+            text-align: right;
+            font-weight: 600;
+            width: 60px;
+            font-size: 15px;
+        }
+        
+        /* Chart Legend Total */
+        .legend-total {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 10px;
+            margin-top: 15px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .total-label {
+            color: white;
+            font-weight: 600;
+            font-size: 16px;
+        }
+        
+        .total-amount {
+            color: #4bc0c0;
+            font-weight: 600;
+            font-size: 16px;
+            text-align: right;
         }
         
         /* Revenue Details */
@@ -483,6 +566,11 @@
                             <div class="legend-value">$131,478</div>
                             <div class="legend-percent">1.1%</div>
                         </div>
+                        
+                        <div class="legend-total">
+                            <div class="total-label">Total Revenue</div>
+                            <div class="total-amount">$11,719,755</div>
+                        </div>
                     </div>
                 </div>
                 
@@ -538,6 +626,11 @@
                             <div class="legend-text">Exempt Debt</div>
                             <div class="legend-value">$82,377</div>
                             <div class="legend-percent">0.9%</div>
+                        </div>
+                        
+                        <div class="legend-total">
+                            <div class="total-label">Total Tax Revenue</div>
+                            <div class="total-amount">$9,198,883</div>
                         </div>
                     </div>
                 </div>
