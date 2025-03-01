@@ -52,7 +52,6 @@
             width: 100%;
             top: 0;
             left: 0;
-            backdrop-filter: blur(10px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             z-index: 1000;
         }
@@ -83,14 +82,43 @@
             border-radius: 5px;
         }
         
-        .container {
+        .main-container {
             max-width: 1200px;
             margin: 120px auto 40px;
-            padding: 30px;
-            background: rgba(0, 0, 0, 0.75);
+            padding: 0;
+            background: rgba(17, 24, 39, 0.9);
             border-radius: 15px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(5px);
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .page-header {
+            text-align: center;
+            padding: 25px 20px;
+            background: linear-gradient(135deg, rgba(37, 158, 115, 0.8), rgba(25, 105, 76, 0.8));
+        }
+        
+        .page-title {
+            color: white;
+            font-size: 36px;
+            font-weight: 600;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .page-subtitle {
+            text-align: center;
+            font-size: 18px;
+            line-height: 1.6;
+            margin: 15px auto;
+            max-width: 800px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .content-container {
+            padding: 30px;
         }
         
         h1, h2 {
@@ -129,62 +157,88 @@
             color: #e0e0e0;
         }
         
-        .top-section {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
-            margin-bottom: 30px;
-            align-items: flex-start;
-        }
+            .top-section {
+                display: flex;
+                gap: 30px;
+                margin-bottom: 30px;
+                align-items: stretch;
+            }
+            
+            .summary-side {
+                flex: 1;
+                min-width: 300px;
+            }
+            
+            .image-side {
+                flex: 1;
+                min-width: 300px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            
+            .cip-image {
+                max-width: 100%;
+                height: auto;
+                border-radius: 10px;
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+            }
+            
+            .cip-section {
+                background: rgba(0, 80, 50, 0.4);
+                border-radius: 10px;
+                padding: 25px;
+                height: 100%;
+                border-left: 4px solid #4bc0c0;
+            }
+            
+            .cip-section h3 {
+                color: #4bc0c0;
+                margin-top: 0;
+                margin-bottom: 20px;
+                font-size: 24px;
+                font-weight: 600;
+                text-align: center;
+            }
+            
+            .cip-section p {
+                margin-bottom: 15px;
+                line-height: 1.7;
+                color: rgba(255, 255, 255, 0.9);
+            }
         
-        .summary-side {
-            flex: 1;
-            min-width: 300px;
-        }
-        
-        .image-side {
-            flex: 1;
-            min-width: 300px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .cip-image {
-            max-width: 100%;
-            height: auto;
-            border-radius: 10px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
-        }
-        
-        .tabs {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 30px;
-        }
-        
-        .tab-button {
-            background: rgba(34, 139, 34, 0.3);
-            border: none;
-            color: white;
-            padding: 12px 24px;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border-radius: 8px;
-            margin: 0 10px;
-        }
-        
-        .tab-button:hover {
-            background: rgba(34, 139, 34, 0.5);
-            transform: translateY(-2px);
-        }
-        
-        .tab-button.active {
-            background: linear-gradient(135deg, #4bc0c0, #358a8a);
-            box-shadow: 0 4px 12px rgba(75, 192, 192, 0.3);
-        }
+            .tabs-container {
+                margin-top: 30px;
+            }
+            
+            .tabs {
+                display: flex;
+                justify-content: center;
+                margin-bottom: 30px;
+            }
+            
+            .tab-button {
+                background: rgba(0, 100, 50, 0.4);
+                border: none;
+                color: white;
+                padding: 12px 24px;
+                font-size: 18px;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                border-radius: 8px;
+                margin: 0 10px;
+            }
+            
+            .tab-button:hover {
+                background: rgba(0, 120, 60, 0.6);
+                transform: translateY(-2px);
+            }
+            
+            .tab-button.active {
+                background: linear-gradient(135deg, #4bc0c0, #358a8a);
+                box-shadow: 0 4px 12px rgba(75, 192, 192, 0.3);
+            }
         
         .tab-content {
             display: none;
@@ -445,24 +499,26 @@
         <a href="citizens_guide.html">CITIZEN'S GUIDE</a>
     </nav>
     
-    <div class="container">
-        <h1>Capital Improvement Plan (FY26-30)</h1>
+    <div class="main-container">
+        <div class="page-header">
+            <h1 class="page-title">Capital Improvement Plan (FY26-30)</h1>
+            <p class="page-subtitle">This five-year plan outlines Hubbardston's strategic investments in infrastructure, equipment, and facilities to ensure high-quality services and fiscal responsibility.</p>
+        </div>
         
-        <div class="top-section">
-            <div class="summary-side">
-                <p class="intro">This five-year plan outlines Hubbardston's strategic investments in infrastructure, equipment, and facilities to ensure high-quality services and fiscal responsibility.</p>
+        <div class="content-container">
+            <div class="top-section">
+                <div class="summary-side">
+                    <div class="cip-section">
+                        <h3>Capital Planning Overview</h3>
+                        <p>Hubbardston's Capital Improvement Plan is a comprehensive framework that identifies and prioritizes the town's capital projects over the next five fiscal years (FY26-30). This planning approach ensures that critical infrastructure needs are addressed in a fiscally responsible manner, avoiding deferred maintenance costs and unexpected emergency repairs.</p>
+                        <p>Projects are evaluated based on several criteria, including public safety impact, service improvements, cost-effectiveness, and alignment with the town's strategic goals. Funding strategies include grants, debt exclusions, and free cash allocations to minimize direct impact on taxpayers while maintaining essential infrastructure.</p>
+                    </div>
+                </div>
                 
-                <div class="cip-section">
-                    <h3>Capital Planning Overview</h3>
-                    <p>Hubbardston's Capital Improvement Plan is a comprehensive framework that identifies and prioritizes the town's capital projects over the next five fiscal years (FY26-30). This planning approach ensures that critical infrastructure needs are addressed in a fiscally responsible manner, avoiding deferred maintenance costs and unexpected emergency repairs.</p>
-                    <p>Projects are evaluated based on several criteria, including public safety impact, service improvements, cost-effectiveness, and alignment with the town's strategic goals. Funding strategies include grants, debt exclusions, and free cash allocations to minimize direct impact on taxpayers while maintaining essential infrastructure.</p>
+                <div class="image-side">
+                    <img src="https://www.hubbardstonma.gov/sites/g/files/vyhlif3276/f/styles/news_image/public/news/2026_-_2030_cip_12132024.png" alt="Hubbardston Capital Improvement Plan" class="cip-image">
                 </div>
             </div>
-            
-            <div class="image-side">
-                <img src="https://www.hubbardstonma.gov/sites/g/files/vyhlif3276/f/styles/news_image/public/news/2026_-_2030_cip_12132024.png" alt="Hubbardston Capital Improvement Plan" class="cip-image">
-            </div>
-        </div>
         
         <div class="tabs">
             <button class="tab-button active" onclick="showTab('oneYear')">One-Year CIP</button>
