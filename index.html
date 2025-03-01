@@ -336,377 +336,356 @@ font-family: 'Poppins', sans-serif;
 </p>
             </div>
             
-<!-- Replace the existing donut-container or charts-container section with this code -->
-<!-- Replace the existing charts-container section with this modern version -->
-<!-- Replace existing charts with these cleaner, simpler versions -->
-<div class="budget-container">
-    <!-- Revenue Chart Section -->
+<!-- Clean budget charts with precise numbers and cohesive design -->
+<div class="budget-charts">
     <div class="chart-section">
-        <h3 class="chart-title">FY26 Revenue Sources</h3>
-        <div class="chart-content">
-            <div class="chart-visual">
+        <h3 class="chart-title">FY26 Budget Overview</h3>
+        
+        <!-- Revenue Chart -->
+        <div class="chart-row">
+            <div class="chart-container">
+                <div class="chart-header">Revenue & Funding</div>
                 <svg width="300" height="300" viewBox="0 0 300 300">
-                    <!-- Dark background circle -->
+                    <!-- Base circle -->
                     <circle cx="150" cy="150" r="120" fill="#1a1a1a" />
                     
-                    <!-- Tax Levy - 78.5% -->
+                    <!-- Tax Levy (blue) - 78.5% -->
                     <path d="M 150 30 
                          A 120 120 0 1 1 45 200 
                          L 150 150 Z" 
                          fill="#3498db" />
                     
-                    <!-- Local Receipts - 13.9% -->
+                    <!-- Local Receipts (yellow) - 13.9% -->
                     <path d="M 45 200 
                          A 120 120 0 0 1 75 60 
                          L 150 150 Z" 
                          fill="#f1c40f" />
                     
-                    <!-- State Aid - 6.3% -->
+                    <!-- State Aid (green) - 6.3% -->
                     <path d="M 75 60 
                          A 120 120 0 0 1 145 31 
                          L 150 150 Z" 
                          fill="#1abc9c" />
                     
-                    <!-- Free Cash - 1.1% -->
+                    <!-- Free Cash (orange) - 1.1% -->
                     <path d="M 145 31 
                          A 120 120 0 0 1 150 30 
                          L 150 150 Z" 
                          fill="#e67e22" />
                     
-                    <!-- Center circle -->
+                    <!-- Center hole -->
                     <circle cx="150" cy="150" r="80" fill="#181818" />
                     
-                    <!-- Center Text -->
-                    <text x="150" y="145" text-anchor="middle" font-size="26" fill="#1abc9c" font-weight="bold">$11.7M</text>
-                    <text x="150" y="175" text-anchor="middle" font-size="16" fill="#fff" font-weight="normal">Total Revenue</text>
+                    <!-- Center text -->
+                    <text x="150" y="145" text-anchor="middle" font-size="26" fill="#1abc9c" font-weight="bold">$11.8M</text>
+                    <text x="150" y="175" text-anchor="middle" font-size="16" fill="#fff" font-weight="normal">Total</text>
                 </svg>
+                
+                <div class="chart-legend">
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #3498db;"></div>
+                        <div class="legend-label">Tax Levy</div>
+                        <div class="legend-amount">$9,198,883</div>
+                        <div class="legend-percent">78.5%</div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #f1c40f;"></div>
+                        <div class="legend-label">Local Receipts</div>
+                        <div class="legend-amount">$1,632,503</div>
+                        <div class="legend-percent">13.9%</div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #1abc9c;"></div>
+                        <div class="legend-label">State Aid</div>
+                        <div class="legend-amount">$733,227</div>
+                        <div class="legend-percent">6.3%</div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #e67e22;"></div>
+                        <div class="legend-label">Free Cash</div>
+                        <div class="legend-amount">$131,478</div>
+                        <div class="legend-percent">1.1%</div>
+                    </div>
+                    <div class="legend-total">
+                        <div class="total-label">Total</div>
+                        <div class="total-amount">$11,851,233</div>
+                    </div>
+                </div>
             </div>
             
-            <div class="chart-legend">
-                <div class="legend-item">
-                    <div class="legend-color" style="background-color: #3498db;"></div>
-                    <div class="legend-text">
-                        <span>Tax Levy</span>
-                        <div class="legend-values">
-                            <span>$9,198,883</span>
-                            <span class="percent">78.5%</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background-color: #f1c40f;"></div>
-                    <div class="legend-text">
-                        <span>Local Receipts</span>
-                        <div class="legend-values">
-                            <span>$1,632,503</span>
-                            <span class="percent">13.9%</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background-color: #1abc9c;"></div>
-                    <div class="legend-text">
-                        <span>State Aid</span>
-                        <div class="legend-values">
-                            <span>$733,227</span>
-                            <span class="percent">6.3%</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background-color: #e67e22;"></div>
-                    <div class="legend-text">
-                        <span>Free Cash</span>
-                        <div class="legend-values">
-                            <span>$131,478</span>
-                            <span class="percent">1.1%</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="legend-total">
-                    <span>Total</span>
-                    <span>$11,719,755</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Expenditures Chart Section -->
-    <div class="chart-section">
-        <h3 class="chart-title">FY26 Expenditures by Department</h3>
-        <div class="chart-content">
-            <div class="chart-visual">
+            <!-- Expenditures Chart -->
+            <div class="chart-container">
+                <div class="chart-header">Expenditures by Department</div>
                 <svg width="300" height="300" viewBox="0 0 300 300">
-                    <!-- Dark background circle -->
+                    <!-- Base circle -->
                     <circle cx="150" cy="150" r="120" fill="#1a1a1a" />
                     
-                    <!-- Missing from image: Education - 61.9% (showing it as blue segment) -->
+                    <!-- Education (blue) - 61.9% -->
                     <path d="M 150 30 
                          A 120 120 0 1 0 40 150 
                          L 150 150 Z" 
                          fill="#3498db" />
                     
-                    <!-- Public Safety - 13.5% -->
+                    <!-- Public Safety (red) - 13.5% -->
                     <path d="M 40 150 
                          A 120 120 0 0 0 110 265 
                          L 150 150 Z" 
                          fill="#e74c3c" />
                     
-                    <!-- Liabilities & Assessments - 8.4% -->
+                    <!-- Liabilities & Assessments (purple) - 8.4% -->
                     <path d="M 110 265 
                          A 120 120 0 0 0 210 265 
                          L 150 150 Z" 
                          fill="#9b59b6" />
                     
-                    <!-- Public Works - 7.8% -->
+                    <!-- Public Works (green) - 7.8% -->
                     <path d="M 210 265 
                          A 120 120 0 0 0 260 210 
                          L 150 150 Z" 
                          fill="#1abc9c" />
                     
-                    <!-- General Government - 6.1% -->
+                    <!-- General Government (yellow) - 6.1% -->
                     <path d="M 260 210 
-                         A 120 120 0 0 0 280 120 
+                         A 120 120 0 0 0 283 120 
                          L 150 150 Z" 
                          fill="#f1c40f" />
                     
-                    <!-- Debt, Culture, Human Services combined as small segments -->
-                    <path d="M 280 120 
+                    <!-- Debt (orange) - 1.2% -->
+                    <path d="M 283 120 
+                         A 120 120 0 0 0 255 80 
+                         L 150 150 Z" 
+                         fill="#e67e22" />
+                    
+                    <!-- Culture (cyan) - 0.8% -->
+                    <path d="M 255 80 
+                         A 120 120 0 0 0 170 35 
+                         L 150 150 Z" 
+                         fill="#00bcd4" />
+                    
+                    <!-- Human Services (pink) - 0.2% -->
+                    <path d="M 170 35 
                          A 120 120 0 0 0 150 30 
                          L 150 150 Z" 
-                         fill="#bbb" />
+                         fill="#ff80ab" />
                     
-                    <!-- Center circle -->
+                    <!-- Center hole -->
                     <circle cx="150" cy="150" r="80" fill="#181818" />
                     
-                    <!-- Center Text -->
+                    <!-- Center text -->
                     <text x="150" y="145" text-anchor="middle" font-size="26" fill="#1abc9c" font-weight="bold">$11.8M</text>
-                    <text x="150" y="175" text-anchor="middle" font-size="16" fill="#fff" font-weight="normal">Total Spending</text>
+                    <text x="150" y="175" text-anchor="middle" font-size="16" fill="#fff" font-weight="normal">Total</text>
                 </svg>
-            </div>
-            
-            <div class="chart-legend">
-                <div class="legend-item">
-                    <div class="legend-color" style="background-color: #3498db;"></div>
-                    <div class="legend-text">
-                        <span>Education</span>
-                        <div class="legend-values">
-                            <span>$7,334,563</span>
-                            <span class="percent">61.9%</span>
-                        </div>
+                
+                <div class="chart-legend">
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #3498db;"></div>
+                        <div class="legend-label">Education</div>
+                        <div class="legend-amount">$7,334,563</div>
+                        <div class="legend-percent">61.9%</div>
                     </div>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background-color: #e74c3c;"></div>
-                    <div class="legend-text">
-                        <span>Public Safety</span>
-                        <div class="legend-values">
-                            <span>$1,595,193</span>
-                            <span class="percent">13.5%</span>
-                        </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #e74c3c;"></div>
+                        <div class="legend-label">Public Safety</div>
+                        <div class="legend-amount">$1,595,193</div>
+                        <div class="legend-percent">13.5%</div>
                     </div>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background-color: #9b59b6;"></div>
-                    <div class="legend-text">
-                        <span>Liabilities & Assessments</span>
-                        <div class="legend-values">
-                            <span>$999,455</span>
-                            <span class="percent">8.4%</span>
-                        </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #9b59b6;"></div>
+                        <div class="legend-label">Liabilities & Assessments</div>
+                        <div class="legend-amount">$999,455</div>
+                        <div class="legend-percent">8.4%</div>
                     </div>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background-color: #1abc9c;"></div>
-                    <div class="legend-text">
-                        <span>Public Works</span>
-                        <div class="legend-values">
-                            <span>$920,184</span>
-                            <span class="percent">7.8%</span>
-                        </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #1abc9c;"></div>
+                        <div class="legend-label">Public Works</div>
+                        <div class="legend-amount">$920,184</div>
+                        <div class="legend-percent">7.8%</div>
                     </div>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background-color: #f1c40f;"></div>
-                    <div class="legend-text">
-                        <span>General Government</span>
-                        <div class="legend-values">
-                            <span>$724,886</span>
-                            <span class="percent">6.1%</span>
-                        </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #f1c40f;"></div>
+                        <div class="legend-label">General Government</div>
+                        <div class="legend-amount">$724,886</div>
+                        <div class="legend-percent">6.1%</div>
                     </div>
-                </div>
-                <div class="legend-item smaller">
-                    <div class="legend-color" style="background-color: #e67e22;"></div>
-                    <div class="legend-text">
-                        <span>Debt</span>
-                        <div class="legend-values">
-                            <span>$146,862</span>
-                            <span class="percent">1.2%</span>
-                        </div>
+                    <div class="legend-item compact">
+                        <div class="legend-color" style="background-color: #e67e22;"></div>
+                        <div class="legend-label">Debt</div>
+                        <div class="legend-amount">$146,862</div>
+                        <div class="legend-percent">1.2%</div>
                     </div>
-                </div>
-                <div class="legend-item smaller">
-                    <div class="legend-color" style="background-color: #00bcd4;"></div>
-                    <div class="legend-text">
-                        <span>Culture & Recreation</span>
-                        <div class="legend-values">
-                            <span>$94,290</span>
-                            <span class="percent">0.8%</span>
-                        </div>
+                    <div class="legend-item compact">
+                        <div class="legend-color" style="background-color: #00bcd4;"></div>
+                        <div class="legend-label">Culture & Recreation</div>
+                        <div class="legend-amount">$94,290</div>
+                        <div class="legend-percent">0.8%</div>
                     </div>
-                </div>
-                <div class="legend-item smaller">
-                    <div class="legend-color" style="background-color: #ff80ab;"></div>
-                    <div class="legend-text">
-                        <span>Human Services</span>
-                        <div class="legend-values">
-                            <span>$26,950</span>
-                            <span class="percent">0.2%</span>
-                        </div>
+                    <div class="legend-item compact">
+                        <div class="legend-color" style="background-color: #ff80ab;"></div>
+                        <div class="legend-label">Human Services</div>
+                        <div class="legend-amount">$26,950</div>
+                        <div class="legend-percent">0.2%</div>
                     </div>
-                </div>
-                <div class="legend-total">
-                    <span>Total</span>
-                    <span>$11,851,233</span>
-                </div>
-                <div class="balance-note">
-                    <p>* $131,478 in Free Cash balances the budget</p>
+                    <div class="legend-total">
+                        <div class="total-label">Total</div>
+                        <div class="total-amount">$11,851,233</div>
+                    </div>
                 </div>
             </div>
+        </div>
+        
+        <div class="budget-note">
+            Note: The FY26 budget is balanced with $131,478 in Free Cash to meet total expenditures of $11,851,233.
         </div>
     </div>
 </div>
 
 <style>
-    .budget-container {
-        display: flex;
-        flex-direction: column;
-        gap: 40px;
+    .budget-charts {
         margin: 40px 0;
+        font-family: 'Poppins', sans-serif;
     }
     
     .chart-section {
-        background: rgba(24, 24, 24, 0.95);
+        background-color: #212121;
         border-radius: 12px;
-        padding: 25px;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
     }
     
     .chart-title {
-        color: #fff;
-        font-size: 24px;
-        font-weight: 600;
-        margin-bottom: 25px;
+        color: white;
         text-align: center;
+        font-size: 28px;
+        font-weight: 600;
+        margin-bottom: 30px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
     
-    .chart-content {
+    .chart-row {
         display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
+        justify-content: space-around;
+        gap: 30px;
     }
     
-    .chart-visual {
-        flex: 0 0 300px;
+    .chart-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+        background-color: #181818;
+        border-radius: 10px;
+    }
+    
+    .chart-header {
+        color: #1abc9c;
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 20px;
+        text-align: center;
+        width: 100%;
     }
     
     .chart-legend {
-        flex: 1;
-        padding-left: 20px;
-        max-width: 400px;
+        width: 100%;
+        margin-top: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding-top: 15px;
     }
     
     .legend-item {
-        display: flex;
+        display: grid;
+        grid-template-columns: 20px 1fr auto auto;
         align-items: center;
-        margin-bottom: 15px;
-        padding: 8px 15px;
+        gap: 12px;
+        margin-bottom: 10px;
+        padding: 8px 10px;
         border-radius: 6px;
-        background: rgba(255, 255, 255, 0.05);
+        background-color: rgba(255, 255, 255, 0.05);
     }
     
     .legend-item:hover {
-        background: rgba(255, 255, 255, 0.1);
+        background-color: rgba(255, 255, 255, 0.08);
     }
     
     .legend-color {
-        width: 18px;
-        height: 18px;
+        width: 16px;
+        height: 16px;
         border-radius: 4px;
-        margin-right: 12px;
     }
     
-    .legend-text {
-        flex: 1;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    
-    .legend-text > span {
+    .legend-label {
+        color: white;
         font-weight: 500;
-        color: #fff;
+        font-size: 15px;
     }
     
-    .legend-values {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-    }
-    
-    .legend-values > span {
+    .legend-amount {
         color: #ddd;
+        font-size: 15px;
+        text-align: right;
     }
     
-    .legend-values .percent {
+    .legend-percent {
         color: #1abc9c;
         font-weight: 500;
+        font-size: 15px;
+        text-align: right;
+        width: 55px;
     }
     
     .legend-total {
-        display: flex;
-        justify-content: space-between;
-        padding: 15px;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 10px;
         margin-top: 15px;
+        padding: 12px 10px;
         border-top: 1px solid rgba(255, 255, 255, 0.1);
-        font-weight: 600;
-        font-size: 18px;
-        color: #fff;
     }
     
-    .balance-note {
-        padding: 10px 15px;
+    .total-label {
+        color: white;
+        font-weight: 600;
+        font-size: 17px;
+    }
+    
+    .total-amount {
+        color: white;
+        font-weight: 600;
+        font-size: 17px;
+        text-align: right;
+    }
+    
+    .compact {
+        padding: 5px 10px;
+        margin-bottom: 5px;
+        background-color: rgba(255, 255, 255, 0.03);
+    }
+    
+    .compact .legend-label,
+    .compact .legend-amount,
+    .compact .legend-percent {
         font-size: 14px;
+    }
+    
+    .budget-note {
+        text-align: center;
         color: #aaa;
         font-style: italic;
+        margin-top: 25px;
+        padding: 10px;
+        background-color: rgba(255, 255, 255, 0.05);
+        border-radius: 6px;
     }
     
-    .smaller {
-        padding: 6px 15px;
-        margin-bottom: 10px;
-        background: rgba(255, 255, 255, 0.03);
-    }
-    
-    .smaller .legend-text > span {
-        font-size: 14px;
-    }
-    
-    .smaller .legend-values > span {
-        font-size: 14px;
-    }
-    
-    @media (max-width: 768px) {
-        .chart-content {
+    @media (max-width: 900px) {
+        .chart-row {
             flex-direction: column;
-            align-items: center;
         }
         
-        .chart-legend {
-            margin-top: 30px;
-            padding-left: 0;
-            width: 100%;
-            max-width: none;
+        .chart-container {
+            margin-bottom: 20px;
         }
     }
 </style>
