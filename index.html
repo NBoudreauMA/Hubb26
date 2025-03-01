@@ -336,86 +336,28 @@ font-family: 'Poppins', sans-serif;
 </p>
             </div>
             
+<!-- Replace the existing donut-container or charts-container section with this code -->
 <div class="charts-container">
-    <!-- Taxes by Type Chart -->
-    <div class="chart-section">
-        <h3 class="chart-title">Taxes by Type</h3>
-        <div class="chart-flex">
-            <div class="chart">
-                <svg width="300" height="300" viewBox="0 0 300 300">
-                    <!-- Pie chart for taxes -->
-                    <circle cx="150" cy="150" r="100" fill="rgba(0,0,0,0.5)" />
-                    
-                    <!-- Property Tax (blue) - largest segment -->
-                    <path d="M 150 50 A 100 100 0 1 1 70 199 L 150 150 Z" fill="#36a2eb" />
-                    
-                    <!-- Excise Tax (green) -->
-                    <path d="M 70 199 A 100 100 0 0 1 90 210 L 150 150 Z" fill="#4bc0c0" />
-                    
-                    <!-- Special Assessment (yellow) -->
-                    <path d="M 90 210 A 100 100 0 0 1 150 250 L 150 150 Z" fill="#ffce56" />
-                    
-                    <!-- Personal Property (pink) -->
-                    <path d="M 150 250 A 100 100 0 0 1 150 50 L 150 150 Z" fill="#ff6384" />
-                    
-                    <!-- Center circle to create donut hole -->
-                    <circle cx="150" cy="150" r="60" fill="rgba(0,0,0,0.7)" />
-                </svg>
-            </div>
-            
-            <div class="legend">
-                <div class="legend-item">
-                    <div class="legend-color" style="background-color: #36a2eb;"></div>
-                    <div class="legend-text">
-                        <span>Property Tax</span>
-                        <span>$8,325,453</span>
-                    </div>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background-color: #4bc0c0;"></div>
-                    <div class="legend-text">
-                        <span>Motor Vehicle Excise</span>
-                        <span>$623,430</span>
-                    </div>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background-color: #ffce56;"></div>
-                    <div class="legend-text">
-                        <span>Special Assessments</span>
-                        <span>$155,142</span>
-                    </div>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background-color: #ff6384;"></div>
-                    <div class="legend-text">
-                        <span>Personal Property</span>
-                        <span>$94,858</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
     <!-- Revenue by Category Chart -->
     <div class="chart-section">
-        <h3 class="chart-title">Revenue by Category</h3>
+        <h3 class="chart-title">FY26 Revenue by Category</h3>
         <div class="chart-flex">
             <div class="chart">
                 <svg width="300" height="300" viewBox="0 0 300 300">
-                    <!-- Donut chart for revenue categories -->
+                    <!-- Base circle -->
                     <circle cx="150" cy="150" r="100" fill="rgba(0,0,0,0.5)" />
                     
-                    <!-- Tax Levy (blue) - largest segment -->
-                    <path d="M 150 50 A 100 100 0 1 1 70 199 L 150 150 Z" fill="#36a2eb" />
+                    <!-- Property Tax (blue) - largest segment ~78.5% -->
+                    <path d="M 150 50 A 100 100 0 1 1 55 180 L 150 150 Z" fill="#36a2eb" />
                     
-                    <!-- Local Receipts (yellow) -->
-                    <path d="M 70 199 A 100 100 0 0 1 65 110 L 150 150 Z" fill="#ffce56" />
+                    <!-- Local Receipts (yellow) ~14% -->
+                    <path d="M 55 180 A 100 100 0 0 1 80 65 L 150 150 Z" fill="#ffce56" />
                     
-                    <!-- State Aid (teal) -->
-                    <path d="M 65 110 A 100 100 0 0 1 110 65 L 150 150 Z" fill="#4bc0c0" />
+                    <!-- State Aid (green) ~6.3% -->
+                    <path d="M 80 65 A 100 100 0 0 1 145 51 L 150 150 Z" fill="#4bc0c0" />
                     
-                    <!-- Free Cash (orange) -->
-                    <path d="M 110 65 A 100 100 0 0 1 150 50 L 150 150 Z" fill="#ff9f40" />
+                    <!-- Free Cash (orange) ~1.1% -->
+                    <path d="M 145 51 A 100 100 0 0 1 150 50 L 150 150 Z" fill="#ff9f40" />
                     
                     <!-- Center circle to create donut hole -->
                     <circle cx="150" cy="150" r="60" fill="rgba(0,0,0,0.7)" />
@@ -426,7 +368,7 @@ font-family: 'Poppins', sans-serif;
                 <div class="legend-item">
                     <div class="legend-color" style="background-color: #36a2eb;"></div>
                     <div class="legend-text">
-                        <span>Tax Levy</span>
+                        <span>Tax Levy (Base+Growth+Exempt)</span>
                         <span>$9,198,883</span>
                     </div>
                 </div>
@@ -451,6 +393,117 @@ font-family: 'Poppins', sans-serif;
                         <span>$131,478</span>
                     </div>
                 </div>
+                <div class="legend-total">
+                    <div class="legend-text">
+                        <span><strong>Total Revenue</strong></span>
+                        <span><strong>$11,719,755</strong></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Expenditures by Department Chart -->
+    <div class="chart-section">
+        <h3 class="chart-title">FY26 Expenditures by Department</h3>
+        <div class="chart-flex">
+            <div class="chart">
+                <svg width="300" height="300" viewBox="0 0 300 300">
+                    <!-- Base circle -->
+                    <circle cx="150" cy="150" r="100" fill="rgba(0,0,0,0.5)" />
+                    
+                    <!-- Education (blue) - largest segment ~61.9% -->
+                    <path d="M 150 50 A 100 100 0 1 0 60 195 L 150 150 Z" fill="#36a2eb" />
+                    
+                    <!-- Public Safety (red) ~13.5% -->
+                    <path d="M 60 195 A 100 100 0 0 0 110 235 L 150 150 Z" fill="#ff6384" />
+                    
+                    <!-- Liabilities & Assessments (purple) ~8.4% -->
+                    <path d="M 110 235 A 100 100 0 0 0 190 235 L 150 150 Z" fill="#9966ff" />
+                    
+                    <!-- Public Works (green) ~7.8% -->
+                    <path d="M 190 235 A 100 100 0 0 0 235 190 L 150 150 Z" fill="#4bc0c0" />
+                    
+                    <!-- General Government (yellow) ~6.1% -->
+                    <path d="M 235 190 A 100 100 0 0 0 240 100 L 150 150 Z" fill="#ffce56" />
+                    
+                    <!-- Debt (orange) ~1.2% -->
+                    <path d="M 240 100 A 100 100 0 0 0 215 75 L 150 150 Z" fill="#ff9f40" />
+                    
+                    <!-- Culture & Recreation (light blue) ~0.8% -->
+                    <path d="M 215 75 A 100 100 0 0 0 180 60 L 150 150 Z" fill="#00d8ff" />
+                    
+                    <!-- Human Services (pink) ~0.2% -->
+                    <path d="M 180 60 A 100 100 0 0 0 150 50 L 150 150 Z" fill="#ff99cc" />
+                    
+                    <!-- Center circle to create donut hole -->
+                    <circle cx="150" cy="150" r="60" fill="rgba(0,0,0,0.7)" />
+                </svg>
+            </div>
+            
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #36a2eb;"></div>
+                    <div class="legend-text">
+                        <span>Education</span>
+                        <span>$7,334,563</span>
+                    </div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #ff6384;"></div>
+                    <div class="legend-text">
+                        <span>Public Safety</span>
+                        <span>$1,595,193</span>
+                    </div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #9966ff;"></div>
+                    <div class="legend-text">
+                        <span>Liabilities & Assessments</span>
+                        <span>$999,455</span>
+                    </div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #4bc0c0;"></div>
+                    <div class="legend-text">
+                        <span>Public Works</span>
+                        <span>$920,184</span>
+                    </div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #ffce56;"></div>
+                    <div class="legend-text">
+                        <span>General Government</span>
+                        <span>$724,886</span>
+                    </div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #ff9f40;"></div>
+                    <div class="legend-text">
+                        <span>Debt</span>
+                        <span>$146,862</span>
+                    </div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #00d8ff;"></div>
+                    <div class="legend-text">
+                        <span>Culture & Recreation</span>
+                        <span>$94,290</span>
+                    </div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #ff99cc;"></div>
+                    <div class="legend-text">
+                        <span>Human Services</span>
+                        <span>$26,950</span>
+                    </div>
+                </div>
+                <div class="legend-total">
+                    <div class="legend-text">
+                        <span><strong>Total Expenditures</strong></span>
+                        <span><strong>$11,851,233</strong></span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -470,6 +523,12 @@ font-family: 'Poppins', sans-serif;
         padding: 25px;
         border-radius: 10px;
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        transition: all 0.3s ease;
+    }
+    
+    .chart-section:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
     }
     
     .chart-title {
@@ -478,6 +537,19 @@ font-family: 'Poppins', sans-serif;
         margin-bottom: 25px;
         font-size: 24px;
         font-weight: 600;
+        position: relative;
+        padding-bottom: 10px;
+    }
+    
+    .chart-title:after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 3px;
+        background: linear-gradient(90deg, rgba(34, 139, 34, 0.5), #4bc0c0);
     }
     
     .chart-flex {
@@ -485,6 +557,17 @@ font-family: 'Poppins', sans-serif;
         justify-content: space-around;
         align-items: center;
         flex-wrap: wrap;
+    }
+    
+    .legend-total {
+        margin-top: 15px;
+        padding-top: 15px;
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        font-size: 18px;
+    }
+    
+    .legend-total .legend-text {
+        color: #4bc0c0;
     }
     
     @media (max-width: 768px) {
