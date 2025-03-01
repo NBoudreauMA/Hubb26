@@ -154,187 +154,7 @@
             height: 1px;
             background-color: rgba(75, 192, 192, 0.4);
         }
-
-        /* Budget Dollar Visualization */
        
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Budget Dollar Visualization</title>
-    <style>
-        /* Global Reset and Base Styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-            background-color: #f4f6f9;
-            line-height: 1.6;
-        }
-
-        /* Budget Dollar Container */
-        .budget-dollar-container {
-            max-width: 600px;
-            margin: 30px auto;
-            background: rgba(0, 40, 20, 0.7);
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-        }
-
-        .budget-dollar-container h2 {
-            text-align: center;
-            color: white;
-            margin-bottom: 20px;
-            font-weight: 600;
-        }
-
-        /* Tax Dollar Image */
-        .tax-dollar-image {
-            display: block;
-            width: 100%;
-            max-width: 100%;
-            height: auto;
-            margin: 10px auto 20px;
-            border-radius: 8px;
-        }
-
-        /* Dollar Visualization Bar */
-        .dollar-visualization {
-            position: relative;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-            width: 100%;
-            margin-bottom: 20px;
-            height: 50px;
-            background-color: #004020;
-        }
-
-        .segments-container {
-            display: flex;
-            width: 100%;
-            height: 100%;
-        }
-
-        .segment {
-            height: 100%;
-            position: relative;
-            transition: opacity 0.3s ease;
-        }
-
-        .segment:hover {
-            opacity: 0.9;
-        }
-
-        .segment-label {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: rgba(0, 0, 0, 0.7);
-            color: white;
-            padding: 6px 10px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 14px;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
-            white-space: nowrap;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            z-index: 10;
-        }
-
-        .segment:hover .segment-label {
-            opacity: 1;
-        }
-
-        .budget-total {
-            text-align: center;
-            font-size: 18px;
-            font-weight: 600;
-            margin-top: 15px;
-            color: white;
-        }
-
-        /* Dollar Legend */
-        .dollar-legend {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 20px;
-            justify-content: center;
-        }
-
-        .dollar-legend-item {
-            display: flex;
-            align-items: center;
-            background-color: rgba(0, 0, 0, 0.3);
-            padding: 8px 12px;
-            border-radius: 6px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-
-        .dollar-legend-color {
-            width: 20px;
-            height: 20px;
-            border-radius: 4px;
-            margin-right: 8px;
-        }
-
-        /* Responsive Adjustments */
-        @media (max-width: 600px) {
-            .budget-dollar-container {
-                margin: 15px;
-                padding: 15px;
-            }
-
-            .segment-label {
-                font-size: 12px;
-                padding: 4px 8px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="budget-dollar-container">
-        <h2>Where Your Tax Dollar Goes</h2>
-        
-        <img src="HUBBARDSTON.png" class="tax-dollar-image" alt="Tax Dollar Allocation Visualization">
-        
-        <div class="dollar-visualization">
-            <div class="segments-container">
-                <div class="segment" style="width: 62%; background-color: #007bff;"><span class="segment-label">Education</span></div>
-                <div class="segment" style="width: 13.5%; background-color: #dc3545;"><span class="segment-label">Public Safety</span></div>
-                <div class="segment" style="width: 7.8%; background-color: #28a745;"><span class="segment-label">Public Works</span></div>
-                <div class="segment" style="width: 6.1%; background-color: #ffc107;"><span class="segment-label">Administration</span></div>
-                <div class="segment" style="width: 8.4%; background-color: #6f42c1;"><span class="segment-label">Benefits & Insurance</span></div>
-                <div class="segment" style="width: 2.2%; background-color: #17a2b8;"><span class="segment-label">Other Services</span></div>
-            </div>
-        </div>
-        
-        <p class="budget-total">Total Budget: $11,851,233</p>
-        
-        <div class="dollar-legend">
-            <div class="dollar-legend-item"><div class="dollar-legend-color" style="background-color: #007bff;"></div> Education: 62¢</div>
-            <div class="dollar-legend-item"><div class="dollar-legend-color" style="background-color: #dc3545;"></div> Public Safety: 13.5¢</div>
-            <div class="dollar-legend-item"><div class="dollar-legend-color" style="background-color: #28a745;"></div> Public Works: 7.8¢</div>
-            <div class="dollar-legend-item"><div class="dollar-legend-color" style="background-color: #ffc107;"></div> Administration: 6.1¢</div>
-            <div class="dollar-legend-item"><div class="dollar-legend-color" style="background-color: #6f42c1;"></div> Benefits & Insurance: 8.4¢</div>
-            <div class="dollar-legend-item"><div class="dollar-legend-color" style="background-color: #17a2b8;"></div> Other Services: 2.2¢</div>
-        </div>
-    </div>
-</body>
-</html>
-
-
-
         /* Department Details */
         .department-grid {
             display: grid;
@@ -707,26 +527,180 @@
             <h2>FY26 Expenditures Analysis</h2>
 
             <!-- Dollar Visualization -->
-            <div class="budget-dollar-container">
-                <h3 class="chart-title">Where Your Tax Dollar Goes</h3>
-                <img src="HUBBARDSTON.png" alt="Hubbardston" style="width: 100%; height: 500px; object-fit: contain; border-radius: 800px; margin-bottom: 100px;">
-                <div class="dollar-visualization" id="dollar-visualization">
-                    <div class="segments-container" id="segments-container"></div>
-                </div>
-                <div class="budget-total">Total Budget: $11,851,233</div>
-                
-                <div class="dollar-legend" id="dollar-legend-container"></div>
+        <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Dollar Visualization</title>
+    <style>
+        /* Global Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+            background-color: #f4f6f9;
+            line-height: 1.6;
+        }
+
+        /* Budget Dollar Container */
+        .budget-dollar-container {
+            max-width: 600px;
+            margin: 30px auto;
+            background: rgba(0, 40, 20, 0.7);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .budget-dollar-container h2 {
+            text-align: center;
+            color: white;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        /* Tax Dollar Image */
+        .tax-dollar-image {
+            display: block;
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            margin: 10px auto 20px;
+            border-radius: 8px;
+        }
+
+        /* Dollar Visualization Bar */
+        .dollar-visualization {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            margin-bottom: 20px;
+            height: 50px;
+            background-color: #004020;
+        }
+
+        .segments-container {
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+
+        .segment {
+            height: 100%;
+            position: relative;
+            transition: opacity 0.3s ease;
+        }
+
+        .segment:hover {
+            opacity: 0.9;
+        }
+
+        .segment-label {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 10;
+        }
+
+        .segment:hover .segment-label {
+            opacity: 1;
+        }
+
+        .budget-total {
+            text-align: center;
+            font-size: 18px;
+            font-weight: 600;
+            margin-top: 15px;
+            color: white;
+        }
+
+        /* Dollar Legend */
+        .dollar-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+
+        .dollar-legend-item {
+            display: flex;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 8px 12px;
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .dollar-legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            margin-right: 8px;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 600px) {
+            .budget-dollar-container {
+                margin: 15px;
+                padding: 15px;
+            }
+
+            .segment-label {
+                font-size: 12px;
+                padding: 4px 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="budget-dollar-container">
+        <h2>Where Your Tax Dollar Goes</h2>
+        
+        <img src="HUBBARDSTON.png" class="tax-dollar-image" alt="Tax Dollar Allocation Visualization">
+        
+        <div class="dollar-visualization">
+            <div class="segments-container">
+                <div class="segment" style="width: 62%; background-color: #007bff;"><span class="segment-label">Education</span></div>
+                <div class="segment" style="width: 13.5%; background-color: #dc3545;"><span class="segment-label">Public Safety</span></div>
+                <div class="segment" style="width: 7.8%; background-color: #28a745;"><span class="segment-label">Public Works</span></div>
+                <div class="segment" style="width: 6.1%; background-color: #ffc107;"><span class="segment-label">Administration</span></div>
+                <div class="segment" style="width: 8.4%; background-color: #6f42c1;"><span class="segment-label">Benefits & Insurance</span></div>
+                <div class="segment" style="width: 2.2%; background-color: #17a2b8;"><span class="segment-label">Other Services</span></div>
             </div>
-
-            <div class="expenditures-header">
-                <h3 class="expenditures-title">Expenditures Overview</h3>
-
-                <div class="expenditures-content">
-                    <p>The FY26 budget reflects Hubbardston's commitment to responsible fiscal management while addressing key community needs. Total expenditures for FY26 amount to <span class="highlight-number">$11,851,233</span>, representing a carefully planned 6.32% increase over the previous fiscal year.</p>
-
-                    <p>This budget prioritizes education, public safety, and infrastructure while maintaining essential services across all departments. Strategic investments in key areas will enable improvements in service delivery while maintaining long-term fiscal sustainability.</p>
-                </div>
-            </div>
+        </div>
+        
+        <p class="budget-total">Total Budget: $11,851,233</p>
+        
+        <div class="dollar-legend">
+            <div class="dollar-legend-item"><div class="dollar-legend-color" style="background-color: #007bff;"></div> Education: 62¢</div>
+            <div class="dollar-legend-item"><div class="dollar-legend-color" style="background-color: #dc3545;"></div> Public Safety: 13.5¢</div>
+            <div class="dollar-legend-item"><div class="dollar-legend-color" style="background-color: #28a745;"></div> Public Works: 7.8¢</div>
+            <div class="dollar-legend-item"><div class="dollar-legend-color" style="background-color: #ffc107;"></div> Administration: 6.1¢</div>
+            <div class="dollar-legend-item"><div class="dollar-legend-color" style="background-color: #6f42c1;"></div> Benefits & Insurance: 8.4¢</div>
+            <div class="dollar-legend-item"><div class="dollar-legend-color" style="background-color: #17a2b8;"></div> Other Services: 2.2¢</div>
+        </div>
+    </div>
+</body>
+</html>
 
             <!-- Expenditures Chart Section -->
             <div class="charts-section">
