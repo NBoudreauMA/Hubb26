@@ -129,11 +129,30 @@
             color: #e0e0e0;
         }
         
+        .top-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 30px;
+            align-items: flex-start;
+        }
+        
+        .summary-side {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .image-side {
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
         .cip-image {
-            display: block;
             max-width: 100%;
             height: auto;
-            margin: 0 auto 30px;
             border-radius: 10px;
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
         }
@@ -402,6 +421,18 @@
                 margin: 0 10px;
                 padding: 5px;
             }
+            
+            .top-section {
+                flex-direction: column-reverse;
+            }
+            
+            .image-side {
+                margin-bottom: 20px;
+            }
+            
+            .summary-side, .image-side {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -416,14 +447,21 @@
     
     <div class="container">
         <h1>Capital Improvement Plan (FY26-30)</h1>
-        <p class="intro">This five-year plan outlines Hubbardston's strategic investments in infrastructure, equipment, and facilities to ensure high-quality services and fiscal responsibility.</p>
         
-        <img src="https://www.hubbardstonma.gov/sites/g/files/vyhlif3276/f/styles/news_image/public/news/2026_-_2030_cip_12132024.png" alt="Hubbardston Capital Improvement Plan" class="cip-image">
-        
-        <div class="cip-section">
-            <h3>Capital Planning Overview</h3>
-            <p>Hubbardston's Capital Improvement Plan is a comprehensive framework that identifies and prioritizes the town's capital projects over the next five fiscal years (FY26-30). This planning approach ensures that critical infrastructure needs are addressed in a fiscally responsible manner, avoiding deferred maintenance costs and unexpected emergency repairs.</p>
-            <p>Projects are evaluated based on several criteria, including public safety impact, service improvements, cost-effectiveness, and alignment with the town's strategic goals. Funding strategies include grants, debt exclusions, and free cash allocations to minimize direct impact on taxpayers while maintaining essential infrastructure.</p>
+        <div class="top-section">
+            <div class="summary-side">
+                <p class="intro">This five-year plan outlines Hubbardston's strategic investments in infrastructure, equipment, and facilities to ensure high-quality services and fiscal responsibility.</p>
+                
+                <div class="cip-section">
+                    <h3>Capital Planning Overview</h3>
+                    <p>Hubbardston's Capital Improvement Plan is a comprehensive framework that identifies and prioritizes the town's capital projects over the next five fiscal years (FY26-30). This planning approach ensures that critical infrastructure needs are addressed in a fiscally responsible manner, avoiding deferred maintenance costs and unexpected emergency repairs.</p>
+                    <p>Projects are evaluated based on several criteria, including public safety impact, service improvements, cost-effectiveness, and alignment with the town's strategic goals. Funding strategies include grants, debt exclusions, and free cash allocations to minimize direct impact on taxpayers while maintaining essential infrastructure.</p>
+                </div>
+            </div>
+            
+            <div class="image-side">
+                <img src="https://www.hubbardstonma.gov/sites/g/files/vyhlif3276/f/styles/news_image/public/news/2026_-_2030_cip_12132024.png" alt="Hubbardston Capital Improvement Plan" class="cip-image">
+            </div>
         </div>
         
         <div class="tabs">
