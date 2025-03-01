@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,15 +6,21 @@
     <title>Hubbardston Budget Portal - Expenditures</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Poppins', sans-serif;
+        /* Global Reset and Base Styles */
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
             background: #005030;
             background-size: cover;
             color: white;
         }
 
+        /* Navigation Bar */
         nav {
             background: linear-gradient(90deg, rgba(34, 139, 34, 0.9), rgba(0, 100, 0, 0.9));
             padding: 15px;
@@ -69,447 +74,52 @@
         }
 
         .content-section {
-            margin-bottom: 40px;
-            transition: 0.4s ease-in-out;
-            padding: 20px;
-            border-radius: 10px;
-            background: rgba(20, 20, 20, 0.5);
+            margin: 0; /* Remove gaps */
+            padding: 0; /* Ensure no internal space */
         }
 
-        .content-section:hover {
-            transform: scale(1.01);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-        }
-
-        h2 {
-            color: #4bc0c0;
-            text-align: center;
-            margin-bottom: 30px;
-            font-size: 32px;
-            font-weight: 600;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        /* Expenditures Header */
-        .expenditures-header {
-            background: linear-gradient(135deg, rgba(0, 60, 30, 0.85), rgba(0, 90, 70, 0.75));
+        /* Budget Dollar Container */
+        .budget-dollar-container {
+            max-width: 600px;
+            margin: 0 auto; /* Centers without adding space */
+            padding: 0; /* Remove extra padding */
+            background: rgba(0, 40, 20, 0.7);
             border-radius: 12px;
-            padding: 35px 40px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            border-left: 4px solid #4bc0c0;
-            margin: 35px 0;
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
         }
 
-        .expenditures-header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at top right, rgba(75, 192, 192, 0.1), transparent 60%);
-            z-index: 0;
-        }
-
-        .expenditures-title {
-            color: #4bc0c0;
+        .budget-dollar-container h2 {
             text-align: center;
-            font-size: 34px;
-            margin-bottom: 28px;
-            font-weight: 600;
-            text-transform: none;
-            letter-spacing: 0;
-            position: relative;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .expenditures-content {
             color: white;
-            font-size: 17px;
-            line-height: 1.8;
-            position: relative;
-        }
-
-        .expenditures-content p {
-            margin-bottom: 22px;
-            opacity: 0.95;
-        }
-
-        .highlight-number {
-            color: #4bc0c0;
+            margin: 0; /* No space between heading and image */
             font-weight: 600;
-            position: relative;
-            padding: 0 2px;
         }
 
-        .highlight-number::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
+        /* Tax Dollar Image - Remove all space */
+        .tax-dollar-image {
+            display: block;
             width: 100%;
-            height: 1px;
-            background-color: rgba(75, 192, 192, 0.4);
-        }
-       
-        /* Department Details */
-        .department-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-top: 40px;
-        }
-
-        .department-card {
-            background: linear-gradient(135deg, rgba(0, 60, 30, 0.85), rgba(0, 90, 70, 0.75));
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-            border-left: 4px solid #4bc0c0;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .department-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
-        }
-
-        .department-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at top right, rgba(75, 192, 192, 0.1), transparent 70%);
-            z-index: 0;
-        }
-
-        .department-title {
-            color: #4bc0c0;
-            font-size: 22px;
-            margin-bottom: 15px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .department-amount {
-            font-size: 26px;
-            font-weight: 600;
-            color: white;
-            margin-bottom: 15px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .department-text {
-            color: rgba(255, 255, 255, 0.9);
-            line-height: 1.6;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Chart Legend Styling */
-        .chart-legend {
-            margin-top:5px;
-            padding: 15px;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 5px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .legend-item {
-            display: grid;
-            grid-template-columns: 24px 1fr auto auto;
-            gap: 15px;
-            align-items: center;
-            padding: 12px 15px;
-            margin-bottom: 5px;
-            border-radius: 6px;
-            transition: all 0.3s ease;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .legend-item:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-        }
-
-        .legend-item:hover {
-            background: rgba(75, 192, 192, 0.1);
-            transform: translateX(5px);
-        }
-
-        .legend-color {
-            width: 18px;
-            height: 18px;
-            border-radius: 4px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-        }
-
-        .legend-text {
-            color: white;
-            font-weight: 500;
-            font-size: 16px;
-        }
-
-        .legend-value {
-            color: #ffffff;
-            text-align: right;
-            font-size: 15px;
-        }
-
-        .legend-percent {
-            color: #4bc0c0;
-            text-align: right;
-            font-weight: 600;
-            width: 60px;
-            font-size: 15px;
-        }
-
-        /* Budget Comparison */
-        .budget-comparison {
-            margin-top: 10px;
-            background: linear-gradient(135deg, rgba(0, 60, 30, 0.85), rgba(0, 90, 70, 0.75));
-            border-radius: 12px;
-            padding: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            border-left: 4px solid #4bc0c0;
-            position: relative;
-        }
-
-        .budget-comparison::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at top right, rgba(75, 192, 192, 0.1), transparent 60%);
-            z-index: 0;
-        }
-
-        .comparison-title {
-            color: #4bc0c0;
-            font-size: 24px;
-            text-align: center;
-            margin-bottom: 30px;
-            position: relative;
-            font-weight: 600;
-        }
-
-        .comparison-container {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-            position: relative;
-        }
-
-        .comparison-card {
-            flex: 1;
-            min-width: 200px;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .year-label {
-            color: #4bc0c0;
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-
-        .amount-label {
-            font-size: 24px;
-            color: white;
-            margin-bottom: 5px;
-        }
-
-        .change-label {
-            font-size: 16px;
-            color: #2ecc71;
-            font-weight: 500;
-        }
-
-        .change-label.negative {
-            color: #e74c3c;
-        }
-
-        /* Budget Forecast Section */
-        .budget-forecast {
-            margin-top: 50px;
-            background: linear-gradient(135deg, rgba(0, 60, 30, 0.85), rgba(0, 90, 70, 0.75));
-            border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            border-left: 4px solid #4bc0c0;
-            position: relative;
-        }
-
-        .budget-forecast::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at top right, rgba(75, 192, 192, 0.1), transparent 60%);
-            z-index: 0;
-        }
-
-        .forecast-title {
-            color: #4bc0c0;
-            font-size: 24px;
-            text-align: center;
-            margin-bottom: 30px;
-            position: relative;
-            font-weight: 600;
-        }
-
-        .forecast-chart {
-            height: 400px;
-            position: relative;
-            z-index: 1;
-            margin-bottom: 30px;
-        }
-
-        .forecast-table {
-            overflow-x: auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        th, td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        th {
-            background-color: rgba(0, 0, 0, 0.3);
-            color: #4bc0c0;
-            font-weight: 600;
-            white-space: nowrap;
-        }
-
-        tr:hover {
-            background-color: rgba(75, 192, 192, 0.1);
-        }
-
-        .category-name {
-            font-weight: 500;
-        }
-
-        .total-row {
-            font-weight: 700;
-            border-top: 2px solid rgba(255, 255, 255, 0.2);
-            background-color: rgba(0, 0, 0, 0.2);
-        }
-
-        .diff-row {
-            font-style: italic;
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .increase {
-            color: #2ecc71;
-        }
-
-        /* Download Button */
-        .button-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin: 40px 0 20px;
-            flex-wrap: wrap;
-        }
-
-        .download-button {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            background: rgba(0, 140, 110, 0.7);
-            color: white;
-            text-decoration: none;
-            padding: 14px 22px;
+            max-width: 500%;
+            height: auto;
+            margin: 0; /* No space above or below */
             border-radius: 8px;
-            font-weight: 600;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
         }
 
-        .download-button:hover {
-            background: rgba(0, 160, 130, 0.9);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+        /* Ensure the next section touches the image */
+        .dollar-visualization {
+            margin: 0; /* No space between the image and the next element */
+            height: 50px;
+            background-color: #004020;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
         }
 
-        .download-button:active {
-            transform: translateY(1px);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .button-icon {
-            flex-shrink: 0;
-            transition: transform 0.3s ease;
-        }
-
-        .download-button:hover .button-icon {
-            transform: translateY(-2px);
-        }
-
-        /* Responsive Design */
-        @media (max-width: 900px) {
-            .charts-section, 
-            .department-grid,
-            .comparison-container {
-                flex-direction: column;
-            }
-
-            .chart-box, 
-            .department-card {
-                min-width: 100%;
-            }
-
-            .expenditures-header,
-            .chart-box,
-            .department-card {
-                padding: 25px 20px;
-            }
-
-            .expenditures-title {
-                font-size: 28px;
-            }
-
-            nav a {
-                font-size: 16px;
-                margin: 0 10px;
-            }
-
-            .chart-display {
-                height: 250px;
-            }
-
-            .forecast-table {
-                overflow-x: scroll;
+        /* Responsive Adjustments */
+        @media (max-width: 600px) {
+            .budget-dollar-container {
+                margin: 0;
+                padding: 0;
             }
         }
     </style>
@@ -527,200 +137,29 @@
         <div class="content-section">
             <h2>FY26 Expenditures Analysis</h2>
 
-            <!-- Dollar Visualization -->
-        <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Budget Dollar Visualization</title>
-    <style>
-        /* Global Reset and Base Styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+            <!-- Budget Dollar Section -->
+            <div class="budget-dollar-container">
+                <h2>Where Your Tax Dollar Goes</h2>
+                <img src="HUBBARDSTON.png" class="tax-dollar-image" alt="Tax Dollar Allocation Visualization">
+                
+                <div class="dollar-visualization">
+                    <div class="segments-container">
+                        <div class="segment" style="width: 62%; background-color: #007bff;"><span class="segment-label">Education</span></div>
+                        <div class="segment" style="width: 13.5%; background-color: #dc3545;"><span class="segment-label">Public Safety</span></div>
+                        <div class="segment" style="width: 7.8%; background-color: #28a745;"><span class="segment-label">Public Works</span></div>
+                        <div class="segment" style="width: 6.1%; background-color: #ffc107;"><span class="segment-label">Administration</span></div>
+                        <div class="segment" style="width: 8.4%; background-color: #6f42c1;"><span class="segment-label">Benefits & Insurance</span></div>
+                        <div class="segment" style="width: 2.2%; background-color: #17a2b8;"><span class="segment-label">Other Services</span></div>
+                    </div>
+                </div>
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-            background-color: #f4f6f9;
-            line-height: 1.6;
-        }
-
-        /* Budget Dollar Container */
-        .budget-dollar-container {
-            max-width: 600px;
-            margin: 30px auto;
-            background: rgba(0, 40, 20, 0.7);
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-        }
-
-        .budget-dollar-container h2 {
-            text-align: center;
-            color: white;
-            margin-bottom: 20px;
-            font-weight: 600;
-        }
-
-        /* Tax Dollar Image */
-    /* Tax Dollar Image - Remove all space */
-.tax-dollar-image {
-    display: block;
-    width: 100%;
-    max-width: 500%;
-    height: auto;
-    margin: 0; /* No space above or below */
-    border-radius: 8px;
-}
-
-/* Reduce space below heading */
-.budget-dollar-container h2 {
-    margin-bottom: 0; /* Removes extra gap between heading and image */
-}
-
-/* Remove top margin of the next section */
-.dollar-visualization {
-    margin-top: 0; /* Ensures the next section touches the image */
-}
-
-/* Reduce container spacing */
-.budget-dollar-container {
-    padding: 0; /* Adjust padding to remove extra space */
-    margin: 0 auto; /* Centered without extra spacing */
-}
-
-        }
-
-        /* Dollar Visualization Bar */
-        .dollar-visualization {
-            position: relative;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-            width: 100%;
-            margin-bottom: 20px;
-            height: 50px;
-            background-color: #004020;
-        }
-
-        .segments-container {
-            display: flex;
-            width: 100%;
-            height: 100%;
-        }
-
-        .segment {
-            height: 100%;
-            position: relative;
-            transition: opacity 0.3s ease;
-        }
-
-        .segment:hover {
-            opacity: 0.9;
-        }
-
-        .segment-label {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: rgba(0, 0, 0, 0.7);
-            color: white;
-            padding: 6px 10px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 14px;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
-            white-space: nowrap;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            z-index: 10;
-        }
-
-        .segment:hover .segment-label {
-            opacity: 1;
-        }
-
-        .budget-total {
-            text-align: center;
-            font-size: 18px;
-            font-weight: 600;
-            margin-top: 15px;
-            color: white;
-        }
-
-        /* Dollar Legend */
-        .dollar-legend {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 20px;
-            justify-content: center;
-        }
-
-        .dollar-legend-item {
-            display: flex;
-            align-items: center;
-            background-color: rgba(0, 0, 0, 0.3);
-            padding: 8px 12px;
-            border-radius: 6px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-
-        .dollar-legend-color {
-            width: 20px;
-            height: 20px;
-            border-radius: 4px;
-            margin-right: 8px;
-        }
-
-        /* Responsive Adjustments */
-        @media (max-width: 600px) {
-            .budget-dollar-container {
-                margin: 15px;
-                padding: 15px;
-            }
-
-            .segment-label {
-                font-size: 12px;
-                padding: 4px 8px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="budget-dollar-container">
-        <h2>Where Your Tax Dollar Goes</h2>
-        
-        <img src="HUBBARDSTON.png" class="tax-dollar-image" alt="Tax Dollar Allocation Visualization">
-        
-        <div class="dollar-visualization">
-            <div class="segments-container">
-                <div class="segment" style="width: 62%; background-color: #007bff;"><span class="segment-label">Education</span></div>
-                <div class="segment" style="width: 13.5%; background-color: #dc3545;"><span class="segment-label">Public Safety</span></div>
-                <div class="segment" style="width: 7.8%; background-color: #28a745;"><span class="segment-label">Public Works</span></div>
-                <div class="segment" style="width: 6.1%; background-color: #ffc107;"><span class="segment-label">Administration</span></div>
-                <div class="segment" style="width: 8.4%; background-color: #6f42c1;"><span class="segment-label">Benefits & Insurance</span></div>
-                <div class="segment" style="width: 2.2%; background-color: #17a2b8;"><span class="segment-label">Other Services</span></div>
+                <p class="budget-total">Total Budget: $11,851,233</p>
             </div>
-        </div>
-        
-        <p class="budget-total">Total Budget: $11,851,233</p>
-        
-        <div class="dollar-legend">
-            <div class="dollar-legend-item"><div class="dollar-legend-color" style="background-color: #007bff;"></div> Education: 62¢</div>
-            <div class="dollar-legend-item"><div class="dollar-legend-color" style="background-color: #dc3545;"></div> Public Safety: 13.5¢</div>
-            <div class="dollar-legend-item"><div class="dollar-legend-color" style="background-color: #28a745;"></div> Public Works: 7.8¢</div>
-            <div class="dollar-legend-item"><div class="dollar-legend-color" style="background-color: #ffc107;"></div> Administration: 6.1¢</div>
-            <div class="dollar-legend-item"><div class="dollar-legend-color" style="background-color: #6f42c1;"></div> Benefits & Insurance: 8.4¢</div>
-            <div class="dollar-legend-item"><div class="dollar-legend-color" style="background-color: #17a2b8;"></div> Other Services: 2.2¢</div>
         </div>
     </div>
 </body>
 </html>
+
 
             <!-- Expenditures Chart Section -->
             <div class="charts-section">
