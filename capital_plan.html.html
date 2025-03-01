@@ -10,18 +10,17 @@
             font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
-            background: url('hubbardston_bg.jpg') no-repeat center center fixed;
-            background-size: cover;
-            color: white;
+            background-color: #f4f4f4;
+            color: #333;
             min-height: 100vh;
         }
         .container {
             max-width: 100%;
             margin: 80px auto 40px;
             padding: 30px;
-            background: rgba(0, 0, 0, 0.85);
+            background: white;
             border-radius: 15px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
             overflow-x: auto;
         }
         h1, h2 {
@@ -33,42 +32,67 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+            margin-bottom: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         th, td {
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: 1px solid #ddd;
             padding: 12px 15px;
             text-align: left;
             font-size: 16px;
             word-wrap: break-word;
         }
         th {
-            background: linear-gradient(135deg, #4bc0c0, #358a8a);
+            background-color: #4bc0c0;
             color: white;
             font-weight: 600;
             text-transform: uppercase;
-            padding: 15px;
         }
         .number-col {
             text-align: right;
             white-space: nowrap;
         }
-        tr:nth-child(even) td {
-            background: rgba(255, 255, 255, 0.05);
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
         }
-        tr:hover td {
-            background: rgba(75, 192, 192, 0.2);
+        tr:hover {
+            background-color: #f0f0f0;
             transition: background 0.3s ease;
+        }
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: help;
+            border-bottom: 1px dotted black;
+        }
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 300px;
+            background-color: #555;
+            color: #fff;
+            text-align: left;
+            border-radius: 6px;
+            padding: 10px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -150px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Capital Improvement Plan (FY26-30)</h1>
-        <p style="text-align: center; font-size: 18px; max-width: 900px; margin: auto; line-height: 1.6;">This five-year plan outlines Hubbardston's strategic investments in infrastructure, equipment, and facilities to ensure high-quality services and fiscal responsibility.</p>
+        <p style="text-align: center; font-size: 18px; max-width: 900px; margin: auto; line-height: 1.6;">
+            This five-year plan outlines Hubbardston's strategic investments in infrastructure, equipment, and facilities to ensure high-quality services and fiscal responsibility.
+        </p>
         
         <h2>One-Year Capital Improvement Plan</h2>
         <table id="oneYearCIPTable">
@@ -84,56 +108,102 @@
     </div>
     
     <script>
+        // Utility function to format currency
         function formatCurrency(value) {
             if (!value || value === "-") return "-";
+            // Remove any non-numeric characters except decimal point
             let num = parseFloat(value.replace(/[^0-9.-]+/g, ""));
             if (!isNaN(num)) {
-                return `$${num.toLocaleString("en-US", { minimumFractionDigits: 2 })}`;
+                return `$${num.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
             }
             return value;
         }
 
-        function cleanCSVRow(row) {
-            return row.map(cell => cell.trim().replace(/^"|"$/g, ""));
+        // Function to create a tooltip
+        function createTooltip(text) {
+            if (!text || text.trim() === "") return "";
+            return `<span class="tooltip">ℹ️<span class="tooltiptext">${text}</span></span>`;
         }
 
-        function fetchAndDisplayCSV(filePath, tableId) {
-            fetch(filePath)
-                .then(response => response.text())
-                .then(csvText => {
-                    let rows = csvText.split("\n").map(row => cleanCSVRow(row.split(",")));
-                    let table = document.getElementById(tableId);
-                    
-                    let thead = table.querySelector("thead");
-                    thead.innerHTML = "";
-                    let headerRow = document.createElement("tr");
-                    rows[0].forEach(header => {
-                        let th = document.createElement("th");
-                        th.textContent = header;
-                        headerRow.appendChild(th);
-                    });
-                    thead.appendChild(headerRow);
-                    
-                    let tbody = table.querySelector("tbody");
-                    tbody.innerHTML = "";
-                    rows.slice(1).forEach(row => {
-                        let tr = document.createElement("tr");
-                        row.forEach((cell, index) => {
-                            let td = document.createElement("td");
-                            td.textContent = index > 2 ? formatCurrency(cell) : cell;
-                            if (index > 2) td.classList.add("number-col");
-                            tr.appendChild(td);
-                        });
-                        tbody.appendChild(tr);
-                    });
-                })
-                .catch(error => console.error("Error loading CSV:", error));
+        // Function to process CSV data
+        function processCSV(csvText) {
+            // Split the CSV into rows
+            const rows = csvText.split('\n').map(row => 
+                row.split(',').map(cell => cell.trim().replace(/^"|"$/g, ''))
+            );
+
+            // Remove any empty rows
+            const cleanRows = rows.filter(row => row.some(cell => cell.trim() !== ''));
+
+            return cleanRows;
         }
-        
-        document.addEventListener("DOMContentLoaded", function () {
-            fetchAndDisplayCSV("strategic_CIP.csv", "strategicCIPTable");
-            fetchAndDisplayCSV("one_year_CIP.csv", "oneYearCIPTable");
-        });
+
+        // Function to render table from CSV data
+        function renderTable(tableId, csvData) {
+            const table = document.getElementById(tableId);
+            const thead = table.querySelector('thead');
+            const tbody = table.querySelector('tbody');
+
+            // Clear existing content
+            thead.innerHTML = '';
+            tbody.innerHTML = '';
+
+            // Create header row
+            const headerRow = document.createElement('tr');
+            csvData[0].forEach((header, index) => {
+                const th = document.createElement('th');
+                th.textContent = header;
+                headerRow.appendChild(th);
+            });
+            thead.appendChild(headerRow);
+
+            // Create data rows
+            csvData.slice(1).forEach(row => {
+                const tr = document.createElement('tr');
+                row.forEach((cell, index) => {
+                    const td = document.createElement('td');
+                    
+                    // Special handling for currency columns and notes
+                    if (index >= 3 && index <= 8) {
+                        td.textContent = formatCurrency(cell);
+                        td.classList.add('number-col');
+                    } else if (index === 9 || index === 8) {
+                        // Add tooltip for notes column
+                        td.innerHTML = cell + createTooltip(cell);
+                    } else {
+                        td.textContent = cell;
+                    }
+                    
+                    tr.appendChild(td);
+                });
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Async function to read and process CSV files
+        async function loadCIPTables() {
+            try {
+                // Read One-Year CIP CSV
+                const oneYearCIPResponse = await window.fs.readFile('one_year_CIP 1.csv', { encoding: 'utf8' });
+                const oneYearCIPData = processCSV(oneYearCIPResponse);
+                renderTable('oneYearCIPTable', oneYearCIPData);
+
+                // Read Strategic CIP CSV
+                const strategicCIPResponse = await window.fs.readFile('strategic_CIP.csv', { encoding: 'utf8' });
+                const strategicCIPData = processCSV(strategicCIPResponse);
+                renderTable('strategicCIPTable', strategicCIPData);
+            } catch (error) {
+                console.error('Error loading CSV files:', error);
+                // Fallback error handling
+                const errorDiv = document.createElement('div');
+                errorDiv.style.color = 'red';
+                errorDiv.textContent = 'Error loading data. Please check the CSV files.';
+                document.querySelector('.container').appendChild(errorDiv);
+            }
+        }
+
+        // Load tables when DOM is ready
+        document.addEventListener('DOMContentLoaded', loadCIPTables);
     </script>
 </body>
 </html>
