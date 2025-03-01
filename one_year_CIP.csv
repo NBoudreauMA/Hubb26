@@ -1,13 +1,13 @@
 DEPARTMENT,PROJECT,SUMMARY,FY26,FY27,FY28,FY29,FY30,TOTAL,Notes (FY26)
 ADMIN,Annual Roads Improvement,"Allocates $100,000 each fiscal year for road maintenance, focusing on high-traffic areas.","$100,000","$100,000","$100,000","$100,000","$100,000","$500,000",FREE CASH
-POLICE,Police Cruiser Replacement (Cycle),"Replacement of aging patrol cruisers to ensure reliable, safe response vehicles for emergency and patrol duties.",,"$95,000",,"$95,000",,"$190,000",FREE CASH
-FIRE,SCBA Replacement,Replacement of self-contained breathing apparatus (SCBA) for firefighter safety in hazardous environments.,"$20,000","$20,000","$20,000","$20,000",,"$80,000",FREE CASH
+POLICE,Police Cruiser Replacement (Cycle),"Replacement of aging patrol cruisers to ensure reliable, safe response vehicles for emergency and patrol duties.",-,"$95,000",-,"$95,000",-,"$190,000",FREE CASH
+FIRE,SCBA Replacement,Replacement of self-contained breathing apparatus (SCBA) for firefighter safety in hazardous environments.,"$20,000","$20,000","$20,000","$20,000",-,"$80,000",FREE CASH
 TECH,Annual Technology Infrastructure Support,"Upgrades for town servers, workstations, and networking hardware to ensure efficient operations and security.","$20,000","$20,000","$20,000","$20,000","$20,000","$100,000",FREE CASH
-ADMIN,Culvert & Bridge Asset Management Plan,Assessment of 150 culverts and 12 bridges for prioritizing replacements.,,"$30,000","$30,000","$30,000",,"$90,000",FREE CASH) / GRANT PLANNING
-DPW,Brush Mower Replacement,Replacement of 27-year-old brush mower to manage overgrown areas and enhance safety.,"$30,000",,,,,"$30,000",7-Year Lease Commitment (FREE CASH)
-DPW,Storm Brine Applicator,Purchase a brine applicator to reduce road salt usage and minimize environmental impact.,"$18,000",,,,,"$18,000",FREE CASH
-FIRE,Fire Pickup Truck Replacement,"Replace 2007 Ford F250 used for operations, plowing, and daily activities.","$65,000",,,,,"$65,000",FREE CASH
-ADMIN,Brigham Street Conceptual Design,"Conceptual design phase for improving road conditions, drainage, and pedestrian safety on Brigham Street.","$28,000",,,,,"$28,000",FREE CASH
-FIRE,Auto Extrication Tools,Replace outdated hydraulic extrication tools with modern battery-powered versions.,,,"$45,000",,,"$45,000",FREE CASH
-QRSD,Water Storage Tank,Install a water storage tank to improve water accessibility and safety for the school.,,"$34,000","$34,000",,,"$68,000",FREE CASH
+ADMIN,Culvert & Bridge Asset Management Plan,Assessment of 150 culverts and 12 bridges for prioritizing replacements.,-,"$30,000","$30,000","$30,000",-,"$90,000",FREE CASH / GRANT PLANNING
+DPW,Brush Mower Replacement,Replacement of 27-year-old brush mower to manage overgrown areas and enhance safety.,"$30,000",,-,-,-,"$30,000","7-Year Lease Commitment (FREE CASH)"
+DPW,Storm Brine Applicator,Purchase a brine applicator to reduce road salt usage and minimize environmental impact.,"$18,000",,-,-,-,"$18,000",FREE CASH
+FIRE,Fire Pickup Truck Replacement,"Replace 2007 Ford F250 used for operations, plowing, and daily activities.","$65,000",,-,-,-,"$65,000",FREE CASH
+ADMIN,Brigham Street Conceptual Design,"Conceptual design phase for improving road conditions, drainage, and pedestrian safety on Brigham Street.","$28,000",,-,-,-,"$28,000",FREE CASH
+FIRE,Auto Extrication Tools,Replace outdated hydraulic extrication tools with modern battery-powered versions.,-,-,"$45,000",-,-,"$45,000",FREE CASH
+QRSD,Water Storage Tank,Install a water storage tank to improve water accessibility and safety for the school.,-,"$34,000","$34,000",-,-,"$68,000",FREE CASH
 ,,TOTAL,"$281,000","$265,000","$215,000","$265,000","$120,000","$1,146,000",
