@@ -1,255 +1,255 @@
 Department,Category,Subcategory,Item,FY24 ACTUAL,FY25 REQUESTED,FY25 ACTUAL,FY26 DEPT,FY26 PROPOSED,CHANGE ($),CHANGE (%)
 GENERAL GOVERNMENT,Moderator - 114,5100,Personnel,,,,,,,
-GENERAL GOVERNMENT,Moderator - 114,5100,Stipend,$100,$100,$100,$100,$100,$0,0%
-GENERAL GOVERNMENT,Moderator - 114,5100,TOTAL,$100,$100,$100,$100,$100,$0,0%
-GENERAL GOVERNMENT,Select Board -122,5100,Personnel,,,,,,,
-GENERAL GOVERNMENT,Select Board -122,5100,Executive Assistant,$28111,$28673,$28673,$36870,$31894,$3221,11%
-GENERAL GOVERNMENT,Select Board -122,5110,Employee Support,,,,,,,
-GENERAL GOVERNMENT,Select Board -122,5110,Expenses,$800,$800,$800,$800,$800,$0,0%
-GENERAL GOVERNMENT,Select Board -122,5200,Services,,,,,,,
-GENERAL GOVERNMENT,Select Board -122,5200,Binding of Records,$250,$0,$0,$0,$0,$0,0%
-GENERAL GOVERNMENT,Select Board -122,5200,Advertising,$1500,$1500,$1500,$1500,$1000,-$500,-33%
-GENERAL GOVERNMENT,Select Board -122,5200,Legal,$40000,$40000,$40000,$40000,$40000,$0,0%
-GENERAL GOVERNMENT,Select Board -122,5200,Town Clock Maint.,$1000,$0,$0,$0,$0,$0,0%
-GENERAL GOVERNMENT,Select Board -122,5400,Supplies,,,,,,,
-GENERAL GOVERNMENT,Select Board -122,5400,Postage,$1000,$1000,$1000,$1000,$4500,$3500,350%
-GENERAL GOVERNMENT,Select Board -122,5400,Office Supplies,$2500,$2500,$2500,$2500,$1000,-$1500,-60%
-GENERAL GOVERNMENT,Select Board -122,5400,Town Report,$500,$500,$500,$500,$500,$0,0%
-GENERAL GOVERNMENT,Select Board -122,5400,Memorial Day,$1500,$1500,$1500,$3000,$1500,$0,0%
-GENERAL GOVERNMENT,Select Board -122,,TOTAL,$77161,$76473,$76473,$86170,$81194,$4721,6%
-GENERAL GOVERNMENT,Town Admin - 129,,Personnel,,,,,,,
-GENERAL GOVERNMENT,Town Admin - 129,,Salary,$110000,$112200,$112200,$112200,$115566,$3366,3%
-GENERAL GOVERNMENT,Town Admin - 129,5110,Employee Support,,,,,,,
-GENERAL GOVERNMENT,Town Admin - 129,5110,Cell Phone Stipend,$600,$600,$600,$600,$600,$0,0%
-GENERAL GOVERNMENT,Town Admin - 129,5110,Expenses,$6600,$7600,$6600,$8000,$6000,-$600,-9%
-GENERAL GOVERNMENT,Town Admin - 129,,TOTAL,$121253,$120400,$119400,$120800,$122166,$2766,2%
-GENERAL GOVERNMENT,Finance Committee - 131,5110,Employee Support,,,,,,,
-GENERAL GOVERNMENT,Finance Committee - 131,5110,FC Expenses,$200,$200,$200,$200,$200,$0,0%
-GENERAL GOVERNMENT,Finance Committee - 131,5700,Other,,,,,,,
-GENERAL GOVERNMENT,Finance Committee - 131,5700,FC Reserve Fund,$30000,$30000,$30000,$30000,$30000,$0,0%
-GENERAL GOVERNMENT,Finance Committee - 131,,TOTAL,$30200,$30200,$30200,$30000,$30200,$0,0%
-GENERAL GOVERNMENT,Accountant - 135,5200,Services,,,,,,,
-GENERAL GOVERNMENT,Accountant - 135,5200,Accountant Services,$23500,$23970,$23970,$24929,$24449,$479,2%
-GENERAL GOVERNMENT,Accountant - 135,5200,Annual Audit,$19500,$19500,$19500,$19500,$19500,$0,0%
-GENERAL GOVERNMENT,Accountant - 135,5400,Supplies,,,,,,,
-GENERAL GOVERNMENT,Accountant - 135,5400,Accountant Expense,$300,$500,$300,$800,$300,$0,0%
-GENERAL GOVERNMENT,Accountant - 135,5110,Employee Support,,,,,,,
-GENERAL GOVERNMENT,Accountant - 135,5110,Travel,$1500,$1500,$0,$0,$0,$0,0%
-GENERAL GOVERNMENT,Accountant - 135,,TOTAL,$44800,$45470,$43770,$45229,$44249,$479,1%
-GENERAL GOVERNMENT,Assessor - 141,5110,Employee Support,,,,,,,
-GENERAL GOVERNMENT,Assessor - 141,5110,Expenses (association dues),$275,$275,$275,$275,$275,$0,0%
-GENERAL GOVERNMENT,Assessor - 141,5200,Services,,,,,,,
-GENERAL GOVERNMENT,Assessor - 141,5200,Assessing Services,$73500,$75000,$75000,$76875,$76875,$1875,3%
-GENERAL GOVERNMENT,Assessor - 141,5200,Assistant,$10000,$20000,$12000,$12000,$15000,$3000,25%
-GENERAL GOVERNMENT,Assessor - 141,,TOTAL,$83775,$95275,$87275,$89150,$92150,$4875,6%
-GENERAL GOVERNMENT,Treasurer Collector - 149,5100,Personnel,,,,,,,
-GENERAL GOVERNMENT,Treasurer Collector - 149,5100,Salary,$65000,$66300,$66300,$68952,$70112,$3812,6%
-GENERAL GOVERNMENT,Treasurer Collector - 149,5100,Certification,$1000,$1000,$1000,$1000,$1000,$0,0%
-GENERAL GOVERNMENT,Treasurer Collector - 149,5100,Assistant Treasurer Collector,$42204,$43048,$43048,$44770,$43909,$861,2%
-GENERAL GOVERNMENT,Treasurer Collector - 149,5110,Employee Support,,,,,,,
-GENERAL GOVERNMENT,Treasurer Collector - 149,5110,Expenses (Dues and Workshops),$870,$13000,$1300,$1300,$1300,$0,0%
-GENERAL GOVERNMENT,Treasurer Collector - 149,5200,Services,,,,,,,
-GENERAL GOVERNMENT,Treasurer Collector - 149,5200,Payroll Services,$3500,$3500,$3500,$4500,$3500,$0,0%
-GENERAL GOVERNMENT,Treasurer Collector - 149,5200,Expenses (Veri and Bank Fees),$4800,$4800,$4800,$4800,$4800,$0,0%
-GENERAL GOVERNMENT,Treasurer Collector - 149,5400,Supplies,,,,,,,
-GENERAL GOVERNMENT,Treasurer Collector - 149,5400,Expenses (Postage and Supplies),$7300,$7450,$7450,$7450,$4450,-$3000,-40%
-GENERAL GOVERNMENT,Treasurer Collector - 149,5700,Other,,,,,,,
-GENERAL GOVERNMENT,Treasurer Collector - 149,5700,Tax Title,$2000,$2000,$1000,$2000,$1000,$0,0%
-GENERAL GOVERNMENT,Treasurer Collector - 149,,TOTAL,$126674,$141098,$128398,$134772,$130071,$1673,1%
-GENERAL GOVERNMENT,Information Technology - 155,5200,Services,,,,,,,
-GENERAL GOVERNMENT,Information Technology - 155,5200,IT Maintenance,$70000,$80000,$78000,$85000,$80000,$2000,3%
-GENERAL GOVERNMENT,Information Technology - 155,5200,Copier,$3000,$3000,$3000,$3000,$3000,$0,0%
-GENERAL GOVERNMENT,Information Technology - 155,5200,Website,$3000,$3000,$3000,$3000,$3000,$0,0%
-GENERAL GOVERNMENT,Information Technology - 155,,TOTAL,$76000,$86000,$84000,$91000,$86000,$2000,2%
-GENERAL GOVERNMENT,Town Clerk - 161,5100,Personnel,,,,,,,
-GENERAL GOVERNMENT,Town Clerk - 161,5100,Town Cerk Salary,$47500,$60000,$55500,$57720,$57720,$2220,4%
-GENERAL GOVERNMENT,Town Clerk - 161,5100,Election Wages,$3375,$4000,$4000,$4000,$4000,$0,0%
-GENERAL GOVERNMENT,Town Clerk - 161,5110,Employee Support,,,,,,,
-GENERAL GOVERNMENT,Town Clerk - 161,5110,Expenses (Conf, Dues, Mileage),$870,$1200,$1200,$1200,$800,-$400,-33%
-GENERAL GOVERNMENT,Town Clerk - 161,5200,Services,,,,,,,
-GENERAL GOVERNMENT,Town Clerk - 161,5200,Expenses (Binding, Safe Deposit),$750,$750,$750,$2795,$1750,$1000,133%
-GENERAL GOVERNMENT,Town Clerk - 161,5400,Supplies,$4000,$5500,$5500,$5500,$2500,-$3000,-55%
-GENERAL GOVERNMENT,Town Clerk - 161,5400,Supplies,$4000,$4000,$4000,$4000,$1500,-$2500,-63%
-GENERAL GOVERNMENT,Town Clerk - 161,,TOTAL,$61995,$75450,$70950,$75215,$68270,-$2680,-4%
-GENERAL GOVERNMENT,Building & Maintenance - 192,5100,Personnel,,,,,,,
-GENERAL GOVERNMENT,Building & Maintenance - 192,5100,Custodian,$10140,$10140,$10343,$17357,$16861,$6518,63%
-GENERAL GOVERNMENT,Building & Maintenance - 192,5200,Services,,,,,,,
-GENERAL GOVERNMENT,Building & Maintenance - 192,5200,Utiities and Maintenance,$31000,$31000,$31000,$41000,$40000,$9000,29%
-GENERAL GOVERNMENT,Building & Maintenance - 192,5200,Phone,$6500,$6500,$6500,$5500,$5000,-$1500,-23%
-GENERAL GOVERNMENT,Building & Maintenance - 192,,TOTAL,$47640,$47640,$47843,$63857,$61861,$14018,29%
-GENERAL GOVERNMENT,,,,$669598,$718106,$688408,$736292,$716261,$27853,4%
+,,5100,Stipend,$100,$100,$100,$100,$100,$0,0%
+,,5100,TOTAL,$100,$100,$100,$100,$100,$0,0%
+,Select Board -122,5100,Personnel,,,,,,,
+,,5100,Executive Assistant,$28111,$28673,$28673,$36870,$31894,$3221,11%
+,,5110,Employee Support,,,,,,,
+,,5110,Expenses,$800,$800,$800,$800,$800,$0,0%
+,,5200,Services,,,,,,,
+,,5200,Binding of Records,$250,$0,$0,$0,$0,$0,0%
+,,5200,Advertising,$1500,$1500,$1500,$1500,$1000,-$500,-33%
+,,5200,Legal,$40000,$40000,$40000,$40000,$40000,$0,0%
+,,5200,Town Clock Maint.,$1000,$0,$0,$0,$0,$0,0%
+,,5400,Supplies,,,,,,,
+,,5400,Postage,$1000,$1000,$1000,$1000,$4500,$3500,350%
+,,5400,Office Supplies,$2500,$2500,$2500,$2500,$1000,-$1500,-60%
+,,5400,Town Report,$500,$500,$500,$500,$500,$0,0%
+,,5400,Memorial Day,$1500,$1500,$1500,$3000,$1500,$0,0%
+,,,TOTAL,$77161,$76473,$76473,$86170,$81194,$4721,6%
+,Town Admin - 129,,Personnel,,,,,,,
+,,,Salary,$110000,$112200,$112200,$112200,$115566,$3366,3%
+,,5110,Employee Support,,,,,,,
+,,5110,Cell Phone Stipend,$600,$600,$600,$600,$600,$0,0%
+,,5110,Expenses,$6600,$7600,$6600,$8000,$6000,-$600,-9%
+,,,TOTAL,$121253,$120400,$119400,$120800,$122166,$2766,2%
+,Finance Committee - 131,5110,Employee Support,,,,,,,
+,,5110,FC Expenses,$200,$200,$200,$200,$200,$0,0%
+,,5700,Other,,,,,,,
+,,5700,FC Reserve Fund,$30000,$30000,$30000,$30000,$30000,$0,0%
+,,,TOTAL,$30200,$30200,$30200,$30000,$30200,$0,0%
+,Accountant - 135,5200,Services,,,,,,,
+,,5200,Accountant Services,$23500,$23970,$23970,$24929,$24449,$479,2%
+,,5200,Annual Audit,$19500,$19500,$19500,$19500,$19500,$0,0%
+,,5400,Supplies,,,,,,,
+,,5400,Accountant Expense,$300,$500,$300,$800,$300,$0,0%
+,,5110,Employee Support,,,,,,,
+,,5110,Travel,$1500,$1500,$0,$0,$0,$0,0%
+,,,TOTAL,$44800,$45470,$43770,$45229,$44249,$479,1%
+,Assessor - 141,5110,Employee Support,,,,,,,
+,,5110,Expenses (association dues),$275,$275,$275,$275,$275,$0,0%
+,,5200,Services,,,,,,,
+,,5200,Assessing Services,$73500,$75000,$75000,$76875,$76875,$1875,3%
+,,5200,Assistant,$10000,$20000,$12000,$12000,$15000,$3000,25%
+,,,TOTAL,$83775,$95275,$87275,$89150,$92150,$4875,6%
+,Treasurer Collector - 149,5100,Personnel,,,,,,,
+,,5100,Salary,$65000,$66300,$66300,$68952,$70112,$3812,6%
+,,5100,Certification,$1000,$1000,$1000,$1000,$1000,$0,0%
+,,5100,Assistant Treasurer Collector,$42204,$43048,$43048,$44770,$43909,$861,2%
+,,5110,Employee Support,,,,,,,
+,,5110,Expenses (Dues and Workshops),$870,$13000,$1300,$1300,$1300,$0,0%
+,,5200,Services,,,,,,,
+,,5200,Payroll Services,$3500,$3500,$3500,$4500,$3500,$0,0%
+,,5200,Expenses (Veri and Bank Fees),$4800,$4800,$4800,$4800,$4800,$0,0%
+,,5400,Supplies,,,,,,,
+,,5400,Expenses (Postage and Supplies),$7300,$7450,$7450,$7450,$4450,-$3000,-40%
+,,5700,Other,,,,,,,
+,,5700,Tax Title,$2000,$2000,$1000,$2000,$1000,$0,0%
+,,,TOTAL,$126674,$141098,$128398,$134772,$130071,$1673,1%
+,Information Technology - 155,5200,Services,,,,,,,
+,,5200,IT Maintenance,$70000,$80000,$78000,$85000,$80000,$2000,3%
+,,5200,Copier,$3000,$3000,$3000,$3000,$3000,$0,0%
+,,5200,Website,$3000,$3000,$3000,$3000,$3000,$0,0%
+,,,TOTAL,$76000,$86000,$84000,$91000,$86000,$2000,2%
+,Town Clerk - 161,5100,Personnel,,,,,,,
+,,5100,Town Cerk Salary,$47500,$60000,$55500,$57720,$57720,$2220,4%
+,,5100,Election Wages,$3375,$4000,$4000,$4000,$4000,$0,0%
+,,5110,Employee Support,,,,,,,
+,,5110,Expenses (Conf, Dues, Mileage),$870,$1200,$1200,$1200,$800,-$400,-33%
+,,5200,Services,,,,,,,
+,,5200,Expenses (Binding, Safe Deposit),$750,$750,$750,$2795,$1750,$1000,133%
+,,5400,Supplies,$4000,$5500,$5500,$5500,$2500,-$3000,-55%
+,,5400,Supplies,$4000,$4000,$4000,$4000,$1500,-$2500,-63%
+,,,TOTAL,$61995,$75450,$70950,$75215,$68270,-$2680,-4%
+,Building & Maintenance - 192,5100,Personnel,,,,,,,
+,,5100,Custodian,$10140,$10140,$10343,$17357,$16861,$6518,63%
+,,5200,Services,,,,,,,
+,,5200,Utiities and Maintenance,$31000,$31000,$31000,$41000,$40000,$9000,29%
+,,5200,Phone,$6500,$6500,$6500,$5500,$5000,-$1500,-23%
+,,,TOTAL,$47640,$47640,$47843,$63857,$61861,$14018,29%
+,,,,$669598,$718106,$688408,$736292,$716261,$27853,4%
 PUBLIC SAFETY,Police - 210,5100,Personnel,,,,,,,
-PUBLIC SAFETY,Police - 210,5100,Police Chief Salary,$96500,$98430,$98430,$101383,$101383,$2953,3%
-PUBLIC SAFETY,Police - 210,5100,Police Wages,$525636,$536739,$505000,$511345,$510050,$5050,1%
-PUBLIC SAFETY,Police - 210,5100,Police Assistant,$16699,$21026,$21026,$21026,$21423,$397,2%
-PUBLIC SAFETY,Police - 210,5110,Employee Support,,,,,,,
-PUBLIC SAFETY,Police - 210,5110,Police Training Expense,$2000,$2000,$2000,$2000,$2000,$0,0%
-PUBLIC SAFETY,Police - 210,5110,Police Education,$6400,$9500,$8000,$7000,$5500,-$2500,-31%
-PUBLIC SAFETY,Police - 210,5110,Police Equipment,$3300,$3300,$3300,$9100,$9100,$5800,176%
-PUBLIC SAFETY,Police - 210,5110,Stipends & Allowances,$18850,$25300,$18850,$13750,$11000,-$7850,-42%
-PUBLIC SAFETY,Police - 210,5110,Mileage,$500,$500,$500,$500,$500,$0,0%
-PUBLIC SAFETY,Police - 210,5200,Services,,,,,,,
-PUBLIC SAFETY,Police - 210,5200,Police Maintenance,$4320,$4820,$4820,$4820,$4820,$0,0%
-PUBLIC SAFETY,Police - 210,5200,Police Vehicle,$7000,$8000,$8000,$8000,$8000,$0,0%
-PUBLIC SAFETY,Police - 210,5200,Police Equipment,$14600,$15800,$15800,$24450,$24450,$8650,55%
-PUBLIC SAFETY,Police - 210,5200,Services,$150,$150,$150,$2350,$2350,$2200,1467%
-PUBLIC SAFETY,Police - 210,5400,Supplies,,,,,,,
-PUBLIC SAFETY,Police - 210,5400,Supplies,$11650,$12000,$11650,$12400,$9000,-$2650,-23%
-PUBLIC SAFETY,Police - 210,,TOTAL,$707605,$737565,$697526,$718124,$709576,$12050,2%
-PUBLIC SAFETY,Fire - 220,,Personnell,,,,,,,
-PUBLIC SAFETY,Fire - 220,,Fire Chief Salary,$91694,$94680,$93528,$96334,$96334,$2806,3%
-PUBLIC SAFETY,Fire - 220,,Fire Wages,$302993,$311118,$311118,$321659,$321659,$10541,3%
-PUBLIC SAFETY,Fire - 220,,Fire Call Wages,$75096,$78700,$75096,$77526,$77526,$2430,3%
-PUBLIC SAFETY,Fire - 220,,Employee Support,$0,$0,$0,$0,$0,$0,0%
-PUBLIC SAFETY,Fire - 220,,Equipment (Protective Clothing),$2500,$2500,$2500,$2500,$2500,$0,0%
-PUBLIC SAFETY,Fire - 220,,Services,,,,,,,
-PUBLIC SAFETY,Fire - 220,,Vehicle Maintenance,$21000,$21000,$15000,$17000,$17000,$2000,13%
-PUBLIC SAFETY,Fire - 220,,Building Maint. (Electric),$2000,$2800,$2000,$3000,$2500,$500,25%
-PUBLIC SAFETY,Fire - 220,,Ambulance Lease Space,$21365,$21365,$21365,$0,$0,-$21365,-100%
-PUBLIC SAFETY,Fire - 220,,Ambulance Pro Service,$26880,$26880,$26880,$28000,$26880,$0,0%
-PUBLIC SAFETY,Fire - 220,,Building Maint. (Building & Heat),$16000,$16000,$13500,$14000,$13500,$0,0%
-PUBLIC SAFETY,Fire - 220,,Equipment (Hose, Turn Out Gear),$8000,$8000,$6000,$6000,$6000,$0,0%
-PUBLIC SAFETY,Fire - 220,,Medical Supplies,$22200,$22200,$15200,$15200,$15200,$0,0%
-PUBLIC SAFETY,Fire - 220,,Fire Equip.(New/Replacement),$8000,$8000,$6000,$6000,$6000,$0,0%
-PUBLIC SAFETY,Fire - 220,,TOTAL,$597728,$613243,$588187,$587219,$585099,-$3088,-1%
-PUBLIC SAFETY,Land Use - 241,5100,Personnel,,,,,,,
-PUBLIC SAFETY,Land Use - 241,5100,Staff,$88910,$90688,$88478,$114748,$106998,$18520,73%
-PUBLIC SAFETY,Land Use - 241,5110,Employee Support,,,,,,,
-PUBLIC SAFETY,Land Use - 241,5110,Continuing Ed for Inspectors,$500,$500,$500,$500,$500,$0,73%
-PUBLIC SAFETY,Land Use - 241,5200,Services,,,,,,,
-PUBLIC SAFETY,Land Use - 241,5200,Montachusett Assessment,$1526,$1526,$1650,$1650,$1650,$0,2%
-PUBLIC SAFETY,Land Use - 241,5400,Supplies,$0,$0,$0,$0,$0,$0,0%
-PUBLIC SAFETY,Land Use - 241,5400,Land Use Supplies,$1500,$1500,$1500,$1500,$0,-$1500,-100%
-PUBLIC SAFETY,Land Use - 241,,TOTAL,$92436,$94214,$92128,$118398,$109148,$17020,-82%
-PUBLIC SAFETY,Emergency Management - 291,5100,Personnel,,,,,,,
-PUBLIC SAFETY,Emergency Management - 291,5100,Emergency Planning Director,$1156,$1156,$1150,$1150,$1150,$0,0%
-PUBLIC SAFETY,Emergency Management - 291,5110,Employee Support,,,,,,,
-PUBLIC SAFETY,Emergency Management - 291,5110,CERT Support,$500,$500,$500,$500,$500,$0,0%
-PUBLIC SAFETY,Emergency Management - 291,5400,Supplies,,,,,,,
-PUBLIC SAFETY,Emergency Management - 291,5400,Emergency Planning Expenses,$833,$833,$833,$833,$500,-$333,-40%
-PUBLIC SAFETY,Emergency Management - 291,,TOTAL,$2489,$2489,$2483,$2483,$2150,-$333,-13%
-PUBLIC SAFETY,Animal Control - 292,5200,Services,,,,,,,
-PUBLIC SAFETY,Animal Control - 292,5200,Regional Animal Control,$1894,$18944,$19323,$19903,$20500,$0,0%
-PUBLIC SAFETY,Animal Control - 292,,TOTAL,$1894,$18944,$19323,$19903,$20500,$0,0%
-PUBLIC SAFETY,Tree Warden - 294,5100,Personnel,,,,,,,
-PUBLIC SAFETY,Tree Warden - 294,5100,Tree Warden Wages,$1900,$1900,$1900,$1900,$1900,$0,0%
-PUBLIC SAFETY,Tree Warden - 294,5200,Services,,,,,,,
-PUBLIC SAFETY,Tree Warden - 294,5200,Outside Tree Services,$0,$0,$0,$5000,$0,$0,0%
-PUBLIC SAFETY,Tree Warden - 294,,TOTAL,$1900,$1900,$1900,$6900,$1900,$0,0%
-PUBLIC SAFETY,Dispatch - 299,5200,Services,,,,,,,
-PUBLIC SAFETY,Dispatch - 299,5200,Rutland Regional,$125000,$142410,$149000,$156450,$156450,$7450,5%
-PUBLIC SAFETY,Dispatch - 299,,TOTAL,$125000,$142410,$149000,$156450,$156450,$7450,5%
-PUBLIC SAFETY,,,,$0,$1610765,$1550547,$1609476,$1584822,$34275,2%
+,,5100,Police Chief Salary,$96500,$98430,$98430,$101383,$101383,$2953,3%
+,,5100,Police Wages,$525636,$536739,$505000,$511345,$510050,$5050,1%
+,,5100,Police Assistant,$16699,$21026,$21026,$21026,$21423,$397,2%
+,,5110,Employee Support,,,,,,,
+,,5110,Police Training Expense,$2000,$2000,$2000,$2000,$2000,$0,0%
+,,5110,Police Education,$6400,$9500,$8000,$7000,$5500,-$2500,-31%
+,,5110,Police Equipment,$3300,$3300,$3300,$9100,$9100,$5800,176%
+,,5110,Stipends & Allowances,$18850,$25300,$18850,$13750,$11000,-$7850,-42%
+,,5110,Mileage,$500,$500,$500,$500,$500,$0,0%
+,,5200,Services,,,,,,,
+,,5200,Police Maintenance,$4320,$4820,$4820,$4820,$4820,$0,0%
+,,5200,Police Vehicle,$7000,$8000,$8000,$8000,$8000,$0,0%
+,,5200,Police Equipment,$14600,$15800,$15800,$24450,$24450,$8650,55%
+,,5200,Services,$150,$150,$150,$2350,$2350,$2200,1467%
+,,5400,Supplies,,,,,,,
+,,5400,Supplies,$11650,$12000,$11650,$12400,$9000,-$2650,-23%
+,,,TOTAL,$707605,$737565,$697526,$718124,$709576,$12050,2%
+,Fire - 220,,Personnell,,,,,,,
+,,,Fire Chief Salary,$91694,$94680,$93528,$96334,$96334,$2806,3%
+,,,Fire Wages,$302993,$311118,$311118,$321659,$321659,$10541,3%
+,,,Fire Call Wages,$75096,$78700,$75096,$77526,$77526,$2430,3%
+,,,Employee Support,$0,$0,$0,$0,$0,$0,0%
+,,,Equipment (Protective Clothing),$2500,$2500,$2500,$2500,$2500,$0,0%
+,,,Services,,,,,,,
+,,,Vehicle Maintenance,$21000,$21000,$15000,$17000,$17000,$2000,13%
+,,,Building Maint. (Electric),$2000,$2800,$2000,$3000,$2500,$500,25%
+,,,Ambulance Lease Space,$21365,$21365,$21365,$0,$0,-$21365,-100%
+,,,Ambulance Pro Service,$26880,$26880,$26880,$28000,$26880,$0,0%
+,,,Building Maint. (Building & Heat),$16000,$16000,$13500,$14000,$13500,$0,0%
+,,,Equipment (Hose, Turn Out Gear),$8000,$8000,$6000,$6000,$6000,$0,0%
+,,,Medical Supplies,$22200,$22200,$15200,$15200,$15200,$0,0%
+,,,Fire Equip.(New/Replacement),$8000,$8000,$6000,$6000,$6000,$0,0%
+,,,TOTAL,$597728,$613243,$588187,$587219,$585099,-$3088,-1%
+,Land Use - 241,5100,Personnel,,,,,,,
+,,5100,Staff,$88910,$90688,$88478,$114748,$106998,$18520,73%
+,,5110,Employee Support,,,,,,,
+,,5110,Continuing Ed for Inspectors,$500,$500,$500,$500,$500,$0,73%
+,,5200,Services,,,,,,,
+,,5200,Montachusett Assessment,$1526,$1526,$1650,$1650,$1650,$0,2%
+,,5400,Supplies,$0,$0,$0,$0,$0,$0,0%
+,,5400,Land Use Supplies,$1500,$1500,$1500,$1500,$0,-$1500,-100%
+,,,TOTAL,$92436,$94214,$92128,$118398,$109148,$17020,-82%
+,Emergency Management - 291,5100,Personnel,,,,,,,
+,,5100,Emergency Planning Director,$1156,$1156,$1150,$1150,$1150,$0,0%
+,,5110,Employee Support,,,,,,,
+,,5110,CERT Support,$500,$500,$500,$500,$500,$0,0%
+,,5400,Supplies,,,,,,,
+,,5400,Emergency Planning Expenses,$833,$833,$833,$833,$500,-$333,-40%
+,,,TOTAL,$2489,$2489,$2483,$2483,$2150,-$333,-13%
+,Animal Control - 292,5200,Services,,,,,,,
+,,5200,Regional Animal Control,$1894,$18944,$19323,$19903,$20500,$0,0%
+,,,TOTAL,$1894,$18944,$19323,$19903,$20500,$0,0%
+,Tree Warden - 294,5100,Personnel,,,,,,,
+,,5100,Tree Warden Wages,$1900,$1900,$1900,$1900,$1900,$0,0%
+,,5200,Services,,,,,,,
+,,5200,Outside Tree Services,$0,$0,$0,$5000,$0,$0,0%
+,,,TOTAL,$1900,$1900,$1900,$6900,$1900,$0,0%
+,Dispatch - 299,5200,Services,,,,,,,
+,,5200,Rutland Regional,$125000,$142410,$149000,$156450,$156450,$7450,5%
+,,,TOTAL,$125000,$142410,$149000,$156450,$156450,$7450,5%
+,,,,$0,$1610765,$1550547,$1609476,$1584822,$34275,2%
 School,School - 300,5700,Other,,,,,,,
-School,School - 300,5700,Quabbin Regional,$5820063,$6343869,$6370641,$6880292,$6880292,$509651,8%
-School,School - 300,5700,QRSD Debt,$30225,$56318,$56318,$57444,$57444,$1126,2%
-School,School - 300,5700,Montachusett Technical,$447411,$357138,$357138,$396826,$396826,$39688,11%
-School,School - 300,,TOTAL,$6297699,$6757325,$6784097,$7334563,$7334563,$550466,8%
-School,,,Education,$0,$6757325,$6784097,$7334563,$7334563,$550466,8%
+,,5700,Quabbin Regional,$5820063,$6343869,$6370641,$6880292,$6880292,$509651,8%
+,,5700,QRSD Debt,$30225,$56318,$56318,$57444,$57444,$1126,2%
+,,5700,Montachusett Technical,$447411,$357138,$357138,$396826,$396826,$39688,11%
+,,,TOTAL,$6297699,$6757325,$6784097,$7334563,$7334563,$550466,8%
+,,,Education,$0,$6757325,$6784097,$7334563,$7334563,$550466,8%
 PUBLIC WORKS,,,Personnel,,,,,,,
-PUBLIC WORKS,,,DPW Director,$87519,$89269,$89269,$94625,$94402,$5133,6%
-PUBLIC WORKS,,,DPW Wages,$280368,$285975,$280368,$285975,$285975,$5607,2%
-PUBLIC WORKS,,,DPW Assistant,$15201,$18166,$18166,$18529,$18529,$363,2%
-PUBLIC WORKS,,,Employee Support,,,,,,,
-PUBLIC WORKS,,,Education,$2000,$1350,$2000,$4000,$4000,$2000,100%
-PUBLIC WORKS,,,Clothing,$7000,$8880,$7000,$7000,$7000,$0,0%
-PUBLIC WORKS,,,Cell Phone,$6300,$6300,$6300,$6300,$6300,$0,0%
-PUBLIC WORKS,,,Longevity,$2000,$2250,$2000,$0,$0,-$2000,-100%
-PUBLIC WORKS,,,Services,,,,,,,
-PUBLIC WORKS,,,Vehicle Repairs,$21855,$21855,$21855,$21855,$21855,$0,0%
-PUBLIC WORKS,,,Building Repairs,$17172,$17500,$17172,$17172,$17172,$0,0%
-PUBLIC WORKS,,,Catch Basins,$39000,$43000,$39000,$44000,$39000,$0,0%
-PUBLIC WORKS,,,Line Painting,$20000,$23000,$20000,$22000,$20000,$0,0%
-PUBLIC WORKS,,,Supplies,,,,,,,
-PUBLIC WORKS,,,Road Materials,$71580,$71580,$57000,$71850,$61275,$4275,8%
-PUBLIC WORKS,,,Signs,$3124,$3124,$3124,$3124,$3124,$0,0%
-PUBLIC WORKS,,,Gas,$50000,$44500,$50000,$51000,$50000,$0,0%
-PUBLIC WORKS,,,Supplies,$34500,$41000,$34500,$36500,$34500,$0,0%
-PUBLIC WORKS,,,Heating Oil,$6027,$6047,$6027,$6027,$6027,$0,0%
-PUBLIC WORKS,,,Intergovernmental,,,,,,,
-PUBLIC WORKS,,,Police Details,$8000,$8000,$8000,$8000,$8000,$0,0%
-PUBLIC WORKS,,,Other,,,,,,,
-PUBLIC WORKS,,,Advertising,$1000,$1000,$0,$1000,$1000,$0,0%
-PUBLIC WORKS,,,TOTAL,$672646,$692797,$661781,$698958,$678159,$16378,2%
-PUBLIC WORKS,Snow and Ice - 423,5100,Personnel,,,,,,,
-PUBLIC WORKS,Snow and Ice - 423,5100,Winter Wages,$68000,$69360,$68000,$69360,$68000,$0,0%
-PUBLIC WORKS,Snow and Ice - 423,5200,Services,,,,,,,
-PUBLIC WORKS,Snow and Ice - 423,5200,Plowing Private Ways,$2100,$2205,$2100,$2800,$0,-$2100,-100%
-PUBLIC WORKS,Snow and Ice - 423,5200,Winter Outside Services,$5300,$5565,$5300,$6000,$5300,$0,0%
-PUBLIC WORKS,Snow and Ice - 423,5400,Supplies,,,,,,,
-PUBLIC WORKS,Snow and Ice - 423,5400,Equip., Supplies & Materials,$160000,$160000,$160000,$160000,$160000,$0,0%
-PUBLIC WORKS,Snow and Ice - 423,,TOTAL,$235400,$237130,$235400,$238160,$233300,-$2100,-1%
-PUBLIC WORKS,Street Lights - 424,5200,Services,,,,,,,
-PUBLIC WORKS,Street Lights - 424,5200,Municipal Lights,$6000,$6000,$6000,$6000,$6000,$0,0%
-PUBLIC WORKS,Street Lights - 424,,TOTAL,$6000,$6000,$6000,$6000,$6000,$0,0%
-PUBLIC WORKS,Cemetery - 491,5400,Supplies,,,,,,,
-PUBLIC WORKS,Cemetery - 491,5400,Cemetery Equiptment,$1300,$1300,$1300,$1500,$1300,$0,0%
-PUBLIC WORKS,Cemetery - 491,,TOTAL,$1300,$1300,$1300,$1500,$1300,$0,0%
-PUBLIC WORKS,,,PUBLIC SERVICES,$0,$937227,$904481,$944618,$918759,$14278,2%
+,,,DPW Director,$87519,$89269,$89269,$94625,$94402,$5133,6%
+,,,DPW Wages,$280368,$285975,$280368,$285975,$285975,$5607,2%
+,,,DPW Assistant,$15201,$18166,$18166,$18529,$18529,$363,2%
+,,,Employee Support,,,,,,,
+,,,Education,$2000,$1350,$2000,$4000,$4000,$2000,100%
+,,,Clothing,$7000,$8880,$7000,$7000,$7000,$0,0%
+,,,Cell Phone,$6300,$6300,$6300,$6300,$6300,$0,0%
+,,,Longevity,$2000,$2250,$2000,$0,$0,-$2000,-100%
+,,,Services,,,,,,,
+,,,Vehicle Repairs,$21855,$21855,$21855,$21855,$21855,$0,0%
+,,,Building Repairs,$17172,$17500,$17172,$17172,$17172,$0,0%
+,,,Catch Basins,$39000,$43000,$39000,$44000,$39000,$0,0%
+,,,Line Painting,$20000,$23000,$20000,$22000,$20000,$0,0%
+,,,Supplies,,,,,,,
+,,,Road Materials,$71580,$71580,$57000,$71850,$61275,$4275,8%
+,,,Signs,$3124,$3124,$3124,$3124,$3124,$0,0%
+,,,Gas,$50000,$44500,$50000,$51000,$50000,$0,0%
+,,,Supplies,$34500,$41000,$34500,$36500,$34500,$0,0%
+,,,Heating Oil,$6027,$6047,$6027,$6027,$6027,$0,0%
+,,,Intergovernmental,,,,,,,
+,,,Police Details,$8000,$8000,$8000,$8000,$8000,$0,0%
+,,,Other,,,,,,,
+,,,Advertising,$1000,$1000,$0,$1000,$1000,$0,0%
+,,,TOTAL,$672646,$692797,$661781,$698958,$678159,$16378,2%
+,Snow and Ice - 423,5100,Personnel,,,,,,,
+,,5100,Winter Wages,$68000,$69360,$68000,$69360,$68000,$0,0%
+,,5200,Services,,,,,,,
+,,5200,Plowing Private Ways,$2100,$2205,$2100,$2800,$0,-$2100,-100%
+,,5200,Winter Outside Services,$5300,$5565,$5300,$6000,$5300,$0,0%
+,,5400,Supplies,,,,,,,
+,,5400,Equip., Supplies & Materials,$160000,$160000,$160000,$160000,$160000,$0,0%
+,,,TOTAL,$235400,$237130,$235400,$238160,$233300,-$2100,-1%
+,Street Lights - 424,5200,Services,,,,,,,
+,,5200,Municipal Lights,$6000,$6000,$6000,$6000,$6000,$0,0%
+,,,TOTAL,$6000,$6000,$6000,$6000,$6000,$0,0%
+,Cemetery - 491,5400,Supplies,,,,,,,
+,,5400,Cemetery Equiptment,$1300,$1300,$1300,$1500,$1300,$0,0%
+,,,TOTAL,$1300,$1300,$1300,$1500,$1300,$0,0%
+,,,PUBLIC SERVICES,$0,$937227,$904481,$944618,$918759,$14278,2%
 HUMAN SERVICES,Senior Center - 541,5100,Personnel,,,,,,,
-HUMAN SERVICES,Senior Center - 541,5100,COA Director,$16867,$17204,$17204,$32990,$19785,$2581,15%
-HUMAN SERVICES,Senior Center - 541,5200,Services,,,,,,,
-HUMAN SERVICES,Senior Center - 541,5200,Coa Expenses,$2500,$2500,$2500,$3000,$2500,$0,0%
-HUMAN SERVICES,Senior Center - 541,5400,Supplies,,,,,,,
-HUMAN SERVICES,Senior Center - 541,5400,COA Expenses,$1900,$2500,$1900,$3000,$1900,$0,0%
-HUMAN SERVICES,Senior Center - 541,,TOTAL,$21267,$22204,$21604,$38990,$24185,$2581,12%
-HUMAN SERVICES,Veterans - 543,5110,Employee Support,,,,,,,
-HUMAN SERVICES,Veterans - 543,5110,Veteran Training Expenses,$650,$650,$650,$650,$650,$0,0%
-HUMAN SERVICES,Veterans - 543,5200,Services,,,,,,,
-HUMAN SERVICES,Veterans - 543,5200,Regional Services,$6000,$12000,$6000,$6000,$6000,$0,0%
-HUMAN SERVICES,Veterans - 543,5400,Supplies,,,,,,,
-HUMAN SERVICES,Veterans - 543,5400,Veterans Expenses,$200,$700,$200,$200,$200,$0,0%
-HUMAN SERVICES,Veterans - 543,5400,Veteran Flags,$500,$500,$500,$500,$500,$0,0%
-HUMAN SERVICES,Veterans - 543,5400,Veteran Graves,$500,$500,$500,$500,$500,$0,0%
-HUMAN SERVICES,Veterans - 543,5700,Other,,,,,,,
-HUMAN SERVICES,Veterans - 543,5700,Veteran Benefits,$20000,$2000,$2000,$2000,$0,-$2000,-100%
-HUMAN SERVICES,Veterans - 543,,TOTAL,$27850,$16350,$9850,$9850,$7850,-$2000,-20%
-HUMAN SERVICES,,,HUMAN SERVICES,$0,$38554,$31454,$48840,$32035,$581,2%
+,,5100,COA Director,$16867,$17204,$17204,$32990,$19785,$2581,15%
+,,5200,Services,,,,,,,
+,,5200,Coa Expenses,$2500,$2500,$2500,$3000,$2500,$0,0%
+,,5400,Supplies,,,,,,,
+,,5400,COA Expenses,$1900,$2500,$1900,$3000,$1900,$0,0%
+,,,TOTAL,$21267,$22204,$21604,$38990,$24185,$2581,12%
+,Veterans - 543,5110,Employee Support,,,,,,,
+,,5110,Veteran Training Expenses,$650,$650,$650,$650,$650,$0,0%
+,,5200,Services,,,,,,,
+,,5200,Regional Services,$6000,$12000,$6000,$6000,$6000,$0,0%
+,,5400,Supplies,,,,,,,
+,,5400,Veterans Expenses,$200,$700,$200,$200,$200,$0,0%
+,,5400,Veteran Flags,$500,$500,$500,$500,$500,$0,0%
+,,5400,Veteran Graves,$500,$500,$500,$500,$500,$0,0%
+,,5700,Other,,,,,,,
+,,5700,Veteran Benefits,$20000,$2000,$2000,$2000,$0,-$2000,-100%
+,,,TOTAL,$27850,$16350,$9850,$9850,$7850,-$2000,-20%
+,,,HUMAN SERVICES,$0,$38554,$31454,$48840,$32035,$581,2%
 CULTURE & RECREATION,Library - 610,5100,Personnel,,,,,,,
-CULTURE & RECREATION,Library - 610,5100,Director,$31644,$32435,$32435,$33084,$33084,$649,2%
-CULTURE & RECREATION,Library - 610,5100,Assistant Wages,$17403,$17498,$17403,$17919,$18500,$1097,6%
-CULTURE & RECREATION,Library - 610,5110,Employee Support,,,,,,,
-CULTURE & RECREATION,Library - 610,5110,Association Dues,$310,$310,$310,$310,$310,$0,0%
-CULTURE & RECREATION,Library - 610,5200,Services,,,,,,,
-CULTURE & RECREATION,Library - 610,5200,Utilities and Maintenance,$19510,$19510,$19510,$19510,$19510,$0,0%
-CULTURE & RECREATION,Library - 610,5400,Supplies,,,,,,,
-CULTURE & RECREATION,Library - 610,5400,Books and Materials,$19886,$19886,$19886,$19886,$19886,$0,0%
-CULTURE & RECREATION,Library - 610,,TOTAL,$88753,$89639,$89544,$90709,$91290,$1746,2%
-CULTURE & RECREATION,Recreation - 630,5400,Supplies,,,,,,,
-CULTURE & RECREATION,Recreation - 630,5400,Park Services and Expenses,$2500,$2500,$2500,$2500,$2500,$0,0%
-CULTURE & RECREATION,Recreation - 630,,TOTAL,$2500,$2500,$2500,$2500,$2500,$0,0%
-CULTURE & RECREATION,Agricultural Commission - 690,5400,Supplies,,,,,,,
-CULTURE & RECREATION,Agricultural Commission - 690,5400,Ag Commission Expenses,$300,$300,$300,$300,$300,$0,0%
-CULTURE & RECREATION,Agricultural Commission - 690,,TOTAL,$300,$300,$300,$300,$300,$0,0%
-CULTURE & RECREATION,Historical Commission - 691,5400,Supplies,,,,,,,
-CULTURE & RECREATION,Historical Commission - 691,5400,Expenses,$200,$200,$200,$200,$200,$0,0%
-CULTURE & RECREATION,Historical Commission - 691,,TOTAL,$200,$200,$200,$200,$200,$0,0%
-CULTURE & RECREATION,,,,$0,$92639,$92544,$93709,$94290,$1746,2%
+,,5100,Director,$31644,$32435,$32435,$33084,$33084,$649,2%
+,,5100,Assistant Wages,$17403,$17498,$17403,$17919,$18500,$1097,6%
+,,5110,Employee Support,,,,,,,
+,,5110,Association Dues,$310,$310,$310,$310,$310,$0,0%
+,,5200,Services,,,,,,,
+,,5200,Utilities and Maintenance,$19510,$19510,$19510,$19510,$19510,$0,0%
+,,5400,Supplies,,,,,,,
+,,5400,Books and Materials,$19886,$19886,$19886,$19886,$19886,$0,0%
+,,,TOTAL,$88753,$89639,$89544,$90709,$91290,$1746,2%
+,Recreation - 630,5400,Supplies,,,,,,,
+,,5400,Park Services and Expenses,$2500,$2500,$2500,$2500,$2500,$0,0%
+,,,TOTAL,$2500,$2500,$2500,$2500,$2500,$0,0%
+,Agricultural Commission - 690,5400,Supplies,,,,,,,
+,,5400,Ag Commission Expenses,$300,$300,$300,$300,$300,$0,0%
+,,,TOTAL,$300,$300,$300,$300,$300,$0,0%
+,Historical Commission - 691,5400,Supplies,,,,,,,
+,,5400,Expenses,$200,$200,$200,$200,$200,$0,0%
+,,,TOTAL,$200,$200,$200,$200,$200,$0,0%
+,,,,$0,$92639,$92544,$93709,$94290,$1746,2%
 DEBT,Debt - Short-Term Interest - 750,,Short-Term Interest (Inside Levy),$14485,$14485,$14485,$20000,$20000,$5515,38%
-DEBT,Debt - Short-Term Interest - 750,,Short-Term Interest (Outside Levy),$0,$0,$0,$0,$0,$0,0%
-DEBT,Debt - Short Term Principal 750,,Principal on Short-Term Debt,$150000,$50000,$50000,$25000,$25000,-$25000,-50%
-DEBT,Debt - Long-Term Principal - 751,,Debt - Long-Term Principal,$180488,$0,$0,$0,$0,$0,0%
-DEBT,Debt - Long-Term Interest - 752,,Long-Term Interest (within Levy),$5400,$0,$0,$0,$0,$0,0%
-DEBT,Debt - School Roof Principal,,Short Term Outside Levy,$25000,$25000,$25000,$52862,$52862,$27862,111%
-DEBT,Debt - School Roof Interest,,Short Term Outside Levy,$37625,$57377,$57377,$49000,$49000,-$8377,-15%
-DEBT,,,TOTAL,$412998,$146862,$146862,$146862,$146862,$0,0%
-DEBT,,,DEBT,$0,$146862,$146862,$146862,$146862,$0,0%
+,,,Short-Term Interest (Outside Levy),$0,$0,$0,$0,$0,$0,0%
+,Debt - Short Term Principal 750,,Principal on Short-Term Debt,$150000,$50000,$50000,$25000,$25000,-$25000,-50%
+,Debt - Long-Term Principal - 751,,Debt - Long-Term Principal,$180488,$0,$0,$0,$0,$0,0%
+,Debt - Long-Term Interest - 752,,Long-Term Interest (within Levy),$5400,$0,$0,$0,$0,$0,0%
+,Debt - School Roof Principal,,Short Term Outside Levy,$25000,$25000,$25000,$52862,$52862,$27862,111%
+,Debt - School Roof Interest,,Short Term Outside Levy,$37625,$57377,$57377,$49000,$49000,-$8377,-15%
+,,,TOTAL,$412998,$146862,$146862,$146862,$146862,$0,0%
+,,,DEBT,$0,$146862,$146862,$146862,$146862,$0,0%
 LIABILITIES & ASSESSMENTS,Cherry Sheet Assessment - 820,,Air Pollution,$1285,$1311,$1400,$1400,$1400,$0,0%
-LIABILITIES & ASSESSMENTS,Cherry Sheet Assessment - 820,,Regional Transit,$6667,$6800,$6800,$6800,$6800,$0,0%
-LIABILITIES & ASSESSMENTS,Cherry Sheet Assessment - 820,,RMV,$2000,$2040,$4080,$4080,$4080,$0,0%
-LIABILITIES & ASSESSMENTS,Cherry Sheet Assessment - 820,,TOTAL,$9952,$10151,$12280,$12280,$12280,$0,0%
-LIABILITIES & ASSESSMENTS,Worcester Regional Retirement - 911,,Assessment,$411025,$431576,$448000,$480823,$480823,$32823,7%
-LIABILITIES & ASSESSMENTS,Worcester Regional Retirement - 911,,TOTAL,$411025,$431576,$448000,$480823,$480823,$32823,7%
-LIABILITIES & ASSESSMENTS,Unemployment - 913,,Reserve,$0,$0,$0,$0,$0,$0,0%
-LIABILITIES & ASSESSMENTS,Unemployment - 913,,TOTAL,$0,$0,$0,$0,$0,$0,0%
-LIABILITIES & ASSESSMENTS,Health insurance - 914,,Annual Cost,$213360,$219761,$219761,$236243,$236243,$16482,8%
-LIABILITIES & ASSESSMENTS,Health insurance - 914,,TOTAL,$213360,$219761,$219761,$236243,$236243,$16482,8%
-LIABILITIES & ASSESSMENTS,Medicare - 916,,Annual Cost,$32706,$33360,$33360,$33360,$33360,$0,0%
-LIABILITIES & ASSESSMENTS,Medicare - 916,,TOTAL,$32706,$33360,$33360,$33360,$33360,$0,0%
-LIABILITIES & ASSESSMENTS,Liability Insurance - 945,,Annual Cost,$143280,$156175,$156175,$163984,$163984,$7809,5%
-LIABILITIES & ASSESSMENTS,Liability Insurance - 945,,TOTAL,$143280,$156175,$156175,$163984,$163984,$7809,5%
-LIABILITIES & ASSESSMENTS,Offsets and Overlay - 999,,Library Off-Set,$8627,$8627,$12765,$12765,$12765,$0,0%
-LIABILITIES & ASSESSMENTS,Offsets and Overlay - 999,,Overlay,$60000,$60000,$66144,$60000,$60000,$0,0%
-LIABILITIES & ASSESSMENTS,Offsets and Overlay - 999,,TOTAL,$68627,$68627,$78909,$72765,$72765,$0,0%
-LIABILITIES & ASSESSMENTS,,,UNCLASSIFIED,$0,$919650,$948485,$999455,$999455,$50970,5%
+,,,Regional Transit,$6667,$6800,$6800,$6800,$6800,$0,0%
+,,,RMV,$2000,$2040,$4080,$4080,$4080,$0,0%
+,,,TOTAL,$9952,$10151,$12280,$12280,$12280,$0,0%
+,Worcester Regional Retirement - 911,,Assessment,$411025,$431576,$448000,$480823,$480823,$32823,7%
+,,,TOTAL,$411025,$431576,$448000,$480823,$480823,$32823,7%
+,Unemployment - 913,,Reserve,$0,$0,$0,$0,$0,$0,0%
+,,,TOTAL,$0,$0,$0,$0,$0,$0,0%
+,Health insurance - 914,,Annual Cost,$213360,$219761,$219761,$236243,$236243,$16482,8%
+,,,TOTAL,$213360,$219761,$219761,$236243,$236243,$16482,8%
+,Medicare - 916,,Annual Cost,$32706,$33360,$33360,$33360,$33360,$0,0%
+,,,TOTAL,$32706,$33360,$33360,$33360,$33360,$0,0%
+,Liability Insurance - 945,,Annual Cost,$143280,$156175,$156175,$163984,$163984,$7809,5%
+,,,TOTAL,$143280,$156175,$156175,$163984,$163984,$7809,5%
+,Offsets and Overlay - 999,,Library Off-Set,$8627,$8627,$12765,$12765,$12765,$0,0%
+,,,Overlay,$60000,$60000,$66144,$60000,$60000,$0,0%
+,,,TOTAL,$68627,$68627,$78909,$72765,$72765,$0,0%
+,,,UNCLASSIFIED,$0,$919650,$948485,$999455,$999455,$50970,5%
 GRAND TOTAL,,,,$10844514,$11221128,$11146879,$11913815,$11827047,$680168,6.10%
