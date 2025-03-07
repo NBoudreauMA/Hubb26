@@ -1,104 +1,653 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hubbardston Free Cash Report (2005–2030)</title>
-    <link rel="stylesheet" href="styles (21).css">
+    <title>Hubbardston Free Cash - Budget Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('hubbardston_bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+        }
+        
+        nav {
+            background: linear-gradient(90deg, rgba(34, 139, 34, 0.9), rgba(0, 100, 0, 0.9));
+            padding: 15px;
+            text-align: center;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 20px;
+            text-decoration: none;
+            font-size: 22px;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: 0.3s ease-in-out;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+            transform: scale(1.2);
+            color: white;
+            background-color: rgba(0, 100, 0, 0.7);
+            border-radius: 5px;
+        }
+        
+        nav a.active {
+            color: white;
+            text-decoration: underline;
+            background-color: rgba(0, 100, 0, 0.7);
+            padding: 8px 15px;
+            border-radius: 5px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 120px auto 40px;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.75);
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+        }
+        
+        h1, h2 {
+            color: #4bc0c0;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 32px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(0, 60, 30, 0.85), rgba(0, 90, 70, 0.75));
+            border-radius: 12px;
+            padding: 25px 30px;
+            margin: 30px 0;
+            border-left: 4px solid #4bc0c0;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+        
+        .highlight-box h3 {
+            color: #4bc0c0;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+        
+        .free-cash-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+        
+        .period-box {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-top: 3px solid #4bc0c0;
+        }
+        
+        .period-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+        }
+        
+        .period-box h4 {
+            color: #4bc0c0;
+            margin-top: 0;
+            font-size: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 10px;
+        }
+        
+        .period-box p {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        .data-table-container {
+            margin: 40px 0;
+            overflow-x: auto;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            padding: 20px;
+            max-height: 600px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #4bc0c0 rgba(0, 0, 0, 0.3);
+        }
+        
+        .data-table-container::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        .data-table-container::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+        }
+        
+        .data-table-container::-webkit-scrollbar-thumb {
+            background-color: #4bc0c0;
+            border-radius: 10px;
+        }
+        
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            color: white;
+        }
+        
+        /* Sticky header for data table */
+        .data-table thead tr th {
+            position: sticky;
+            top: 0;
+            background-color: rgba(34, 139, 34, 0.8);
+            z-index: 10;
+        }
+        
+        .data-table th, 
+        .data-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .data-table th {
+            background-color: rgba(34, 139, 34, 0.3);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+        
+        .data-table tr:hover {
+            background-color: rgba(34, 139, 34, 0.1);
+        }
+        
+        .negative {
+            color: #ff6b6b;
+        }
+        
+        .highlight-row {
+            background-color: rgba(75, 192, 192, 0.2);
+            font-weight: 500;
+        }
+        
+        .projected-row {
+            font-style: italic;
+            color: #aaa;
+        }
+        
+        .chart-container {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 40px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .signature {
+            text-align: right;
+            font-style: italic;
+            margin-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+        }
+        
+        .button-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        .action-button {
+            display: inline-block;
+            padding: 12px 25px;
+            background: rgba(0, 130, 100, 0.7);
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .action-button:hover {
+            background: rgba(0, 150, 120, 0.9);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+        
+        .footer {
+            background: linear-gradient(90deg, rgba(34, 139, 34, 0.9), rgba(0, 100, 0, 0.9));
+            text-align: center;
+            padding: 20px;
+            width: 100%;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
+            margin-top: 40px;
+        }
+        
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                padding: 10px 0;
+            }
+            
+            nav a {
+                margin: 5px 0;
+                font-size: 18px;
+            }
+            
+            .container {
+                padding: 15px;
+                margin-top: 180px;
+            }
+            
+            .free-cash-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
     <nav>
-        <a href="#insights">Key Insights</a>
-        <a href="#data">Data</a>
-        <a href="#chart">Chart</a>
-        <a href="#conclusion">Conclusion</a>
+        <a href="index.html">HOME</a>
+        <a href="revenue.html">REVENUE</a>
+        <a href="expenditures.html">EXPENDITURES</a>
+        <a href="freecash.html" class="active">FREE CASH</a>
+        <a href="capital_plan.html">CAPITAL PLAN</a>
+        <a href="citizens_guide.html">CITIZEN'S GUIDE</a>
     </nav>
-
+    
     <div class="container">
-        <h1>🔥 Hubbardston Free Cash Report (2005–2030) 🔥</h1>
-        <p>Explore the full financial journey of Hubbardston's free cash — from past challenges to future stability. Scroll to view all historical data.</p>
-
-        <div class="info-section" id="insights">
-            <h2>Key Insights</h2>
-            <ul>
-                <li><b>2005–2009:</b> Period of fiscal instability with deficits in several years due to revenue shortfalls and budget deficits.</li>
-                <li><b>2010–2015:</b> Recovery and stabilization with moderate free cash levels (around $100k–$300k).</li>
-                <li><b>2020–2023:</b> Sharp improvement, peaking at $806,289 in FY2023 due to conservative budgeting, revenue growth, and federal relief funds.</li>
-                <li><b>Future Projections:</b> Expected to stabilize between $570k–$730k through FY2030, barring economic downturns.</li>
-                <li><b>Fiscal Management:</b> Hubbardston aims to reduce reliance on free cash for operations, directing funds toward capital investments and stabilization funds.</li>
-            </ul>
+        <h1>Hubbardston Free Cash (2005–2030)</h1>
+        <p>Free Cash is a critical financial indicator representing the town's available, undesignated funds that can be appropriated for various municipal needs. This page explores Hubbardston's free cash journey from past challenges to future projections.</p>
+        
+        <div class="highlight-box">
+            <h3>What is Free Cash?</h3>
+            <p>Free Cash represents the amount of unrestricted funds from the previous fiscal year's operations that can be appropriated by Town Meeting for any municipal purpose. It's essentially the town's "savings account" and a key indicator of fiscal health.</p>
+            <p>Free cash is certified annually by the Massachusetts Department of Revenue and comes from actual revenue receipts in excess of revenue estimates, unexpended funds from departmental budgets, and prior year free cash that wasn't appropriated.</p>
         </div>
-
-        <h2 id="data">Historical Free Cash Data (2005-2030)</h2>
-        <div class="scroll-table">
-            <table>
-                <tr>
-                    <th>Fiscal Year</th>
-                    <th>Certified Free Cash</th>
-                </tr>
-                <tr><td>2005</td><td>$29,269</td></tr>
-                <tr><td>2006</td><td>-$5,384</td></tr>
-                <tr><td>2007</td><td>-$355,144</td></tr>
-                <tr><td>2008</td><td>-$49,460</td></tr>
-                <tr><td>2009</td><td>$76,246</td></tr>
-                <tr><td>2010</td><td>$123,998</td></tr>
-                <tr><td>2011</td><td>$297,370</td></tr>
-                <tr><td>2012</td><td>$211,777</td></tr>
-                <tr><td>2013</td><td>$230,061</td></tr>
-                <tr><td>2014</td><td>$106,916</td></tr>
-                <tr><td>2015</td><td>$220,223</td></tr>
-                <tr><td>2016</td><td>$172,811</td></tr>
-                <tr><td>2017</td><td>$98,815</td></tr>
-                <tr><td>2018</td><td>$177,223</td></tr>
-                <tr><td>2019</td><td>$201,866</td></tr>
-                <tr><td>2020</td><td class="highlight">$401,503</td></tr>
-                <tr><td>2021</td><td>$312,052</td></tr>
-                <tr><td>2022</td><td>$585,266</td></tr>
-                <tr><td>2023</td><td class="highlight">$806,289</td></tr>
-                <tr><td>2024</td><td>$542,924</td></tr>
-                <tr><td>2025</td><td>$549,563</td></tr>
-                <tr class="projected"><td>2026</td><td>$570,000</td></tr>
-                <tr class="projected"><td>2027</td><td>$600,000</td></tr>
-                <tr class="projected"><td>2028</td><td>$630,000</td></tr>
-                <tr class="projected"><td>2029</td><td>$680,000</td></tr>
-                <tr class="projected"><td>2030</td><td>$730,000</td></tr>
+        
+        <h2>Key Insights & Timeline</h2>
+        
+        <div class="free-cash-grid">
+            <div class="period-box">
+                <h4>2005–2009: Financial Challenges</h4>
+                <p>This period marked significant fiscal instability with deficits in multiple years, particularly 2007's negative balance of $355,144. The town faced revenue shortfalls, budget deficits, and financial management challenges requiring corrective action.</p>
+            </div>
+            
+            <div class="period-box">
+                <h4>2010–2015: Recovery & Stabilization</h4>
+                <p>Hubbardston implemented improved financial practices, leading to recovery and stabilization. Free cash levels remained moderate (around $100k–$300k), establishing a foundation for future growth and financial health.</p>
+            </div>
+            
+            <div class="period-box">
+                <h4>2016–2019: Modest Balances</h4>
+                <p>This period saw consistent but relatively modest free cash balances, ranging from approximately $98k to $201k. While positive, these levels indicated opportunities for improved revenue collection and expense management.</p>
+            </div>
+            
+            <div class="period-box">
+                <h4>2020–2023: Sharp Improvement</h4>
+                <p>Free cash rose dramatically, peaking at $806,289 in FY2023. This improvement resulted from conservative budgeting practices, revenue growth, and federal relief funds that helped strengthen the town's financial position.</p>
+            </div>
+            
+            <div class="period-box">
+                <h4>2024–2025: Current Position</h4>
+                <p>Free cash has normalized to sustainable levels ($542,924 in FY2024 and $549,563 in FY2025), reflecting a more realistic financial position while maintaining significant reserves for town priorities.</p>
+            </div>
+            
+            <div class="period-box">
+                <h4>2026–2030: Future Projections</h4>
+                <p>Projections indicate continued stability with growth from $570,000 in FY2026 to $730,000 by FY2030. These estimates assume continued disciplined fiscal management and absence of major economic disruptions.</p>
+            </div>
+        </div>
+        
+        <div class="data-table-container">
+            <h2>Historical Free Cash Data (2005-2030)</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Fiscal Year</th>
+                        <th>Certified Free Cash</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2005</td>
+                        <td>$29,269</td>
+                        <td>Certified</td>
+                    </tr>
+                    <tr>
+                        <td>2006</td>
+                        <td class="negative">-$5,384</td>
+                        <td>Certified</td>
+                    </tr>
+                    <tr>
+                        <td>2007</td>
+                        <td class="negative">-$355,144</td>
+                        <td>Certified</td>
+                    </tr>
+                    <tr>
+                        <td>2008</td>
+                        <td class="negative">-$49,460</td>
+                        <td>Certified</td>
+                    </tr>
+                    <tr>
+                        <td>2009</td>
+                        <td>$76,246</td>
+                        <td>Certified</td>
+                    </tr>
+                    <tr>
+                        <td>2010</td>
+                        <td>$123,998</td>
+                        <td>Certified</td>
+                    </tr>
+                    <tr>
+                        <td>2011</td>
+                        <td>$297,370</td>
+                        <td>Certified</td>
+                    </tr>
+                    <tr>
+                        <td>2012</td>
+                        <td>$211,777</td>
+                        <td>Certified</td>
+                    </tr>
+                    <tr>
+                        <td>2013</td>
+                        <td>$230,061</td>
+                        <td>Certified</td>
+                    </tr>
+                    <tr>
+                        <td>2014</td>
+                        <td>$106,916</td>
+                        <td>Certified</td>
+                    </tr>
+                    <tr>
+                        <td>2015</td>
+                        <td>$220,223</td>
+                        <td>Certified</td>
+                    </tr>
+                    <tr>
+                        <td>2016</td>
+                        <td>$172,811</td>
+                        <td>Certified</td>
+                    </tr>
+                    <tr>
+                        <td>2017</td>
+                        <td>$98,815</td>
+                        <td>Certified</td>
+                    </tr>
+                    <tr>
+                        <td>2018</td>
+                        <td>$177,223</td>
+                        <td>Certified</td>
+                    </tr>
+                    <tr>
+                        <td>2019</td>
+                        <td>$201,866</td>
+                        <td>Certified</td>
+                    </tr>
+                    <tr class="highlight-row">
+                        <td>2020</td>
+                        <td>$401,503</td>
+                        <td>Certified</td>
+                    </tr>
+                    <tr>
+                        <td>2021</td>
+                        <td>$312,052</td>
+                        <td>Certified</td>
+                    </tr>
+                    <tr>
+                        <td>2022</td>
+                        <td>$585,266</td>
+                        <td>Certified</td>
+                    </tr>
+                    <tr class="highlight-row">
+                        <td>2023</td>
+                        <td>$806,289</td>
+                        <td>Certified</td>
+                    </tr>
+                    <tr>
+                        <td>2024</td>
+                        <td>$542,924</td>
+                        <td>Certified</td>
+                    </tr>
+                    <tr>
+                        <td>2025</td>
+                        <td>$549,563</td>
+                        <td>Certified</td>
+                    </tr>
+                    <tr class="projected-row">
+                        <td>2026</td>
+                        <td>$570,000</td>
+                        <td>Projected</td>
+                    </tr>
+                    <tr class="projected-row">
+                        <td>2027</td>
+                        <td>$600,000</td>
+                        <td>Projected</td>
+                    </tr>
+                    <tr class="projected-row">
+                        <td>2028</td>
+                        <td>$630,000</td>
+                        <td>Projected</td>
+                    </tr>
+                    <tr class="projected-row">
+                        <td>2029</td>
+                        <td>$680,000</td>
+                        <td>Projected</td>
+                    </tr>
+                    <tr class="projected-row">
+                        <td>2030</td>
+                        <td>$730,000</td>
+                        <td>Projected</td>
+                    </tr>
+                </tbody>
             </table>
         </div>
-
-        <div class="chart-container" id="chart">
-            <canvas id="freeCashChart"></canvas>
-        </div>
-
-        <h2 id="conclusion">Conclusion</h2>
-        <p>Through smart budgeting, strategic savings, and disciplined financial planning, Hubbardston is well-positioned for a stable financial future. With continued growth and resilience, the town’s financial outlook remains strong.</p>
         
-        <div class="footer">© 2025 Hubbardston Financial Analysis | Powered by Data & Strategy</div>
+        <div class="chart-container">
+            <h2>Free Cash Trend Visualization</h2>
+            <canvas id="freeCashChart" height="400"></canvas>
+        </div>
+        
+        <div class="highlight-box">
+            <h3>Current Free Cash Strategy</h3>
+            <p>Hubbardston's financial leadership is implementing a strategic approach to free cash management:</p>
+            <ul>
+                <li><strong>Capital Investment:</strong> Prioritizing one-time capital expenditures over recurring operational costs to prevent structural deficits.</li>
+                <li><strong>Stabilization Funds:</strong> Allocating portions of free cash to designated stabilization funds for future capital needs and financial resilience.</li>
+                <li><strong>Moderate Use:</strong> Using only a portion of available free cash annually, allowing reserves to continue growing over time.</li>
+                <li><strong>Targeted Investments:</strong> Focusing free cash appropriations on projects that reduce future costs or enhance service delivery.</li>
+            </ul>
+            <p>For FY2026, the town has allocated $131,478 in free cash (approximately 24% of the available amount) to support the annual budget, primarily for one-time investments.</p>
+        </div>
+        
+        <div class="button-container">
+            <a href="budget_view.html" class="action-button">📊 View Full Budget</a>
+            <a href="freecash_policy.pdf" class="action-button" target="_blank">📄 Free Cash Policy</a>
+            <a href="capital_plan.html" class="action-button">🔨 Capital Plan</a>
+        </div>
+        
+        <div class="signature">
+            <p>Through smart budgeting, strategic savings, and disciplined financial planning, Hubbardston is well-positioned for a stable financial future.</p>
+            <p>Last updated: March 1, 2025 | Finance Committee & Town Administrator's Office</p>
+        </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <div class="footer">
+        © 2025 Town of Hubbardston | All Rights Reserved | Financial Transparency Initiative
+    </div>
+    
+    <!-- Load Chart.js with defer attribute to ensure it loads properly -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js" defer></script>
     <script>
-        const ctx = document.getElementById('freeCashChart').getContext('2d');
-        const freeCashChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025', '2026', '2027', '2028', '2029', '2030'],
-                datasets: [{
-                    label: 'Certified Free Cash',
-                    data: [29269, -5384, -355144, -49460, 76246, 123998, 297370, 211777, 230061, 106916, 220223, 172811, 98815, 177223, 201866, 401503, 312052, 585266, 806289, 542924, 549563, 570000, 600000, 630000, 680000, 730000],
-                    borderColor: '#58a6ff',
-                    backgroundColor: 'rgba(88, 166, 255, 0.2)',
-                    borderWidth: 3,
-                    tension: 0.3
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true
+        window.addEventListener('load', function() {
+            // Wait until window is fully loaded to ensure Chart.js is available
+            if (typeof Chart !== 'undefined') {
+                const ctx = document.getElementById('freeCashChart').getContext('2d');
+                
+                const freeCashChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025', '2026', '2027', '2028', '2029', '2030'],
+                    datasets: [{
+                        label: 'Certified Free Cash',
+                        data: [29269, -5384, -355144, -49460, 76246, 123998, 297370, 211777, 230061, 106916, 220223, 172811, 98815, 177223, 201866, 401503, 312052, 585266, 806289, 542924, 549563, 570000, 600000, 630000, 680000, 730000],
+                        borderColor: '#58a6ff',
+                        backgroundColor: 'rgba(88, 166, 255, 0.2)',
+                        borderWidth: 3,
+                        tension: 0.3,
+                        pointBackgroundColor: function(context) {
+                            const index = context.dataIndex;
+                            const value = context.dataset.data[index];
+                            return value < 0 ? '#ff6b6b' : '#58a6ff';
+                        },
+                        pointRadius: function(context) {
+                            const index = context.dataIndex;
+                            const value = context.dataset.data[index];
+                            return Math.abs(value) > 500000 ? 8 : 5;
+                        },
+                        segment: {
+                            borderColor: function(context) {
+                                if (context.p0.parsed.y < 0 && context.p1.parsed.y < 0) {
+                                    return '#ff6b6b';
+                                }
+                                return '#58a6ff';
+                            }
+                        }
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)',
+                                callback: function(value) {
+                                    if (value >= 1000000) return '$' + (value / 1000000).toFixed(1) + 'M';
+                                    if (value >= 1000) return '$' + (value / 1000).toFixed(0) + 'K';
+                                    return '$' + value;
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: 'Free Cash Amount',
+                                color: 'rgba(255, 255, 255, 0.9)',
+                                font: {
+                                    size: 14,
+                                    weight: 'bold'
+                                }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)',
+                                maxRotation: 45,
+                                minRotation: 45
+                            },
+                            title: {
+                                display: true,
+                                text: 'Fiscal Year',
+                                color: 'rgba(255, 255, 255, 0.9)',
+                                font: {
+                                    size: 14,
+                                    weight: 'bold'
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: 'rgba(255, 255, 255, 0.9)',
+                                font: {
+                                    size: 14
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += new Intl.NumberFormat('en-US', { 
+                                            style: 'currency', 
+                                            currency: 'USD',
+                                            maximumFractionDigits: 0
+                                        }).format(context.parsed.y);
+                                    }
+                                    return label;
+                                },
+                                title: function(context) {
+                                    return 'FY' + context[0].label;
+                                },
+                                afterLabel: function(context) {
+                                    const year = parseInt(context.label);
+                                    if (year >= 2026) {
+                                        return '(Projected)';
+                                    }
+                                    return '';
+                                }
+                            }
+                        },
+                        annotation: {
+                            annotations: {
+                                line1: {
+                                    type: 'line',
+                                    yMin: 0,
+                                    yMax: 0,
+                                    borderColor: 'rgba(255, 255, 255, 0.5)',
+                                    borderWidth: 1,
+                                    borderDash: [5, 5],
+                                }
+                            }
+                        }
                     }
                 }
+            });
+            } else {
+                console.error("Chart.js not loaded correctly. Please refresh the page.");
+                document.getElementById('freeCashChart').insertAdjacentHTML('afterend', 
+                    '<div style="color: #ff6b6b; text-align: center; padding: 20px;">' +
+                    'Chart visualization could not be loaded. Please refresh the page.' +
+                    '</div>');
             }
         });
     </script>
