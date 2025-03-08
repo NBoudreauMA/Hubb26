@@ -682,23 +682,6 @@
                     
                     <p>The town budget is more than just numbers—it's a reflection of our community's priorities and a roadmap for Hubbardston's future. By understanding the budget, you can make informed decisions about town initiatives and participate meaningfully in town meetings.</p>
                 </div>
-            </div>
-            
-            <!-- Tab Navigation -->
-            <div class="tabs-container">
-                <div class="tabs-nav">
-                    <button class="tab-button active" data-tab="basics">Budget Basics</button>
-                    <button class="tab-button" data-tab="process">Budget Process</button>
-                    <button class="tab-button" data-tab="breakdown">Budget Breakdown</button>
-                    <button class="tab-button" data-tab="glossary">Budget Glossary</button>
-                    <button class="tab-button" data-tab="faq">FAQ</button>
-                
-                <!-- Budget Glossary Tab -->
-                <div id="glossary" class="tab-content">
-                    <div class="info-card">
-                        <h3>Understanding Budget Terminology</h3>
-                        <p>Budget discussions often involve specialized terms that can be confusing. This glossary explains common budget-related terminology to help you better understand Hubbardston's finances.</p>
-                    </div>
             
             <div class="action-section">
                 <h3 class="action-title">Get Involved in Hubbardston's Budget Process</h3>
@@ -724,36 +707,26 @@
     </div>
     
     <script>
-        window.onload = function() {
+        document.addEventListener("DOMContentLoaded", function() {
             // Tab navigation functionality
             const tabButtons = document.querySelectorAll(".tab-button");
             const tabContents = document.querySelectorAll(".tab-content");
             
-            // Initially hide all tabs except the first one
-            tabContents.forEach(function(content, index) {
-                if (index !== 0) {
-                    content.style.display = "none";
-                }
-            });
-            
             tabButtons.forEach(function(button) {
                 button.addEventListener("click", function() {
-                    // Remove active class from all buttons
+                    // Remove active class from all buttons and contents
                     tabButtons.forEach(function(btn) {
                         btn.classList.remove("active");
                     });
                     
-                    // Add active class to clicked button
-                    button.classList.add("active");
-                    
-                    // Hide all tab contents
                     tabContents.forEach(function(content) {
-                        content.style.display = "none";
+                        content.classList.remove("active");
                     });
                     
-                    // Show the selected tab content
-                    const tabId = button.getAttribute("data-tab");
-                    document.getElementById(tabId).style.display = "block";
+                    // Add active class to clicked button and corresponding content
+                    this.classList.add("active");
+                    const tabId = this.getAttribute("data-tab");
+                    document.getElementById(tabId).classList.add("active");
                 });
             });
             
@@ -762,27 +735,21 @@
             
             accordions.forEach(function(accordion) {
                 const header = accordion.querySelector(".accordion-header");
-                const content = accordion.querySelector(".accordion-content");
-                
-                // Initially set the height for the transition to work
-                content.style.maxHeight = "0px";
                 
                 header.addEventListener("click", function() {
                     accordion.classList.toggle("active");
-                    
-                    if (accordion.classList.contains("active")) {
-                        content.style.maxHeight = content.scrollHeight + "px";
-                        content.style.padding = "20px 25px";
-                    } else {
-                        content.style.maxHeight = "0px";
-                        content.style.padding = "0px";
-                    }
                 });
             });
-        };
+        });
     </script>
-</body>
-</html>    
+                
+                <!-- Budget Glossary Tab -->
+                <div id="glossary" class="tab-content">
+                    <div class="info-card">
+                        <h3>Understanding Budget Terminology</h3>
+                        <p>Budget discussions often involve specialized terms that can be confusing. This glossary explains common budget-related terminology to help you better understand Hubbardston's finances.</p>
+                    </div>
+                    
                     <div class="glossary-container">
                         <div class="glossary-item">
                             <div class="glossary-term">Fiscal Year (FY)</div>
@@ -901,7 +868,7 @@
                                     <li>Attend public hearings on the budget held by the Select Board and Finance Committee in March and April</li>
                                     <li>Provide input during public comment periods at Select Board and Finance Committee meetings</li>
                                     <li>Contact your Select Board members or the Town Administrator with specific concerns or suggestions</li>
-                                    <li>Attend the Annual Town Meeting in May, where you can ask questions, propose amendments, and vote on the budget</li>
+                                    <li>Attend the Annual Town Meeting in June, where you can ask questions, propose amendments, and vote on the budget</li>
                                     <li>Consider volunteering for town committees or boards that have input in the budget process</li>
                                 </ul>
                             </div>
@@ -926,6 +893,17 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+            
+            <!-- Tab Navigation -->
+            <div class="tabs-container">
+                <div class="tabs-nav">
+                    <button class="tab-button active" data-tab="basics">Budget Basics</button>
+                    <button class="tab-button" data-tab="process">Budget Process</button>
+                    <button class="tab-button" data-tab="breakdown">Budget Breakdown</button>
+                    <button class="tab-button" data-tab="glossary">Budget Glossary</button>
+                    <button class="tab-button" data-tab="faq">FAQ</button>
                 </div>
                 
                 <!-- Budget Basics Tab -->
