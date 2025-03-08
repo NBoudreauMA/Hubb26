@@ -699,7 +699,90 @@
                         <h3>Understanding Budget Terminology</h3>
                         <p>Budget discussions often involve specialized terms that can be confusing. This glossary explains common budget-related terminology to help you better understand Hubbardston's finances.</p>
                     </div>
+            
+            <div class="action-section">
+                <h3 class="action-title">Get Involved in Hubbardston's Budget Process</h3>
+                
+                <p class="action-text">Your participation in town government matters! By understanding the budget and getting involved in the process, you help ensure that Hubbardston's financial decisions reflect community priorities and needs.</p>
+                
+                <div class="action-buttons">
+                    <a href="#" class="action-button primary-button">
+                        <i class="fas fa-calendar-alt"></i>
+                        View Meeting Schedule
+                    </a>
+                    <a href="#" class="action-button">
+                        <i class="fas fa-file-pdf"></i>
+                        Download Full Budget
+                    </a>
+                    <a href="#" class="action-button">
+                        <i class="fas fa-envelope"></i>
+                        Contact Town Officials
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        window.onload = function() {
+            // Tab navigation functionality
+            const tabButtons = document.querySelectorAll(".tab-button");
+            const tabContents = document.querySelectorAll(".tab-content");
+            
+            // Initially hide all tabs except the first one
+            tabContents.forEach(function(content, index) {
+                if (index !== 0) {
+                    content.style.display = "none";
+                }
+            });
+            
+            tabButtons.forEach(function(button) {
+                button.addEventListener("click", function() {
+                    // Remove active class from all buttons
+                    tabButtons.forEach(function(btn) {
+                        btn.classList.remove("active");
+                    });
                     
+                    // Add active class to clicked button
+                    button.classList.add("active");
+                    
+                    // Hide all tab contents
+                    tabContents.forEach(function(content) {
+                        content.style.display = "none";
+                    });
+                    
+                    // Show the selected tab content
+                    const tabId = button.getAttribute("data-tab");
+                    document.getElementById(tabId).style.display = "block";
+                });
+            });
+            
+            // Accordion functionality for FAQ section
+            const accordions = document.querySelectorAll(".accordion");
+            
+            accordions.forEach(function(accordion) {
+                const header = accordion.querySelector(".accordion-header");
+                const content = accordion.querySelector(".accordion-content");
+                
+                // Initially set the height for the transition to work
+                content.style.maxHeight = "0px";
+                
+                header.addEventListener("click", function() {
+                    accordion.classList.toggle("active");
+                    
+                    if (accordion.classList.contains("active")) {
+                        content.style.maxHeight = content.scrollHeight + "px";
+                        content.style.padding = "20px 25px";
+                    } else {
+                        content.style.maxHeight = "0px";
+                        content.style.padding = "0px";
+                    }
+                });
+            });
+        };
+    </script>
+</body>
+</html>    
                     <div class="glossary-container">
                         <div class="glossary-item">
                             <div class="glossary-term">Fiscal Year (FY)</div>
