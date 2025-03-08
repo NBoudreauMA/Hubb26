@@ -206,9 +206,26 @@
             padding: 20px;
             margin: 40px 0;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .line-chart-container {
             position: relative;
-            height: 400px; /* Fixed height */
-            max-height: 50vh; /* Responsive max height */
+            height: 400px;
+            margin-top: 40px;
+        }
+        
+        .line-chart {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+            border-left: 2px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        /* SVG Line Chart */
+        .chart-svg {
+            width: 100%;
+            height: 100%;
         }
         
         .signature {
@@ -254,38 +271,6 @@
             margin-top: 40px;
         }
         
-        /* Chart legend styles */
-        .chart-legend-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 15px;
-            flex-wrap: wrap;
-        }
-        
-        .chart-legend-item {
-            display: flex;
-            align-items: center;
-            margin: 5px 0;
-        }
-        
-        .legend-circle {
-            display: inline-block;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            margin-right: 8px;
-        }
-        
-        .legend-dash {
-            display: inline-block;
-            width: 20px;
-            height: 2px;
-            background: #58a6ff;
-            margin-right: 8px;
-            border-top: 2px dashed #58a6ff;
-        }
-        
         @media (max-width: 768px) {
             nav {
                 flex-direction: column;
@@ -306,7 +291,7 @@
                 grid-template-columns: 1fr;
             }
             
-            .chart-container {
+            .line-chart-container {
                 height: 300px;
             }
         }
@@ -363,6 +348,137 @@
             <div class="period-box">
                 <h4>2026–2030: Future Projections</h4>
                 <p>Projections indicate continued stability with growth from $570,000 in FY2026 to $730,000 by FY2030. These estimates assume continued disciplined fiscal management and absence of major economic disruptions.</p>
+            </div>
+        </div>
+        
+        <div class="highlight-box">
+            <h3>Free Cash Trend Visualization</h3>
+            <p>The line chart below shows Hubbardston's free cash journey from 2005 to 2030, with projections for future years. Note the significant improvement in recent years following earlier fiscal challenges.</p>
+        </div>
+        
+        <div class="chart-container">
+            <div class="line-chart-container">
+                <svg class="chart-svg" viewBox="0 0 1000 400" preserveAspectRatio="none">
+                    <!-- Horizontal grid lines -->
+                    <line x1="50" y1="350" x2="950" y2="350" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+                    <line x1="50" y1="300" x2="950" y2="300" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+                    <line x1="50" y1="250" x2="950" y2="250" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+                    <line x1="50" y1="200" x2="950" y2="200" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+                    <line x1="50" y1="150" x2="950" y2="150" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+                    <line x1="50" y1="100" x2="950" y2="100" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+                    <line x1="50" y1="50" x2="950" y2="50" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+                    
+                    <!-- Baseline (zero) -->
+                    <line x1="50" y1="200" x2="950" y2="200" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-dasharray="5,5" />
+                    
+                    <!-- Y-axis labels -->
+                    <text x="45" y="350" text-anchor="end" fill="white" font-size="12">-$400K</text>
+                    <text x="45" y="300" text-anchor="end" fill="white" font-size="12">-$200K</text>
+                    <text x="45" y="200" text-anchor="end" fill="white" font-size="12">$0</text>
+                    <text x="45" y="100" text-anchor="end" fill="white" font-size="12">$400K</text>
+                    <text x="45" y="50" text-anchor="end" fill="white" font-size="12">$800K</text>
+                    
+                    <!-- X-axis labels (selected years) -->
+                    <text x="50" y="370" text-anchor="middle" fill="white" font-size="12">2005</text>
+                    <text x="231" y="370" text-anchor="middle" fill="white" font-size="12">2010</text>
+                    <text x="413" y="370" text-anchor="middle" fill="white" font-size="12">2015</text>
+                    <text x="594" y="370" text-anchor="middle" fill="white" font-size="12">2020</text>
+                    <text x="774" y="370" text-anchor="middle" fill="white" font-size="12">2025</text>
+                    <text x="950" y="370" text-anchor="middle" fill="white" font-size="12">2030</text>
+                    
+                    <!-- The actual line (data) -->
+                    <polyline 
+                        points="
+                        50,186 
+                        85,207
+                        120,355
+                        155,225 
+                        190,171
+                        231,146
+                        267,85 
+                        302,120
+                        337,111
+                        372,155
+                        413,113
+                        447,133
+                        483,160
+                        518,131
+                        553,122
+                        594,66
+                        629,83
+                        665,29
+                        700,5
+                        737,38
+                        774,37
+                        810,31
+                        846,26
+                        883,21
+                        918,14
+                        950,8"
+                        fill="none"
+                        stroke="#58a6ff"
+                        stroke-width="3"
+                    />
+                    
+                    <!-- Dots for each data point -->
+                    <circle cx="50" cy="186" r="5" fill="#58a6ff" />
+                    <circle cx="85" cy="207" r="5" fill="#ff6b6b" />
+                    <circle cx="120" cy="355" r="5" fill="#ff6b6b" />
+                    <circle cx="155" cy="225" r="5" fill="#ff6b6b" />
+                    <circle cx="190" cy="171" r="5" fill="#58a6ff" />
+                    <circle cx="231" cy="146" r="5" fill="#58a6ff" />
+                    <circle cx="267" cy="85" r="5" fill="#58a6ff" />
+                    <circle cx="302" cy="120" r="5" fill="#58a6ff" />
+                    <circle cx="337" cy="111" r="5" fill="#58a6ff" />
+                    <circle cx="372" cy="155" r="5" fill="#58a6ff" />
+                    <circle cx="413" cy="113" r="5" fill="#58a6ff" />
+                    <circle cx="447" cy="133" r="5" fill="#58a6ff" />
+                    <circle cx="483" cy="160" r="5" fill="#58a6ff" />
+                    <circle cx="518" cy="131" r="5" fill="#58a6ff" />
+                    <circle cx="553" cy="122" r="5" fill="#58a6ff" />
+                    <circle cx="594" cy="66" r="5" fill="#58a6ff" />
+                    <circle cx="629" cy="83" r="5" fill="#58a6ff" />
+                    <circle cx="665" cy="29" r="5" fill="#58a6ff" />
+                    <circle cx="700" cy="5" r="5" fill="#58a6ff" />
+                    <circle cx="737" cy="38" r="5" fill="#58a6ff" />
+                    <circle cx="774" cy="37" r="5" fill="#58a6ff" />
+                    
+                    <!-- Projected values (dashed line style and different dot style) -->
+                    <polyline 
+                        points="
+                        774,37
+                        810,31
+                        846,26
+                        883,21
+                        918,14
+                        950,8"
+                        fill="none"
+                        stroke="#58a6ff"
+                        stroke-width="3"
+                        stroke-dasharray="5,5"
+                    />
+                    
+                    <circle cx="810" cy="31" r="4" fill="none" stroke="#58a6ff" stroke-width="2" />
+                    <circle cx="846" cy="26" r="4" fill="none" stroke="#58a6ff" stroke-width="2" />
+                    <circle cx="883" cy="21" r="4" fill="none" stroke="#58a6ff" stroke-width="2" />
+                    <circle cx="918" cy="14" r="4" fill="none" stroke="#58a6ff" stroke-width="2" />
+                    <circle cx="950" cy="8" r="4" fill="none" stroke="#58a6ff" stroke-width="2" />
+                    
+                    <!-- Annotation for peak value -->
+                    <text x="700" y="15" text-anchor="middle" fill="white" font-size="12" transform="translate(20,-10)">Peak: $806,289</text>
+                    <line x1="700" y1="5" x2="720" y2="-5" stroke="white" stroke-width="1" />
+                    
+                    <!-- Annotation for deficit -->
+                    <text x="120" y="355" text-anchor="middle" fill="white" font-size="12" transform="translate(20,20)">Deficit: -$355,144</text>
+                    <line x1="120" y1="355" x2="140" y2="375" stroke="white" stroke-width="1" />
+                    
+                    <!-- Legend -->
+                    <rect x="750" y="15" width="15" height="4" fill="#58a6ff" />
+                    <text x="770" y="20" fill="white" font-size="12">Certified Free Cash</text>
+                    
+                    <rect x="750" y="35" width="15" height="2" fill="none" stroke="#58a6ff" stroke-width="2" stroke-dasharray="5,3" />
+                    <text x="770" y="40" fill="white" font-size="12">Projected Values</text>
+                </svg>
             </div>
         </div>
         
@@ -511,26 +627,6 @@
             </table>
         </div>
         
-                    <div class="highlight-box">
-                <h3>Free Cash Trend Analysis</h3>
-                <p>The chart below shows Hubbardston's free cash history since 2005, illustrating the town's financial journey from instability to recovery and growth. Note the significant improvement from 2020 onward and projected stability through 2030.</p>
-            </div>
-            
-            <div class="chart-container">
-                <canvas id="freeCashChart"></canvas>
-            </div>
-            
-            <div class="chart-legend-container">
-                <div class="chart-legend-item">
-                    <span class="legend-circle" style="background-color: #58a6ff;"></span>
-                    <span>Certified Free Cash</span>
-                </div>
-                <div class="chart-legend-item">
-                    <span class="legend-dash"></span>
-                    <span>Projected Values (2026-2030)</span>
-                </div>
-            </div>
-        
         <div class="highlight-box">
             <h3>Current Free Cash Strategy</h3>
             <p>Hubbardston's financial leadership is implementing a strategic approach to free cash management:</p>
@@ -558,477 +654,5 @@
     <div class="footer">
         © 2025 Town of Hubbardston | All Rights Reserved | Financial Transparency Initiative
     </div>
-    
-    <!-- Load Chart.js with defer attribute to ensure it loads properly -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js" defer></script>
-    <script>
-        window.addEventListener('load', function() {
-            // Wait until window is fully loaded to ensure Chart.js is available
-            if (typeof Chart !== 'undefined') {
-                const ctx = document.getElementById('freeCashChart').getContext('2d');
-                
-                const freeCashChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: ['2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025', '2026', '2027', '2028', '2029', '2030'],
-                    datasets: [{
-                        label: 'Certified Free Cash',
-                        data: [29269, -5384, -355144, -49460, 76246, 123998, 297370, 211777, 230061, 106916, 220223, 172811, 98815, 177223, 201866, 401503, 312052, 585266, 806289, 542924, 549563, 570000, 600000, 630000, 680000, 730000],
-                        borderColor: '#58a6ff',
-                        backgroundColor: 'rgba(88, 166, 255, 0.2)',
-                        borderWidth: 3,
-                        tension: 0.2,
-                        pointBackgroundColor: '#58a6ff',
-                        pointBorderColor: '#fff',
-                        pointRadius: 4,
-                        pointHoverRadius: 6
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    responsive: true,
-                    animation: {
-                        duration: 1000 // Less demanding animation
-                    },
-                    scales: {
-                        y: {
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.1)'
-                            },
-                            beginAtZero: false,
-                            min: -400000, // Set reasonable bounds
-                            max: 850000,
-                            ticks: {
-                                color: 'rgba(255, 255, 255, 0.7)',
-                                maxTicksLimit: 8, // Limit number of ticks for performance
-                                callback: function(value) {
-                                    if (value >= 1000000) return '
-                        x: {
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.1)'
-                            },
-                            ticks: {
-                                color: 'rgba(255, 255, 255, 0.7)',
-                                maxRotation: 45,
-                                minRotation: 45,
-                                maxTicksLimit: 12, // Limit number of ticks for better performance
-                                autoSkip: true
-                            },
-                            title: {
-                                display: true,
-                                text: 'Fiscal Year',
-                                color: 'rgba(255, 255, 255, 0.9)',
-                                font: {
-                                    size: 14,
-                                    weight: 'bold'
-                                }
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: true,
-                            position: 'top',
-                            labels: {
-                                color: 'rgba(255, 255, 255, 0.9)',
-                                font: {
-                                    size: 13
-                                },
-                                boxWidth: 12
-                            }
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    let label = context.dataset.label || '';
-                                    if (label) {
-                                        label += ': ';
-                                    }
-                                    if (context.parsed.y !== null) {
-                                        label += new Intl.NumberFormat('en-US', { 
-                                            style: 'currency', 
-                                            currency: 'USD',
-                                            maximumFractionDigits: 0
-                                        }).format(context.parsed.y);
-                                    }
-                                    return label;
-                                },
-                                title: function(context) {
-                                    return 'FY' + context[0].label;
-                                },
-                                afterLabel: function(context) {
-                                    const year = parseInt(context.label);
-                                    if (year >= 2026) {
-                                        return '(Projected)';
-                                    }
-                                    return '';
-                                }
-                            }
-                        },
-                        // Remove annotation plugin as it may not be loaded and could cause errors
-                    }
-                }
-            });
-            } else {
-                console.error("Chart.js not loaded correctly. Please refresh the page.");
-                document.getElementById('freeCashChart').insertAdjacentHTML('afterend', 
-                    '<div style="color: #ff6b6b; text-align: center; padding: 20px;">' +
-                    'Chart visualization could not be loaded. Please refresh the page.' +
-                    '</div>');
-            }
-        });
-    </script>
-</body>
-</html>
- + (value / 1000000).toFixed(1) + 'M';
-                                    if (value >= 1000) return '
-                        x: {
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.1)'
-                            },
-                            ticks: {
-                                color: 'rgba(255, 255, 255, 0.7)',
-                                maxRotation: 45,
-                                minRotation: 45
-                            },
-                            title: {
-                                display: true,
-                                text: 'Fiscal Year',
-                                color: 'rgba(255, 255, 255, 0.9)',
-                                font: {
-                                    size: 14,
-                                    weight: 'bold'
-                                }
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            labels: {
-                                color: 'rgba(255, 255, 255, 0.9)',
-                                font: {
-                                    size: 14
-                                }
-                            }
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    let label = context.dataset.label || '';
-                                    if (label) {
-                                        label += ': ';
-                                    }
-                                    if (context.parsed.y !== null) {
-                                        label += new Intl.NumberFormat('en-US', { 
-                                            style: 'currency', 
-                                            currency: 'USD',
-                                            maximumFractionDigits: 0
-                                        }).format(context.parsed.y);
-                                    }
-                                    return label;
-                                },
-                                title: function(context) {
-                                    return 'FY' + context[0].label;
-                                },
-                                afterLabel: function(context) {
-                                    const year = parseInt(context.label);
-                                    if (year >= 2026) {
-                                        return '(Projected)';
-                                    }
-                                    return '';
-                                }
-                            }
-                        },
-                        annotation: {
-                            annotations: {
-                                line1: {
-                                    type: 'line',
-                                    yMin: 0,
-                                    yMax: 0,
-                                    borderColor: 'rgba(255, 255, 255, 0.5)',
-                                    borderWidth: 1,
-                                    borderDash: [5, 5],
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-            } else {
-                console.error("Chart.js not loaded correctly. Please refresh the page.");
-                document.getElementById('freeCashChart').insertAdjacentHTML('afterend', 
-                    '<div style="color: #ff6b6b; text-align: center; padding: 20px;">' +
-                    'Chart visualization could not be loaded. Please refresh the page.' +
-                    '</div>');
-            }
-        });
-    </script>
-</body>
-</html>
- + (value / 1000).toFixed(0) + 'K';
-                                    if (value <= -1000) return '-
-                        x: {
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.1)'
-                            },
-                            ticks: {
-                                color: 'rgba(255, 255, 255, 0.7)',
-                                maxRotation: 45,
-                                minRotation: 45
-                            },
-                            title: {
-                                display: true,
-                                text: 'Fiscal Year',
-                                color: 'rgba(255, 255, 255, 0.9)',
-                                font: {
-                                    size: 14,
-                                    weight: 'bold'
-                                }
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            labels: {
-                                color: 'rgba(255, 255, 255, 0.9)',
-                                font: {
-                                    size: 14
-                                }
-                            }
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    let label = context.dataset.label || '';
-                                    if (label) {
-                                        label += ': ';
-                                    }
-                                    if (context.parsed.y !== null) {
-                                        label += new Intl.NumberFormat('en-US', { 
-                                            style: 'currency', 
-                                            currency: 'USD',
-                                            maximumFractionDigits: 0
-                                        }).format(context.parsed.y);
-                                    }
-                                    return label;
-                                },
-                                title: function(context) {
-                                    return 'FY' + context[0].label;
-                                },
-                                afterLabel: function(context) {
-                                    const year = parseInt(context.label);
-                                    if (year >= 2026) {
-                                        return '(Projected)';
-                                    }
-                                    return '';
-                                }
-                            }
-                        },
-                        annotation: {
-                            annotations: {
-                                line1: {
-                                    type: 'line',
-                                    yMin: 0,
-                                    yMax: 0,
-                                    borderColor: 'rgba(255, 255, 255, 0.5)',
-                                    borderWidth: 1,
-                                    borderDash: [5, 5],
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-            } else {
-                console.error("Chart.js not loaded correctly. Please refresh the page.");
-                document.getElementById('freeCashChart').insertAdjacentHTML('afterend', 
-                    '<div style="color: #ff6b6b; text-align: center; padding: 20px;">' +
-                    'Chart visualization could not be loaded. Please refresh the page.' +
-                    '</div>');
-            }
-        });
-    </script>
-</body>
-</html>
- + Math.abs(value / 1000).toFixed(0) + 'K';
-                                    return '
-                        x: {
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.1)'
-                            },
-                            ticks: {
-                                color: 'rgba(255, 255, 255, 0.7)',
-                                maxRotation: 45,
-                                minRotation: 45
-                            },
-                            title: {
-                                display: true,
-                                text: 'Fiscal Year',
-                                color: 'rgba(255, 255, 255, 0.9)',
-                                font: {
-                                    size: 14,
-                                    weight: 'bold'
-                                }
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            labels: {
-                                color: 'rgba(255, 255, 255, 0.9)',
-                                font: {
-                                    size: 14
-                                }
-                            }
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    let label = context.dataset.label || '';
-                                    if (label) {
-                                        label += ': ';
-                                    }
-                                    if (context.parsed.y !== null) {
-                                        label += new Intl.NumberFormat('en-US', { 
-                                            style: 'currency', 
-                                            currency: 'USD',
-                                            maximumFractionDigits: 0
-                                        }).format(context.parsed.y);
-                                    }
-                                    return label;
-                                },
-                                title: function(context) {
-                                    return 'FY' + context[0].label;
-                                },
-                                afterLabel: function(context) {
-                                    const year = parseInt(context.label);
-                                    if (year >= 2026) {
-                                        return '(Projected)';
-                                    }
-                                    return '';
-                                }
-                            }
-                        },
-                        annotation: {
-                            annotations: {
-                                line1: {
-                                    type: 'line',
-                                    yMin: 0,
-                                    yMax: 0,
-                                    borderColor: 'rgba(255, 255, 255, 0.5)',
-                                    borderWidth: 1,
-                                    borderDash: [5, 5],
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-            } else {
-                console.error("Chart.js not loaded correctly. Please refresh the page.");
-                document.getElementById('freeCashChart').insertAdjacentHTML('afterend', 
-                    '<div style="color: #ff6b6b; text-align: center; padding: 20px;">' +
-                    'Chart visualization could not be loaded. Please refresh the page.' +
-                    '</div>');
-            }
-        });
-    </script>
-</body>
-</html>
- + value;
-                                }
-                            },
-                            title: {
-                                display: true,
-                                text: 'Free Cash Amount',
-                                color: 'rgba(255, 255, 255, 0.9)',
-                                font: {
-                                    size: 14,
-                                    weight: 'bold'
-                                }
-                            }
-                        },
-                        x: {
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.1)'
-                            },
-                            ticks: {
-                                color: 'rgba(255, 255, 255, 0.7)',
-                                maxRotation: 45,
-                                minRotation: 45
-                            },
-                            title: {
-                                display: true,
-                                text: 'Fiscal Year',
-                                color: 'rgba(255, 255, 255, 0.9)',
-                                font: {
-                                    size: 14,
-                                    weight: 'bold'
-                                }
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            labels: {
-                                color: 'rgba(255, 255, 255, 0.9)',
-                                font: {
-                                    size: 14
-                                }
-                            }
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    let label = context.dataset.label || '';
-                                    if (label) {
-                                        label += ': ';
-                                    }
-                                    if (context.parsed.y !== null) {
-                                        label += new Intl.NumberFormat('en-US', { 
-                                            style: 'currency', 
-                                            currency: 'USD',
-                                            maximumFractionDigits: 0
-                                        }).format(context.parsed.y);
-                                    }
-                                    return label;
-                                },
-                                title: function(context) {
-                                    return 'FY' + context[0].label;
-                                },
-                                afterLabel: function(context) {
-                                    const year = parseInt(context.label);
-                                    if (year >= 2026) {
-                                        return '(Projected)';
-                                    }
-                                    return '';
-                                }
-                            }
-                        },
-                        annotation: {
-                            annotations: {
-                                line1: {
-                                    type: 'line',
-                                    yMin: 0,
-                                    yMax: 0,
-                                    borderColor: 'rgba(255, 255, 255, 0.5)',
-                                    borderWidth: 1,
-                                    borderDash: [5, 5],
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-            } else {
-                console.error("Chart.js not loaded correctly. Please refresh the page.");
-                document.getElementById('freeCashChart').insertAdjacentHTML('afterend', 
-                    '<div style="color: #ff6b6b; text-align: center; padding: 20px;">' +
-                    'Chart visualization could not be loaded. Please refresh the page.' +
-                    '</div>');
-            }
-        });
-    </script>
 </body>
 </html>
