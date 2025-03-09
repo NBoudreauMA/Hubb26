@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hubbardston Budget Portal - Benchmarks</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('hubbardston_bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+        }
+        
+        nav {
+            background: linear-gradient(90deg, rgba(34, 139, 34, 0.9), rgba(0, 100, 0, 0.9));
+            padding: 15px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 20px;
+            text-decoration: none;
+            font-size: 22px;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: 0.3s ease-in-out;
+            padding: 8px 15px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+            transform: scale(1.05);
+            color: white;
+            background-color: rgba(0, 100, 0, 0.7);
+            border-radius: 5px;
+        }
+        
+        nav a.active {
+            color: white;
+            text-decoration: underline;
+            background-color: rgba(0, 100, 0, 0.7);
+            padding: 8px 15px;
+            border-radius: 5px;
+        }
+        
+        /* Dropdown styles */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropbtn {
+            background: transparent;
+            color: white;
+            margin: 0 20px;
+            text-decoration: none;
+            font-size: 22px;
+            font-weight: bold;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            padding: 8px 15px;
+            font-family: 'Poppins', sans-serif;
+            transition: 0.3s ease-in-out;
+        }
+        
+        .dropbtn:hover {
+            text-decoration: underline;
+            transform: scale(1.05);
+            background-color: rgba(0, 100, 0, 0.7);
+            border-radius: 5px;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: rgba(0, 60, 30, 0.95);
+            min-width: 240px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            z-index: 1;
+            border-radius: 0 0 8px 8px;
+            backdrop-filter: blur(5px);
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .dropdown-content a {
+            color: white;
+            padding: 14px 20px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+            font-size: 18px;
+            transition: 0.2s ease-in-out;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .dropdown-content a:last-child {
+            border-bottom: none;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: rgba(75, 192, 192, 0.3);
+            transform: translateX(5px);
+        }
+        
+        .dropdown-content a.active {
+            background-color: rgba(75, 192, 192, 0.5);
+            color: white;
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 120px auto 40px;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.75);
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+        }
+        
+        .content-section {
+            margin-bottom: 40px;
+            transition: 0.4s ease-in-out;
+            padding: 20px;
+            border-radius: 10px;
+            background: rgba(20, 20, 20, 0.5);
+        }
+        
+        .content-section:hover {
+            transform: scale(1.01);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+        }
+        
+        h2 {
+            color: #4bc0c0;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 32px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        /* Section Header */
+        .benchmark-header {
+            background: linear-gradient(135deg, rgba(0, 60, 30, 0.85), rgba(0, 90, 70, 0.75));
+            border-radius: 12px;
+            padding: 35px 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border-left: 4px solid #4bc0c0;
+            margin: 35px 0;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+        }
+        
+        .benchmark-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top right, rgba(75, 192, 192, 0.1), transparent 60%);
+            z-index: 0;
+        }
+        
+        .benchmark-title {
+            color: #4bc0c0;
+            text-align: center;
+            font-size: 34px;
+            margin-bottom: 28px;
+            font-weight: 600;
+            text-transform: none;
+            letter-spacing: 0;
+            position: relative;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .benchmark-content {
+            color: white;
+            font-size: 17px;
+            line-height: 1.8;
+            position: relative;
+        }
+        
+        .benchmark-content p {
+            margin-bottom: 22px;
+            opacity: 0.95;
+        }
+
+        .highlight-text {
+            color: #4bc0c0;
+            font-weight: 600;
+            position: relative;
+            padding: 0 2px;
+        }
+        
+        .highlight-text::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background-color: rgba(75, 192, 192, 0.4);
+        }
+        
+        /* Dashboard Elements */
+        .dashboard-controls {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .control-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .control-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #4bc0c0;
+        }
+        
+        .control-select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(75, 192, 192, 0.5);
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .control-select:focus {
+            outline: none;
+            border-color: #4bc0c0;
+            box-shadow: 0 0 0 2px rgba(75, 192, 192, 0.3);
+        }
+        
+        .control-select option {
+            background-color: #1a1a1a;
+        }
+        
+        .chart-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .chart-card {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            border-left: 3px solid #4bc0c0;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .chart-title {
+            color: #4bc0c0;
+            text-align: center;
+            font-size: 22px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .chart-canvas-container {
+            flex: 1;
+            position: relative;
+            min-height: 300px;
+        }
+        
+        canvas {
+            max-width: 100%;
+        }
+        
+        .data-table-container {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 30px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+        
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            color: white;
+            margin-top: 20px;
+        }
+        
+        .data-table th,
+        .data-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .data-table th {
+            background-color: rgba(34, 139, 34, 0.3);
+            font-weight: 600;
+            color: #4bc0c0;
+            position: sticky;
+            top: 0;
+        }
+        
+        .data-table tbody tr:hover {
+            background-color: rgba(75, 192, 192, 0.1);
+        }
+        
+        .comparison-highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+        
+        .highlight-card {
+            background: linear-gradient(135deg, rgba(0, 60, 30, 0.85), rgba(0, 90, 70, 0.75));
+            border-radius: 12px;
+            padding: 25px;
+            border-left: 4px solid #4bc0c0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+        
+        .highlight-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top right, rgba(75, 192, 192, 0.1), transparent 70%);
+            z-index: 0;
+        }
+        
+        .highlight-icon {
+            font-size: 32px;
+            color: #4bc0c0;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .highlight-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .highlight-label {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.8);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .interpretation-section {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 40px;
+            border-left: 4px solid #4bc0c0;
+        }
+        
+        .interpretation-title {
+            color: #4bc0c0;
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .interpretation-content {
+            font-size: 16px;
+            line-height: 1.7;
+        }
+        
+        .interpretation-content p {
+            margin-bottom: 15px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .chart-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .chart-card {
+                height: 350px;
+            }
+            
+            .comparison-highlights {
+                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard-controls {
+                flex-direction: column;
+            }
+            
+            .control-group {
+                width: 100%;
+            }
+            
+            nav a {
+                font-size: 16px;
+                margin: 0 10px;
+            }
+            
+            .benchmark-header {
+                padding: 25px 20px;
+            }
+            
+            .benchmark-title {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html">HOME</a>
+        <div class="dropdown">
+            <button class="dropbtn">BUDGET & FINANCE <i class="fas fa-caret-down"></i></button>
+            <div class="dropdown-content">
+                <a href="revenue.html">REVENUE</a>
+                <a href="expenditures.html">EXPENDITURES</a>
+                <a href="capital_plan.html">CAPITAL PLAN</a>
+                <a href="benchmarks.html" class="active">BENCHMARKS</a>
+                <a href="citizens_guide.html">CITIZEN'S GUIDE</a>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="content-section">
+            <h2>Community Benchmarks & Comparisons</h2>
+            
+            <div class="benchmark-header">
+                <h3 class="benchmark-title">Regional Comparison & Benchmarking</h3>
+                
+                <div class="benchmark-content">
+                    <p>Understanding how Hubbardston's finances compare to similar communities provides valuable context for our fiscal decisions. This dashboard allows you to explore how our town measures against neighboring municipalities across key financial metrics.</p>
+                    
+                    <p>We've selected comparable communities based on population size, geographic proximity, and similar socioeconomic characteristics. These benchmarks help identify areas where Hubbardston is performing well and opportunities for improvement in our financial management.</p>
+                    
+                    <p>Use the controls below to customize the comparison view and explore different fiscal years and metrics. This transparency tool empowers residents to better understand Hubbardston's position within our region.</p>
+                </div>
+            </div>
+            
+            <!-- Dashboard Controls -->
+            <div class="dashboard-controls">
+                <div class="control-group">
+                    <label class="control-label" for="yearSelect">Fiscal Year</label>
+                    <select class="control-select" id="yearSelect">
+                        <option value="2025">FY 2025</option>
+                        <option value="2024" selected>FY 2024</option>
+                        <option value="2023">FY 2023</option>
+                        <option value="2022">FY 2022</option>
+                    </select>
+                </div>
+                
+                <div class="control-group">
+                    <label class="control-label" for="metricSelect">Primary Metric</label>
+                    <select class="control-select" id="metricSelect">
+                        <option value="taxBill" selected>Average Single Family Tax Bill</option>
+                        <option value="value">Average Single Family Home Value</option>
+                        <option value="rate">Property Tax Rate</option>
+                        <option value="income">Income Per Capita</option>
+                    </select>
+                </div>
+                
+                <div class="control-group">
+                    <label class="control-label" for="communitySelect">Communities to Compare</label>
+                    <select class="control-select" id="communitySelect" multiple>
+                        <option value="all" selected>All Similar Communities</option>
+                        <option value="neighbors">Direct Neighbors Only</option>
+                        <option value="custom">Custom Selection</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Hubbardston Position Highlights -->
+            <div class="comparison-highlights">
+                <div class="highlight-card">
+                    <div class="highlight-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <div class="highlight-value">$375,236</div>
+                    <div class="highlight-label">Average Single Family Home Value</div>
+                </div>
+                
+                <div class="highlight-card">
+                    <div class="highlight-icon">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                    </div>
+                    <div class="highlight-value">$5,862</div>
+                    <div class="highlight-label">Average Single Family Tax Bill</div>
+                </div>
+                
+                <div class="highlight-card">
+                    <div class="highlight-icon">
+                        <i class="fas fa-percentage"></i>
+                    </div>
+                    <div class="highlight-value">$16.75</div>
+                    <div class="highlight-label">Residential Tax Rate per $1,000</div>
+                </div>
+                
+                <div class="highlight-card">
+                    <div class="highlight-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="highlight-value">138 of 351</div>
+                    <div class="highlight-label">Community Rank in Massachusetts</div>
+                </div>
+            </div>
+            
+            <!-- Chart Grid -->
+            <div class="chart-grid">
+                <div class="chart-card">
+                    <h4 class="chart-title">Average Single Family Tax Bill</h4>
+                    <div class="chart-canvas-container">
+                        <canvas id="taxBillChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="chart-card">
+                    <h4 class="chart-title">Average Single Family Home Value</h4>
+                    <div class="chart-canvas-container">
+                        <canvas id="homeValueChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="chart-card">
+                    <h4 class="chart-title">Income Per Capita</h4>
+                    <div class="chart-canvas-container">
+                        <canvas id="incomeChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="chart-card">
+                    <h4 class="chart-title">Tax Rate Comparison</h4>
+                    <div class="chart-canvas-container">
+                        <canvas id="taxRateChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Data Table -->
+            <div class="data-table-container">
+                <h4 class="chart-title">Detailed Comparison Data (FY2024)</h4>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Municipality</th>
+                            <th>Single Family Value</th>
+                            <th>Tax Rate</th>
+                            <th>Average Tax Bill</th>
+                            <th>Income Per Capita</th>
+                            <th>State Rank</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Hubbardston</td>
+                            <td>$375,236</td>
+                            <td>$16.75</td>
+                            <td>$5,862</td>
+                            <td>$45,725</td>
+                            <td>138</td>
+                        </tr>
+                        <tr>
+                            <td>Princeton</td>
+                            <td>$432,562</td>
+                            <td>$17.25</td>
+                            <td>$7,462</td>
+                            <td>$58,453</td>
+                            <td>72</td>
+                        </tr>
+                        <tr>
+                            <td>Barre</td>
+                            <td>$317,218</td>
+                            <td>$18.12</td>
+                            <td>$5,748</td>
+                            <td>$39,875</td>
+                            <td>192</td>
+                        </tr>
+                        <tr>
+                            <td>Rutland</td>
+                            <td>$365,487</td>
+                            <td>$17.45</td>
+                            <td>$6,378</td>
+                            <td>$43,256</td>
+                            <td>151</td>
+                        </tr>
+                        <tr>
+                            <td>Westminster</td>
+                            <td>$345,268</td>
+                            <td>$18.92</td>
+                            <td>$6,532</td>
+                            <td>$44,128</td>
+                            <td>148</td>
+                        </tr>
+                        <tr>
+                            <td>Templeton</td>
+                            <td>$308,453</td>
+                            <td>$15.65</td>
+                            <td>$4,827</td>
+                            <td>$38,256</td>
+                            <td>217</td>
+                        </tr>
+                        <tr>
+                            <td>Gardner</td>
+                            <td>$287,543</td>
+                            <td>$19.75</td>
+                            <td>$5,679</td>
+                            <td>$32,658</td>
+                            <td>243</td>
+                        </tr>
+                        <tr>
+                            <td>Regional Average</td>
+                            <td>$347,395</td>
+                            <td>$17.70</td>
+                            <td>$6,070</td>
+                            <td>$43,193</td>
+                            <td>166</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Interpretation Section -->
+            <div class="interpretation-section">
+                <h4 class="interpretation-title">Key Insights & Context</h4>
+                
+                <div class="interpretation-content">
+                    <p><strong>Tax Bill Context:</strong> Hubbardston's average single-family tax bill of $5,862 falls slightly below the regional average of $6,070. This positions Hubbardston as providing relatively good value for municipal services while maintaining a competitive tax burden compared to surrounding communities.</p>
+                    
+                    <p><strong>Property Values:</strong> With an average single-family home value of $375,236, Hubbardston sits approximately 8% above the regional average. This reflects our community's desirability while still remaining more affordable than some neighboring towns like Princeton.</p>
+                    
+                    <p><strong>Regional Position:</strong> Hubbardston's rank of 138 out of 351 Massachusetts municipalities places us in the middle tier of communities statewide. This balanced position suggests a community that maintains fiscal responsibility while providing quality services.</p>
+                    
+                    <p><strong>Future Considerations:</strong> As we plan for FY26 and beyond, maintaining this balanced position will be a priority. The proposed 6.32% budget increase for FY26 aims to enhance services while ensuring our tax burden remains regionally competitive. Our goal is to continue providing excellent value for taxpayer dollars with strategic investments in infrastructure, planning, and modernization.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Sample data for charts
+            const municipalities = ['Hubbardston', 'Princeton', 'Barre', 'Rutland', 'Westminster', 'Templeton', 'Gardner', 'Regional Avg'];
+            
+            // Tax Bill Chart
+            const taxBillCtx = document.getElementById('taxBillChart').getContext('2d');
+            const taxBillChart = new Chart(taxBillCtx, {
+                type: 'bar',
+                data: {
+                    labels: municipalities,
+                    datasets: [{
+                        label: 'Average Single Family Tax Bill',
+                        data: [5862, 7462, 5748, 6378, 6532, 4827, 5679, 6070],
+                        backgroundColor: [
+                            'rgba(75, 192, 192, 0.8)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(255, 99, 132, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 99, 132, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)',
+                                callback: function(value) {
+                                    return '
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)',
+                                callback: function(value) {
+                                    return '
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Home Value Chart
+            const homeValueCtx = document.getElementById('homeValueChart').getContext('2d');
+            const homeValueChart = new Chart(homeValueCtx, {
+                type: 'bar',
+                data: {
+                    labels: municipalities,
+                    datasets: [{
+                        label: 'Average Single Family Home Value',
+                        data: [375236, 432562, 317218, 365487, 345268, 308453, 287543, 347395],
+                        backgroundColor: [
+                            'rgba(75, 192, 192, 0.8)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(255, 99, 132, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 99, 132, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)',
+                                callback: function(value) {
+                                    return '$' + value.toLocaleString();
+                                }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Income Chart
+            const incomeCtx = document.getElementById('incomeChart').getContext('2d');
+            const incomeChart = new Chart(incomeCtx, {
+                type: 'bar',
+                data: {
+                    labels: municipalities,
+                    datasets: [{
+                        label: 'Income Per Capita',
+                        data: [45725, 58453, 39875, 43256, 44128, 38256, 32658, 43193],
+                        backgroundColor: [
+                            'rgba(75, 192, 192, 0.8)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(255, 99, 132, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 99, 132, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { + value.toLocaleString();
+                                }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Tax Rate Chart
+            const taxRateCtx = document.getElementById('taxRateChart').getContext('2d');
+            const taxRateChart = new Chart(taxRateCtx, {
+                type: 'bar',
+                data: {
+                    labels: municipalities,
+                    datasets: [{
+                        label: 'Residential Tax Rate per $1,000',
+                        data: [16.75, 17.25, 18.12, 17.45, 18.92, 15.65, 19.75, 17.70],
+                        backgroundColor: [
+                            'rgba(75, 192, 192, 0.8)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(255, 99, 132, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 99, 132, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Home Value Chart
+            const homeValueCtx = document.getElementById('homeValueChart').getContext('2d');
+            const homeValueChart = new Chart(homeValueCtx, {
+                type: 'bar',
+                data: {
+                    labels: municipalities,
+                    datasets: [{
+                        label: 'Average Single Family Home Value',
+                        data: [375236, 432562, 317218, 365487, 345268, 308453, 287543, 347395],
+                        backgroundColor: [
+                            'rgba(75, 192, 192, 0.8)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(255, 99, 132, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 99, 132, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)',
+                                callback: function(value) {
+                                    return '$' + value.toLocaleString();
+                                }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Income Chart
+            const incomeCtx = document.getElementById('incomeChart').getContext('2d');
+            const incomeChart = new Chart(incomeCtx, {
+                type: 'bar',
+                data: {
+                    labels: municipalities,
+                    datasets: [{
+                        label: 'Income Per Capita',
+                        data: [45725, 58453, 39875, 43256, 44128, 38256, 32658, 43193],
+                        backgroundColor: [
+                            'rgba(75, 192, 192, 0.8)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(255, 99, 132, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 99, 132, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { + value.toFixed(2);
+                                }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Add interactivity to controls
+            const yearSelect = document.getElementById('yearSelect');
+            const metricSelect = document.getElementById('metricSelect');
+            const communitySelect = document.getElementById('communitySelect');
+            
+            // Fiscal year change handler
+            yearSelect.addEventListener('change', function() {
+                updateChartsByYear(this.value);
+            });
+            
+            // Metric selection handler
+            metricSelect.addEventListener('change', function() {
+                highlightSelectedMetric(this.value);
+            });
+            
+            // Update charts based on selected year
+            function updateChartsByYear(year) {
+                // This would normally fetch data for the selected year
+                // For demo purposes, we're just showing a visualization change
+                
+                // Create a visual indication that data has changed
+                const chartContainers = document.querySelectorAll('.chart-card');
+                chartContainers.forEach(container => {
+                    container.style.opacity = '0.5';
+                    setTimeout(() => {
+                        container.style.opacity = '1';
+                    }, 500);
+                });
+                
+                // Update the table header to reflect the selected year
+                const tableTitle = document.querySelector('.data-table-container .chart-title');
+                tableTitle.textContent = `Detailed Comparison Data (FY${year})`;
+                
+                // Update the highlight cards to indicate data year change
+                const highlightValues = document.querySelectorAll('.highlight-value');
+                
+                // In a real implementation, these would be updated with actual data
+                // This is just for demonstration of the interaction
+                if (year === '2023') {
+                    highlightValues[0].textContent = '$352,128';
+                    highlightValues[1].textContent = '$5,524';
+                    highlightValues[2].textContent = '$15.95';
+                    highlightValues[3].textContent = '142 of 351';
+                } else if (year === '2022') {
+                    highlightValues[0].textContent = '$321,675';
+                    highlightValues[1].textContent = '$5,128';
+                    highlightValues[2].textContent = '$15.82';
+                    highlightValues[3].textContent = '146 of 351';
+                } else if (year === '2025') {
+                    highlightValues[0].textContent = '$394,750';
+                    highlightValues[1].textContent = '$6,212';
+                    highlightValues[2].textContent = '$16.85';
+                    highlightValues[3].textContent = '135 of 351';
+                } else {
+                    // Default to 2024
+                    highlightValues[0].textContent = '$375,236';
+                    highlightValues[1].textContent = '$5,862';
+                    highlightValues[2].textContent = '$16.75';
+                    highlightValues[3].textContent = '138 of 351';
+                }
+            }
+            
+            // Highlight charts based on selected metric
+            function highlightSelectedMetric(metric) {
+                // Reset all chart borders
+                document.querySelectorAll('.chart-card').forEach(card => {
+                    card.style.borderLeft = '3px solid #4bc0c0';
+                    card.style.transform = 'scale(1)';
+                    card.style.boxShadow = '0 8px 16px rgba(0, 0, 0, 0.3)';
+                });
+                
+                // Highlight the selected chart
+                let targetChart;
+                switch(metric) {
+                    case 'taxBill':
+                        targetChart = document.getElementById('taxBillChart').closest('.chart-card');
+                        break;
+                    case 'value':
+                        targetChart = document.getElementById('homeValueChart').closest('.chart-card');
+                        break;
+                    case 'rate':
+                        targetChart = document.getElementById('taxRateChart').closest('.chart-card');
+                        break;
+                    case 'income':
+                        targetChart = document.getElementById('incomeChart').closest('.chart-card');
+                        break;
+                }
+                
+                if (targetChart) {
+                    targetChart.style.borderLeft = '5px solid #4bc0c0';
+                    targetChart.style.transform = 'scale(1.02)';
+                    targetChart.style.boxShadow = '0 12px 24px rgba(0, 0, 0, 0.4)';
+                    
+                    // Scroll to the highlighted chart
+                    targetChart.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
+            
+            // Add tooltip functionality for a better user experience
+            const tooltipElements = document.querySelectorAll('[data-tooltip]');
+            tooltipElements.forEach(element => {
+                element.addEventListener('mouseover', function() {
+                    const tooltip = document.createElement('div');
+                    tooltip.className = 'tooltip';
+                    tooltip.textContent = this.getAttribute('data-tooltip');
+                    tooltip.style.position = 'absolute';
+                    tooltip.style.background = 'rgba(0, 0, 0, 0.8)';
+                    tooltip.style.color = 'white';
+                    tooltip.style.padding = '5px 10px';
+                    tooltip.style.borderRadius = '4px';
+                    tooltip.style.zIndex = '1000';
+                    tooltip.style.fontSize = '14px';
+                    
+                    document.body.appendChild(tooltip);
+                    
+                    const rect = this.getBoundingClientRect();
+                    tooltip.style.top = (rect.bottom + 10) + 'px';
+                    tooltip.style.left = (rect.left + rect.width/2 - tooltip.offsetWidth/2) + 'px';
+                    
+                    this.addEventListener('mouseout', function() {
+                        document.body.removeChild(tooltip);
+                    }, { once: true });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)',
+                                callback: function(value) {
+                                    return '
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Home Value Chart
+            const homeValueCtx = document.getElementById('homeValueChart').getContext('2d');
+            const homeValueChart = new Chart(homeValueCtx, {
+                type: 'bar',
+                data: {
+                    labels: municipalities,
+                    datasets: [{
+                        label: 'Average Single Family Home Value',
+                        data: [375236, 432562, 317218, 365487, 345268, 308453, 287543, 347395],
+                        backgroundColor: [
+                            'rgba(75, 192, 192, 0.8)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(255, 99, 132, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 99, 132, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)',
+                                callback: function(value) {
+                                    return '$' + value.toLocaleString();
+                                }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Income Chart
+            const incomeCtx = document.getElementById('incomeChart').getContext('2d');
+            const incomeChart = new Chart(incomeCtx, {
+                type: 'bar',
+                data: {
+                    labels: municipalities,
+                    datasets: [{
+                        label: 'Income Per Capita',
+                        data: [45725, 58453, 39875, 43256, 44128, 38256, 32658, 43193],
+                        backgroundColor: [
+                            'rgba(75, 192, 192, 0.8)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(255, 99, 132, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 99, 132, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { + value.toLocaleString();
+                                }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Tax Rate Chart
+            const taxRateCtx = document.getElementById('taxRateChart').getContext('2d');
+            const taxRateChart = new Chart(taxRateCtx, {
+                type: 'bar',
+                data: {
+                    labels: municipalities,
+                    datasets: [{
+                        label: 'Residential Tax Rate per $1,000',
+                        data: [16.75, 17.25, 18.12, 17.45, 18.92, 15.65, 19.75, 17.70],
+                        backgroundColor: [
+                            'rgba(75, 192, 192, 0.8)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(255, 99, 132, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 99, 132, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Home Value Chart
+            const homeValueCtx = document.getElementById('homeValueChart').getContext('2d');
+            const homeValueChart = new Chart(homeValueCtx, {
+                type: 'bar',
+                data: {
+                    labels: municipalities,
+                    datasets: [{
+                        label: 'Average Single Family Home Value',
+                        data: [375236, 432562, 317218, 365487, 345268, 308453, 287543, 347395],
+                        backgroundColor: [
+                            'rgba(75, 192, 192, 0.8)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(255, 99, 132, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 99, 132, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)',
+                                callback: function(value) {
+                                    return '$' + value.toLocaleString();
+                                }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Income Chart
+            const incomeCtx = document.getElementById('incomeChart').getContext('2d');
+            const incomeChart = new Chart(incomeCtx, {
+                type: 'bar',
+                data: {
+                    labels: municipalities,
+                    datasets: [{
+                        label: 'Income Per Capita',
+                        data: [45725, 58453, 39875, 43256, 44128, 38256, 32658, 43193],
+                        backgroundColor: [
+                            'rgba(75, 192, 192, 0.8)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(255, 99, 132, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 99, 132, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
