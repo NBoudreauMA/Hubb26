@@ -6,7 +6,7 @@
     <title>Hubbardston Benchmarks</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Core styles from your existing CSS */
+        /* Core styles */
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
@@ -47,7 +47,6 @@
 
         nav a:hover {
             text-decoration: underline;
-            transform: scale(1.2);
             color: white;
             background-color: rgba(0, 100, 0, 0.7);
             border-radius: 5px;
@@ -72,38 +71,6 @@
             flex: 1;
         }
 
-        .container:hover {
-            transform: scale(1.01);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.8);
-            transition: 0.4s ease-in-out;
-        }
-
-        /* Footer Styles */
-        .footer {
-            background: linear-gradient(90deg, rgba(34, 139, 34, 0.9), rgba(0, 100, 0, 0.9));
-            text-align: center;
-            padding: 20px;
-            width: 100%;
-            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        .footer p {
-            margin: 10px 0;
-            font-size: 16px;
-        }
-
-        .footer a {
-            color: #4bc0c0;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .footer a:hover {
-            color: white;
-            text-decoration: underline;
-        }
-
-        /* Benchmarks specific styles */
         h2 {
             color: #4bc0c0;
             text-align: center;
@@ -119,8 +86,31 @@
             margin-top: 20px;
             font-weight: 600;
             font-size: 24px;
+            text-align: center;
         }
 
+        /* Insights box */
+        .insights-box {
+            background: linear-gradient(135deg, rgba(0, 60, 30, 0.85), rgba(0, 90, 70, 0.75));
+            border-radius: 12px;
+            padding: 25px;
+            margin: 30px 0;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            border-left: 4px solid #4bc0c0;
+        }
+
+        .insights-box h3 {
+            color: #4bc0c0;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .insights-box p {
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+
+        /* Year Selector */
         .year-selector {
             margin: 20px 0;
             text-align: center;
@@ -136,14 +126,13 @@
             cursor: pointer;
             font-family: 'Poppins', sans-serif;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
         }
 
         .year-selector select:hover {
             background: rgba(34, 139, 34, 0.9);
-            transform: translateY(-2px);
         }
 
+        /* Stats Grid */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -157,13 +146,7 @@
             padding: 20px;
             text-align: center;
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease;
             border-left: 3px solid #4bc0c0;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
         }
 
         .stat-value {
@@ -179,6 +162,7 @@
             margin-top: 5px;
         }
 
+        /* Tabs */
         .tabs {
             display: flex;
             justify-content: center;
@@ -192,7 +176,6 @@
             font-weight: 600;
             color: white;
             text-align: center;
-            transition: all 0.3s ease;
             position: relative;
             margin: 0 10px;
         }
@@ -218,13 +201,10 @@
 
         .tab-content {
             display: none;
-            opacity: 0;
-            transition: opacity 0.3s ease;
         }
 
         .tab-content.active {
             display: block;
-            opacity: 1;
         }
 
         /* Table Styles */
@@ -267,47 +247,54 @@
             font-weight: 500;
         }
 
-        .insights-box {
-            background: linear-gradient(135deg, rgba(0, 60, 30, 0.85), rgba(0, 90, 70, 0.75));
-            border-radius: 12px;
-            padding: 25px;
-            margin: 30px 0;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-            border-left: 4px solid #4bc0c0;
-        }
-
-        .insights-box h3 {
-            color: #4bc0c0;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .insights-box p {
-            margin-bottom: 15px;
-            line-height: 1.7;
-        }
-
-        .float-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #4bc0c0;
+        /* Button Styles */
+        .action-button {
+            display: inline-block;
+            background: rgba(75, 192, 192, 0.7);
             color: white;
-            padding: 15px 20px;
+            padding: 10px 20px;
+            border-radius: 8px;
+            margin: 10px auto;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 600;
+            border: none;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .action-button:hover {
+            background: rgba(75, 192, 192, 0.9);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(90deg, rgba(34, 139, 34, 0.9), rgba(0, 100, 0, 0.9));
+            text-align: center;
+            padding: 20px;
+            width: 100%;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .footer p {
+            margin: 10px 0;
             font-size: 16px;
-            font-weight: bold;
+        }
+
+        .footer a {
+            color: #4bc0c0;
             text-decoration: none;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: 0.3s;
-            z-index: 100;
+            transition: all 0.3s ease;
         }
 
-        .float-btn:hover {
-            background-color: #36a2eb;
-            transform: scale(1.1);
+        .footer a:hover {
+            color: white;
+            text-decoration: underline;
         }
 
+        /* Responsive Styles */
         @media screen and (max-width: 768px) {
             nav {
                 flex-direction: column;
@@ -361,7 +348,7 @@
         
         <div class="year-selector">
             <label for="yearSelect">Select Fiscal Year: </label>
-            <select id="yearSelect" onchange="changeYear()">
+            <select id="yearSelect" onchange="updateYear()">
                 <option value="2025">FY 2025</option>
                 <option value="2024">FY 2024</option>
                 <option value="2023">FY 2023</option>
@@ -410,17 +397,17 @@
         </div>
         
         <div class="tabs">
-            <div class="tab active" onclick="switchTab('comparison', this)">Regional Comparison</div>
-            <div class="tab" onclick="switchTab('trends', this)">Historical Trends</div>
-            <div class="tab" onclick="switchTab('analysis', this)">Tax Analysis</div>
+            <div class="tab active" onclick="switchTab(0)">Regional Comparison</div>
+            <div class="tab" onclick="switchTab(1)">Historical Trends</div>
+            <div class="tab" onclick="switchTab(2)">Tax Analysis</div>
         </div>
         
-        <div id="comparison" class="tab-content active">
+        <div id="tab1" class="tab-content active">
             <div class="data-card">
                 <h3>Regional Comparison: <span id="comparisonYear">FY 2025</span></h3>
                 <p>This table shows how Hubbardston compares to neighboring communities in terms of home values, tax rates, and overall tax burden. Higher rank numbers indicate lower tax bills relative to other municipalities.</p>
                 
-                <table id="comparisonTable">
+                <table>
                     <thead>
                         <tr>
                             <th>Municipality</th>
@@ -492,12 +479,12 @@
             </div>
         </div>
         
-        <div id="trends" class="tab-content">
+        <div id="tab2" class="tab-content">
             <div class="data-card">
                 <h3>Historical Trends (2005-2025)</h3>
                 <p>This table shows how Hubbardston's key financial metrics have evolved over time. The data reveals trends in home values, tax rates, and overall tax burden.</p>
                 
-                <table id="trendsTable">
+                <table>
                     <thead>
                         <tr>
                             <th>Fiscal Year</th>
@@ -589,17 +576,17 @@
                 </table>
                 
                 <div style="text-align: center; margin-top: 20px;">
-                    <button class="float-btn" onclick="toggleFullHistory()">Show All Years</button>
+                    <button id="showMoreBtn" class="action-button" onclick="toggleHistory()">Show All Years</button>
                 </div>
             </div>
         </div>
         
-        <div id="analysis" class="tab-content">
+        <div id="tab3" class="tab-content">
             <div class="data-card">
                 <h3>Tax Rate vs. Home Value Analysis</h3>
                 <p>This analysis examines the relationship between home values and tax rates in our region. The data generally shows that communities with higher property values tend to have lower tax rates, while still collecting more per household due to the higher assessments.</p>
                 
-                <table id="analysisTable">
+                <table>
                     <thead>
                         <tr>
                             <th>Municipality</th>
@@ -701,35 +688,116 @@
     <div class="footer">
         <p>Data source: Massachusetts Department of Revenue | Hubbardston Budget Portal &copy; 2025</p>
         <p>
-            <a href="about.html">About</a> | 
-            <a href="contact.html">Contact</a> | 
-            <a href="privacy.html">Privacy Policy</a>
+            <a href="index.html">Home</a> | 
+            <a href="revenue.html">Revenue</a> | 
+            <a href="expenditures.html">Expenditures</a> | 
+            <a href="capital_plan.html">Capital Plan</a> | 
+            <a href="citizens_guide.html">Citizen's Guide</a>
         </p>
     </div>
-    
-    <a href="index.html" class="float-btn">Back to Home</a>
 
     <script>
-        // Data model
-        const data = {
-            // Hubbardston historical data (tax rates in $ per $1,000)
-            historicalData: {
-                2005: { homeValue: 236104, taxRate: 10.8, taxBill: 2540, rank: 249 },
-                2006: { homeValue: 247352, taxRate: 10.6, taxBill: 2624, rank: 249 },
-                2007: { homeValue: 279922, taxRate: 9.7, taxBill: 2712, rank: 253 },
-                2008: { homeValue: 287705, taxRate: 9.4, taxBill: 2713, rank: 260 },
-                2009: { homeValue: 287856, taxRate: 9.5, taxBill: 2738, rank: 271 },
-                2010: { homeValue: 261104, taxRate: 10.7, taxBill: 2791, rank: 276 },
-                2011: { homeValue: 244828, taxRate: 11.3, taxBill: 2774, rank: 293 },
-                2012: { homeValue: 236155, taxRate: 12.7, taxBill: 2999, rank: 272 },
-                2013: { homeValue: 229932, taxRate: 13.6, taxBill: 3136, rank: 262 },
-                2014: { homeValue: 226340, taxRate: 14.5, taxBill: 3286, rank: 258 },
-                2015: { homeValue: 226863, taxRate: 14.9, taxBill: 3385, rank: 260 },
-                2016: { homeValue: 214110, taxRate: 15.9, taxBill: 3404, rank: 271 },
-                2017: { homeValue: 246291, taxRate: 15.2, taxBill: 3751, rank: 245 },
-                2018: { homeValue: 246161, taxRate: 15.1, taxBill: 3724, rank: 262 },
-                2019: { homeValue: 257471, taxRate: 15.2, taxBill: 3919, rank: 254 },
-                2020: { homeValue: 278987, taxRate: 14.8, taxBill: 4135, rank: 248 },
-                2021: { homeValue: 286533, taxRate: 14.8, taxBill: 4244, rank: 246 },
-                2022: { homeValue: 315258, taxRate: 14.0, taxBill: 4414, rank: 266 },
-                2023: { homeValue: 354932, taxRate: 13.0, taxBill: 4625, rank
+        // Simple data
+        const yearData = {
+            2005: { homeValue: "$236,104", taxRate: "$10.80", taxBill: "$2,540", rank: "249" },
+            2006: { homeValue: "$247,352", taxRate: "$10.60", taxBill: "$2,624", rank: "249" },
+            2007: { homeValue: "$279,922", taxRate: "$9.70", taxBill: "$2,712", rank: "253" },
+            2008: { homeValue: "$287,705", taxRate: "$9.40", taxBill: "$2,713", rank: "260" },
+            2009: { homeValue: "$287,856", taxRate: "$9.50", taxBill: "$2,738", rank: "271" },
+            2010: { homeValue: "$261,104", taxRate: "$10.70", taxBill: "$2,791", rank: "276" },
+            2011: { homeValue: "$244,828", taxRate: "$11.30", taxBill: "$2,774", rank: "293" },
+            2012: { homeValue: "$236,155", taxRate: "$12.70", taxBill: "$2,999", rank: "272" },
+            2013: { homeValue: "$229,932", taxRate: "$13.60", taxBill: "$3,136", rank: "262" },
+            2014: { homeValue: "$226,340", taxRate: "$14.50", taxBill: "$3,286", rank: "258" },
+            2015: { homeValue: "$226,863", taxRate: "$14.90", taxBill: "$3,385", rank: "260" },
+            2016: { homeValue: "$214,110", taxRate: "$15.90", taxBill: "$3,404", rank: "271" },
+            2017: { homeValue: "$246,291", taxRate: "$15.20", taxBill: "$3,751", rank: "245" },
+            2018: { homeValue: "$246,161", taxRate: "$15.10", taxBill: "$3,724", rank: "262" },
+            2019: { homeValue: "$257,471", taxRate: "$15.20", taxBill: "$3,919", rank: "254" },
+            2020: { homeValue: "$278,987", taxRate: "$14.80", taxBill: "$4,135", rank: "248" },
+            2021: { homeValue: "$286,533", taxRate: "$14.80", taxBill: "$4,244", rank: "246" },
+            2022: { homeValue: "$315,258", taxRate: "$14.00", taxBill: "$4,414", rank: "266" },
+            2023: { homeValue: "$354,932", taxRate: "$13.00", taxBill: "$4,625", rank: "264" },
+            2024: { homeValue: "$403,232", taxRate: "$11.80", taxBill: "$4,754", rank: "270" },
+            2025: { homeValue: "$412,176", taxRate: "$11.70", taxBill: "$4,814", rank: "282" }
+        };
+        
+        // Function to update data when year changes
+        function updateYear() {
+            const year = document.getElementById('yearSelect').value;
+            const data = yearData[year];
+            
+            // Update stats cards
+            document.getElementById('homeValue').textContent = data.homeValue;
+            document.getElementById('taxBill').textContent = data.taxBill;
+            document.getElementById('taxRate').textContent = data.taxRate;
+            document.getElementById('stateRank').textContent = data.rank;
+            
+            // Update comparison year text
+            document.getElementById('comparisonYear').textContent = "FY " + year;
+        }
+        
+        // Show/hide full history
+        let showingFullHistory = false;
+        function toggleHistory() {
+            const button = document.getElementById('showMoreBtn');
+            
+            if (showingFullHistory) {
+                button.textContent = "Show All Years";
+                showingFullHistory = false;
+                
+                // Hide rows beyond the first 11
+                const historyRows = document.querySelectorAll('#tab2 tbody tr');
+                for (let i = 0; i < historyRows.length; i++) {
+                    if (i > 10) {
+                        historyRows[i].style.display = 'none';
+                    }
+                }
+            } else {
+                button.textContent = "Show Fewer Years";
+                showingFullHistory = true;
+                
+                // Show all rows
+                const historyRows = document.querySelectorAll('#tab2 tbody tr');
+                for (let i = 0; i < historyRows.length; i++) {
+                    historyRows[i].style.display = '';
+                }
+            }
+        }
+        
+        // Switch between tabs
+        function switchTab(tabIndex) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(function(content) {
+                content.classList.remove('active');
+            });
+            
+            // Show the selected tab
+            document.getElementById('tab' + (tabIndex + 1)).classList.add('active');
+            
+            // Update tab styling
+            document.querySelectorAll('.tab').forEach(function(tab, index) {
+                if (index === tabIndex) {
+                    tab.classList.add('active');
+                } else {
+                    tab.classList.remove('active');
+                }
+            });
+        }
+        
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set initial data
+            updateYear();
+            
+            // Initially hide older history rows
+            const historyRows = document.querySelectorAll('#tab2 tbody tr');
+            for (let i = 0; i < historyRows.length; i++) {
+                if (i > 10) {
+                    historyRows[i].style.display = 'none';
+                }
+            }
+        });
+    </script>
+</body>
+</html>
