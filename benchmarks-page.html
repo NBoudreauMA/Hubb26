@@ -1,1103 +1,622 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hubbardston Budget Portal - Benchmarks</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background: url('hubbardston_bg.jpg') no-repeat center center fixed;
-            background-size: cover;
-            color: white;
+            background-color: #f0f0f0;
+            color: #333;
         }
         
-        nav {
-            background: linear-gradient(90deg, rgba(34, 139, 34, 0.9), rgba(0, 100, 0, 0.9));
+        .header {
+            background-color: #2a4d2e;
+            color: white;
             padding: 15px;
             text-align: center;
-            display: flex;
-            align-items: center;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            left: 0;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
         }
-
-        nav a {
+        
+        .nav {
+            background-color: #4bc0c0;
+            padding: 10px;
+            text-align: center;
+        }
+        
+        .nav a {
             color: white;
-            margin: 0 20px;
+            margin: 0 15px;
             text-decoration: none;
-            font-size: 22px;
             font-weight: bold;
-            text-transform: uppercase;
-            transition: 0.3s ease-in-out;
-            padding: 8px 15px;
-        }
-
-        nav a:hover {
-            text-decoration: underline;
-            transform: scale(1.05);
-            color: white;
-            background-color: rgba(0, 100, 0, 0.7);
-            border-radius: 5px;
-        }
-        
-        nav a.active {
-            color: white;
-            text-decoration: underline;
-            background-color: rgba(0, 100, 0, 0.7);
-            padding: 8px 15px;
-            border-radius: 5px;
-        }
-        
-        /* Dropdown styles */
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-        
-        .dropbtn {
-            background: transparent;
-            color: white;
-            margin: 0 20px;
-            text-decoration: none;
-            font-size: 22px;
-            font-weight: bold;
-            text-transform: uppercase;
-            border: none;
-            cursor: pointer;
-            padding: 8px 15px;
-            font-family: 'Poppins', sans-serif;
-            transition: 0.3s ease-in-out;
-        }
-        
-        .dropbtn:hover {
-            text-decoration: underline;
-            transform: scale(1.05);
-            background-color: rgba(0, 100, 0, 0.7);
-            border-radius: 5px;
-        }
-        
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: rgba(0, 60, 30, 0.95);
-            min-width: 240px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-            z-index: 1;
-            border-radius: 0 0 8px 8px;
-            backdrop-filter: blur(5px);
-            left: 50%;
-            transform: translateX(-50%);
-        }
-        
-        .dropdown-content a {
-            color: white;
-            padding: 14px 20px;
-            text-decoration: none;
-            display: block;
-            text-align: left;
-            font-size: 18px;
-            transition: 0.2s ease-in-out;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .dropdown-content a:last-child {
-            border-bottom: none;
-        }
-        
-        .dropdown-content a:hover {
-            background-color: rgba(75, 192, 192, 0.3);
-            transform: translateX(5px);
-        }
-        
-        .dropdown-content a.active {
-            background-color: rgba(75, 192, 192, 0.5);
-            color: white;
-        }
-        
-        .dropdown:hover .dropdown-content {
-            display: block;
         }
         
         .container {
             max-width: 1200px;
-            margin: 120px auto 40px;
-            padding: 30px;
-            background: rgba(0, 0, 0, 0.75);
-            border-radius: 15px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(5px);
-        }
-        
-        .content-section {
-            margin-bottom: 40px;
-            transition: 0.4s ease-in-out;
+            margin: 20px auto;
             padding: 20px;
-            border-radius: 10px;
-            background: rgba(20, 20, 20, 0.5);
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
         
-        .content-section:hover {
-            transform: scale(1.01);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+        h1, h2, h3 {
+            color: #2a4d2e;
         }
         
-        h2 {
-            color: #4bc0c0;
-            text-align: center;
-            margin-bottom: 30px;
-            font-size: 32px;
-            font-weight: 600;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-        
-        /* Section Header */
-        .benchmark-header {
-            background: linear-gradient(135deg, rgba(0, 60, 30, 0.85), rgba(0, 90, 70, 0.75));
-            border-radius: 12px;
-            padding: 35px 40px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            border-left: 4px solid #4bc0c0;
-            margin: 35px 0;
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(5px);
-        }
-        
-        .benchmark-header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at top right, rgba(75, 192, 192, 0.1), transparent 60%);
-            z-index: 0;
-        }
-        
-        .benchmark-title {
-            color: #4bc0c0;
-            text-align: center;
-            font-size: 34px;
-            margin-bottom: 28px;
-            font-weight: 600;
-            text-transform: none;
-            letter-spacing: 0;
-            position: relative;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        
-        .benchmark-content {
-            color: white;
-            font-size: 17px;
-            line-height: 1.8;
-            position: relative;
-        }
-        
-        .benchmark-content p {
-            margin-bottom: 22px;
-            opacity: 0.95;
-        }
-
-        .highlight-text {
-            color: #4bc0c0;
-            font-weight: 600;
-            position: relative;
-            padding: 0 2px;
-        }
-        
-        .highlight-text::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 100%;
-            height: 1px;
-            background-color: rgba(75, 192, 192, 0.4);
-        }
-        
-        /* Dashboard Elements */
-        .dashboard-controls {
-            background: rgba(0, 0, 0, 0.4);
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-        }
-        
-        .year-tabs {
+        .tabs {
             display: flex;
             justify-content: center;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .year-tab {
-            padding: 10px 20px;
-            background: rgba(0, 60, 30, 0.6);
-            color: white;
-            text-decoration: none;
-            border-radius: 6px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-        
-        .year-tab:hover {
-            background: rgba(75, 192, 192, 0.4);
-            transform: translateY(-2px);
-        }
-        
-        .year-tab-active {
-            background: rgba(75, 192, 192, 0.7);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        
-        /* Year sections */
-        .year-section {
-            margin-bottom: 60px;
-            padding-top: 20px;
-        }
-        
-        .year-section:not(:first-of-type) {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 40px;
-        }
-        
-        .year-heading {
-            color: #4bc0c0;
-            text-align: center;
-            font-size: 28px;
-            margin-bottom: 30px;
-            font-weight: 600;
-        }
-        
-        .comparison-highlights {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            margin: 40px 0;
-        }
-        
-        .highlight-card {
-            background: linear-gradient(135deg, rgba(0, 60, 30, 0.85), rgba(0, 90, 70, 0.75));
-            border-radius: 12px;
-            padding: 25px;
-            border-left: 4px solid #4bc0c0;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-        }
-        
-        .highlight-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at top right, rgba(75, 192, 192, 0.1), transparent 70%);
-            z-index: 0;
-        }
-        
-        .highlight-icon {
-            font-size: 32px;
-            color: #4bc0c0;
-            margin-bottom: 15px;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .highlight-value {
-            font-size: 28px;
-            font-weight: 700;
-            color: white;
-            margin-bottom: 10px;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .highlight-label {
-            font-size: 16px;
-            color: rgba(255, 255, 255, 0.8);
-            position: relative;
-            z-index: 1;
-        }
-        
-        .chart-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-            gap: 25px;
-            margin-bottom: 40px;
-        }
-        
-        .chart-card {
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-            border-left: 3px solid #4bc0c0;
-            height: 400px;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .chart-title {
-            color: #4bc0c0;
-            text-align: center;
-            font-size: 22px;
             margin-bottom: 20px;
-            font-weight: 600;
+            border-bottom: 1px solid #ddd;
         }
         
-        .chart-img-container {
-            flex: 1;
-            background-color: rgba(0, 0, 0, 0.3);
-            border-radius: 8px;
+        .tab-button {
+            background-color: #f0f0f0;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 5px;
+            cursor: pointer;
+            border-radius: 5px 5px 0 0;
+        }
+        
+        .tab-button.active {
+            background-color: #4bc0c0;
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .active-content {
+            display: block;
+        }
+        
+        .highlight-cards {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
         }
         
-        .chart-img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
+        .card {
+            flex: 1;
+            min-width: 200px;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
         }
         
-        .data-table-container {
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 12px;
-            padding: 25px;
-            margin-top: 30px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        .value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #4bc0c0;
         }
         
-        .data-table {
+        table {
             width: 100%;
             border-collapse: collapse;
-            color: white;
-            margin-top: 20px;
+            margin: 20px 0;
         }
         
-        .data-table th,
-        .data-table td {
-            padding: 12px 15px;
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
             text-align: left;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
         
-        .data-table th {
-            background-color: rgba(34, 139, 34, 0.3);
-            font-weight: 600;
-            color: #4bc0c0;
-            position: sticky;
-            top: 0;
+        th {
+            background-color: #4bc0c0;
+            color: white;
         }
         
-        .data-table tbody tr:hover {
-            background-color: rgba(75, 192, 192, 0.1);
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
         }
         
-        .interpretation-section {
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 12px;
-            padding: 25px;
-            margin-top: 40px;
-            border-left: 4px solid #4bc0c0;
+        .hubbardston-row {
+            background-color: #e6f7f7;
+            font-weight: bold;
         }
         
-        .interpretation-title {
-            color: #4bc0c0;
-            font-size: 24px;
-            margin-bottom: 20px;
-            font-weight: 600;
-        }
-        
-        .interpretation-content {
-            font-size: 16px;
-            line-height: 1.7;
-        }
-        
-        .interpretation-content p {
-            margin-bottom: 15px;
-        }
-        
-        /* Responsive Design */
-        @media (max-width: 992px) {
-            .chart-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .chart-card {
-                height: 350px;
-            }
-            
-            .comparison-highlights {
-                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            }
-        }
-        
-        @media (max-width: 768px) {
-            nav a {
-                font-size: 16px;
-                margin: 0 10px;
-            }
-            
-            .benchmark-header {
-                padding: 25px 20px;
-            }
-            
-            .benchmark-title {
-                font-size: 28px;
-            }
+        .footer {
+            background-color: #2a4d2e;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
-    <nav>
-        <a href="index.html">HOME</a>
-        <div class="dropdown">
-            <button class="dropbtn">BUDGET & FINANCE <i class="fas fa-caret-down"></i></button>
-            <div class="dropdown-content">
-                <a href="revenue.html">REVENUE</a>
-                <a href="expenditures.html">EXPENDITURES</a>
-                <a href="capital_plan.html">CAPITAL PLAN</a>
-                <a href="benchmarks.html" class="active">BENCHMARKS</a>
-                <a href="citizens_guide.html">CITIZEN'S GUIDE</a>
-            </div>
-        </div>
-    </nav>
+    <div class="header">
+        <h1>Hubbardston Budget Portal</h1>
+    </div>
+    
+    <div class="nav">
+        <a href="#">Home</a>
+        <a href="#">Revenue</a>
+        <a href="#">Expenditures</a>
+        <a href="#">Capital Plan</a>
+        <a href="#" style="text-decoration: underline;">Benchmarks</a>
+        <a href="#">Citizen's Guide</a>
+    </div>
     
     <div class="container">
-        <div class="content-section">
-            <h2>Community Benchmarks & Comparisons</h2>
+        <h2>Community Benchmarks & Comparisons</h2>
+        
+        <p>Understanding how Hubbardston's finances compare to similar communities provides valuable context for our fiscal decisions. This dashboard allows you to explore how our town measures against neighboring municipalities across key financial metrics.</p>
+        
+        <div class="tabs">
+            <button class="tab-button" onclick="changeTab('fy2022')">FY 2022</button>
+            <button class="tab-button" onclick="changeTab('fy2023')">FY 2023</button>
+            <button class="tab-button active" onclick="changeTab('fy2024')">FY 2024</button>
+            <button class="tab-button" onclick="changeTab('fy2025')">FY 2025</button>
+        </div>
+        
+        <!-- FY 2024 Content -->
+        <div id="fy2024" class="tab-content active-content">
+            <h3>Fiscal Year 2024 Benchmarks</h3>
             
-            <div class="benchmark-header">
-                <h3 class="benchmark-title">Regional Comparison & Benchmarking</h3>
-                
-                <div class="benchmark-content">
-                    <p>Understanding how Hubbardston's finances compare to similar communities provides valuable context for our fiscal decisions. This dashboard allows you to explore how our town measures against neighboring municipalities across key financial metrics.</p>
-                    
-                    <p>We've selected comparable communities based on population size, geographic proximity, and similar socioeconomic characteristics. These benchmarks help identify areas where Hubbardston is performing well and opportunities for improvement in our financial management.</p>
+            <!-- Highlight Cards -->
+            <div class="highlight-cards">
+                <div class="card">
+                    <h4>Average Home Value</h4>
+                    <div class="value">$375,236</div>
+                </div>
+                <div class="card">
+                    <h4>Average Tax Bill</h4>
+                    <div class="value">$5,862</div>
+                </div>
+                <div class="card">
+                    <h4>Tax Rate</h4>
+                    <div class="value">$16.75</div>
+                </div>
+                <div class="card">
+                    <h4>State Rank</h4>
+                    <div class="value">138 of 351</div>
                 </div>
             </div>
             
-            <!-- Dashboard Controls - Fixed Year Tabs -->
-            <div class="dashboard-controls">
-                <div class="year-tabs">
-                    <a href="#fy2022" class="year-tab">FY 2022</a>
-                    <a href="#fy2023" class="year-tab">FY 2023</a>
-                    <a href="#fy2024" class="year-tab year-tab-active">FY 2024</a>
-                    <a href="#fy2025" class="year-tab">FY 2025</a>
+            <!-- Data Table -->
+            <h4>Detailed Comparison Data (FY2024)</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Municipality</th>
+                        <th>Single Family Value</th>
+                        <th>Tax Rate</th>
+                        <th>Average Tax Bill</th>
+                        <th>Income Per Capita</th>
+                        <th>State Rank</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="hubbardston-row">
+                        <td>Hubbardston</td>
+                        <td>$375,236</td>
+                        <td>$16.75</td>
+                        <td>$5,862</td>
+                        <td>$45,725</td>
+                        <td>138</td>
+                    </tr>
+                    <tr>
+                        <td>Princeton</td>
+                        <td>$432,562</td>
+                        <td>$17.25</td>
+                        <td>$7,462</td>
+                        <td>$58,453</td>
+                        <td>72</td>
+                    </tr>
+                    <tr>
+                        <td>Barre</td>
+                        <td>$317,218</td>
+                        <td>$18.12</td>
+                        <td>$5,748</td>
+                        <td>$39,875</td>
+                        <td>192</td>
+                    </tr>
+                    <tr>
+                        <td>Rutland</td>
+                        <td>$365,487</td>
+                        <td>$17.45</td>
+                        <td>$6,378</td>
+                        <td>$43,256</td>
+                        <td>151</td>
+                    </tr>
+                    <tr>
+                        <td>Westminster</td>
+                        <td>$345,268</td>
+                        <td>$18.92</td>
+                        <td>$6,532</td>
+                        <td>$44,128</td>
+                        <td>148</td>
+                    </tr>
+                    <tr>
+                        <td>Templeton</td>
+                        <td>$308,453</td>
+                        <td>$15.65</td>
+                        <td>$4,827</td>
+                        <td>$38,256</td>
+                        <td>217</td>
+                    </tr>
+                    <tr>
+                        <td>Gardner</td>
+                        <td>$287,543</td>
+                        <td>$19.75</td>
+                        <td>$5,679</td>
+                        <td>$32,658</td>
+                        <td>243</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Regional Average</strong></td>
+                        <td>$347,395</td>
+                        <td>$17.70</td>
+                        <td>$6,070</td>
+                        <td>$43,193</td>
+                        <td>166</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- FY 2023 Content -->
+        <div id="fy2023" class="tab-content">
+            <h3>Fiscal Year 2023 Benchmarks</h3>
+            
+            <!-- Highlight Cards -->
+            <div class="highlight-cards">
+                <div class="card">
+                    <h4>Average Home Value</h4>
+                    <div class="value">$352,128</div>
+                </div>
+                <div class="card">
+                    <h4>Average Tax Bill</h4>
+                    <div class="value">$5,524</div>
+                </div>
+                <div class="card">
+                    <h4>Tax Rate</h4>
+                    <div class="value">$15.95</div>
+                </div>
+                <div class="card">
+                    <h4>State Rank</h4>
+                    <div class="value">142 of 351</div>
                 </div>
             </div>
             
+            <!-- Data Table -->
+            <h4>Detailed Comparison Data (FY2023)</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Municipality</th>
+                        <th>Single Family Value</th>
+                        <th>Tax Rate</th>
+                        <th>Average Tax Bill</th>
+                        <th>Income Per Capita</th>
+                        <th>State Rank</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="hubbardston-row">
+                        <td>Hubbardston</td>
+                        <td>$352,128</td>
+                        <td>$15.95</td>
+                        <td>$5,524</td>
+                        <td>$44,820</td>
+                        <td>142</td>
+                    </tr>
+                    <tr>
+                        <td>Princeton</td>
+                        <td>$406,872</td>
+                        <td>$16.80</td>
+                        <td>$6,835</td>
+                        <td>$57,210</td>
+                        <td>74</td>
+                    </tr>
+                    <tr>
+                        <td>Barre</td>
+                        <td>$298,320</td>
+                        <td>$17.60</td>
+                        <td>$5,250</td>
+                        <td>$38,940</td>
+                        <td>196</td>
+                    </tr>
+                    <tr>
+                        <td>Rutland</td>
+                        <td>$342,650</td>
+                        <td>$17.10</td>
+                        <td>$5,859</td>
+                        <td>$42,380</td>
+                        <td>154</td>
+                    </tr>
+                    <tr>
+                        <td>Westminster</td>
+                        <td>$328,420</td>
+                        <td>$18.45</td>
+                        <td>$6,059</td>
+                        <td>$43,240</td>
+                        <td>150</td>
+                    </tr>
+                    <tr>
+                        <td>Templeton</td>
+                        <td>$290,760</td>
+                        <td>$15.20</td>
+                        <td>$4,420</td>
+                        <td>$37,480</td>
+                        <td>224</td>
+                    </tr>
+                    <tr>
+                        <td>Gardner</td>
+                        <td>$271,350</td>
+                        <td>$19.20</td>
+                        <td>$5,210</td>
+                        <td>$31,920</td>
+                        <td>248</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Regional Average</strong></td>
+                        <td>$327,214</td>
+                        <td>$17.19</td>
+                        <td>$5,594</td>
+                        <td>$42,286</td>
+                        <td>170</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- FY 2022 Content -->
+        <div id="fy2022" class="tab-content">
+            <h3>Fiscal Year 2022 Benchmarks</h3>
             
-            <!-- FY 2024 SECTION -->
-            <div id="fy2024" class="year-section">
-                <h3 class="year-heading">Fiscal Year 2024 Benchmarks</h3>
-                
-                <!-- Hubbardston Position Highlights -->
-                <div class="comparison-highlights">
-                    <div class="highlight-card">
-                        <div class="highlight-icon">
-                            <i class="fas fa-home"></i>
-                        </div>
-                        <div class="highlight-value">$375,236</div>
-                        <div class="highlight-label">Average Single Family Home Value</div>
-                    </div>
-                    
-                    <div class="highlight-card">
-                        <div class="highlight-icon">
-                            <i class="fas fa-file-invoice-dollar"></i>
-                        </div>
-                        <div class="highlight-value">$5,862</div>
-                        <div class="highlight-label">Average Single Family Tax Bill</div>
-                    </div>
-                    
-                    <div class="highlight-card">
-                        <div class="highlight-icon">
-                            <i class="fas fa-percentage"></i>
-                        </div>
-                        <div class="highlight-value">$16.75</div>
-                        <div class="highlight-label">Residential Tax Rate per $1,000</div>
-                    </div>
-                    
-                    <div class="highlight-card">
-                        <div class="highlight-icon">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                        <div class="highlight-value">138 of 351</div>
-                        <div class="highlight-label">Community Rank in Massachusetts</div>
-                    </div>
+            <!-- Highlight Cards -->
+            <div class="highlight-cards">
+                <div class="card">
+                    <h4>Average Home Value</h4>
+                    <div class="value">$321,675</div>
                 </div>
-                
-                <!-- Chart Grid - static images -->
-                <div class="chart-grid">
-                    <div class="chart-card">
-                        <h4 class="chart-title">Average Single Family Tax Bill</h4>
-                        <div class="chart-img-container">
-                            <img src="tax_bill_chart_2024.png" alt="Tax Bill Chart 2024" class="chart-img">
-                        </div>
-                    </div>
-                    
-                    <div class="chart-card">
-                        <h4 class="chart-title">Average Single Family Home Value</h4>
-                        <div class="chart-img-container">
-                            <img src="home_value_chart_2024.png" alt="Home Value Chart 2024" class="chart-img">
-                        </div>
-                    </div>
-                    
-                    <div class="chart-card">
-                        <h4 class="chart-title">Income Per Capita</h4>
-                        <div class="chart-img-container">
-                            <img src="income_chart_2024.png" alt="Income Chart 2024" class="chart-img">
-                        </div>
-                    </div>
-                    
-                    <div class="chart-card">
-                        <h4 class="chart-title">Tax Rate Comparison</h4>
-                        <div class="chart-img-container">
-                            <img src="tax_rate_chart_2024.png" alt="Tax Rate Chart 2024" class="chart-img">
-                        </div>
-                    </div>
+                <div class="card">
+                    <h4>Average Tax Bill</h4>
+                    <div class="value">$5,128</div>
                 </div>
-                
-                <!-- Data Table -->
-                <div class="data-table-container">
-                    <h4 class="chart-title">Detailed Comparison Data (FY2024)</h4>
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>Municipality</th>
-                                <th>Single Family Value</th>
-                                <th>Tax Rate</th>
-                                <th>Average Tax Bill</th>
-                                <th>Income Per Capita</th>
-                                <th>State Rank</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Hubbardston</td>
-                                <td>$375,236</td>
-                                <td>$16.75</td>
-                                <td>$5,862</td>
-                                <td>$45,725</td>
-                                <td>138</td>
-                            </tr>
-                            <tr>
-                                <td>Princeton</td>
-                                <td>$432,562</td>
-                                <td>$17.25</td>
-                                <td>$7,462</td>
-                                <td>$58,453</td>
-                                <td>72</td>
-                            </tr>
-                            <tr>
-                                <td>Barre</td>
-                                <td>$317,218</td>
-                                <td>$18.12</td>
-                                <td>$5,748</td>
-                                <td>$39,875</td>
-                                <td>192</td>
-                            </tr>
-                            <tr>
-                                <td>Rutland</td>
-                                <td>$365,487</td>
-                                <td>$17.45</td>
-                                <td>$6,378</td>
-                                <td>$43,256</td>
-                                <td>151</td>
-                            </tr>
-                            <tr>
-                                <td>Westminster</td>
-                                <td>$345,268</td>
-                                <td>$18.92</td>
-                                <td>$6,532</td>
-                                <td>$44,128</td>
-                                <td>148</td>
-                            </tr>
-                            <tr>
-                                <td>Templeton</td>
-                                <td>$308,453</td>
-                                <td>$15.65</td>
-                                <td>$4,827</td>
-                                <td>$38,256</td>
-                                <td>217</td>
-                            </tr>
-                            <tr>
-                                <td>Gardner</td>
-                                <td>$287,543</td>
-                                <td>$19.75</td>
-                                <td>$5,679</td>
-                                <td>$32,658</td>
-                                <td>243</td>
-                            </tr>
-                            <tr>
-                                <td>Regional Average</td>
-                                <td>$347,395</td>
-                                <td>$17.70</td>
-                                <td>$6,070</td>
-                                <td>$43,193</td>
-                                <td>166</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="card">
+                    <h4>Tax Rate</h4>
+                    <div class="value">$15.82</div>
+                </div>
+                <div class="card">
+                    <h4>State Rank</h4>
+                    <div class="value">146 of 351</div>
                 </div>
             </div>
             
-            <!-- FY 2023 SECTION -->
-            <div id="fy2023" class="year-section">
-                <h3 class="year-heading">Fiscal Year 2023 Benchmarks</h3>
-                
-                <!-- Hubbardston Position Highlights -->
-                <div class="comparison-highlights">
-                    <div class="highlight-card">
-                        <div class="highlight-icon">
-                            <i class="fas fa-home"></i>
-                        </div>
-                        <div class="highlight-value">$352,128</div>
-                        <div class="highlight-label">Average Single Family Home Value</div>
-                    </div>
-                    
-                    <div class="highlight-card">
-                        <div class="highlight-icon">
-                            <i class="fas fa-file-invoice-dollar"></i>
-                        </div>
-                        <div class="highlight-value">$5,524</div>
-                        <div class="highlight-label">Average Single Family Tax Bill</div>
-                    </div>
-                    
-                    <div class="highlight-card">
-                        <div class="highlight-icon">
-                            <i class="fas fa-percentage"></i>
-                        </div>
-                        <div class="highlight-value">$15.95</div>
-                        <div class="highlight-label">Residential Tax Rate per $1,000</div>
-                    </div>
-                    
-                    <div class="highlight-card">
-                        <div class="highlight-icon">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                        <div class="highlight-value">142 of 351</div>
-                        <div class="highlight-label">Community Rank in Massachusetts</div>
-                    </div>
+            <!-- Data Table -->
+            <h4>Detailed Comparison Data (FY2022)</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Municipality</th>
+                        <th>Single Family Value</th>
+                        <th>Tax Rate</th>
+                        <th>Average Tax Bill</th>
+                        <th>Income Per Capita</th>
+                        <th>State Rank</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="hubbardston-row">
+                        <td>Hubbardston</td>
+                        <td>$321,675</td>
+                        <td>$15.82</td>
+                        <td>$5,128</td>
+                        <td>$43,650</td>
+                        <td>146</td>
+                    </tr>
+                    <tr>
+                        <td>Princeton</td>
+                        <td>$371,450</td>
+                        <td>$16.42</td>
+                        <td>$6,172</td>
+                        <td>$55,790</td>
+                        <td>78</td>
+                    </tr>
+                    <tr>
+                        <td>Barre</td>
+                        <td>$275,120</td>
+                        <td>$17.22</td>
+                        <td>$4,837</td>
+                        <td>$37,820</td>
+                        <td>201</td>
+                    </tr>
+                    <tr>
+                        <td>Rutland</td>
+                        <td>$312,540</td>
+                        <td>$16.85</td>
+                        <td>$5,268</td>
+                        <td>$41,270</td>
+                        <td>158</td>
+                    </tr>
+                    <tr>
+                        <td>Westminster</td>
+                        <td>$301,750</td>
+                        <td>$18.05</td>
+                        <td>$5,447</td>
+                        <td>$42,150</td>
+                        <td>154</td>
+                    </tr>
+                    <tr>
+                        <td>Templeton</td>
+                        <td>$268,320</td>
+                        <td>$14.98</td>
+                        <td>$4,020</td>
+                        <td>$36,450</td>
+                        <td>230</td>
+                    </tr>
+                    <tr>
+                        <td>Gardner</td>
+                        <td>$249,650</td>
+                        <td>$18.88</td>
+                        <td>$4,713</td>
+                        <td>$31,080</td>
+                        <td>254</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Regional Average</strong></td>
+                        <td>$300,072</td>
+                        <td>$16.89</td>
+                        <td>$5,084</td>
+                        <td>$41,173</td>
+                        <td>174</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- FY 2025 Content -->
+        <div id="fy2025" class="tab-content">
+            <h3>Fiscal Year 2025 Benchmarks</h3>
+            
+            <!-- Highlight Cards -->
+            <div class="highlight-cards">
+                <div class="card">
+                    <h4>Average Home Value</h4>
+                    <div class="value">$394,750</div>
                 </div>
-                
-                <!-- Data Table -->
-                <div class="data-table-container">
-                    <h4 class="chart-title">Detailed Comparison Data (FY2023)</h4>
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>Municipality</th>
-                                <th>Single Family Value</th>
-                                <th>Tax Rate</th>
-                                <th>Average Tax Bill</th>
-                                <th>Income Per Capita</th>
-                                <th>State Rank</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Hubbardston</td>
-                                <td>$352,128</td>
-                                <td>$15.95</td>
-                                <td>$5,524</td>
-                                <td>$44,820</td>
-                                <td>142</td>
-                            </tr>
-                            <tr>
-                                <td>Princeton</td>
-                                <td>$406,872</td>
-                                <td>$16.80</td>
-                                <td>$6,835</td>
-                                <td>$57,210</td>
-                                <td>74</td>
-                            </tr>
-                            <tr>
-                                <td>Barre</td>
-                                <td>$298,320</td>
-                                <td>$17.60</td>
-                                <td>$5,250</td>
-                                <td>$38,940</td>
-                                <td>196</td>
-                            </tr>
-                            <tr>
-                                <td>Rutland</td>
-                                <td>$342,650</td>
-                                <td>$17.10</td>
-                                <td>$5,859</td>
-                                <td>$42,380</td>
-                                <td>154</td>
-                            </tr>
-                            <tr>
-                                <td>Westminster</td>
-                                <td>$328,420</td>
-                                <td>$18.45</td>
-                                <td>$6,059</td>
-                                <td>$43,240</td>
-                                <td>150</td>
-                            </tr>
-                            <tr>
-                                <td>Templeton</td>
-                                <td>$290,760</td>
-                                <td>$15.20</td>
-                                <td>$4,420</td>
-                                <td>$37,480</td>
-                                <td>224</td>
-                            </tr>
-                            <tr>
-                                <td>Gardner</td>
-                                <td>$271,350</td>
-                                <td>$19.20</td>
-                                <td>$5,210</td>
-                                <td>$31,920</td>
-                                <td>248</td>
-                            </tr>
-                            <tr>
-                                <td>Regional Average</td>
-                                <td>$327,214</td>
-                                <td>$17.19</td>
-                                <td>$5,594</td>
-                                <td>$42,286</td>
-                                <td>170</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="card">
+                    <h4>Average Tax Bill</h4>
+                    <div class="value">$6,212</div>
+                </div>
+                <div class="card">
+                    <h4>Tax Rate</h4>
+                    <div class="value">$16.85</div>
+                </div>
+                <div class="card">
+                    <h4>State Rank</h4>
+                    <div class="value">135 of 351</div>
                 </div>
             </div>
             
-            <!-- FY 2022 SECTION -->
-            <div id="fy2022" class="year-section">
-                <h3 class="year-heading">Fiscal Year 2022 Benchmarks</h3>
-                
-                <!-- Hubbardston Position Highlights -->
-                <div class="comparison-highlights">
-                    <div class="highlight-card">
-                        <div class="highlight-icon">
-                            <i class="fas fa-home"></i>
-                        </div>
-                        <div class="highlight-value">$321,675</div>
-                        <div class="highlight-label">Average Single Family Home Value</div>
-                    </div>
-                    
-                    <div class="highlight-card">
-                        <div class="highlight-icon">
-                            <i class="fas fa-file-invoice-dollar"></i>
-                        </div>
-                        <div class="highlight-value">$5,128</div>
-                        <div class="highlight-label">Average Single Family Tax Bill</div>
-                    </div>
-                    
-                    <div class="highlight-card">
-                        <div class="highlight-icon">
-                            <i class="fas fa-percentage"></i>
-                        </div>
-                        <div class="highlight-value">$15.82</div>
-                        <div class="highlight-label">Residential Tax Rate per $1,000</div>
-                    </div>
-                    
-                    <div class="highlight-card">
-                        <div class="highlight-icon">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                        <div class="highlight-value">146 of 351</div>
-                        <div class="highlight-label">Community Rank in Massachusetts</div>
-                    </div>
-                </div>
-                
-                <!-- Data Table -->
-                <div class="data-table-container">
-                    <h4 class="chart-title">Detailed Comparison Data (FY2022)</h4>
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>Municipality</th>
-                                <th>Single Family Value</th>
-                                <th>Tax Rate</th>
-                                <th>Average Tax Bill</th>
-                                <th>Income Per Capita</th>
-                                <th>State Rank</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Hubbardston</td>
-                                <td>$321,675</td>
-                                <td>$15.82</td>
-                                <td>$5,128</td>
-                                <td>$43,650</td>
-                                <td>146</td>
-                            </tr>
-                            <tr>
-                                <td>Princeton</td>
-                                <td>$371,450</td>
-                                <td>$16.42</td>
-                                <td>$6,172</td>
-                                <td>$55,790</td>
-                                <td>78</td>
-                            </tr>
-                            <tr>
-                                <td>Barre</td>
-                                <td>$275,120</td>
-                                <td>$17.22</td>
-                                <td>$4,837</td>
-                                <td>$37,820</td>
-                                <td>201</td>
-                            </tr>
-                            <tr>
-                                <td>Rutland</td>
-                                <td>$312,540</td>
-                                <td>$16.85</td>
-                                <td>$5,268</td>
-                                <td>$41,270</td>
-                                <td>158</td>
-                            </tr>
-                            <tr>
-                                <td>Westminster</td>
-                                <td>$301,750</td>
-                                <td>$18.05</td>
-                                <td>$5,447</td>
-                                <td>$42,150</td>
-                                <td>154</td>
-                            </tr>
-                            <tr>
-                                <td>Templeton</td>
-                                <td>$268,320</td>
-                                <td>$14.98</td>
-                                <td>$4,020</td>
-                                <td>$36,450</td>
-                                <td>230</td>
-                            </tr>
-                            <tr>
-                                <td>Gardner</td>
-                                <td>$249,650</td>
-                                <td>$18.88</td>
-                                <td>$4,713</td>
-                                <td>$31,080</td>
-                                <td>254</td>
-                            </tr>
-                            <tr>
-                                <td>Regional Average</td>
-                                <td>$300,072</td>
-                                <td>$16.89</td>
-                                <td>$5,084</td>
-                                <td>$41,173</td>
-                                <td>174</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            <!-- Data Table -->
+            <h4>Detailed Comparison Data (FY2025)</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Municipality</th>
+                        <th>Single Family Value</th>
+                        <th>Tax Rate</th>
+                        <th>Average Tax Bill</th>
+                        <th>Income Per Capita</th>
+                        <th>State Rank</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="hubbardston-row">
+                        <td>Hubbardston</td>
+                        <td>$394,750</td>
+                        <td>$16.85</td>
+                        <td>$6,212</td>
+                        <td>$46,640</td>
+                        <td>135</td>
+                    </tr>
+                    <tr>
+                        <td>Princeton</td>
+                        <td>$456,180</td>
+                        <td>$17.50</td>
+                        <td>$7,983</td>
+                        <td>$59,620</td>
+                        <td>70</td>
+                    </tr>
+                    <tr>
+                        <td>Barre</td>
+                        <td>$335,460</td>
+                        <td>$18.45</td>
+                        <td>$6,189</td>
+                        <td>$40,670</td>
+                        <td>189</td>
+                    </tr>
+                    <tr>
+                        <td>Rutland</td>
+                        <td>$386,210</td>
+                        <td>$17.82</td>
+                        <td>$6,882</td>
+                        <td>$44,120</td>
+                        <td>148</td>
+                    </tr>
+                    <tr>
+                        <td>Westminster</td>
+                        <td>$364,830</td>
+                        <td>$19.15</td>
+                        <td>$6,986</td>
+                        <td>$45,010</td>
+                        <td>145</td>
+                    </tr>
+                    <tr>
+                        <td>Templeton</td>
+                        <td>$326,460</td>
+                        <td>$15.95</td>
+                        <td>$5,207</td>
+                        <td>$39,020</td>
+                        <td>213</td>
+                    </tr>
+                    <tr>
+                        <td>Gardner</td>
+                        <td>$303,285</td>
+                        <td>$20.15</td>
+                        <td>$6,111</td>
+                        <td>$33,310</td>
+                        <td>239</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Regional Average</strong></td>
+                        <td>$366,739</td>
+                        <td>$17.98</td>
+                        <td>$6,510</td>
+                        <td>$44,056</td>
+                        <td>163</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="insights">
+            <h3>Key Insights & Context</h3>
+            <p><strong>Tax Bill Context:</strong> Hubbardston's average single-family tax bill has shown modest increases over the fiscal years from $5,128 in FY2022 to $6,212 in FY2025, representing a 21.1% increase over four years. This growth rate is relatively aligned with surrounding communities, maintaining Hubbardston's position as providing competitive tax rates within the region.</p>
             
-            <!-- FY 2025 SECTION -->
-            <div id="fy2025" class="year-section">
-                <h3 class="year-heading">Fiscal Year 2025 Benchmarks</h3>
-                
-                <!-- Hubbardston Position Highlights -->
-                <div class="comparison-highlights">
-                    <div class="highlight-card">
-                        <div class="highlight-icon">
-                            <i class="fas fa-home"></i>
-                        </div>
-                        <div class="highlight-value">$394,750</div>
-                        <div class="highlight-label">Average Single Family Home Value</div>
-                    </div>
-                    
-                    <div class="highlight-card">
-                        <div class="highlight-icon">
-                            <i class="fas fa-file-invoice-dollar"></i>
-                        </div>
-                        <div class="highlight-value">$6,212</div>
-                        <div class="highlight-label">Average Single Family Tax Bill</div>
-                    </div>
-                    
-                    <div class="highlight-card">
-                        <div class="highlight-icon">
-                            <i class="fas fa-percentage"></i>
-                        </div>
-                        <div class="highlight-value">$16.85</div>
-                        <div class="highlight-label">Residential Tax Rate per $1,000</div>
-                    </div>
-                    
-                    <div class="highlight-card">
-                        <div class="highlight-icon">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                        <div class="highlight-value">135 of 351</div>
-                        <div class="highlight-label">Community Rank in Massachusetts</div>
-                    </div>
-                </div>
-                
-                <!-- Data Table -->
-                <div class="data-table-container">
-                    <h4 class="chart-title">Detailed Comparison Data (FY2025)</h4>
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>Municipality</th>
-                                <th>Single Family Value</th>
-                                <th>Tax Rate</th>
-                                <th>Average Tax Bill</th>
-                                <th>Income Per Capita</th>
-                                <th>State Rank</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Hubbardston</td>
-                                <td>$394,750</td>
-                                <td>$16.85</td>
-                                <td>$6,212</td>
-                                <td>$46,640</td>
-                                <td>135</td>
-                            </tr>
-                            <tr>
-                                <td>Princeton</td>
-                                <td>$456,180</td>
-                                <td>$17.50</td>
-                                <td>$7,983</td>
-                                <td>$59,620</td>
-                                <td>70</td>
-                            </tr>
-                            <tr>
-                                <td>Barre</td>
-                                <td>$335,460</td>
-                                <td>$18.45</td>
-                                <td>$6,189</td>
-                                <td>$40,670</td>
-                                <td>189</td>
-                            </tr>
-                            <tr>
-                                <td>Rutland</td>
-                                <td>$386,210</td>
-                                <td>$17.82</td>
-                                <td>$6,882</td>
-                                <td>$44,120</td>
-                                <td>148</td>
-                            </tr>
-                            <tr>
-                                <td>Westminster</td>
-                                <td>$364,830</td>
-                                <td>$19.15</td>
-                                <td>$6,986</td>
-                                <td>$45,010</td>
-                                <td>145</td>
-                            </tr>
-                            <tr>
-                                <td>Templeton</td>
-                                <td>$326,460</td>
-                                <td>$15.95</td>
-                                <td>$5,207</td>
-                                <td>$39,020</td>
-                                <td>213</td>
-                            </tr>
-                            <tr>
-                                <td>Gardner</td>
-                                <td>$303,285</td>
-                                <td>$20.15</td>
-                                <td>$6,111</td>
-                                <td>$33,310</td>
-                                <td>239</td>
-                            </tr>
-                            <tr>
-                                <td>Regional Average</td>
-                                <td>$366,739</td>
-                                <td>$17.98</td>
-                                <td>$6,510</td>
-                                <td>$44,056</td>
-                                <td>163</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div></td>
-                            <td>$17.70</td>
-                            <td>$6,070</td>
-                            <td>$43,193</td>
-                            <td>166</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            <p><strong>Property Values:</strong> The town has seen healthy property value appreciation from $321,675 in FY2022 to $394,750 in FY2025, a 22.7% increase. This growth reflects Hubbardston's desirability as a residential community while still maintaining more affordable housing compared to towns like Princeton.</p>
             
-            <!-- Interpretation Section -->
-            <div class="interpretation-section">
-                <h4 class="interpretation-title">Key Insights & Context</h4>
-                
-                <div class="interpretation-content">
-                    <p><strong>Tax Bill Context:</strong> Hubbardston's average single-family tax bill has shown modest increases over the fiscal years from $5,128 in FY2022 to $6,212 in FY2025, representing a 21.1% increase over four years. This growth rate is relatively aligned with surrounding communities, maintaining Hubbardston's position as providing competitive tax rates within the region.</p>
-                    
-                    <p><strong>Property Values:</strong> The town has seen healthy property value appreciation from $321,675 in FY2022 to $394,750 in FY2025, a 22.7% increase. This growth reflects Hubbardston's desirability as a residential community while still maintaining more affordable housing compared to towns like Princeton.</p>
-                    
-                    <p><strong>Regional Position:</strong> Hubbardston's state rank has improved slightly from 146 in FY2022 to 135 in FY2025, moving the town up in Massachusetts municipality rankings. This balanced position suggests Hubbardston maintains fiscal responsibility while improving service quality.</p>
-                    
-                    <p><strong>Future Considerations:</strong> As we plan for FY26 and beyond, the trends shown in this four-year comparison demonstrate Hubbardston's stable financial position with gradual improvements. The proposed 6.32% budget increase for FY26 continues this pattern of strategic investments in infrastructure, planning, and modernization while maintaining competitive tax rates.</p>
-                </div>
-            </div>
+            <p><strong>Regional Position:</strong> Hubbardston's state rank has improved slightly from 146 in FY2022 to 135 in FY2025, moving the town up in Massachusetts municipality rankings. This balanced position suggests Hubbardston maintains fiscal responsibility while improving service quality.</p>
         </div>
     </div>
     
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+    <div class="footer">
+        <p>Hubbardston Budget Portal &copy; 2025</p>
+    </div>
+    
     <script>
-        // Simple script to highlight the active year tab
-        document.addEventListener('DOMContentLoaded', function() {
-            const yearTabs = document.querySelectorAll('.year-tab');
-            
-            // Check if hash exists and scroll to the section
-            function checkHash() {
-                const hash = window.location.hash;
-                if (hash) {
-                    // Remove active class from all tabs
-                    yearTabs.forEach(tab => tab.classList.remove('year-tab-active'));
-                    
-                    // Add active class to the tab matching the hash
-                    const activeTab = document.querySelector(`a[href="${hash}"]`);
-                    if (activeTab) {
-                        activeTab.classList.add('year-tab-active');
-                        
-                        // Scroll to the section after a short delay
-                        setTimeout(() => {
-                            const section = document.querySelector(hash);
-                            if (section) {
-                                section.scrollIntoView({ behavior: 'smooth' });
-                            }
-                        }, 100);
-                    }
-                } else {
-                    // Default to FY2024 if no hash
-                    document.querySelector('a[href="#fy2024"]').classList.add('year-tab-active');
-                }
+        function changeTab(year) {
+            // Hide all tab content
+            var contents = document.getElementsByClassName('tab-content');
+            for (var i = 0; i < contents.length; i++) {
+                contents[i].classList.remove('active-content');
             }
             
-            // Initial check
-            checkHash();
+            // Remove active class from all buttons
+            var buttons = document.getElementsByClassName('tab-button');
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].classList.remove('active');
+            }
             
-            // Listen for hash changes
-            window.addEventListener('hashchange', checkHash);
+            // Show selected content and highlight button
+            document.getElementById(year).classList.add('active-content');
             
-            // Add click event to year tabs
-            yearTabs.forEach(tab => {
-                tab.addEventListener('click', function(e) {
-                    yearTabs.forEach(t => t.classList.remove('year-tab-active'));
-                    this.classList.add('year-tab-active');
-                });
-            });
-        });
+            // Find the button that was clicked
+            var activeButton = document.querySelector('button[onclick="changeTab(\'' + year + '\')"]');
+            activeButton.classList.add('active');
+        }
     </script>
 </body>
 </html>
