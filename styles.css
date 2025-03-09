@@ -1,4 +1,4 @@
-/* Core styles with footer fix */
+/* Core styles for Hubbardston Budget Portal */
 body {
     font-family: 'Poppins', sans-serif;
     margin: 0;
@@ -18,39 +18,23 @@ nav {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    position: fixed;
     width: 100%;
-    top: 0;
-    left: 0;
-    backdrop-filter: blur(10px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
 }
 
 nav a {
     color: white;
-    margin: 0 20px;
     text-decoration: none;
-    font-size: 22px;
+    padding: 10px 20px;
+    border-radius: 5px;
     font-weight: bold;
     text-transform: uppercase;
     transition: 0.3s ease-in-out;
 }
 
-nav a:hover {
-    text-decoration: underline;
-    transform: scale(1.2);
-    color: white;
+nav a:hover, nav a.active {
     background-color: rgba(0, 100, 0, 0.7);
-    border-radius: 5px;
-}
-
-nav a.active {
-    color: white;
     text-decoration: underline;
-    background-color: rgba(0, 100, 0, 0.7);
-    padding: 8px 15px;
-    border-radius: 5px;
 }
 
 .container {
@@ -60,8 +44,6 @@ nav a.active {
     background: rgba(0, 0, 0, 0.75);
     border-radius: 15px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(5px);
-    flex: 1;
 }
 
 .container:hover {
@@ -69,7 +51,6 @@ nav a.active {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.8);
 }
 
-/* Footer Styles */
 .footer {
     background: linear-gradient(90deg, rgba(34, 139, 34, 0.9), rgba(0, 100, 0, 0.9));
     text-align: center;
