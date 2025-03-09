@@ -6,7 +6,6 @@
     <title>Hubbardston Budget Portal - Benchmarks</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -230,117 +229,55 @@
         /* Dashboard Elements */
         .dashboard-controls {
             background: rgba(0, 0, 0, 0.4);
-            padding: 20px;
+            padding: 15px;
             border-radius: 10px;
             margin-bottom: 30px;
+        }
+        
+        .year-tabs {
             display: flex;
+            justify-content: center;
             flex-wrap: wrap;
-            gap: 15px;
-            align-items: center;
+            gap: 10px;
         }
         
-        .control-group {
-            flex: 1;
-            min-width: 200px;
-        }
-        
-        .control-label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: #4bc0c0;
-        }
-        
-        .control-select {
-            width: 100%;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid rgba(75, 192, 192, 0.5);
-            background-color: rgba(0, 0, 0, 0.6);
+        .year-tab {
+            padding: 10px 20px;
+            background: rgba(0, 60, 30, 0.6);
             color: white;
-            font-family: 'Poppins', sans-serif;
-            font-size: 16px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
             transition: all 0.3s ease;
         }
         
-        .control-select:focus {
-            outline: none;
-            border-color: #4bc0c0;
-            box-shadow: 0 0 0 2px rgba(75, 192, 192, 0.3);
+        .year-tab:hover {
+            background: rgba(75, 192, 192, 0.4);
+            transform: translateY(-2px);
         }
         
-        .control-select option {
-            background-color: #1a1a1a;
+        .year-tab-active {
+            background: rgba(75, 192, 192, 0.7);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
         
-        .chart-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-            gap: 25px;
-            margin-bottom: 40px;
+        /* Year sections */
+        .year-section {
+            margin-bottom: 60px;
+            padding-top: 20px;
         }
         
-        .chart-card {
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-            border-left: 3px solid #4bc0c0;
-            height: 400px;
-            display: flex;
-            flex-direction: column;
+        .year-section:not(:first-of-type) {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 40px;
         }
         
-        .chart-title {
+        .year-heading {
             color: #4bc0c0;
             text-align: center;
-            font-size: 22px;
-            margin-bottom: 20px;
+            font-size: 28px;
+            margin-bottom: 30px;
             font-weight: 600;
-        }
-        
-        .chart-canvas-container {
-            flex: 1;
-            position: relative;
-            min-height: 300px;
-        }
-        
-        canvas {
-            max-width: 100%;
-        }
-        
-        .data-table-container {
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 12px;
-            padding: 25px;
-            margin-top: 30px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-        }
-        
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-            color: white;
-            margin-top: 20px;
-        }
-        
-        .data-table th,
-        .data-table td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .data-table th {
-            background-color: rgba(34, 139, 34, 0.3);
-            font-weight: 600;
-            color: #4bc0c0;
-            position: sticky;
-            top: 0;
-        }
-        
-        .data-table tbody tr:hover {
-            background-color: rgba(75, 192, 192, 0.1);
         }
         
         .comparison-highlights {
@@ -396,6 +333,82 @@
             z-index: 1;
         }
         
+        .chart-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .chart-card {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            border-left: 3px solid #4bc0c0;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .chart-title {
+            color: #4bc0c0;
+            text-align: center;
+            font-size: 22px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .chart-img-container {
+            flex: 1;
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .chart-img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        .data-table-container {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 30px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+        
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            color: white;
+            margin-top: 20px;
+        }
+        
+        .data-table th,
+        .data-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .data-table th {
+            background-color: rgba(34, 139, 34, 0.3);
+            font-weight: 600;
+            color: #4bc0c0;
+            position: sticky;
+            top: 0;
+        }
+        
+        .data-table tbody tr:hover {
+            background-color: rgba(75, 192, 192, 0.1);
+        }
+        
         .interpretation-section {
             background: rgba(0, 0, 0, 0.4);
             border-radius: 12px;
@@ -436,14 +449,6 @@
         }
         
         @media (max-width: 768px) {
-            .dashboard-controls {
-                flex-direction: column;
-            }
-            
-            .control-group {
-                width: 100%;
-            }
-            
             nav a {
                 font-size: 16px;
                 margin: 0 10px;
@@ -485,183 +490,542 @@
                     <p>Understanding how Hubbardston's finances compare to similar communities provides valuable context for our fiscal decisions. This dashboard allows you to explore how our town measures against neighboring municipalities across key financial metrics.</p>
                     
                     <p>We've selected comparable communities based on population size, geographic proximity, and similar socioeconomic characteristics. These benchmarks help identify areas where Hubbardston is performing well and opportunities for improvement in our financial management.</p>
-                    
-                    <p>Use the controls below to customize the comparison view and explore different fiscal years and metrics. This transparency tool empowers residents to better understand Hubbardston's position within our region.</p>
                 </div>
             </div>
             
-            <!-- Dashboard Controls -->
+            <!-- Dashboard Controls - Fixed Year Tabs -->
             <div class="dashboard-controls">
-                <div class="control-group">
-                    <label class="control-label" for="yearSelect">Fiscal Year</label>
-                    <select class="control-select" id="yearSelect">
-                        <option value="2025">FY 2025</option>
-                        <option value="2024" selected>FY 2024</option>
-                        <option value="2023">FY 2023</option>
-                        <option value="2022">FY 2022</option>
-                    </select>
-                </div>
-                
-                <div class="control-group">
-                    <label class="control-label" for="metricSelect">Primary Metric</label>
-                    <select class="control-select" id="metricSelect">
-                        <option value="taxBill" selected>Average Single Family Tax Bill</option>
-                        <option value="value">Average Single Family Home Value</option>
-                        <option value="rate">Property Tax Rate</option>
-                        <option value="income">Income Per Capita</option>
-                    </select>
-                </div>
-                
-                <div class="control-group">
-                    <label class="control-label" for="communitySelect">Communities to Compare</label>
-                    <select class="control-select" id="communitySelect" multiple>
-                        <option value="all" selected>All Similar Communities</option>
-                        <option value="neighbors">Direct Neighbors Only</option>
-                        <option value="custom">Custom Selection</option>
-                    </select>
+                <div class="year-tabs">
+                    <a href="#fy2022" class="year-tab">FY 2022</a>
+                    <a href="#fy2023" class="year-tab">FY 2023</a>
+                    <a href="#fy2024" class="year-tab year-tab-active">FY 2024</a>
+                    <a href="#fy2025" class="year-tab">FY 2025</a>
                 </div>
             </div>
             
-            <!-- Hubbardston Position Highlights -->
-            <div class="comparison-highlights">
-                <div class="highlight-card">
-                    <div class="highlight-icon">
-                        <i class="fas fa-home"></i>
+            
+            <!-- FY 2024 SECTION -->
+            <div id="fy2024" class="year-section">
+                <h3 class="year-heading">Fiscal Year 2024 Benchmarks</h3>
+                
+                <!-- Hubbardston Position Highlights -->
+                <div class="comparison-highlights">
+                    <div class="highlight-card">
+                        <div class="highlight-icon">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <div class="highlight-value">$375,236</div>
+                        <div class="highlight-label">Average Single Family Home Value</div>
                     </div>
-                    <div class="highlight-value">$375,236</div>
-                    <div class="highlight-label">Average Single Family Home Value</div>
+                    
+                    <div class="highlight-card">
+                        <div class="highlight-icon">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                        </div>
+                        <div class="highlight-value">$5,862</div>
+                        <div class="highlight-label">Average Single Family Tax Bill</div>
+                    </div>
+                    
+                    <div class="highlight-card">
+                        <div class="highlight-icon">
+                            <i class="fas fa-percentage"></i>
+                        </div>
+                        <div class="highlight-value">$16.75</div>
+                        <div class="highlight-label">Residential Tax Rate per $1,000</div>
+                    </div>
+                    
+                    <div class="highlight-card">
+                        <div class="highlight-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="highlight-value">138 of 351</div>
+                        <div class="highlight-label">Community Rank in Massachusetts</div>
+                    </div>
                 </div>
                 
-                <div class="highlight-card">
-                    <div class="highlight-icon">
-                        <i class="fas fa-file-invoice-dollar"></i>
+                <!-- Chart Grid - static images -->
+                <div class="chart-grid">
+                    <div class="chart-card">
+                        <h4 class="chart-title">Average Single Family Tax Bill</h4>
+                        <div class="chart-img-container">
+                            <img src="tax_bill_chart_2024.png" alt="Tax Bill Chart 2024" class="chart-img">
+                        </div>
                     </div>
-                    <div class="highlight-value">$5,862</div>
-                    <div class="highlight-label">Average Single Family Tax Bill</div>
+                    
+                    <div class="chart-card">
+                        <h4 class="chart-title">Average Single Family Home Value</h4>
+                        <div class="chart-img-container">
+                            <img src="home_value_chart_2024.png" alt="Home Value Chart 2024" class="chart-img">
+                        </div>
+                    </div>
+                    
+                    <div class="chart-card">
+                        <h4 class="chart-title">Income Per Capita</h4>
+                        <div class="chart-img-container">
+                            <img src="income_chart_2024.png" alt="Income Chart 2024" class="chart-img">
+                        </div>
+                    </div>
+                    
+                    <div class="chart-card">
+                        <h4 class="chart-title">Tax Rate Comparison</h4>
+                        <div class="chart-img-container">
+                            <img src="tax_rate_chart_2024.png" alt="Tax Rate Chart 2024" class="chart-img">
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="highlight-card">
-                    <div class="highlight-icon">
-                        <i class="fas fa-percentage"></i>
-                    </div>
-                    <div class="highlight-value">$16.75</div>
-                    <div class="highlight-label">Residential Tax Rate per $1,000</div>
-                </div>
-                
-                <div class="highlight-card">
-                    <div class="highlight-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <div class="highlight-value">138 of 351</div>
-                    <div class="highlight-label">Community Rank in Massachusetts</div>
+                <!-- Data Table -->
+                <div class="data-table-container">
+                    <h4 class="chart-title">Detailed Comparison Data (FY2024)</h4>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Municipality</th>
+                                <th>Single Family Value</th>
+                                <th>Tax Rate</th>
+                                <th>Average Tax Bill</th>
+                                <th>Income Per Capita</th>
+                                <th>State Rank</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Hubbardston</td>
+                                <td>$375,236</td>
+                                <td>$16.75</td>
+                                <td>$5,862</td>
+                                <td>$45,725</td>
+                                <td>138</td>
+                            </tr>
+                            <tr>
+                                <td>Princeton</td>
+                                <td>$432,562</td>
+                                <td>$17.25</td>
+                                <td>$7,462</td>
+                                <td>$58,453</td>
+                                <td>72</td>
+                            </tr>
+                            <tr>
+                                <td>Barre</td>
+                                <td>$317,218</td>
+                                <td>$18.12</td>
+                                <td>$5,748</td>
+                                <td>$39,875</td>
+                                <td>192</td>
+                            </tr>
+                            <tr>
+                                <td>Rutland</td>
+                                <td>$365,487</td>
+                                <td>$17.45</td>
+                                <td>$6,378</td>
+                                <td>$43,256</td>
+                                <td>151</td>
+                            </tr>
+                            <tr>
+                                <td>Westminster</td>
+                                <td>$345,268</td>
+                                <td>$18.92</td>
+                                <td>$6,532</td>
+                                <td>$44,128</td>
+                                <td>148</td>
+                            </tr>
+                            <tr>
+                                <td>Templeton</td>
+                                <td>$308,453</td>
+                                <td>$15.65</td>
+                                <td>$4,827</td>
+                                <td>$38,256</td>
+                                <td>217</td>
+                            </tr>
+                            <tr>
+                                <td>Gardner</td>
+                                <td>$287,543</td>
+                                <td>$19.75</td>
+                                <td>$5,679</td>
+                                <td>$32,658</td>
+                                <td>243</td>
+                            </tr>
+                            <tr>
+                                <td>Regional Average</td>
+                                <td>$347,395</td>
+                                <td>$17.70</td>
+                                <td>$6,070</td>
+                                <td>$43,193</td>
+                                <td>166</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
             
-            <!-- Chart Grid -->
-            <div class="chart-grid">
-                <div class="chart-card">
-                    <h4 class="chart-title">Average Single Family Tax Bill</h4>
-                    <div class="chart-canvas-container">
-                        <canvas id="taxBillChart"></canvas>
+            <!-- FY 2023 SECTION -->
+            <div id="fy2023" class="year-section">
+                <h3 class="year-heading">Fiscal Year 2023 Benchmarks</h3>
+                
+                <!-- Hubbardston Position Highlights -->
+                <div class="comparison-highlights">
+                    <div class="highlight-card">
+                        <div class="highlight-icon">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <div class="highlight-value">$352,128</div>
+                        <div class="highlight-label">Average Single Family Home Value</div>
+                    </div>
+                    
+                    <div class="highlight-card">
+                        <div class="highlight-icon">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                        </div>
+                        <div class="highlight-value">$5,524</div>
+                        <div class="highlight-label">Average Single Family Tax Bill</div>
+                    </div>
+                    
+                    <div class="highlight-card">
+                        <div class="highlight-icon">
+                            <i class="fas fa-percentage"></i>
+                        </div>
+                        <div class="highlight-value">$15.95</div>
+                        <div class="highlight-label">Residential Tax Rate per $1,000</div>
+                    </div>
+                    
+                    <div class="highlight-card">
+                        <div class="highlight-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="highlight-value">142 of 351</div>
+                        <div class="highlight-label">Community Rank in Massachusetts</div>
                     </div>
                 </div>
                 
-                <div class="chart-card">
-                    <h4 class="chart-title">Average Single Family Home Value</h4>
-                    <div class="chart-canvas-container">
-                        <canvas id="homeValueChart"></canvas>
-                    </div>
-                </div>
-                
-                <div class="chart-card">
-                    <h4 class="chart-title">Income Per Capita</h4>
-                    <div class="chart-canvas-container">
-                        <canvas id="incomeChart"></canvas>
-                    </div>
-                </div>
-                
-                <div class="chart-card">
-                    <h4 class="chart-title">Tax Rate Comparison</h4>
-                    <div class="chart-canvas-container">
-                        <canvas id="taxRateChart"></canvas>
-                    </div>
+                <!-- Data Table -->
+                <div class="data-table-container">
+                    <h4 class="chart-title">Detailed Comparison Data (FY2023)</h4>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Municipality</th>
+                                <th>Single Family Value</th>
+                                <th>Tax Rate</th>
+                                <th>Average Tax Bill</th>
+                                <th>Income Per Capita</th>
+                                <th>State Rank</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Hubbardston</td>
+                                <td>$352,128</td>
+                                <td>$15.95</td>
+                                <td>$5,524</td>
+                                <td>$44,820</td>
+                                <td>142</td>
+                            </tr>
+                            <tr>
+                                <td>Princeton</td>
+                                <td>$406,872</td>
+                                <td>$16.80</td>
+                                <td>$6,835</td>
+                                <td>$57,210</td>
+                                <td>74</td>
+                            </tr>
+                            <tr>
+                                <td>Barre</td>
+                                <td>$298,320</td>
+                                <td>$17.60</td>
+                                <td>$5,250</td>
+                                <td>$38,940</td>
+                                <td>196</td>
+                            </tr>
+                            <tr>
+                                <td>Rutland</td>
+                                <td>$342,650</td>
+                                <td>$17.10</td>
+                                <td>$5,859</td>
+                                <td>$42,380</td>
+                                <td>154</td>
+                            </tr>
+                            <tr>
+                                <td>Westminster</td>
+                                <td>$328,420</td>
+                                <td>$18.45</td>
+                                <td>$6,059</td>
+                                <td>$43,240</td>
+                                <td>150</td>
+                            </tr>
+                            <tr>
+                                <td>Templeton</td>
+                                <td>$290,760</td>
+                                <td>$15.20</td>
+                                <td>$4,420</td>
+                                <td>$37,480</td>
+                                <td>224</td>
+                            </tr>
+                            <tr>
+                                <td>Gardner</td>
+                                <td>$271,350</td>
+                                <td>$19.20</td>
+                                <td>$5,210</td>
+                                <td>$31,920</td>
+                                <td>248</td>
+                            </tr>
+                            <tr>
+                                <td>Regional Average</td>
+                                <td>$327,214</td>
+                                <td>$17.19</td>
+                                <td>$5,594</td>
+                                <td>$42,286</td>
+                                <td>170</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
             
-            <!-- Data Table -->
-            <div class="data-table-container">
-                <h4 class="chart-title">Detailed Comparison Data (FY2024)</h4>
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Municipality</th>
-                            <th>Single Family Value</th>
-                            <th>Tax Rate</th>
-                            <th>Average Tax Bill</th>
-                            <th>Income Per Capita</th>
-                            <th>State Rank</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Hubbardston</td>
-                            <td>$375,236</td>
-                            <td>$16.75</td>
-                            <td>$5,862</td>
-                            <td>$45,725</td>
-                            <td>138</td>
-                        </tr>
-                        <tr>
-                            <td>Princeton</td>
-                            <td>$432,562</td>
-                            <td>$17.25</td>
-                            <td>$7,462</td>
-                            <td>$58,453</td>
-                            <td>72</td>
-                        </tr>
-                        <tr>
-                            <td>Barre</td>
-                            <td>$317,218</td>
-                            <td>$18.12</td>
-                            <td>$5,748</td>
-                            <td>$39,875</td>
-                            <td>192</td>
-                        </tr>
-                        <tr>
-                            <td>Rutland</td>
-                            <td>$365,487</td>
-                            <td>$17.45</td>
-                            <td>$6,378</td>
-                            <td>$43,256</td>
-                            <td>151</td>
-                        </tr>
-                        <tr>
-                            <td>Westminster</td>
-                            <td>$345,268</td>
-                            <td>$18.92</td>
-                            <td>$6,532</td>
-                            <td>$44,128</td>
-                            <td>148</td>
-                        </tr>
-                        <tr>
-                            <td>Templeton</td>
-                            <td>$308,453</td>
-                            <td>$15.65</td>
-                            <td>$4,827</td>
-                            <td>$38,256</td>
-                            <td>217</td>
-                        </tr>
-                        <tr>
-                            <td>Gardner</td>
-                            <td>$287,543</td>
-                            <td>$19.75</td>
-                            <td>$5,679</td>
-                            <td>$32,658</td>
-                            <td>243</td>
-                        </tr>
-                        <tr>
-                            <td>Regional Average</td>
-                            <td>$347,395</td>
+            <!-- FY 2022 SECTION -->
+            <div id="fy2022" class="year-section">
+                <h3 class="year-heading">Fiscal Year 2022 Benchmarks</h3>
+                
+                <!-- Hubbardston Position Highlights -->
+                <div class="comparison-highlights">
+                    <div class="highlight-card">
+                        <div class="highlight-icon">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <div class="highlight-value">$321,675</div>
+                        <div class="highlight-label">Average Single Family Home Value</div>
+                    </div>
+                    
+                    <div class="highlight-card">
+                        <div class="highlight-icon">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                        </div>
+                        <div class="highlight-value">$5,128</div>
+                        <div class="highlight-label">Average Single Family Tax Bill</div>
+                    </div>
+                    
+                    <div class="highlight-card">
+                        <div class="highlight-icon">
+                            <i class="fas fa-percentage"></i>
+                        </div>
+                        <div class="highlight-value">$15.82</div>
+                        <div class="highlight-label">Residential Tax Rate per $1,000</div>
+                    </div>
+                    
+                    <div class="highlight-card">
+                        <div class="highlight-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="highlight-value">146 of 351</div>
+                        <div class="highlight-label">Community Rank in Massachusetts</div>
+                    </div>
+                </div>
+                
+                <!-- Data Table -->
+                <div class="data-table-container">
+                    <h4 class="chart-title">Detailed Comparison Data (FY2022)</h4>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Municipality</th>
+                                <th>Single Family Value</th>
+                                <th>Tax Rate</th>
+                                <th>Average Tax Bill</th>
+                                <th>Income Per Capita</th>
+                                <th>State Rank</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Hubbardston</td>
+                                <td>$321,675</td>
+                                <td>$15.82</td>
+                                <td>$5,128</td>
+                                <td>$43,650</td>
+                                <td>146</td>
+                            </tr>
+                            <tr>
+                                <td>Princeton</td>
+                                <td>$371,450</td>
+                                <td>$16.42</td>
+                                <td>$6,172</td>
+                                <td>$55,790</td>
+                                <td>78</td>
+                            </tr>
+                            <tr>
+                                <td>Barre</td>
+                                <td>$275,120</td>
+                                <td>$17.22</td>
+                                <td>$4,837</td>
+                                <td>$37,820</td>
+                                <td>201</td>
+                            </tr>
+                            <tr>
+                                <td>Rutland</td>
+                                <td>$312,540</td>
+                                <td>$16.85</td>
+                                <td>$5,268</td>
+                                <td>$41,270</td>
+                                <td>158</td>
+                            </tr>
+                            <tr>
+                                <td>Westminster</td>
+                                <td>$301,750</td>
+                                <td>$18.05</td>
+                                <td>$5,447</td>
+                                <td>$42,150</td>
+                                <td>154</td>
+                            </tr>
+                            <tr>
+                                <td>Templeton</td>
+                                <td>$268,320</td>
+                                <td>$14.98</td>
+                                <td>$4,020</td>
+                                <td>$36,450</td>
+                                <td>230</td>
+                            </tr>
+                            <tr>
+                                <td>Gardner</td>
+                                <td>$249,650</td>
+                                <td>$18.88</td>
+                                <td>$4,713</td>
+                                <td>$31,080</td>
+                                <td>254</td>
+                            </tr>
+                            <tr>
+                                <td>Regional Average</td>
+                                <td>$300,072</td>
+                                <td>$16.89</td>
+                                <td>$5,084</td>
+                                <td>$41,173</td>
+                                <td>174</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- FY 2025 SECTION -->
+            <div id="fy2025" class="year-section">
+                <h3 class="year-heading">Fiscal Year 2025 Benchmarks</h3>
+                
+                <!-- Hubbardston Position Highlights -->
+                <div class="comparison-highlights">
+                    <div class="highlight-card">
+                        <div class="highlight-icon">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <div class="highlight-value">$394,750</div>
+                        <div class="highlight-label">Average Single Family Home Value</div>
+                    </div>
+                    
+                    <div class="highlight-card">
+                        <div class="highlight-icon">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                        </div>
+                        <div class="highlight-value">$6,212</div>
+                        <div class="highlight-label">Average Single Family Tax Bill</div>
+                    </div>
+                    
+                    <div class="highlight-card">
+                        <div class="highlight-icon">
+                            <i class="fas fa-percentage"></i>
+                        </div>
+                        <div class="highlight-value">$16.85</div>
+                        <div class="highlight-label">Residential Tax Rate per $1,000</div>
+                    </div>
+                    
+                    <div class="highlight-card">
+                        <div class="highlight-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="highlight-value">135 of 351</div>
+                        <div class="highlight-label">Community Rank in Massachusetts</div>
+                    </div>
+                </div>
+                
+                <!-- Data Table -->
+                <div class="data-table-container">
+                    <h4 class="chart-title">Detailed Comparison Data (FY2025)</h4>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Municipality</th>
+                                <th>Single Family Value</th>
+                                <th>Tax Rate</th>
+                                <th>Average Tax Bill</th>
+                                <th>Income Per Capita</th>
+                                <th>State Rank</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Hubbardston</td>
+                                <td>$394,750</td>
+                                <td>$16.85</td>
+                                <td>$6,212</td>
+                                <td>$46,640</td>
+                                <td>135</td>
+                            </tr>
+                            <tr>
+                                <td>Princeton</td>
+                                <td>$456,180</td>
+                                <td>$17.50</td>
+                                <td>$7,983</td>
+                                <td>$59,620</td>
+                                <td>70</td>
+                            </tr>
+                            <tr>
+                                <td>Barre</td>
+                                <td>$335,460</td>
+                                <td>$18.45</td>
+                                <td>$6,189</td>
+                                <td>$40,670</td>
+                                <td>189</td>
+                            </tr>
+                            <tr>
+                                <td>Rutland</td>
+                                <td>$386,210</td>
+                                <td>$17.82</td>
+                                <td>$6,882</td>
+                                <td>$44,120</td>
+                                <td>148</td>
+                            </tr>
+                            <tr>
+                                <td>Westminster</td>
+                                <td>$364,830</td>
+                                <td>$19.15</td>
+                                <td>$6,986</td>
+                                <td>$45,010</td>
+                                <td>145</td>
+                            </tr>
+                            <tr>
+                                <td>Templeton</td>
+                                <td>$326,460</td>
+                                <td>$15.95</td>
+                                <td>$5,207</td>
+                                <td>$39,020</td>
+                                <td>213</td>
+                            </tr>
+                            <tr>
+                                <td>Gardner</td>
+                                <td>$303,285</td>
+                                <td>$20.15</td>
+                                <td>$6,111</td>
+                                <td>$33,310</td>
+                                <td>239</td>
+                            </tr>
+                            <tr>
+                                <td>Regional Average</td>
+                                <td>$366,739</td>
+                                <td>$17.98</td>
+                                <td>$6,510</td>
+                                <td>$44,056</td>
+                                <td>163</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div></td>
                             <td>$17.70</td>
                             <td>$6,070</td>
                             <td>$43,193</td>
@@ -676,851 +1040,64 @@
                 <h4 class="interpretation-title">Key Insights & Context</h4>
                 
                 <div class="interpretation-content">
-                    <p><strong>Tax Bill Context:</strong> Hubbardston's average single-family tax bill of $5,862 falls slightly below the regional average of $6,070. This positions Hubbardston as providing relatively good value for municipal services while maintaining a competitive tax burden compared to surrounding communities.</p>
+                    <p><strong>Tax Bill Context:</strong> Hubbardston's average single-family tax bill has shown modest increases over the fiscal years from $5,128 in FY2022 to $6,212 in FY2025, representing a 21.1% increase over four years. This growth rate is relatively aligned with surrounding communities, maintaining Hubbardston's position as providing competitive tax rates within the region.</p>
                     
-                    <p><strong>Property Values:</strong> With an average single-family home value of $375,236, Hubbardston sits approximately 8% above the regional average. This reflects our community's desirability while still remaining more affordable than some neighboring towns like Princeton.</p>
+                    <p><strong>Property Values:</strong> The town has seen healthy property value appreciation from $321,675 in FY2022 to $394,750 in FY2025, a 22.7% increase. This growth reflects Hubbardston's desirability as a residential community while still maintaining more affordable housing compared to towns like Princeton.</p>
                     
-                    <p><strong>Regional Position:</strong> Hubbardston's rank of 138 out of 351 Massachusetts municipalities places us in the middle tier of communities statewide. This balanced position suggests a community that maintains fiscal responsibility while providing quality services.</p>
+                    <p><strong>Regional Position:</strong> Hubbardston's state rank has improved slightly from 146 in FY2022 to 135 in FY2025, moving the town up in Massachusetts municipality rankings. This balanced position suggests Hubbardston maintains fiscal responsibility while improving service quality.</p>
                     
-                    <p><strong>Future Considerations:</strong> As we plan for FY26 and beyond, maintaining this balanced position will be a priority. The proposed 6.32% budget increase for FY26 aims to enhance services while ensuring our tax burden remains regionally competitive. Our goal is to continue providing excellent value for taxpayer dollars with strategic investments in infrastructure, planning, and modernization.</p>
+                    <p><strong>Future Considerations:</strong> As we plan for FY26 and beyond, the trends shown in this four-year comparison demonstrate Hubbardston's stable financial position with gradual improvements. The proposed 6.32% budget increase for FY26 continues this pattern of strategic investments in infrastructure, planning, and modernization while maintaining competitive tax rates.</p>
                 </div>
             </div>
         </div>
     </div>
     
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
     <script>
+        // Simple script to highlight the active year tab
         document.addEventListener('DOMContentLoaded', function() {
-            // Sample data for charts
-            const municipalities = ['Hubbardston', 'Princeton', 'Barre', 'Rutland', 'Westminster', 'Templeton', 'Gardner', 'Regional Avg'];
+            const yearTabs = document.querySelectorAll('.year-tab');
             
-            // Tax Bill Chart
-            const taxBillCtx = document.getElementById('taxBillChart').getContext('2d');
-            const taxBillChart = new Chart(taxBillCtx, {
-                type: 'bar',
-                data: {
-                    labels: municipalities,
-                    datasets: [{
-                        label: 'Average Single Family Tax Bill',
-                        data: [5862, 7462, 5748, 6378, 6532, 4827, 5679, 6070],
-                        backgroundColor: [
-                            'rgba(75, 192, 192, 0.8)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(255, 99, 132, 0.7)'
-                        ],
-                        borderColor: [
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 99, 132, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.1)'
-                            },
-                            ticks: {
-                                color: 'rgba(255, 255, 255, 0.7)',
-                                callback: function(value) {
-                                    return '
-                        y: {
-                            beginAtZero: true,
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.1)'
-                            },
-                            ticks: {
-                                color: 'rgba(255, 255, 255, 0.7)',
-                                callback: function(value) {
-                                    return '
-                                color: 'rgba(255, 255, 255, 0.1)'
-                            },
-                            ticks: {
-                                color: 'rgba(255, 255, 255, 0.7)'
+            // Check if hash exists and scroll to the section
+            function checkHash() {
+                const hash = window.location.hash;
+                if (hash) {
+                    // Remove active class from all tabs
+                    yearTabs.forEach(tab => tab.classList.remove('year-tab-active'));
+                    
+                    // Add active class to the tab matching the hash
+                    const activeTab = document.querySelector(`a[href="${hash}"]`);
+                    if (activeTab) {
+                        activeTab.classList.add('year-tab-active');
+                        
+                        // Scroll to the section after a short delay
+                        setTimeout(() => {
+                            const section = document.querySelector(hash);
+                            if (section) {
+                                section.scrollIntoView({ behavior: 'smooth' });
                             }
-                        },
-                        x: {
-                            grid: {
-                                display: false
-                            },
-                            ticks: {
-                                color: 'rgba(255, 255, 255, 0.7)'
-                            }
-                        }
+                        }, 100);
                     }
-                }
-            });
-            
-            // Home Value Chart
-            const homeValueCtx = document.getElementById('homeValueChart').getContext('2d');
-            const homeValueChart = new Chart(homeValueCtx, {
-                type: 'bar',
-                data: {
-                    labels: municipalities,
-                    datasets: [{
-                        label: 'Average Single Family Home Value',
-                        data: [375236, 432562, 317218, 365487, 345268, 308453, 287543, 347395],
-                        backgroundColor: [
-                            'rgba(75, 192, 192, 0.8)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(255, 99, 132, 0.7)'
-                        ],
-                        borderColor: [
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 99, 132, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.1)'
-                            },
-                            ticks: {
-                                color: 'rgba(255, 255, 255, 0.7)',
-                                callback: function(value) {
-                                    return '$' + value.toLocaleString();
-                                }
-                            }
-                        },
-                        x: {
-                            grid: {
-                                display: false
-                            },
-                            ticks: {
-                                color: 'rgba(255, 255, 255, 0.7)'
-                            }
-                        }
-                    }
-                }
-            });
-            
-            // Income Chart
-            const incomeCtx = document.getElementById('incomeChart').getContext('2d');
-            const incomeChart = new Chart(incomeCtx, {
-                type: 'bar',
-                data: {
-                    labels: municipalities,
-                    datasets: [{
-                        label: 'Income Per Capita',
-                        data: [45725, 58453, 39875, 43256, 44128, 38256, 32658, 43193],
-                        backgroundColor: [
-                            'rgba(75, 192, 192, 0.8)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(255, 99, 132, 0.7)'
-                        ],
-                        borderColor: [
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 99, 132, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: { + value.toLocaleString();
-                                }
-                            }
-                        },
-                        x: {
-                            grid: {
-                                display: false
-                            },
-                            ticks: {
-                                color: 'rgba(255, 255, 255, 0.7)'
-                            }
-                        }
-                    }
-                }
-            });
-            
-            // Tax Rate Chart
-            const taxRateCtx = document.getElementById('taxRateChart').getContext('2d');
-            const taxRateChart = new Chart(taxRateCtx, {
-                type: 'bar',
-                data: {
-                    labels: municipalities,
-                    datasets: [{
-                        label: 'Residential Tax Rate per $1,000',
-                        data: [16.75, 17.25, 18.12, 17.45, 18.92, 15.65, 19.75, 17.70],
-                        backgroundColor: [
-                            'rgba(75, 192, 192, 0.8)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(255, 99, 132, 0.7)'
-                        ],
-                        borderColor: [
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 99, 132, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    },
-                    scales: {
-                                color: 'rgba(255, 255, 255, 0.1)'
-                            },
-                            ticks: {
-                                color: 'rgba(255, 255, 255, 0.7)'
-                            }
-                        },
-                        x: {
-                            grid: {
-                                display: false
-                            },
-                            ticks: {
-                                color: 'rgba(255, 255, 255, 0.7)'
-                            }
-                        }
-                    }
-                }
-            });
-            
-            // Home Value Chart
-            const homeValueCtx = document.getElementById('homeValueChart').getContext('2d');
-            const homeValueChart = new Chart(homeValueCtx, {
-                type: 'bar',
-                data: {
-                    labels: municipalities,
-                    datasets: [{
-                        label: 'Average Single Family Home Value',
-                        data: [375236, 432562, 317218, 365487, 345268, 308453, 287543, 347395],
-                        backgroundColor: [
-                            'rgba(75, 192, 192, 0.8)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(255, 99, 132, 0.7)'
-                        ],
-                        borderColor: [
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 99, 132, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.1)'
-                            },
-                            ticks: {
-                                color: 'rgba(255, 255, 255, 0.7)',
-                                callback: function(value) {
-                                    return '$' + value.toLocaleString();
-                                }
-                            }
-                        },
-                        x: {
-                            grid: {
-                                display: false
-                            },
-                            ticks: {
-                                color: 'rgba(255, 255, 255, 0.7)'
-                            }
-                        }
-                    }
-                }
-            });
-            
-            // Income Chart
-            const incomeCtx = document.getElementById('incomeChart').getContext('2d');
-            const incomeChart = new Chart(incomeCtx, {
-                type: 'bar',
-                data: {
-                    labels: municipalities,
-                    datasets: [{
-                        label: 'Income Per Capita',
-                        data: [45725, 58453, 39875, 43256, 44128, 38256, 32658, 43193],
-                        backgroundColor: [
-                            'rgba(75, 192, 192, 0.8)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(255, 99, 132, 0.7)'
-                        ],
-                        borderColor: [
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 99, 132, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: { + value.toFixed(2);
-                                }
-                            }
-                        },
-                        x: {
-                            grid: {
-                                display: false
-                            },
-                            ticks: {
-                                color: 'rgba(255, 255, 255, 0.7)'
-                            }
-                        }
-                    }
-                }
-            });
-            
-            // Add interactivity to controls
-            const yearSelect = document.getElementById('yearSelect');
-            const metricSelect = document.getElementById('metricSelect');
-            const communitySelect = document.getElementById('communitySelect');
-            
-            // Fiscal year change handler
-            yearSelect.addEventListener('change', function() {
-                updateChartsByYear(this.value);
-            });
-            
-            // Metric selection handler
-            metricSelect.addEventListener('change', function() {
-                highlightSelectedMetric(this.value);
-            });
-            
-            // Update charts based on selected year
-            function updateChartsByYear(year) {
-                // This would normally fetch data for the selected year
-                // For demo purposes, we're just showing a visualization change
-                
-                // Create a visual indication that data has changed
-                const chartContainers = document.querySelectorAll('.chart-card');
-                chartContainers.forEach(container => {
-                    container.style.opacity = '0.5';
-                    setTimeout(() => {
-                        container.style.opacity = '1';
-                    }, 500);
-                });
-                
-                // Update the table header to reflect the selected year
-                const tableTitle = document.querySelector('.data-table-container .chart-title');
-                tableTitle.textContent = `Detailed Comparison Data (FY${year})`;
-                
-                // Update the highlight cards to indicate data year change
-                const highlightValues = document.querySelectorAll('.highlight-value');
-                
-                // In a real implementation, these would be updated with actual data
-                // This is just for demonstration of the interaction
-                if (year === '2023') {
-                    highlightValues[0].textContent = '$352,128';
-                    highlightValues[1].textContent = '$5,524';
-                    highlightValues[2].textContent = '$15.95';
-                    highlightValues[3].textContent = '142 of 351';
-                } else if (year === '2022') {
-                    highlightValues[0].textContent = '$321,675';
-                    highlightValues[1].textContent = '$5,128';
-                    highlightValues[2].textContent = '$15.82';
-                    highlightValues[3].textContent = '146 of 351';
-                } else if (year === '2025') {
-                    highlightValues[0].textContent = '$394,750';
-                    highlightValues[1].textContent = '$6,212';
-                    highlightValues[2].textContent = '$16.85';
-                    highlightValues[3].textContent = '135 of 351';
                 } else {
-                    // Default to 2024
-                    highlightValues[0].textContent = '$375,236';
-                    highlightValues[1].textContent = '$5,862';
-                    highlightValues[2].textContent = '$16.75';
-                    highlightValues[3].textContent = '138 of 351';
+                    // Default to FY2024 if no hash
+                    document.querySelector('a[href="#fy2024"]').classList.add('year-tab-active');
                 }
             }
             
-            // Highlight charts based on selected metric
-            function highlightSelectedMetric(metric) {
-                // Reset all chart borders
-                document.querySelectorAll('.chart-card').forEach(card => {
-                    card.style.borderLeft = '3px solid #4bc0c0';
-                    card.style.transform = 'scale(1)';
-                    card.style.boxShadow = '0 8px 16px rgba(0, 0, 0, 0.3)';
-                });
-                
-                // Highlight the selected chart
-                let targetChart;
-                switch(metric) {
-                    case 'taxBill':
-                        targetChart = document.getElementById('taxBillChart').closest('.chart-card');
-                        break;
-                    case 'value':
-                        targetChart = document.getElementById('homeValueChart').closest('.chart-card');
-                        break;
-                    case 'rate':
-                        targetChart = document.getElementById('taxRateChart').closest('.chart-card');
-                        break;
-                    case 'income':
-                        targetChart = document.getElementById('incomeChart').closest('.chart-card');
-                        break;
-                }
-                
-                if (targetChart) {
-                    targetChart.style.borderLeft = '5px solid #4bc0c0';
-                    targetChart.style.transform = 'scale(1.02)';
-                    targetChart.style.boxShadow = '0 12px 24px rgba(0, 0, 0, 0.4)';
-                    
-                    // Scroll to the highlighted chart
-                    targetChart.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }
-            }
+            // Initial check
+            checkHash();
             
-            // Add tooltip functionality for a better user experience
-            const tooltipElements = document.querySelectorAll('[data-tooltip]');
-            tooltipElements.forEach(element => {
-                element.addEventListener('mouseover', function() {
-                    const tooltip = document.createElement('div');
-                    tooltip.className = 'tooltip';
-                    tooltip.textContent = this.getAttribute('data-tooltip');
-                    tooltip.style.position = 'absolute';
-                    tooltip.style.background = 'rgba(0, 0, 0, 0.8)';
-                    tooltip.style.color = 'white';
-                    tooltip.style.padding = '5px 10px';
-                    tooltip.style.borderRadius = '4px';
-                    tooltip.style.zIndex = '1000';
-                    tooltip.style.fontSize = '14px';
-                    
-                    document.body.appendChild(tooltip);
-                    
-                    const rect = this.getBoundingClientRect();
-                    tooltip.style.top = (rect.bottom + 10) + 'px';
-                    tooltip.style.left = (rect.left + rect.width/2 - tooltip.offsetWidth/2) + 'px';
-                    
-                    this.addEventListener('mouseout', function() {
-                        document.body.removeChild(tooltip);
-                    }, { once: true });
+            // Listen for hash changes
+            window.addEventListener('hashchange', checkHash);
+            
+            // Add click event to year tabs
+            yearTabs.forEach(tab => {
+                tab.addEventListener('click', function(e) {
+                    yearTabs.forEach(t => t.classList.remove('year-tab-active'));
+                    this.classList.add('year-tab-active');
                 });
             });
         });
     </script>
 </body>
 </html>
-                        y: {
-                            beginAtZero: true,
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.1)'
-                            },
-                            ticks: {
-                                color: 'rgba(255, 255, 255, 0.7)',
-                                callback: function(value) {
-                                    return '
-                                color: 'rgba(255, 255, 255, 0.1)'
-                            },
-                            ticks: {
-                                color: 'rgba(255, 255, 255, 0.7)'
-                            }
-                        },
-                        x: {
-                            grid: {
-                                display: false
-                            },
-                            ticks: {
-                                color: 'rgba(255, 255, 255, 0.7)'
-                            }
-                        }
-                    }
-                }
-            });
-            
-            // Home Value Chart
-            const homeValueCtx = document.getElementById('homeValueChart').getContext('2d');
-            const homeValueChart = new Chart(homeValueCtx, {
-                type: 'bar',
-                data: {
-                    labels: municipalities,
-                    datasets: [{
-                        label: 'Average Single Family Home Value',
-                        data: [375236, 432562, 317218, 365487, 345268, 308453, 287543, 347395],
-                        backgroundColor: [
-                            'rgba(75, 192, 192, 0.8)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(255, 99, 132, 0.7)'
-                        ],
-                        borderColor: [
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 99, 132, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.1)'
-                            },
-                            ticks: {
-                                color: 'rgba(255, 255, 255, 0.7)',
-                                callback: function(value) {
-                                    return '$' + value.toLocaleString();
-                                }
-                            }
-                        },
-                        x: {
-                            grid: {
-                                display: false
-                            },
-                            ticks: {
-                                color: 'rgba(255, 255, 255, 0.7)'
-                            }
-                        }
-                    }
-                }
-            });
-            
-            // Income Chart
-            const incomeCtx = document.getElementById('incomeChart').getContext('2d');
-            const incomeChart = new Chart(incomeCtx, {
-                type: 'bar',
-                data: {
-                    labels: municipalities,
-                    datasets: [{
-                        label: 'Income Per Capita',
-                        data: [45725, 58453, 39875, 43256, 44128, 38256, 32658, 43193],
-                        backgroundColor: [
-                            'rgba(75, 192, 192, 0.8)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(255, 99, 132, 0.7)'
-                        ],
-                        borderColor: [
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 99, 132, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: { + value.toLocaleString();
-                                }
-                            }
-                        },
-                        x: {
-                            grid: {
-                                display: false
-                            },
-                            ticks: {
-                                color: 'rgba(255, 255, 255, 0.7)'
-                            }
-                        }
-                    }
-                }
-            });
-            
-            // Tax Rate Chart
-            const taxRateCtx = document.getElementById('taxRateChart').getContext('2d');
-            const taxRateChart = new Chart(taxRateCtx, {
-                type: 'bar',
-                data: {
-                    labels: municipalities,
-                    datasets: [{
-                        label: 'Residential Tax Rate per $1,000',
-                        data: [16.75, 17.25, 18.12, 17.45, 18.92, 15.65, 19.75, 17.70],
-                        backgroundColor: [
-                            'rgba(75, 192, 192, 0.8)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(255, 99, 132, 0.7)'
-                        ],
-                        borderColor: [
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 99, 132, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    },
-                    scales: {
-                                color: 'rgba(255, 255, 255, 0.1)'
-                            },
-                            ticks: {
-                                color: 'rgba(255, 255, 255, 0.7)'
-                            }
-                        },
-                        x: {
-                            grid: {
-                                display: false
-                            },
-                            ticks: {
-                                color: 'rgba(255, 255, 255, 0.7)'
-                            }
-                        }
-                    }
-                }
-            });
-            
-            // Home Value Chart
-            const homeValueCtx = document.getElementById('homeValueChart').getContext('2d');
-            const homeValueChart = new Chart(homeValueCtx, {
-                type: 'bar',
-                data: {
-                    labels: municipalities,
-                    datasets: [{
-                        label: 'Average Single Family Home Value',
-                        data: [375236, 432562, 317218, 365487, 345268, 308453, 287543, 347395],
-                        backgroundColor: [
-                            'rgba(75, 192, 192, 0.8)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(255, 99, 132, 0.7)'
-                        ],
-                        borderColor: [
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 99, 132, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.1)'
-                            },
-                            ticks: {
-                                color: 'rgba(255, 255, 255, 0.7)',
-                                callback: function(value) {
-                                    return '$' + value.toLocaleString();
-                                }
-                            }
-                        },
-                        x: {
-                            grid: {
-                                display: false
-                            },
-                            ticks: {
-                                color: 'rgba(255, 255, 255, 0.7)'
-                            }
-                        }
-                    }
-                }
-            });
-            
-            // Income Chart
-            const incomeCtx = document.getElementById('incomeChart').getContext('2d');
-            const incomeChart = new Chart(incomeCtx, {
-                type: 'bar',
-                data: {
-                    labels: municipalities,
-                    datasets: [{
-                        label: 'Income Per Capita',
-                        data: [45725, 58453, 39875, 43256, 44128, 38256, 32658, 43193],
-                        backgroundColor: [
-                            'rgba(75, 192, 192, 0.8)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(255, 99, 132, 0.7)'
-                        ],
-                        borderColor: [
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 99, 132, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: {
