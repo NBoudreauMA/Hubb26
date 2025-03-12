@@ -4,120 +4,156 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hubbardston Revenue Data</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Open Sans', Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: rgba(173, 216, 230, 0.3);
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.4;
         }
         
         .header {
             background-color: #2e6e41;
             color: white;
-            padding: 10px 0;
+            padding: 12px 0;
             text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
         
         .header-nav {
             display: flex;
-            justify-content: space-around;
+            justify-content: center;
             max-width: 1200px;
             margin: 0 auto;
+            gap: 20px;
+            flex-wrap: wrap;
         }
         
         .header-nav a {
             color: white;
             text-decoration: none;
-            font-weight: bold;
-            padding: 5px 10px;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+        
+        .header-nav a:hover {
+            background-color: rgba(255,255,255,0.1);
         }
         
         .page-title {
             text-align: center;
             color: #2e6e41;
             margin: 20px 0;
-            font-size: 24px;
+            font-size: 26px;
+            font-weight: 700;
+        }
+        
+        .table-wrapper {
+            max-width: 1400px;
+            margin: 0 auto 30px;
+            padding: 0 15px;
         }
         
         .table-container {
             width: 100%;
-            max-width: 100%;
             overflow-x: auto;
-            margin: 0 auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            background-color: white;
             position: relative;
         }
         
         table {
             width: 100%;
             border-collapse: collapse;
+            border-spacing: 0;
         }
         
         thead {
             position: sticky;
             top: 0;
             z-index: 10;
+            background-color: #2e6e41;
         }
         
         th {
             background-color: #2e6e41;
             color: white;
-            padding: 10px 8px;
+            padding: 15px 10px;
             text-align: left;
+            font-weight: 600;
             position: sticky;
             top: 0;
+            box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+        }
+        
+        th:first-child {
+            border-top-left-radius: 8px;
+        }
+        
+        th:last-child {
+            border-top-right-radius: 8px;
         }
         
         td {
-            padding: 8px;
-            border-bottom: 1px solid #ddd;
+            padding: 12px 10px;
+            border-bottom: 1px solid #eaedf0;
         }
         
-        /* Hide Category column */
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+        
         .category-column {
             display: none;
         }
         
-        /* Color coding based on categories */
-        tr.tax-revenue {
-            background-color: rgba(211, 235, 205, 0.5);
+        .money-cell, .percent-cell {
+            text-align: left;
+            white-space: nowrap;
         }
-        
-        tr.state-aid {
-            background-color: rgba(209, 233, 237, 0.5);
-        }
-        
-        tr.local-receipts {
-            background-color: rgba(255, 245, 204, 0.5);
-        }
-        
-        tr.licenses-fees {
-            background-color: rgba(230, 230, 250, 0.5);
-        }
-        
-        tr.permits {
-            background-color: rgba(250, 235, 215, 0.5);
-        }
-        
-        tr.other-revenues {
+
+        tr.subtotal {
+            font-weight: 600;
             background-color: rgba(220, 220, 220, 0.5);
         }
-        
-        tr.subtotal {
-            font-weight: bold;
-        }
-        
+
         tr.grand-total {
-            font-weight: bold;
-            background-color: rgba(46, 110, 65, 0.2);
+            font-weight: 700;
+            background-color: rgba(46, 110, 65, 0.15);
+        }
+
+        .table-info {
+            background-color: #f0f5f0;
+            border-left: 4px solid #2e6e41;
+            padding: 10px 15px;
+            margin: 20px 0;
+            border-radius: 0 4px 4px 0;
+            font-size: 14px;
+            color: #444;
         }
         
-        .money-cell {
-            text-align: left;
-        }
-        
-        .percent-cell {
-            text-align: left;
+        @media (max-width: 768px) {
+            .header-nav a {
+                padding: 5px 8px;
+                font-size: 14px;
+            }
+            
+            .table-wrapper {
+                padding: 0 10px;
+            }
+            
+            th, td {
+                padding: 10px 8px;
+            }
         }
     </style>
 </head>
@@ -134,446 +170,37 @@
     
     <h1 class="page-title">Proposed Revenue</h1>
     
-    <div class="table-container">
-        <table id="revenue-table">
-            <thead>
-                <tr>
-                    <th class="category-column">Category</th>
-                    <th>Account</th>
-                    <th>FY23 ($)</th>
-                    <th>FY24 ($)</th>
-                    <th>FY25 ($)</th>
-                    <th>FY26 Proposed ($)</th>
-                    <th>Explanation</th>
-                    <th>% Collected as of 2/28/25</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Tax Revenue -->
-                <tr class="tax-revenue">
-                    <td class="category-column">Tax Revenue</td>
-                    <td>Tax Levy</td>
-                    <td class="money-cell"></td>
-                    <td class="money-cell">$8,425,343.00</td>
-                    <td class="money-cell">$8,770,191.58</td>
-                    <td class="money-cell"></td>
-                    <td>Based on corrected Prop 2.5% calculation</td>
-                    <td class="percent-cell">74.50%</td>
-                </tr>
-                <tr class="tax-revenue">
-                    <td class="category-column">Tax Revenue</td>
-                    <td>Prop 2.5%</td>
-                    <td class="money-cell"></td>
-                    <td class="money-cell"></td>
-                    <td class="money-cell">$210,633.58</td>
-                    <td class="money-cell">$219,254.79</td>
-                    <td>Adjusted for corrected 2.5% increase calculation</td>
-                    <td class="percent-cell">100.00%</td>
-                </tr>
-                <tr class="tax-revenue">
-                    <td class="category-column">Tax Revenue</td>
-                    <td>New Growth / Amended NG</td>
-                    <td class="money-cell"></td>
-                    <td class="money-cell"></td>
-                    <td class="money-cell">$134,215.00</td>
-                    <td class="money-cell">$125,000.00</td>
-                    <td>Projected at 90% due to no collections yet</td>
-                    <td class="percent-cell">0.00%</td>
-                </tr>
-                <tr class="tax-revenue">
-                    <td class="category-column">Tax Revenue</td>
-                    <td>Debt Exclusions (School Roof)</td>
-                    <td class="money-cell"></td>
-                    <td class="money-cell"></td>
-                    <td class="money-cell">$82,377.00</td>
-                    <td class="money-cell">$82,377.00</td>
-                    <td>Fixed debt amount for school roof</td>
-                    <td class="percent-cell">0.00%</td>
-                </tr>
-                <tr class="tax-revenue subtotal">
-                    <td class="category-column">Tax Revenue</td>
-                    <td>Subtotal</td>
-                    <td class="money-cell">$8,052,778</td>
-                    <td class="money-cell">$8,425,343</td>
-                    <td class="money-cell">$8,852,569</td>
-                    <td class="money-cell">$9,196,823</td>
-                    <td>Subtotal of Tax Levy items</td>
-                    <td class="percent-cell">74.20%</td>
-                </tr>
-                
-                <!-- State Aid -->
-                <tr class="state-aid">
-                    <td class="category-column">State Aid</td>
-                    <td>Unrestricted General Government Aid</td>
-                    <td class="money-cell">$521,806.00</td>
-                    <td class="money-cell">$530,155.00</td>
-                    <td class="money-cell">$554,659.00</td>
-                    <td class="money-cell">$579,659.00</td>
-                    <td>H1</td>
-                    <td class="percent-cell">66.00%</td>
-                </tr>
-                <tr class="state-aid">
-                    <td class="category-column">State Aid</td>
-                    <td>Abatements to Veterans' and Blind</td>
-                    <td class="money-cell">$29,038.00</td>
-                    <td class="money-cell">$24,861.00</td>
-                    <td class="money-cell">$25,706.00</td>
-                    <td class="money-cell">$26,477.18</td>
-                    <td>H1</td>
-                    <td class="percent-cell">196.00%</td>
-                </tr>
-                <tr class="state-aid">
-                    <td class="category-column">State Aid</td>
-                    <td>State Owned Land</td>
-                    <td class="money-cell">$101,466.00</td>
-                    <td class="money-cell">$115,957.00</td>
-                    <td class="money-cell">$118,741.00</td>
-                    <td class="money-cell">$122,303.23</td>
-                    <td>H1</td>
-                    <td class="percent-cell">68.00%</td>
-                </tr>
-                <tr class="state-aid">
-                    <td class="category-column">State Aid</td>
-                    <td>Veterans' Benefits and Exemptions</td>
-                    <td class="money-cell">$6,428.00</td>
-                    <td class="money-cell">$365.00</td>
-                    <td class="money-cell">-</td>
-                    <td class="money-cell">-</td>
-                    <td>H1</td>
-                    <td class="percent-cell"></td>
-                </tr>
-                <tr class="state-aid">
-                    <td class="category-column">State Aid</td>
-                    <td>Offsets (Library)</td>
-                    <td class="money-cell">$9,936.00</td>
-                    <td class="money-cell">$11,114.00</td>
-                    <td class="money-cell">$12,765.00</td>
-                    <td class="money-cell">$13,147.95</td>
-                    <td>H1</td>
-                    <td class="percent-cell">57.00%</td>
-                </tr>
-                <tr class="state-aid subtotal">
-                    <td class="category-column">State Aid</td>
-                    <td>Subtotal</td>
-                    <td class="money-cell"></td>
-                    <td class="money-cell">$682,452.00</td>
-                    <td class="money-cell">$711,871.00</td>
-                    <td class="money-cell">$741,587.36</td>
-                    <td>Subtotal of State Aid</td>
-                    <td class="percent-cell">71.00%</td>
-                </tr>
-                
-                <!-- Local Receipts -->
-                <tr class="local-receipts">
-                    <td class="category-column">Local Receipts</td>
-                    <td>MotorVehicle</td>
-                    <td class="money-cell">$647,660.00</td>
-                    <td class="money-cell">$716,352.00</td>
-                    <td class="money-cell">$727,600.00</td>
-                    <td class="money-cell">$763,980.00</td>
-                    <td>Strong motor vehicle revenue in Q2</td>
-                    <td class="percent-cell">43.00%</td>
-                </tr>
-                <tr class="local-receipts">
-                    <td class="category-column">Local Receipts</td>
-                    <td>Interest&Penalties (Property Tax)</td>
-                    <td class="money-cell">$20,500.00</td>
-                    <td class="money-cell">$21,115.00</td>
-                    <td class="money-cell">$21,115.00</td>
-                    <td class="money-cell">$21,960.00</td>
-                    <td>Stable projection based on past trends</td>
-                    <td class="percent-cell">45.00%</td>
-                </tr>
-                <tr class="local-receipts">
-                    <td class="category-column">Local Receipts</td>
-                    <td>Interest&Penalties (Excise Tax)</td>
-                    <td class="money-cell">$5,100.00</td>
-                    <td class="money-cell">$5,200.00</td>
-                    <td class="money-cell">$6,000.00</td>
-                    <td class="money-cell">$6,000.00</td>
-                    <td>Consistent revenue patterns</td>
-                    <td class="percent-cell">61.00%</td>
-                </tr>
-                <tr class="local-receipts">
-                    <td class="category-column">Local Receipts</td>
-                    <td>Watershed Division Trust PILOT</td>
-                    <td class="money-cell">$380,387.00</td>
-                    <td class="money-cell">$391,798.61</td>
-                    <td class="money-cell">$405,000.00</td>
-                    <td class="money-cell">$417,150.00</td>
-                    <td>PILOT adjusted for new assessment values</td>
-                    <td class="percent-cell">100.00%</td>
-                </tr>
-                <tr class="local-receipts">
-                    <td class="category-column">Local Receipts</td>
-                    <td>PILOT (Not from Cherry Sheet)</td>
-                    <td class="money-cell">$5,000.00</td>
-                    <td class="money-cell">$10,000.00</td>
-                    <td class="money-cell">$10,000.00</td>
-                    <td class="money-cell">$10,000.00</td>
-                    <td>Stable PILOT revenue pattern</td>
-                    <td class="percent-cell">100.00%</td>
-                </tr>
-                <tr class="local-receipts">
-                    <td class="category-column">Local Receipts</td>
-                    <td>Ambulance Revenue</td>
-                    <td class="money-cell">$150,000.00</td>
-                    <td class="money-cell">$185,390.00</td>
-                    <td class="money-cell">$165,000.00</td>
-                    <td class="money-cell">$200,000.00</td>
-                    <td>Increased due to strong Q2 reporting</td>
-                    <td class="percent-cell">80.00%</td>
-                </tr>
-                <tr class="local-receipts">
-                    <td class="category-column">Local Receipts</td>
-                    <td>Collector Receipts</td>
-                    <td class="money-cell">$31,000.00</td>
-                    <td class="money-cell">$34,697.00</td>
-                    <td class="money-cell">$35,000.00</td>
-                    <td class="money-cell">$36,050.00</td>
-                    <td>Slight increase based on trends</td>
-                    <td class="percent-cell">35.00%</td>
-                </tr>
-                <tr class="local-receipts">
-                    <td class="category-column">Local Receipts</td>
-                    <td>Treasurer Fees</td>
-                    <td class="money-cell">$100.00</td>
-                    <td class="money-cell">$100.00</td>
-                    <td class="money-cell">$100.00</td>
-                    <td class="money-cell">$100.00</td>
-                    <td>Consistent projection for Treasurer fees</td>
-                    <td class="percent-cell">25.00%</td>
-                </tr>
-                
-                <!-- Licenses & Fees -->
-                <tr class="licenses-fees">
-                    <td class="category-column">Licenses & Fees</td>
-                    <td>Tax Liens Fees</td>
-                    <td class="money-cell">$13,000.00</td>
-                    <td class="money-cell">$7,345.00</td>
-                    <td class="money-cell">$14,000.00</td>
-                    <td class="money-cell">$14,000.00</td>
-                    <td>Level projection based on past patterns</td>
-                    <td class="percent-cell">19.00%</td>
-                </tr>
-                <tr class="licenses-fees">
-                    <td class="category-column">Licenses & Fees</td>
-                    <td>Police Fees</td>
-                    <td class="money-cell">$10,000.00</td>
-                    <td class="money-cell">$10,151.00</td>
-                    <td class="money-cell">$10,250.00</td>
-                    <td class="money-cell">$20,000.00</td>
-                    <td>Increased due to policy change impacting LTC</td>
-                    <td class="percent-cell">245.00%</td>
-                </tr>
-                <tr class="licenses-fees">
-                    <td class="category-column">Licenses & Fees</td>
-                    <td>Fire Fees</td>
-                    <td class="money-cell">$6,200.00</td>
-                    <td class="money-cell">$4,945.00</td>
-                    <td class="money-cell">$6,355.00</td>
-                    <td class="money-cell">$6,545.00</td>
-                    <td>Minor increase based on past collection trends</td>
-                    <td class="percent-cell">54.00%</td>
-                </tr>
-                <tr class="licenses-fees">
-                    <td class="category-column">Licenses & Fees</td>
-                    <td>Highway Fees</td>
-                    <td class="money-cell">$1,500.00</td>
-                    <td class="money-cell">$750.00</td>
-                    <td class="money-cell">$1,538.00</td>
-                    <td class="money-cell">$1,584.00</td>
-                    <td>Minor increase in scheduled fees</td>
-                    <td class="percent-cell">15.00%</td>
-                </tr>
-                <tr class="licenses-fees">
-                    <td class="category-column">Licenses & Fees</td>
-                    <td>Board of Health Fees</td>
-                    <td class="money-cell">$7,500.00</td>
-                    <td class="money-cell">$12,323.50</td>
-                    <td class="money-cell">$10,000.00</td>
-                    <td class="money-cell">$12,000.00</td>
-                    <td>Level projection based on consistent trends</td>
-                    <td class="percent-cell">26.00%</td>
-                </tr>
-                <tr class="licenses-fees">
-                    <td class="category-column">Licenses & Fees</td>
-                    <td>Assessor Fees</td>
-                    <td class="money-cell">$125.00</td>
-                    <td class="money-cell">$33.00</td>
-                    <td class="money-cell">$128.00</td>
-                    <td class="money-cell">$128.00</td>
-                    <td>Stable Clerk revenue trend</td>
-                    <td class="percent-cell">20.00%</td>
-                </tr>
-                <tr class="licenses-fees">
-                    <td class="category-column">Licenses & Fees</td>
-                    <td>Clerk Fees</td>
-                    <td class="money-cell">$4,200.00</td>
-                    <td class="money-cell">$1,845.00</td>
-                    <td class="money-cell">$4,305.00</td>
-                    <td class="money-cell">$4,434.00</td>
-                    <td>Adjusted for updated Clerk fee schedule</td>
-                    <td class="percent-cell">20.00%</td>
-                </tr>
-                <tr class="licenses-fees">
-                    <td class="category-column">Licenses & Fees</td>
-                    <td>Alcoholic Beverage Licence</td>
-                    <td class="money-cell">$3,200.00</td>
-                    <td class="money-cell">$3,365.00</td>
-                    <td class="money-cell">$3,280.00</td>
-                    <td class="money-cell">$4,000.00</td>
-                    <td>Stable alcohol licensing revenue</td>
-                    <td class="percent-cell">0.00%</td>
-                </tr>
-                
-                <!-- Permits -->
-                <tr class="permits">
-                    <td class="category-column">Permits</td>
-                    <td>Dog Licences</td>
-                    <td class="money-cell">$5,500.00</td>
-                    <td class="money-cell">$7,790.00</td>
-                    <td class="money-cell">$6,500.00</td>
-                    <td class="money-cell">$6,500.00</td>
-                    <td>Steady licensing demand in FY25</td>
-                    <td class="percent-cell">42.00%</td>
-                </tr>
-                <tr class="permits">
-                    <td class="category-column">Permits</td>
-                    <td>Misc. Licenses</td>
-                    <td class="money-cell">$510.00</td>
-                    <td class="money-cell">$150.00</td>
-                    <td class="money-cell">$560.00</td>
-                    <td class="money-cell">$560.00</td>
-                    <td>Stable miscellaneous licensing fees</td>
-                    <td class="percent-cell">606.00%</td>
-                </tr>
-                <tr class="permits">
-                    <td class="category-column">Permits</td>
-                    <td>Building Permits</td>
-                    <td class="money-cell">$47,750.00</td>
-                    <td class="money-cell">$27,253.00</td>
-                    <td class="money-cell">$50,000.00</td>
-                    <td class="money-cell">$45,000.00</td>
-                    <td>Conservative estimate based on trends</td>
-                    <td class="percent-cell">29.00%</td>
-                </tr>
-                <tr class="permits">
-                    <td class="category-column">Permits</td>
-                    <td>Gas Permits</td>
-                    <td class="money-cell">$1,000.00</td>
-                    <td class="money-cell">$1,377.00</td>
-                    <td class="money-cell">$1,025.00</td>
-                    <td class="money-cell">$1,056.00</td>
-                    <td>Adjusted to align with updated fee projections</td>
-                    <td class="percent-cell">0.00%</td>
-                </tr>
-                
-                <!-- Other Revenues -->
-                <tr class="other-revenues">
-                    <td class="category-column">Other Revenues</td>
-                    <td>Wiring Permits</td>
-                    <td class="money-cell">$4,000.00</td>
-                    <td class="money-cell">$7,344.00</td>
-                    <td class="money-cell">$7,000.00</td>
-                    <td class="money-cell">$7,000.00</td>
-                    <td>Level projection for wiring permits</td>
-                    <td class="percent-cell">55.00%</td>
-                </tr>
-                <tr class="other-revenues">
-                    <td class="category-column">Other Revenues</td>
-                    <td>Plumbing Permits</td>
-                    <td class="money-cell">$1,000.00</td>
-                    <td class="money-cell">$1,124.35</td>
-                    <td class="money-cell">$1,025.00</td>
-                    <td class="money-cell">$1,025.00</td>
-                    <td>Stable projection for plumbing fees</td>
-                    <td class="percent-cell">62.00%</td>
-                </tr>
-                <tr class="other-revenues">
-                    <td class="category-column">Other Revenues</td>
-                    <td>RMV Court Fees</td>
-                    <td class="money-cell">$1,580.00</td>
-                    <td class="money-cell">$1,775.00</td>
-                    <td class="money-cell">$1,620.00</td>
-                    <td class="money-cell">$1,620.00</td>
-                    <td>Level projection based on RMV trends</td>
-                    <td class="percent-cell">40.00%</td>
-                </tr>
-                <tr class="other-revenues">
-                    <td class="category-column">Other Revenues</td>
-                    <td>Registry Fees</td>
-                    <td class="money-cell">$2,500.00</td>
-                    <td class="money-cell">$1,235.00</td>
-                    <td class="money-cell">$2,563.00</td>
-                    <td class="money-cell">$2,640.00</td>
-                    <td>Registry fee increase based on collection growth</td>
-                    <td class="percent-cell">84.00%</td>
-                </tr>
-                <tr class="other-revenues">
-                    <td class="category-column">Other Revenues</td>
-                    <td>Earnings on Investment</td>
-                    <td class="money-cell">$4,080.00</td>
-                    <td class="money-cell">$18,000.00</td>
-                    <td class="money-cell">$10,000.00</td>
-                    <td class="money-cell">$25,000.00</td>
-                    <td>Higher interest earnings based on market trends</td>
-                    <td class="percent-cell">136.00%</td>
-                </tr>
-                <tr class="other-revenues">
-                    <td class="category-column">Other Revenues</td>
-                    <td>Misc. Revenue</td>
-                    <td class="money-cell">$11,000.00</td>
-                    <td class="money-cell">$7,228.72</td>
-                    <td class="money-cell">$18,000.00</td>
-                    <td class="money-cell">$54,000.00</td>
-                    <td>Settlement revenue boosted by new agreements</td>
-                    <td class="percent-cell">77.00%</td>
-                </tr>
-                <tr class="local-receipts subtotal">
-                    <td class="category-column">Local Receipts</td>
-                    <td>Subtotal</td>
-                    <td class="money-cell">$1,364,392</td>
-                    <td class="money-cell">$1,478,687</td>
-                    <td class="money-cell">$1,517,964</td>
-                    <td class="money-cell">$1,662,332.00</td>
-                    <td></td>
-                    <td class="percent-cell"></td>
-                </tr>
-                
-                <!-- Grand Totals -->
-                <tr class="grand-total">
-                    <td class="category-column">GRAND TOTAL</td>
-                    <td>Tax</td>
-                    <td class="money-cell">$8,852,569</td>
-                    <td class="money-cell">$8,852,569</td>
-                    <td class="money-cell">$9,196,823</td>
-                    <td class="money-cell">$9,196,823</td>
-                    <td></td>
-                    <td class="percent-cell"></td>
-                </tr>
-                <tr class="grand-total">
-                    <td class="category-column">GRAND TOTAL</td>
-                    <td>State Aid</td>
-                    <td class="money-cell">$711,871</td>
-                    <td class="money-cell">$711,871</td>
-                    <td class="money-cell">$733,227</td>
-                    <td class="money-cell">$733,227</td>
-                    <td></td>
-                    <td class="percent-cell"></td>
-                </tr>
-                <tr class="grand-total">
-                    <td class="category-column">GRAND TOTAL</td>
-                    <td>Local Receipts</td>
-                    <td class="money-cell">$1,478,687</td>
-                    <td class="money-cell">$1,478,687</td>
-                    <td class="money-cell">$1,517,964</td>
-                    <td class="money-cell">$1,662,332.00</td>
-                    <td></td>
-                    <td class="percent-cell"></td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="table-wrapper">
+        <div class="table-info">
+            Scroll horizontally to view all columns. The header row remains fixed while scrolling down.
+        </div>
+        
+        <div class="table-container">
+            <table id="revenue-table">
+                <thead>
+                    <tr>
+                        <th scope="col">Account</th>
+                        <th scope="col">FY23 ($)</th>
+                        <th scope="col">FY24 ($)</th>
+                        <th scope="col">FY25 ($)</th>
+                        <th scope="col">FY26 Proposed ($)</th>
+                        <th scope="col">Explanation</th>
+                        <th scope="col">% Collected as of 2/28/25</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="grand-total">
+                        <td>Overall Total</td>
+                        <td class="money-cell">$10,250,000</td>
+                        <td class="money-cell">$10,850,000</td>
+                        <td class="money-cell">$11,200,000</td>
+                        <td class="money-cell">$12,000,000</td>
+                        <td></td>
+                        <td class="percent-cell">90.00%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </body>
 </html>
