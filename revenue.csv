@@ -4,12 +4,14 @@ Tax Revenue,Prop 2.5%,,,210633.58,219254.79,Adjusted for corrected 2.5% increase
 Tax Revenue,New Growth / Amended NG,,,134215.00,125000.00,Projected at 90% due to no collections yet,0.00%
 Tax Revenue,Debt Exclusions (School Roof),,,82377.00,82377.00,Fixed debt amount for school roof,0.00%
 Tax Revenue,Subtotal,8052778,8425343,8852569,9196823,Subtotal of Tax Levy items,74.20%
+
 State Aid,Unrestricted General Government Aid,521806.00,530155.00,554659.00,579659.00,H1,66.00%
 State Aid,Abatements to Veterans' and Blind,29038.00,24861.00,25706.00,26477.18,H1,196.00%
 State Aid,State Owned Land,101466.00,115957.00,118741.00,122303.23,H1,68.00%
 State Aid,Veterans' Benefits and Exemptions,6428.00,365.00,-,-,H1,
 State Aid,Offsets (Library),9936.00,11114.00,12765.00,13147.95,H1,57.00%
 State Aid,Subtotal,,682452.00,711871.00,741587.36,Subtotal of State Aid,71.00%
+
 Local Receipts,MotorVehicle,647660.00,716352.00,727600.00,763980.00,Strong motor vehicle revenue in Q2,43.00%
 Local Receipts,Interest&Penalties (Property Tax),20500.00,21115.00,21115.00,21960.00,Stable projection based on past trends,45.00%
 Local Receipts,Interest&Penalties (Excise Tax),5100.00,5200.00,6000.00,6000.00,Consistent revenue patterns,61.00%
@@ -37,6 +39,7 @@ Other Revenues,Registry Fees,2500.00,1235.00,2563.00,2640.00,Registry fee increa
 Other Revenues,Earnings on Investment,4080.00,18000.00,10000.00,25000.00,Higher interest earnings based on market trends,136.00%
 Other Revenues,Misc. Revenue,11000.00,7228.72,18000.00,54000.00,Settlement revenue boosted by new agreements,77.00%
 Local Receipts,Subtotal,1364392,1478687,1517964,1662332.00,,
+
 GRAND TOTAL,Tax,8852569,8852569,9196823,9196823,,
 GRAND TOTAL,State Aid,711871,711871,733227,733227,,
 GRAND TOTAL,Local Receipts,1478687,1478687,1517964,1662332.00,,
