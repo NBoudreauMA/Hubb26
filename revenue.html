@@ -3,1063 +3,577 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hubbardston Budget Portal - Revenue</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Hubbardston Revenue Data</title>
     <style>
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background: url('hubbardston_bg.jpg') no-repeat center center fixed;
-            background-size: cover;
-            color: white;
+            background-color: rgba(173, 216, 230, 0.3);
         }
         
-        nav {
-            background: linear-gradient(90deg, rgba(34, 139, 34, 0.9), rgba(0, 100, 0, 0.9));
-            padding: 15px;
+        .header {
+            background-color: #2e6e41;
+            color: white;
+            padding: 10px 0;
             text-align: center;
+        }
+        
+        .header-nav {
             display: flex;
             justify-content: space-around;
-            align-items: center;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            left: 0;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-        }
-
-        nav a {
-            color: white;
-            margin: 0 20px;
-            text-decoration: none;
-            font-size: 22px;
-            font-weight: bold;
-            text-transform: uppercase;
-            transition: 0.3s ease-in-out;
-        }
-
-        nav a:hover {
-            text-decoration: underline;
-            transform: scale(1.2);
-            color: white;
-            background-color: rgba(0, 100, 0, 0.7);
-            border-radius: 5px;
-        }
-        
-        nav a.active {
-            color: white;
-            text-decoration: underline;
-            background-color: rgba(0, 100, 0, 0.7);
-            padding: 8px 15px;
-            border-radius: 5px;
-        }
-        
-        .container {
             max-width: 1200px;
-            margin: 120px auto 40px;
-            padding: 30px;
-            background: rgba(0, 0, 0, 0.75);
-            border-radius: 15px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(5px);
+            margin: 0 auto;
         }
         
-        .content-section {
-            margin-bottom: 40px;
-            transition: 0.4s ease-in-out;
-            padding: 20px;
-            border-radius: 10px;
-            background: rgba(20, 20, 20, 0.5);
-        }
-        
-        .content-section:hover {
-            transform: scale(1.01);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-        }
-        
-        h2 {
-            color: #4bc0c0;
-            text-align: center;
-            margin-bottom: 30px;
-            font-size: 32px;
-            font-weight: 600;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-        
-        /* Revenue Section Styling */
-        .revenue-header {
-            background: linear-gradient(135deg, rgba(0, 60, 30, 0.85), rgba(0, 90, 70, 0.75));
-            border-radius: 12px;
-            padding: 35px 40px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            border-left: 4px solid #4bc0c0;
-            margin: 35px 0;
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(5px);
-        }
-        
-        .revenue-header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at top right, rgba(75, 192, 192, 0.1), transparent 60%);
-            z-index: 0;
-        }
-        
-        .revenue-title {
-            color: #4bc0c0;
-            text-align: center;
-            font-size: 34px;
-            margin-bottom: 28px;
-            font-weight: 600;
-            text-transform: none;
-            letter-spacing: 0;
-            position: relative;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        
-        .revenue-content {
-            color: white;
-            font-size: 17px;
-            line-height: 1.8;
-            position: relative;
-        }
-        
-        .revenue-content p {
-            margin-bottom: 22px;
-            opacity: 0.95;
-        }
-        
-        .highlight-number {
-            color: #4bc0c0;
-            font-weight: 600;
-            position: relative;
-            padding: 0 2px;
-        }
-        
-        .highlight-number::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 100%;
-            height: 1px;
-            background-color: rgba(75, 192, 192, 0.4);
-        }
-        
-        /* Revenue Charts Section */
-        .revenue-charts {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
-            margin-top: 40px;
-        }
-        
-        .chart-container {
-            flex: 1;
-            min-width: 45%;
-            background: linear-gradient(135deg, rgba(0, 60, 30, 0.85), rgba(0, 90, 70, 0.75));
-            border-radius: 12px;
-            padding: 30px;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            border-left: 4px solid #4bc0c0;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .chart-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at top right, rgba(75, 192, 192, 0.1), transparent 60%);
-            z-index: 0;
-        }
-        
-        .chart-title {
-            color: #4bc0c0;
-            font-size: 24px;
-            text-align: center;
-            margin-bottom: 25px;
-            position: relative;
-            z-index: 1;
-            font-weight: 600;
-        }
-        
-        .chart-display {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 20px;
-            position: relative;
-            z-index: 1;
-        }
-        
-        /* Legend Styling */
-        .chart-legend {
-            margin-top: 25px;
-            padding: 15px;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 10px;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .legend-item {
-            display: grid;
-            grid-template-columns: 24px 1fr auto auto;
-            gap: 15px;
-            align-items: center;
-            padding: 12px 15px;
-            margin-bottom: 5px;
-            border-radius: 6px;
-            transition: all 0.3s ease;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .legend-item:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-        }
-        
-        .legend-item:hover {
-            background: rgba(75, 192, 192, 0.1);
-            transform: translateX(5px);
-        }
-        
-        .legend-color {
-            width: 18px;
-            height: 18px;
-            border-radius: 4px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-        }
-        
-        .legend-text {
-            color: white;
-            font-weight: 500;
-            font-size: 16px;
-        }
-        
-        .legend-value {
-            color: #ffffff;
-            text-align: right;
-            font-size: 15px;
-        }
-        
-        .legend-percent {
-            color: #4bc0c0;
-            text-align: right;
-            font-weight: 600;
-            width: 60px;
-            font-size: 15px;
-        }
-        
-        /* Chart Legend Total */
-        .legend-total {
-            display: grid;
-            grid-template-columns: 1fr auto;
-            gap: 10px;
-            margin-top: 15px;
-            padding-top: 12px;
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .total-label {
-            color: white;
-            font-weight: 600;
-            font-size: 16px;
-        }
-        
-        .total-amount {
-            color: #4bc0c0;
-            font-weight: 600;
-            font-size: 16px;
-            text-align: right;
-        }
-        
-        /* Revenue Details */
-        .revenue-details {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-top: 40px;
-        }
-        
-        .detail-card {
-            background: linear-gradient(135deg, rgba(0, 60, 30, 0.85), rgba(0, 90, 70, 0.75));
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-            border-left: 4px solid #4bc0c0;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .detail-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
-        }
-        
-        .detail-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at top right, rgba(75, 192, 192, 0.1), transparent 70%);
-            z-index: 0;
-        }
-        
-        .detail-title {
-            color: #4bc0c0;
-            font-size: 22px;
-            margin-bottom: 15px;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .detail-amount {
-            font-size: 26px;
-            font-weight: 600;
-            color: white;
-            margin-bottom: 15px;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .detail-text {
-            color: rgba(255, 255, 255, 0.9);
-            line-height: 1.6;
-            position: relative;
-            z-index: 1;
-        }
-        
-        /* Download Button */
-        .download-button {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            background: rgba(0, 140, 110, 0.7);
+        .header-nav a {
             color: white;
             text-decoration: none;
-            padding: 14px 22px;
-            border-radius: 8px;
-            font-weight: 600;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-            margin: 30px auto;
-            width: fit-content;
+            font-weight: bold;
+            padding: 5px 10px;
         }
         
-        .download-button:hover {
-            background: rgba(0, 160, 130, 0.9);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-        }
-        
-        .download-button:active {
-            transform: translateY(1px);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        }
-        
-        .button-icon {
-            flex-shrink: 0;
-            transition: transform 0.3s ease;
-        }
-        
-        .download-button:hover .button-icon {
-            transform: translateY(-2px);
-        }
-        
-        /* Timeline - Historical Revenue */
-        .revenue-timeline {
-            margin-top: 50px;
-            position: relative;
-            padding-left: 30px;
-        }
-        
-        .timeline-title {
-            color: #4bc0c0;
-            font-size: 28px;
-            margin-bottom: 30px;
+        .page-title {
             text-align: center;
-        }
-        
-        .timeline-container {
-            position: relative;
-        }
-        
-        .timeline-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background: linear-gradient(to bottom, #4bc0c0, rgba(75, 192, 192, 0.3));
-            border-radius: 2px;
-        }
-        
-        .timeline-item {
-            position: relative;
-            padding-bottom: 40px;
-            padding-left: 30px;
-        }
-        
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -12px;
-            top: 0;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background-color: #1a1a1a;
-            border: 4px solid #4bc0c0;
-            box-shadow: 0 0 0 4px rgba(75, 192, 192, 0.2);
-        }
-        
-        .timeline-year {
+            color: #2e6e41;
+            margin: 20px 0;
             font-size: 24px;
-            font-weight: 600;
-            color: #4bc0c0;
-            margin-bottom: 10px;
         }
         
-        .timeline-content {
-            background: linear-gradient(135deg, rgba(0, 60, 30, 0.85), rgba(0, 90, 70, 0.75));
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        .table-container {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: auto;
+            margin: 0 auto;
+            position: relative;
         }
         
-        .timeline-amount {
-            font-size: 22px;
-            font-weight: 600;
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        thead {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        th {
+            background-color: #2e6e41;
             color: white;
-            margin-bottom: 10px;
+            padding: 10px 8px;
+            text-align: left;
+            position: sticky;
+            top: 0;
         }
         
-        .timeline-text {
-            color: rgba(255, 255, 255, 0.9);
-            line-height: 1.6;
+        td {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
         }
         
-        /* Responsive Design */
-        @media (max-width: 900px) {
-            .revenue-charts,
-            .revenue-details {
-                flex-direction: column;
-            }
-            
-            .chart-container,
-            .detail-card {
-                min-width: 100%;
-            }
-            
-            .revenue-header,
-            .chart-container,
-            .detail-card {
-                padding: 25px 20px;
-            }
-            
-            .revenue-title {
-                font-size: 28px;
-            }
-            
-            nav a {
-                font-size: 16px;
-                margin: 0 10px;
-            }
+        /* Hide Category column */
+        .category-column {
+            display: none;
+        }
+        
+        /* Color coding based on categories */
+        tr.tax-revenue {
+            background-color: rgba(211, 235, 205, 0.5);
+        }
+        
+        tr.state-aid {
+            background-color: rgba(209, 233, 237, 0.5);
+        }
+        
+        tr.local-receipts {
+            background-color: rgba(255, 245, 204, 0.5);
+        }
+        
+        tr.licenses-fees {
+            background-color: rgba(230, 230, 250, 0.5);
+        }
+        
+        tr.permits {
+            background-color: rgba(250, 235, 215, 0.5);
+        }
+        
+        tr.other-revenues {
+            background-color: rgba(220, 220, 220, 0.5);
+        }
+        
+        tr.subtotal {
+            font-weight: bold;
+        }
+        
+        tr.grand-total {
+            font-weight: bold;
+            background-color: rgba(46, 110, 65, 0.2);
+        }
+        
+        .money-cell {
+            text-align: left;
+        }
+        
+        .percent-cell {
+            text-align: left;
         }
     </style>
 </head>
 <body>
-    <nav>
-       <a href="index.html">Home</a>
-<a href="revenue.html">Revenue</a>
-<a href="expenditures.html">Spending</a>
-<a href="capital_plan.html">Capital Plan</a>
-<a href="citizens_guide.html">Guide</a>
-<a href="benchmarks-page.html">Benchmarks</a>
-<a href="Hubbardston_Free_Cash_Report.html">Free Cash</a>
-    </nav>
-    
-    <div class="container">
-        <div class="content-section">
-            <h2>FY26 Revenue Analysis</h2>
-            
-            <div class="revenue-header">
-                <h3 class="revenue-title">Revenue Summary</h3>
-                
-                <div class="revenue-content">
-                    <p>Hubbardston's revenue strategy focuses on maintaining a sustainable tax base while diversifying revenue sources to ensure fiscal stability. For FY26, total revenue is projected at <span class="highlight-number">$11,719,755</span>, a 5.75% increase from the previous fiscal year.</p>
-                    
-                    <p>The town's revenue consists primarily of property taxes, supplemented by local receipts, state aid, and strategic use of free cash. This balanced approach allows us to fund essential services while maintaining the town's financial health.</p>
-                </div>
-            </div>
-            
-            <!-- Revenue Circle Chart -->
-            <div class="revenue-charts">
-                <div class="chart-container">
-                    <h3 class="chart-title">Revenue By Source</h3>
-                    <div class="chart-display">
-                        <svg width="300" height="300" viewBox="0 0 300 300">
-                            <!-- Tax Levy (blue) - 78.5% -->
-                            <circle cx="150" cy="150" r="120" fill="transparent" stroke="#3498db" stroke-width="40" stroke-dasharray="493 133" stroke-dashoffset="0" />
-                            
-                            <!-- Local Receipts (yellow) - 13.9% -->
-                            <circle cx="150" cy="150" r="120" fill="transparent" stroke="#f1c40f" stroke-width="40" stroke-dasharray="87 539" stroke-dashoffset="-493" />
-                            
-                            <!-- State Aid (teal) - 6.3% -->
-                            <circle cx="150" cy="150" r="120" fill="transparent" stroke="#1abc9c" stroke-width="40" stroke-dasharray="40 586" stroke-dashoffset="-580" />
-                            
-                            <!-- Free Cash (orange) - 1.1% -->
-                            <circle cx="150" cy="150" r="120" fill="transparent" stroke="#e67e22" stroke-width="40" stroke-dasharray="7 619" stroke-dashoffset="-620" />
-                            
-                            <!-- Inner circle (creates donut) -->
-                            <circle cx="150" cy="150" r="100" fill="#181818" />
-                            
-                            <!-- Center text -->
-                            <text x="150" y="140" text-anchor="middle" font-size="26" fill="#4bc0c0" font-weight="bold">$11.7M</text>
-                            <text x="150" y="170" text-anchor="middle" font-size="16" fill="#fff">Total</text>
-                        </svg>
-                    </div>
-                    
-                    <div class="chart-legend">
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #3498db;"></div>
-                            <div class="legend-text">Tax Levy</div>
-                            <div class="legend-value">$9,198,883</div>
-                            <div class="legend-percent">78.5%</div>
-                        </div>
-                        
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #f1c40f;"></div>
-                            <div class="legend-text">Local Receipts</div>
-                            <div class="legend-value">$1,632,503</div>
-                            <div class="legend-percent">13.9%</div>
-                        </div>
-                        
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #1abc9c;"></div>
-                            <div class="legend-text">State Aid</div>
-                            <div class="legend-value">$733,227</div>
-                            <div class="legend-percent">6.3%</div>
-                        </div>
-                        
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #e67e22;"></div>
-                            <div class="legend-text">Free Cash</div>
-                            <div class="legend-value">$144,938</div>
-                            <div class="legend-percent">1.1%</div>
-                        </div>
-                        
-                        <div class="legend-total">
-                            <div class="total-label">Total Revenue</div>
-                            <div class="total-amount">$11,682,108</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="chart-container">
-                    <h3 class="chart-title">Tax Revenue Breakdown</h3>
-                    <div class="chart-display">
-                        <svg width="300" height="300" viewBox="0 0 300 300">
-                            <!-- Base Property Tax - 90.5% -->
-                            <circle cx="150" cy="150" r="120" fill="transparent" stroke="#3498db" stroke-width="40" stroke-dasharray="569 57" stroke-dashoffset="0" />
-                            
-                            <!-- New Growth - 1.35% -->
-                            <circle cx="150" cy="150" r="120" fill="transparent" stroke="#2980b9" stroke-width="40" stroke-dasharray="8 618" stroke-dashoffset="-569" />
-                            
-                            <!-- Excise Taxes - 6.8% -->
-                            <circle cx="150" cy="150" r="120" fill="transparent" stroke="#16a085" stroke-width="40" stroke-dasharray="43 583" stroke-dashoffset="-577" />
-                            
-                            <!-- Exempt Debt - 0.9% -->
-                            <circle cx="150" cy="150" r="120" fill="transparent" stroke="#8e44ad" stroke-width="40" stroke-dasharray="6 620" stroke-dashoffset="-620" />
-                            
-                            <!-- Inner circle (creates donut) -->
-                            <circle cx="150" cy="150" r="100" fill="#181818" />
-                            
-                            <!-- Center text -->
-                            <text x="150" y="140" text-anchor="middle" font-size="26" fill="#4bc0c0" font-weight="bold">$9.2M</text>
-                            <text x="150" y="170" text-anchor="middle" font-size="16" fill="#fff">Tax Revenue</text>
-                        </svg>
-                    </div>
-                    
-                    <div class="chart-legend">
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #3498db;"></div>
-                            <div class="legend-text">Base Property Tax</div>
-                            <div class="legend-value">$8,325,453</div>
-                            <div class="legend-percent">90.5%</div>
-                        </div>
-                        
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #2980b9;"></div>
-                            <div class="legend-text">New Growth</div>
-                            <div class="legend-value">$125,000</div>
-                            <div class="legend-percent">1.35%</div>
-                        </div>
-                        
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #16a085;"></div>
-                            <div class="legend-text">Excise Taxes</div>
-                            <div class="legend-value">$623,430</div>
-                            <div class="legend-percent">6.8%</div>
-                        </div>
-                        
-                        <div class="legend-item">
-                            <div class="legend-color" style="background-color: #8e44ad;"></div>
-                            <div class="legend-text">Exempt Debt</div>
-                            <div class="legend-value">$82,377</div>
-                            <div class="legend-percent">0.9%</div>
-                        </div>
-                        
-                        <div class="legend-total">
-                            <div class="total-label">Total Tax Revenue</div>
-                            <div class="total-amount">$9,198,883</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Revenue Details Cards -->
-            <div class="revenue-details">
-                <div class="detail-card">
-                    <h3 class="detail-title">Tax Levy</h3>
-                    <div class="detail-amount">$9,198,883</div>
-                    <p class="detail-text">The tax levy represents Hubbardston's largest revenue source, comprising property taxes and new growth. For FY26, this reflects a 3.9% increase over FY25, balanced to maintain stable services while respecting taxpayer impacts.</p>
-                </div>
-                
-                <div class="detail-card">
-                    <h3 class="detail-title">Local Receipts</h3>
-                    <div class="detail-amount">$1,632,503</div>
-                    <p class="detail-text">Local receipts include motor vehicle excise taxes, fees, permits, and other non-tax revenue sources. FY26 projections show a 7.5% increase based on recent collection trends and updated fee schedules.</p>
-                </div>
-                
-                <div class="detail-card">
-                    <h3 class="detail-title">State Aid</h3>
-                    <div class="detail-amount">$733,227</div>
-                    <p class="detail-text">State aid includes Chapter 70 education funding, unrestricted general government aid, and various state grants. For FY26, state aid has increased by 3.0% from the previous fiscal year.</p>
-                </div>
-                
-                <div class="detail-card">
-                    <h3 class="detail-title">Free Cash</h3>
-                    <div class="detail-amount">$131,478</div>
-                    <p class="detail-text">Free cash represents unspent funds from the previous fiscal year. This strategic allocation helps balance the budget while funding one-time investments without impacting the tax levy.</p>
-                </div>
-            </div>
-            
-            <!-- Download Button -->
-            <a href="revenue_view.html" target="_blank" class="download-button">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="button-icon">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                    <polyline points="7 10 12 15 17 10"></polyline>
-                    <line x1="12" y1="15" x2="12" y2="3"></line>
-                </svg>
-                Revenue Detail Report
-            </a>
-            
-            <!-- Historical Revenue Timeline -->
-           <!-- Enhanced Historical Revenue Section -->
-<div class="revenue-history">
-    <h3 class="section-title">Historical Revenue Analysis</h3>
-    
-    <div class="history-container">
-        <!-- Revenue Growth Chart -->
-        <div class="history-chart">
-            <h4 class="subsection-title">FY20-FY26 Revenue Growth</h4>
-            <svg width="100%" height="300" viewBox="0 0 600 300">
-                <!-- Background grid -->
-                <line x1="50" y1="250" x2="550" y2="250" stroke="#444" stroke-width="1" />
-                <line x1="50" y1="200" x2="550" y2="200" stroke="#444" stroke-width="1" stroke-dasharray="4" />
-                <line x1="50" y1="150" x2="550" y2="150" stroke="#444" stroke-width="1" stroke-dasharray="4" />
-                <line x1="50" y1="100" x2="550" y2="100" stroke="#444" stroke-width="1" stroke-dasharray="4" />
-                <line x1="50" y1="50" x2="550" y2="50" stroke="#444" stroke-width="1" stroke-dasharray="4" />
-                
-                <!-- Y-axis labels -->
-                <text x="45" y="255" text-anchor="end" font-size="12" fill="#aaa">$9M</text>
-                <text x="45" y="205" text-anchor="end" font-size="12" fill="#aaa">$10M</text>
-                <text x="45" y="155" text-anchor="end" font-size="12" fill="#aaa">$11M</text>
-                <text x="45" y="105" text-anchor="end" font-size="12" fill="#aaa">$12M</text>
-                <text x="45" y="55" text-anchor="end" font-size="12" fill="#aaa">$13M</text>
-                
-                <!-- X-axis labels -->
-                <text x="100" y="270" text-anchor="middle" font-size="12" fill="#aaa">FY20</text>
-                <text x="183" y="270" text-anchor="middle" font-size="12" fill="#aaa">FY21</text>
-                <text x="266" y="270" text-anchor="middle" font-size="12" fill="#aaa">FY22</text>
-                <text x="349" y="270" text-anchor="middle" font-size="12" fill="#aaa">FY23</text>
-                <text x="432" y="270" text-anchor="middle" font-size="12" fill="#aaa">FY24</text>
-                <text x="515" y="270" text-anchor="middle" font-size="12" fill="#aaa">FY25</text>
-                
-                <!-- Revenue Bars (scaled to fit 9M-13M range) -->
-                <!-- FY20: $9,334,811 (height: ~84px) -->
-                <rect x="75" y="166" width="50" height="84" fill="url(#barGradient)" />
-                <text x="100" y="158" text-anchor="middle" font-size="12" fill="#fff">$9.33M</text>
-                
-                <!-- FY21: $9,750,036 (height: ~125px) -->
-                <rect x="158" y="125" width="50" height="125" fill="url(#barGradient)" />
-                <text x="183" y="117" text-anchor="middle" font-size="12" fill="#fff">$9.75M</text>
-                
-                <!-- FY22: $10,199,265 (height: ~170px) -->
-                <rect x="241" y="80" width="50" height="170" fill="url(#barGradient)" />
-                <text x="266" y="72" text-anchor="middle" font-size="12" fill="#fff">$10.20M</text>
-                
-                <!-- FY23: $10,271,623 (height: ~177px) -->
-                <rect x="324" y="73" width="50" height="177" fill="url(#barGradient)" />
-                <text x="349" y="65" text-anchor="middle" font-size="12" fill="#fff">$10.27M</text>
-                
-                <!-- FY24: $10,540,649 (height: ~204px) -->
-                <rect x="407" y="46" width="50" height="204" fill="url(#barGradient)" />
-                <text x="432" y="38" text-anchor="middle" font-size="12" fill="#fff">$10.54M</text>
-                
-                <!-- FY25: $11,046,935 (height: ~255px) -->
-                <rect x="490" y="0" width="50" height="250" fill="url(#barGradient)" />
-                <text x="515" y="-8" text-anchor="middle" font-size="12" fill="#fff">$11.05M</text>
-                
-                <!-- Trend line -->
-                <path d="M 100 166 L 183 125 L 266 80 L 349 73 L 432 46 L 515 0" 
-                      fill="none" stroke="#4bc0c0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
-                
-                <!-- Data points -->
-                <circle cx="100" cy="166" r="5" fill="#4bc0c0" />
-                <circle cx="183" cy="125" r="5" fill="#4bc0c0" />
-                <circle cx="266" cy="80" r="5" fill="#4bc0c0" />
-                <circle cx="349" cy="73" r="5" fill="#4bc0c0" />
-                <circle cx="432" cy="46" r="5" fill="#4bc0c0" />
-                <circle cx="515" cy="0" r="5" fill="#4bc0c0" />
-                
-                <!-- Gradient definitions -->
-                <defs>
-                    <linearGradient id="barGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" stop-color="#1abc9c" />
-                        <stop offset="100%" stop-color="rgba(0, 60, 30, 0.7)" />
-                    </linearGradient>
-                </defs>
-            </svg>
-        </div>
-        
-        <!-- Revenue Composition Table -->
-        <div class="history-table">
-            <h4 class="subsection-title">Revenue Composition by Year</h4>
-            <div class="table-wrapper">
-                <table class="revenue-table">
-                    <thead>
-                        <tr>
-                            <th>Component</th>
-                            <th>FY25</th>
-                            <th>Growth</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Base Tax Levy</td>
-                            <td>$8,425,343</td>
-                            <td class="growth positive">+3.8%</td>
-                        </tr>
-                        <tr>
-                            <td>Prop 2.5 Increase</td>
-                            <td>$210,634</td>
-                            <td class="growth positive">+2.5%</td>
-                        </tr>
-                        <tr>
-                            <td>New Growth</td>
-                            <td>$130,000</td>
-                            <td class="growth neutral">0.0%</td>
-                        </tr>
-                        <tr>
-                            <td>Exempt Debt</td>
-                            <td>$82,377</td>
-                            <td class="growth neutral">0.0%</td>
-                        </tr>
-                        <tr>
-                            <td>State Aid</td>
-                            <td>$695,617</td>
-                            <td class="growth positive">+2.3%</td>
-                        </tr>
-                        <tr>
-                            <td>Local Receipts</td>
-                            <td>$1,502,964</td>
-                            <td class="growth positive">+5.4%</td>
-                        </tr>
-                        <tr class="total-row">
-                            <td>Total Revenue</td>
-                            <td>$11,046,935</td>
-                            <td class="growth positive">+4.8%</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+    <div class="header">
+        <div class="header-nav">
+            <a href="index.html">HOME</a>
+            <a href="revenue.html">REVENUE</a>
+            <a href="expenditures.html">EXPENDITURES</a>
+            <a href="capital_plan.html">CAPITAL PLAN</a>
+            <a href="citizens_guide.html">CITIZEN'S GUIDE</a>
         </div>
     </div>
     
-    <div class="six-year-summary">
-        <h4 class="subsection-title">Six-Year Revenue Summary</h4>
-        <div class="year-boxes">
-            <div class="year-box">
-                <div class="year">FY20</div>
-                <div class="amount">$9,334,811</div>
-                <div class="percent">Base Year</div>
-            </div>
-            <div class="year-box">
-                <div class="year">FY21</div>
-                <div class="amount">$9,750,036</div>
-                <div class="percent">+4.4%</div>
-            </div>
-            <div class="year-box">
-                <div class="year">FY22</div>
-                <div class="amount">$10,199,265</div>
-                <div class="percent">+4.6%</div>
-            </div>
-            <div class="year-box">
-                <div class="year">FY23</div>
-                <div class="amount">$10,271,623</div>
-                <div class="percent">+0.7%</div>
-            </div>
-            <div class="year-box">
-                <div class="year">FY24</div>
-                <div class="amount">$10,540,649</div>
-                <div class="percent">+2.6%</div>
-            </div>
-            <div class="year-box">
-                <div class="year">FY25</div>
-                <div class="amount">$11,046,935</div>
-                <div class="percent">+4.8%</div>
-            </div>
-            <div class="year-box highlight">
-                <div class="year">FY26</div>
-                <div class="amount">$11,719,755</div>
-                <div class="percent">+6.1%</div>
-            </div>
-        </div>
-        
-        <div class="trend-summary">
-            <h4>Trend Analysis</h4>
-            <p>Since FY20, Hubbardston's revenue has grown by <span class="highlight-text">$2,384,944</span>, representing a <span class="highlight-text">25.5%</span> increase over six years. This growth has been driven primarily by tax levy increases and expanded local receipts. The FY26 budget continues this trend with the strongest year-over-year growth in the period.</p>
-            <p>Looking ahead, the town's revenue management strategies focus on sustainable growth through new development, optimized fee structures, and careful management of tax impacts on residents.</p>
-        </div>
+    <h1 class="page-title">Proposed Revenue</h1>
+    
+    <div class="table-container">
+        <table id="revenue-table">
+            <thead>
+                <tr>
+                    <th class="category-column">Category</th>
+                    <th>Account</th>
+                    <th>FY23 ($)</th>
+                    <th>FY24 ($)</th>
+                    <th>FY25 ($)</th>
+                    <th>FY26 Proposed ($)</th>
+                    <th>Explanation</th>
+                    <th>% Collected as of 2/28/25</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Tax Revenue -->
+                <tr class="tax-revenue">
+                    <td class="category-column">Tax Revenue</td>
+                    <td>Tax Levy</td>
+                    <td class="money-cell"></td>
+                    <td class="money-cell">$8,425,343.00</td>
+                    <td class="money-cell">$8,770,191.58</td>
+                    <td class="money-cell"></td>
+                    <td>Based on corrected Prop 2.5% calculation</td>
+                    <td class="percent-cell">74.50%</td>
+                </tr>
+                <tr class="tax-revenue">
+                    <td class="category-column">Tax Revenue</td>
+                    <td>Prop 2.5%</td>
+                    <td class="money-cell"></td>
+                    <td class="money-cell"></td>
+                    <td class="money-cell">$210,633.58</td>
+                    <td class="money-cell">$219,254.79</td>
+                    <td>Adjusted for corrected 2.5% increase calculation</td>
+                    <td class="percent-cell">100.00%</td>
+                </tr>
+                <tr class="tax-revenue">
+                    <td class="category-column">Tax Revenue</td>
+                    <td>New Growth / Amended NG</td>
+                    <td class="money-cell"></td>
+                    <td class="money-cell"></td>
+                    <td class="money-cell">$134,215.00</td>
+                    <td class="money-cell">$125,000.00</td>
+                    <td>Projected at 90% due to no collections yet</td>
+                    <td class="percent-cell">0.00%</td>
+                </tr>
+                <tr class="tax-revenue">
+                    <td class="category-column">Tax Revenue</td>
+                    <td>Debt Exclusions (School Roof)</td>
+                    <td class="money-cell"></td>
+                    <td class="money-cell"></td>
+                    <td class="money-cell">$82,377.00</td>
+                    <td class="money-cell">$82,377.00</td>
+                    <td>Fixed debt amount for school roof</td>
+                    <td class="percent-cell">0.00%</td>
+                </tr>
+                <tr class="tax-revenue subtotal">
+                    <td class="category-column">Tax Revenue</td>
+                    <td>Subtotal</td>
+                    <td class="money-cell">$8,052,778</td>
+                    <td class="money-cell">$8,425,343</td>
+                    <td class="money-cell">$8,852,569</td>
+                    <td class="money-cell">$9,196,823</td>
+                    <td>Subtotal of Tax Levy items</td>
+                    <td class="percent-cell">74.20%</td>
+                </tr>
+                
+                <!-- State Aid -->
+                <tr class="state-aid">
+                    <td class="category-column">State Aid</td>
+                    <td>Unrestricted General Government Aid</td>
+                    <td class="money-cell">$521,806.00</td>
+                    <td class="money-cell">$530,155.00</td>
+                    <td class="money-cell">$554,659.00</td>
+                    <td class="money-cell">$579,659.00</td>
+                    <td>H1</td>
+                    <td class="percent-cell">66.00%</td>
+                </tr>
+                <tr class="state-aid">
+                    <td class="category-column">State Aid</td>
+                    <td>Abatements to Veterans' and Blind</td>
+                    <td class="money-cell">$29,038.00</td>
+                    <td class="money-cell">$24,861.00</td>
+                    <td class="money-cell">$25,706.00</td>
+                    <td class="money-cell">$26,477.18</td>
+                    <td>H1</td>
+                    <td class="percent-cell">196.00%</td>
+                </tr>
+                <tr class="state-aid">
+                    <td class="category-column">State Aid</td>
+                    <td>State Owned Land</td>
+                    <td class="money-cell">$101,466.00</td>
+                    <td class="money-cell">$115,957.00</td>
+                    <td class="money-cell">$118,741.00</td>
+                    <td class="money-cell">$122,303.23</td>
+                    <td>H1</td>
+                    <td class="percent-cell">68.00%</td>
+                </tr>
+                <tr class="state-aid">
+                    <td class="category-column">State Aid</td>
+                    <td>Veterans' Benefits and Exemptions</td>
+                    <td class="money-cell">$6,428.00</td>
+                    <td class="money-cell">$365.00</td>
+                    <td class="money-cell">-</td>
+                    <td class="money-cell">-</td>
+                    <td>H1</td>
+                    <td class="percent-cell"></td>
+                </tr>
+                <tr class="state-aid">
+                    <td class="category-column">State Aid</td>
+                    <td>Offsets (Library)</td>
+                    <td class="money-cell">$9,936.00</td>
+                    <td class="money-cell">$11,114.00</td>
+                    <td class="money-cell">$12,765.00</td>
+                    <td class="money-cell">$13,147.95</td>
+                    <td>H1</td>
+                    <td class="percent-cell">57.00%</td>
+                </tr>
+                <tr class="state-aid subtotal">
+                    <td class="category-column">State Aid</td>
+                    <td>Subtotal</td>
+                    <td class="money-cell"></td>
+                    <td class="money-cell">$682,452.00</td>
+                    <td class="money-cell">$711,871.00</td>
+                    <td class="money-cell">$741,587.36</td>
+                    <td>Subtotal of State Aid</td>
+                    <td class="percent-cell">71.00%</td>
+                </tr>
+                
+                <!-- Local Receipts -->
+                <tr class="local-receipts">
+                    <td class="category-column">Local Receipts</td>
+                    <td>MotorVehicle</td>
+                    <td class="money-cell">$647,660.00</td>
+                    <td class="money-cell">$716,352.00</td>
+                    <td class="money-cell">$727,600.00</td>
+                    <td class="money-cell">$763,980.00</td>
+                    <td>Strong motor vehicle revenue in Q2</td>
+                    <td class="percent-cell">43.00%</td>
+                </tr>
+                <tr class="local-receipts">
+                    <td class="category-column">Local Receipts</td>
+                    <td>Interest&Penalties (Property Tax)</td>
+                    <td class="money-cell">$20,500.00</td>
+                    <td class="money-cell">$21,115.00</td>
+                    <td class="money-cell">$21,115.00</td>
+                    <td class="money-cell">$21,960.00</td>
+                    <td>Stable projection based on past trends</td>
+                    <td class="percent-cell">45.00%</td>
+                </tr>
+                <tr class="local-receipts">
+                    <td class="category-column">Local Receipts</td>
+                    <td>Interest&Penalties (Excise Tax)</td>
+                    <td class="money-cell">$5,100.00</td>
+                    <td class="money-cell">$5,200.00</td>
+                    <td class="money-cell">$6,000.00</td>
+                    <td class="money-cell">$6,000.00</td>
+                    <td>Consistent revenue patterns</td>
+                    <td class="percent-cell">61.00%</td>
+                </tr>
+                <tr class="local-receipts">
+                    <td class="category-column">Local Receipts</td>
+                    <td>Watershed Division Trust PILOT</td>
+                    <td class="money-cell">$380,387.00</td>
+                    <td class="money-cell">$391,798.61</td>
+                    <td class="money-cell">$405,000.00</td>
+                    <td class="money-cell">$417,150.00</td>
+                    <td>PILOT adjusted for new assessment values</td>
+                    <td class="percent-cell">100.00%</td>
+                </tr>
+                <tr class="local-receipts">
+                    <td class="category-column">Local Receipts</td>
+                    <td>PILOT (Not from Cherry Sheet)</td>
+                    <td class="money-cell">$5,000.00</td>
+                    <td class="money-cell">$10,000.00</td>
+                    <td class="money-cell">$10,000.00</td>
+                    <td class="money-cell">$10,000.00</td>
+                    <td>Stable PILOT revenue pattern</td>
+                    <td class="percent-cell">100.00%</td>
+                </tr>
+                <tr class="local-receipts">
+                    <td class="category-column">Local Receipts</td>
+                    <td>Ambulance Revenue</td>
+                    <td class="money-cell">$150,000.00</td>
+                    <td class="money-cell">$185,390.00</td>
+                    <td class="money-cell">$165,000.00</td>
+                    <td class="money-cell">$200,000.00</td>
+                    <td>Increased due to strong Q2 reporting</td>
+                    <td class="percent-cell">80.00%</td>
+                </tr>
+                <tr class="local-receipts">
+                    <td class="category-column">Local Receipts</td>
+                    <td>Collector Receipts</td>
+                    <td class="money-cell">$31,000.00</td>
+                    <td class="money-cell">$34,697.00</td>
+                    <td class="money-cell">$35,000.00</td>
+                    <td class="money-cell">$36,050.00</td>
+                    <td>Slight increase based on trends</td>
+                    <td class="percent-cell">35.00%</td>
+                </tr>
+                <tr class="local-receipts">
+                    <td class="category-column">Local Receipts</td>
+                    <td>Treasurer Fees</td>
+                    <td class="money-cell">$100.00</td>
+                    <td class="money-cell">$100.00</td>
+                    <td class="money-cell">$100.00</td>
+                    <td class="money-cell">$100.00</td>
+                    <td>Consistent projection for Treasurer fees</td>
+                    <td class="percent-cell">25.00%</td>
+                </tr>
+                
+                <!-- Licenses & Fees -->
+                <tr class="licenses-fees">
+                    <td class="category-column">Licenses & Fees</td>
+                    <td>Tax Liens Fees</td>
+                    <td class="money-cell">$13,000.00</td>
+                    <td class="money-cell">$7,345.00</td>
+                    <td class="money-cell">$14,000.00</td>
+                    <td class="money-cell">$14,000.00</td>
+                    <td>Level projection based on past patterns</td>
+                    <td class="percent-cell">19.00%</td>
+                </tr>
+                <tr class="licenses-fees">
+                    <td class="category-column">Licenses & Fees</td>
+                    <td>Police Fees</td>
+                    <td class="money-cell">$10,000.00</td>
+                    <td class="money-cell">$10,151.00</td>
+                    <td class="money-cell">$10,250.00</td>
+                    <td class="money-cell">$20,000.00</td>
+                    <td>Increased due to policy change impacting LTC</td>
+                    <td class="percent-cell">245.00%</td>
+                </tr>
+                <tr class="licenses-fees">
+                    <td class="category-column">Licenses & Fees</td>
+                    <td>Fire Fees</td>
+                    <td class="money-cell">$6,200.00</td>
+                    <td class="money-cell">$4,945.00</td>
+                    <td class="money-cell">$6,355.00</td>
+                    <td class="money-cell">$6,545.00</td>
+                    <td>Minor increase based on past collection trends</td>
+                    <td class="percent-cell">54.00%</td>
+                </tr>
+                <tr class="licenses-fees">
+                    <td class="category-column">Licenses & Fees</td>
+                    <td>Highway Fees</td>
+                    <td class="money-cell">$1,500.00</td>
+                    <td class="money-cell">$750.00</td>
+                    <td class="money-cell">$1,538.00</td>
+                    <td class="money-cell">$1,584.00</td>
+                    <td>Minor increase in scheduled fees</td>
+                    <td class="percent-cell">15.00%</td>
+                </tr>
+                <tr class="licenses-fees">
+                    <td class="category-column">Licenses & Fees</td>
+                    <td>Board of Health Fees</td>
+                    <td class="money-cell">$7,500.00</td>
+                    <td class="money-cell">$12,323.50</td>
+                    <td class="money-cell">$10,000.00</td>
+                    <td class="money-cell">$12,000.00</td>
+                    <td>Level projection based on consistent trends</td>
+                    <td class="percent-cell">26.00%</td>
+                </tr>
+                <tr class="licenses-fees">
+                    <td class="category-column">Licenses & Fees</td>
+                    <td>Assessor Fees</td>
+                    <td class="money-cell">$125.00</td>
+                    <td class="money-cell">$33.00</td>
+                    <td class="money-cell">$128.00</td>
+                    <td class="money-cell">$128.00</td>
+                    <td>Stable Clerk revenue trend</td>
+                    <td class="percent-cell">20.00%</td>
+                </tr>
+                <tr class="licenses-fees">
+                    <td class="category-column">Licenses & Fees</td>
+                    <td>Clerk Fees</td>
+                    <td class="money-cell">$4,200.00</td>
+                    <td class="money-cell">$1,845.00</td>
+                    <td class="money-cell">$4,305.00</td>
+                    <td class="money-cell">$4,434.00</td>
+                    <td>Adjusted for updated Clerk fee schedule</td>
+                    <td class="percent-cell">20.00%</td>
+                </tr>
+                <tr class="licenses-fees">
+                    <td class="category-column">Licenses & Fees</td>
+                    <td>Alcoholic Beverage Licence</td>
+                    <td class="money-cell">$3,200.00</td>
+                    <td class="money-cell">$3,365.00</td>
+                    <td class="money-cell">$3,280.00</td>
+                    <td class="money-cell">$4,000.00</td>
+                    <td>Stable alcohol licensing revenue</td>
+                    <td class="percent-cell">0.00%</td>
+                </tr>
+                
+                <!-- Permits -->
+                <tr class="permits">
+                    <td class="category-column">Permits</td>
+                    <td>Dog Licences</td>
+                    <td class="money-cell">$5,500.00</td>
+                    <td class="money-cell">$7,790.00</td>
+                    <td class="money-cell">$6,500.00</td>
+                    <td class="money-cell">$6,500.00</td>
+                    <td>Steady licensing demand in FY25</td>
+                    <td class="percent-cell">42.00%</td>
+                </tr>
+                <tr class="permits">
+                    <td class="category-column">Permits</td>
+                    <td>Misc. Licenses</td>
+                    <td class="money-cell">$510.00</td>
+                    <td class="money-cell">$150.00</td>
+                    <td class="money-cell">$560.00</td>
+                    <td class="money-cell">$560.00</td>
+                    <td>Stable miscellaneous licensing fees</td>
+                    <td class="percent-cell">606.00%</td>
+                </tr>
+                <tr class="permits">
+                    <td class="category-column">Permits</td>
+                    <td>Building Permits</td>
+                    <td class="money-cell">$47,750.00</td>
+                    <td class="money-cell">$27,253.00</td>
+                    <td class="money-cell">$50,000.00</td>
+                    <td class="money-cell">$45,000.00</td>
+                    <td>Conservative estimate based on trends</td>
+                    <td class="percent-cell">29.00%</td>
+                </tr>
+                <tr class="permits">
+                    <td class="category-column">Permits</td>
+                    <td>Gas Permits</td>
+                    <td class="money-cell">$1,000.00</td>
+                    <td class="money-cell">$1,377.00</td>
+                    <td class="money-cell">$1,025.00</td>
+                    <td class="money-cell">$1,056.00</td>
+                    <td>Adjusted to align with updated fee projections</td>
+                    <td class="percent-cell">0.00%</td>
+                </tr>
+                
+                <!-- Other Revenues -->
+                <tr class="other-revenues">
+                    <td class="category-column">Other Revenues</td>
+                    <td>Wiring Permits</td>
+                    <td class="money-cell">$4,000.00</td>
+                    <td class="money-cell">$7,344.00</td>
+                    <td class="money-cell">$7,000.00</td>
+                    <td class="money-cell">$7,000.00</td>
+                    <td>Level projection for wiring permits</td>
+                    <td class="percent-cell">55.00%</td>
+                </tr>
+                <tr class="other-revenues">
+                    <td class="category-column">Other Revenues</td>
+                    <td>Plumbing Permits</td>
+                    <td class="money-cell">$1,000.00</td>
+                    <td class="money-cell">$1,124.35</td>
+                    <td class="money-cell">$1,025.00</td>
+                    <td class="money-cell">$1,025.00</td>
+                    <td>Stable projection for plumbing fees</td>
+                    <td class="percent-cell">62.00%</td>
+                </tr>
+                <tr class="other-revenues">
+                    <td class="category-column">Other Revenues</td>
+                    <td>RMV Court Fees</td>
+                    <td class="money-cell">$1,580.00</td>
+                    <td class="money-cell">$1,775.00</td>
+                    <td class="money-cell">$1,620.00</td>
+                    <td class="money-cell">$1,620.00</td>
+                    <td>Level projection based on RMV trends</td>
+                    <td class="percent-cell">40.00%</td>
+                </tr>
+                <tr class="other-revenues">
+                    <td class="category-column">Other Revenues</td>
+                    <td>Registry Fees</td>
+                    <td class="money-cell">$2,500.00</td>
+                    <td class="money-cell">$1,235.00</td>
+                    <td class="money-cell">$2,563.00</td>
+                    <td class="money-cell">$2,640.00</td>
+                    <td>Registry fee increase based on collection growth</td>
+                    <td class="percent-cell">84.00%</td>
+                </tr>
+                <tr class="other-revenues">
+                    <td class="category-column">Other Revenues</td>
+                    <td>Earnings on Investment</td>
+                    <td class="money-cell">$4,080.00</td>
+                    <td class="money-cell">$18,000.00</td>
+                    <td class="money-cell">$10,000.00</td>
+                    <td class="money-cell">$25,000.00</td>
+                    <td>Higher interest earnings based on market trends</td>
+                    <td class="percent-cell">136.00%</td>
+                </tr>
+                <tr class="other-revenues">
+                    <td class="category-column">Other Revenues</td>
+                    <td>Misc. Revenue</td>
+                    <td class="money-cell">$11,000.00</td>
+                    <td class="money-cell">$7,228.72</td>
+                    <td class="money-cell">$18,000.00</td>
+                    <td class="money-cell">$54,000.00</td>
+                    <td>Settlement revenue boosted by new agreements</td>
+                    <td class="percent-cell">77.00%</td>
+                </tr>
+                <tr class="local-receipts subtotal">
+                    <td class="category-column">Local Receipts</td>
+                    <td>Subtotal</td>
+                    <td class="money-cell">$1,364,392</td>
+                    <td class="money-cell">$1,478,687</td>
+                    <td class="money-cell">$1,517,964</td>
+                    <td class="money-cell">$1,662,332.00</td>
+                    <td></td>
+                    <td class="percent-cell"></td>
+                </tr>
+                
+                <!-- Grand Totals -->
+                <tr class="grand-total">
+                    <td class="category-column">GRAND TOTAL</td>
+                    <td>Tax</td>
+                    <td class="money-cell">$8,852,569</td>
+                    <td class="money-cell">$8,852,569</td>
+                    <td class="money-cell">$9,196,823</td>
+                    <td class="money-cell">$9,196,823</td>
+                    <td></td>
+                    <td class="percent-cell"></td>
+                </tr>
+                <tr class="grand-total">
+                    <td class="category-column">GRAND TOTAL</td>
+                    <td>State Aid</td>
+                    <td class="money-cell">$711,871</td>
+                    <td class="money-cell">$711,871</td>
+                    <td class="money-cell">$733,227</td>
+                    <td class="money-cell">$733,227</td>
+                    <td></td>
+                    <td class="percent-cell"></td>
+                </tr>
+                <tr class="grand-total">
+                    <td class="category-column">GRAND TOTAL</td>
+                    <td>Local Receipts</td>
+                    <td class="money-cell">$1,478,687</td>
+                    <td class="money-cell">$1,478,687</td>
+                    <td class="money-cell">$1,517,964</td>
+                    <td class="money-cell">$1,662,332.00</td>
+                    <td></td>
+                    <td class="percent-cell"></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-</div>
-
-<style>
-    .revenue-history {
-        margin-top: 50px;
-        padding: 30px;
-        background: linear-gradient(135deg, rgba(0, 60, 30, 0.85), rgba(0, 90, 70, 0.75));
-        border-radius: 12px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        border-left: 4px solid #4bc0c0;
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .revenue-history::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: radial-gradient(circle at top right, rgba(75, 192, 192, 0.1), transparent 60%);
-        z-index: 0;
-    }
-    
-    .section-title {
-        color: #4bc0c0;
-        text-align: center;
-        font-size: 28px;
-        margin-bottom: 30px;
-        font-weight: 600;
-        position: relative;
-        z-index: 1;
-    }
-    
-    .subsection-title {
-        color: #fff;
-        font-size: 20px;
-        margin-bottom: 20px;
-        position: relative;
-        z-index: 1;
-        text-align: center;
-    }
-    
-    .history-container {
-        display: flex;
-        gap: 30px;
-        margin-bottom: 40px;
-        position: relative;
-        z-index: 1;
-    }
-    
-    .history-chart, .history-table {
-        flex: 1;
-        background: rgba(0, 0, 0, 0.2);
-        border-radius: 10px;
-        padding: 20px;
-    }
-    
-    /* Table Styling */
-    .table-wrapper {
-        overflow-x: auto;
-    }
-    
-    .revenue-table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-    
-    .revenue-table th {
-        background: rgba(0, 0, 0, 0.3);
-        color: #4bc0c0;
-        text-align: left;
-        padding: 12px 15px;
-        font-weight: 600;
-    }
-    
-    .revenue-table td {
-        padding: 10px 15px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        color: #fff;
-    }
-    
-    .revenue-table .total-row {
-        background: rgba(75, 192, 192, 0.1);
-        font-weight: 600;
-    }
-    
-    .revenue-table .growth {
-        text-align: right;
-        font-weight: 500;
-    }
-    
-    .revenue-table .positive {
-        color: #2ecc71;
-    }
-    
-    .revenue-table .negative {
-        color: #e74c3c;
-    }
-    
-    .revenue-table .neutral {
-        color: #f1c40f;
-    }
-    
-    /* Six Year Summary */
-    .six-year-summary {
-        position: relative;
-        z-index: 1;
-    }
-    
-    .year-boxes {
-        display: flex;
-        justify-content: space-between;
-        gap: 15px;
-        margin-bottom: 30px;
-        flex-wrap: wrap;
-    }
-    
-    .year-box {
-        flex: 1;
-        min-width: 120px;
-        background: rgba(0, 0, 0, 0.2);
-        border-radius: 8px;
-        padding: 15px;
-        text-align: center;
-        transition: all 0.3s ease;
-    }
-    
-    .year-box:hover {
-        transform: translateY(-5px);
-        background: rgba(0, 0, 0, 0.3);
-    }
-    
-    .year-box.highlight {
-        background: rgba(75, 192, 192, 0.2);
-        border: 1px solid rgba(75, 192, 192, 0.5);
-    }
-    
-    .year-box .year {
-        font-size: 18px;
-        font-weight: 600;
-        color: #4bc0c0;
-        margin-bottom: 5px;
-    }
-    
-    .year-box .amount {
-        font-size: 16px;
-        color: #fff;
-        margin-bottom: 5px;
-    }
-    
-    .year-box .percent {
-        font-size: 14px;
-        color: #2ecc71;
-        font-weight: 500;
-    }
-    
-    .trend-summary {
-        background: rgba(0, 0, 0, 0.2);
-        border-radius: 10px;
-        padding: 20px;
-        margin-top: 30px;
-    }
-    
-    .trend-summary h4 {
-        color: #4bc0c0;
-        margin-bottom: 15px;
-        font-size: 18px;
-    }
-    
-    .trend-summary p {
-        color: #fff;
-        line-height: 1.7;
-        margin-bottom: 15px;
-    }
-    
-    .highlight-text {
-        color: #4bc0c0;
-        font-weight: 600;
-        position: relative;
-        padding: 0 2px;
-    }
-    
-    .highlight-text::after {
-        content: '';
-        position: absolute;
-        bottom: -2px;
-        left: 0;
-        width: 100%;
-        height: 1px;
-        background-color: rgba(75, 192, 192, 0.4);
-    }
-    
-    @media (max-width: 900px) {
-        .history-container {
-            flex-direction: column;
-        }
-        
-        .year-boxes {
-            justify-content: center;
-        }
-        
-        .year-box {
-            min-width: 130px;
-            margin-bottom: 10px;
-        }
-    }
-</style>
+</body>
+</html>
