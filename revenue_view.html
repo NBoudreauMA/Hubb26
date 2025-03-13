@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Revenue Data for Hubbardston Residents</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -15,7 +13,6 @@
             padding: 0;
             line-height: 1.6;
         }
-
         nav {
             background: #2d6a4f;
             padding: 15px;
@@ -26,7 +23,6 @@
             top: 0;
             z-index: 1000;
         }
-
         nav a {
             color: white;
             text-decoration: none;
@@ -34,85 +30,71 @@
             font-weight: bold;
             padding: 10px;
         }
-
         nav a:hover {
             text-decoration: underline;
         }
-
         h1 {
             text-align: center;
-            margin-top: 100px;
+            margin: 30px 0;
             color: #2d6a4f;
+            font-size: 28px;
         }
-
         .table-container {
             width: 95%;
-            margin: 20px auto;
+            max-width: 1400px;
+            margin: 0 auto 30px;
             overflow-x: auto;
             background: #ffffff;
-            border: 2px solid #2d6a4f;
+            border: 1px solid #2d6a4f;
             border-radius: 8px;
-            padding: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-
+        .table-container {
+            width: 95%;
+            max-width: 1400px;
+            margin: 0 auto 30px;
+            overflow-x: auto;
+            background: #ffffff;
+            border: 1px solid #2d6a4f;
+            border-radius: 8px;
+            padding: 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-height: 80vh;
+            overflow-y: auto;
+        }
         table {
             width: 100%;
             border-collapse: collapse;
         }
-
         th, td {
             border: 1px solid #ddd;
             padding: 10px;
             text-align: left;
         }
-
         th {
             background-color: #2d6a4f;
             color: white;
+            font-weight: bold;
             position: sticky;
             top: 0;
-            z-index: 3;
+            z-index: 10;
         }
-
         .section-header {
             background-color: #74c69d;
+            color: #333;
             font-weight: bold;
             text-transform: uppercase;
         }
-
-        .currency, .percentage {
+        .currency {
             text-align: right;
         }
-
-        .total-row {
+        .percentage {
+            text-align: right;
+        }
+        .subtotal-row {
             background-color: #e8f5e9;
             font-weight: bold;
-        }
-
-        .error-message {
-            color: red;
-            text-align: center;
-            padding: 20px;
-        }
-
-        .spacer-row td {
-            height: 15px;
-            background-color: #f0f4f8;
-            border: none;
-        }
-
-        @media (max-width: 768px) {
-            .table-container {
-                width: 100%;
-                margin-top: 20px;
-            }
-            table {
-                font-size: 12px;
-            }
-            th, td {
-                padding: 6px;
-            }
         }
     </style>
 </head>
@@ -124,84 +106,420 @@
         <a href="capital_plan.html">Capital Plan</a>
         <a href="citizens_guide.html">Citizen's Guide</a>
     </nav>
-
-    <h1>Revenue Overview for Hubbardston Residents</h1>
-
+    <h1>Revenue Overview for Hubbardston</h1>
     <div class="table-container">
         <table id="revenueTable">
             <thead>
-                <tr id="tableHeader"></tr>
+                <tr>
+                    <th>Account</th>
+                    <th>FY23 ($)</th>
+                    <th>FY24 ($)</th>
+                    <th>FY25 ($)</th>
+                    <th>FY26 Proposed ($)</th>
+                    <th>Notes</th>
+                    <th>% Collected</th>
+                </tr>
             </thead>
-            <tbody id="tableBody"></tbody>
+            <tbody>
+                <!-- Tax Revenue Section -->
+                <tr class="section-header">
+                    <td colspan="7">TAX REVENUE</td>
+                </tr>
+                <tr>
+                    <td>Tax Levy</td>
+                    <td class="currency"></td>
+                    <td class="currency"></td>
+                    <td class="currency">8,425,343.00</td>
+                    <td class="currency">8,770,191.58</td>
+                    <td>Based on corrected Prop 2.5% calculation</td>
+                    <td class="percentage">74.50%</td>
+                </tr>
+                <tr>
+                    <td>Prop 2.5%</td>
+                    <td class="currency"></td>
+                    <td class="currency"></td>
+                    <td class="currency">210,633.58</td>
+                    <td class="currency">219,254.79</td>
+                    <td>Adjusted for corrected 2.5% increase calculation</td>
+                    <td class="percentage">100.00%</td>
+                </tr>
+                <tr>
+                    <td>New Growth / Amended NG</td>
+                    <td class="currency"></td>
+                    <td class="currency"></td>
+                    <td class="currency">134,215.00</td>
+                    <td class="currency">125,000.00</td>
+                    <td>Projected at 90% due to no collections yet</td>
+                    <td class="percentage">0.00%</td>
+                </tr>
+                <tr>
+                    <td>Debt Exclusions (School Roof)</td>
+                    <td class="currency"></td>
+                    <td class="currency"></td>
+                    <td class="currency">82,377.00</td>
+                    <td class="currency">82,377.00</td>
+                    <td>Fixed debt amount for school roof</td>
+                    <td class="percentage">0.00%</td>
+                </tr>
+                <tr class="subtotal-row">
+                    <td>Subtotal</td>
+                    <td class="currency">8,052,778</td>
+                    <td class="currency">8,425,343</td>
+                    <td class="currency">8,852,569</td>
+                    <td class="currency">9,196,823</td>
+                    <td>Subtotal of Tax Levy items</td>
+                    <td class="percentage">74.20%</td>
+                </tr>
+                
+                <!-- State Aid Section -->
+                <tr class="section-header">
+                    <td colspan="7">STATE AID</td>
+                </tr>
+                <tr>
+                    <td>Unrestricted General Government Aid</td>
+                    <td class="currency">521,806.00</td>
+                    <td class="currency">530,155.00</td>
+                    <td class="currency">554,659.00</td>
+                    <td class="currency">579,659.00</td>
+                    <td>H1</td>
+                    <td class="percentage">66.00%</td>
+                </tr>
+                <tr>
+                    <td>Abatements to Veterans' and Blind</td>
+                    <td class="currency">29,038.00</td>
+                    <td class="currency">24,861.00</td>
+                    <td class="currency">25,706.00</td>
+                    <td class="currency">26,477.18</td>
+                    <td>H1</td>
+                    <td class="percentage">196.00%</td>
+                </tr>
+                <tr>
+                    <td>State Owned Land</td>
+                    <td class="currency">101,466.00</td>
+                    <td class="currency">115,957.00</td>
+                    <td class="currency">118,741.00</td>
+                    <td class="currency">122,303.23</td>
+                    <td>H1</td>
+                    <td class="percentage">68.00%</td>
+                </tr>
+                <tr>
+                    <td>Veterans' Benefits and Exemptions</td>
+                    <td class="currency">6,428.00</td>
+                    <td class="currency">365.00</td>
+                    <td class="currency">-</td>
+                    <td class="currency">-</td>
+                    <td>H1</td>
+                    <td class="percentage"></td>
+                </tr>
+                <tr>
+                    <td>Offsets (Library)</td>
+                    <td class="currency">9,936.00</td>
+                    <td class="currency">11,114.00</td>
+                    <td class="currency">12,765.00</td>
+                    <td class="currency">13,147.95</td>
+                    <td>H1</td>
+                    <td class="percentage">57.00%</td>
+                </tr>
+                <tr class="subtotal-row">
+                    <td>Subtotal</td>
+                    <td class="currency"></td>
+                    <td class="currency">682,452.00</td>
+                    <td class="currency">711,871.00</td>
+                    <td class="currency">741,587.36</td>
+                    <td>Subtotal of State Aid</td>
+                    <td class="percentage">71.00%</td>
+                </tr>
+                
+                <!-- Local Receipts Section -->
+                <tr class="section-header">
+                    <td colspan="7">LOCAL RECEIPTS</td>
+                </tr>
+                <tr>
+                    <td>MotorVehicle</td>
+                    <td class="currency">647,660.00</td>
+                    <td class="currency">716,352.00</td>
+                    <td class="currency">727,600.00</td>
+                    <td class="currency">763,980.00</td>
+                    <td>Strong motor vehicle revenue in Q2</td>
+                    <td class="percentage">43.00%</td>
+                </tr>
+                <tr>
+                    <td>Interest&Penalties (Property Tax)</td>
+                    <td class="currency">20,500.00</td>
+                    <td class="currency">21,115.00</td>
+                    <td class="currency">21,115.00</td>
+                    <td class="currency">21,960.00</td>
+                    <td>Stable projection based on past trends</td>
+                    <td class="percentage">45.00%</td>
+                </tr>
+                <tr>
+                    <td>Interest&Penalties (Excise Tax)</td>
+                    <td class="currency">5,100.00</td>
+                    <td class="currency">5,200.00</td>
+                    <td class="currency">6,000.00</td>
+                    <td class="currency">6,000.00</td>
+                    <td>Consistent revenue patterns</td>
+                    <td class="percentage">61.00%</td>
+                </tr>
+                <tr>
+                    <td>Watershed Division Trust PILOT</td>
+                    <td class="currency">380,387.00</td>
+                    <td class="currency">391,798.61</td>
+                    <td class="currency">405,000.00</td>
+                    <td class="currency">417,150.00</td>
+                    <td>PILOT adjusted for new assessment values</td>
+                    <td class="percentage">100.00%</td>
+                </tr>
+                <tr>
+                    <td>PILOT (Not from Cherry Sheet)</td>
+                    <td class="currency">5,000.00</td>
+                    <td class="currency">10,000.00</td>
+                    <td class="currency">10,000.00</td>
+                    <td class="currency">10,000.00</td>
+                    <td>Stable PILOT revenue pattern</td>
+                    <td class="percentage">100.00%</td>
+                </tr>
+                <tr>
+                    <td>Ambulance Revenue</td>
+                    <td class="currency">150,000.00</td>
+                    <td class="currency">185,390.00</td>
+                    <td class="currency">165,000.00</td>
+                    <td class="currency">200,000.00</td>
+                    <td>Increased due to strong Q2 reporting</td>
+                    <td class="percentage">80.00%</td>
+                </tr>
+                <tr>
+                    <td>Collector Receipts</td>
+                    <td class="currency">31,000.00</td>
+                    <td class="currency">34,697.00</td>
+                    <td class="currency">35,000.00</td>
+                    <td class="currency">36,050.00</td>
+                    <td>Slight increase based on trends</td>
+                    <td class="percentage">35.00%</td>
+                </tr>
+                <tr>
+                    <td>Treasurer Fees</td>
+                    <td class="currency">100.00</td>
+                    <td class="currency">100.00</td>
+                    <td class="currency">100.00</td>
+                    <td class="currency">100.00</td>
+                    <td>Consistent projection for Treasurer fees</td>
+                    <td class="percentage">25.00%</td>
+                </tr>
+                <tr>
+                    <td>Tax Liens Fees</td>
+                    <td class="currency">13,000.00</td>
+                    <td class="currency">7,345.00</td>
+                    <td class="currency">14,000.00</td>
+                    <td class="currency">14,000.00</td>
+                    <td>Level projection based on past patterns</td>
+                    <td class="percentage">19.00%</td>
+                </tr>
+                <tr>
+                    <td>Police Fees</td>
+                    <td class="currency">10,000.00</td>
+                    <td class="currency">10,151.00</td>
+                    <td class="currency">10,250.00</td>
+                    <td class="currency">20,000.00</td>
+                    <td>Increased due to policy change impacting LTC</td>
+                    <td class="percentage">245.00%</td>
+                </tr>
+                <tr>
+                    <td>Fire Fees</td>
+                    <td class="currency">6,200.00</td>
+                    <td class="currency">4,945.00</td>
+                    <td class="currency">6,355.00</td>
+                    <td class="currency">6,545.00</td>
+                    <td>Minor increase based on past collection trends</td>
+                    <td class="percentage">54.00%</td>
+                </tr>
+                <tr>
+                    <td>Highway Fees</td>
+                    <td class="currency">1,500.00</td>
+                    <td class="currency">750.00</td>
+                    <td class="currency">1,538.00</td>
+                    <td class="currency">1,584.00</td>
+                    <td>Minor increase in scheduled fees</td>
+                    <td class="percentage">15.00%</td>
+                </tr>
+                <tr>
+                    <td>Board of Health Fees</td>
+                    <td class="currency">7,500.00</td>
+                    <td class="currency">12,323.50</td>
+                    <td class="currency">10,000.00</td>
+                    <td class="currency">12,000.00</td>
+                    <td>Level projection based on consistent trends</td>
+                    <td class="percentage">26.00%</td>
+                </tr>
+                <tr>
+                    <td>Assessor Fees</td>
+                    <td class="currency">125.00</td>
+                    <td class="currency">33.00</td>
+                    <td class="currency">128.00</td>
+                    <td class="currency">128.00</td>
+                    <td>Stable Clerk revenue trend</td>
+                    <td class="percentage">20.00%</td>
+                </tr>
+                <tr>
+                    <td>Clerk Fees</td>
+                    <td class="currency">4,200.00</td>
+                    <td class="currency">1,845.00</td>
+                    <td class="currency">4,305.00</td>
+                    <td class="currency">4,434.00</td>
+                    <td>Adjusted for updated Clerk fee schedule</td>
+                    <td class="percentage">20.00%</td>
+                </tr>
+                <tr>
+                    <td>Alcoholic Beverage Licence</td>
+                    <td class="currency">3,200.00</td>
+                    <td class="currency">3,365.00</td>
+                    <td class="currency">3,280.00</td>
+                    <td class="currency">4,000.00</td>
+                    <td>Stable alcohol licensing revenue</td>
+                    <td class="percentage">0.00%</td>
+                </tr>
+                <tr>
+                    <td>Dog Licences</td>
+                    <td class="currency">5,500.00</td>
+                    <td class="currency">7,790.00</td>
+                    <td class="currency">6,500.00</td>
+                    <td class="currency">6,500.00</td>
+                    <td>Steady licensing demand in FY25</td>
+                    <td class="percentage">42.00%</td>
+                </tr>
+                <tr>
+                    <td>Misc. Licenses</td>
+                    <td class="currency">510.00</td>
+                    <td class="currency">150.00</td>
+                    <td class="currency">560.00</td>
+                    <td class="currency">560.00</td>
+                    <td>Stable miscellaneous licensing fees</td>
+                    <td class="percentage">606.00%</td>
+                </tr>
+                <tr>
+                    <td>Building Permits</td>
+                    <td class="currency">47,750.00</td>
+                    <td class="currency">27,253.00</td>
+                    <td class="currency">50,000.00</td>
+                    <td class="currency">45,000.00</td>
+                    <td>Conservative estimate based on trends</td>
+                    <td class="percentage">29.00%</td>
+                </tr>
+                <tr>
+                    <td>Gas Permits</td>
+                    <td class="currency">1,000.00</td>
+                    <td class="currency">1,377.00</td>
+                    <td class="currency">1,025.00</td>
+                    <td class="currency">1,056.00</td>
+                    <td>Adjusted to align with updated fee projections</td>
+                    <td class="percentage">0.00%</td>
+                </tr>
+                <tr>
+                    <td>Wiring Permits</td>
+                    <td class="currency">4,000.00</td>
+                    <td class="currency">7,344.00</td>
+                    <td class="currency">7,000.00</td>
+                    <td class="currency">7,000.00</td>
+                    <td>Level projection for wiring permits</td>
+                    <td class="percentage">55.00%</td>
+                </tr>
+                <tr>
+                    <td>Plumbing Permits</td>
+                    <td class="currency">1,000.00</td>
+                    <td class="currency">1,124.35</td>
+                    <td class="currency">1,025.00</td>
+                    <td class="currency">1,025.00</td>
+                    <td>Stable projection for plumbing fees</td>
+                    <td class="percentage">62.00%</td>
+                </tr>
+                <tr>
+                    <td>RMV Court Fees</td>
+                    <td class="currency">1,580.00</td>
+                    <td class="currency">1,775.00</td>
+                    <td class="currency">1,620.00</td>
+                    <td class="currency">1,620.00</td>
+                    <td>Level projection based on RMV trends</td>
+                    <td class="percentage">40.00%</td>
+                </tr>
+                <tr>
+                    <td>Registry Fees</td>
+                    <td class="currency">2,500.00</td>
+                    <td class="currency">1,235.00</td>
+                    <td class="currency">2,563.00</td>
+                    <td class="currency">2,640.00</td>
+                    <td>Registry fee increase based on collection growth</td>
+                    <td class="percentage">84.00%</td>
+                </tr>
+                <tr>
+                    <td>Earnings on Investment</td>
+                    <td class="currency">4,080.00</td>
+                    <td class="currency">18,000.00</td>
+                    <td class="currency">10,000.00</td>
+                    <td class="currency">25,000.00</td>
+                    <td>Higher interest earnings based on market trends</td>
+                    <td class="percentage">136.00%</td>
+                </tr>
+                <tr>
+                    <td>Misc. Revenue</td>
+                    <td class="currency">11,000.00</td>
+                    <td class="currency">7,228.72</td>
+                    <td class="currency">18,000.00</td>
+                    <td class="currency">54,000.00</td>
+                    <td>Settlement revenue boosted by new agreements</td>
+                    <td class="percentage">77.00%</td>
+                </tr>
+                <tr class="subtotal-row">
+                    <td>Subtotal</td>
+                    <td class="currency">1,364,392</td>
+                    <td class="currency">1,478,687</td>
+                    <td class="currency">1,517,964</td>
+                    <td class="currency">1,662,332.00</td>
+                    <td></td>
+                    <td class="percentage"></td>
+                </tr>
+                
+                <!-- Grand Total Section -->
+                <tr class="section-header">
+                    <td colspan="7">GRAND TOTAL</td>
+                </tr>
+                <tr class="subtotal-row">
+                    <td>Tax Revenue</td>
+                    <td class="currency">8,052,778</td>
+                    <td class="currency">8,425,343</td>
+                    <td class="currency">8,852,569</td>
+                    <td class="currency">9,196,823</td>
+                    <td></td>
+                    <td class="percentage">74.20%</td>
+                </tr>
+                <tr class="subtotal-row">
+                    <td>State Aid</td>
+                    <td class="currency">668,674</td>
+                    <td class="currency">682,452</td>
+                    <td class="currency">711,871</td>
+                    <td class="currency">741,587.36</td>
+                    <td></td>
+                    <td class="percentage">71.00%</td>
+                </tr>
+                <tr class="subtotal-row">
+                    <td>Local Receipts</td>
+                    <td class="currency">1,364,392</td>
+                    <td class="currency">1,478,687</td>
+                    <td class="currency">1,517,964</td>
+                    <td class="currency">1,662,332.00</td>
+                    <td></td>
+                    <td class="percentage"></td>
+                </tr>
+                <tr class="subtotal-row">
+                    <td>ALL REVENUE</td>
+                    <td class="currency">10,085,844</td>
+                    <td class="currency">10,586,482</td>
+                    <td class="currency">11,082,404</td>
+                    <td class="currency">11,600,742.36</td>
+                    <td>Total Revenue for Hubbardston</td>
+                    <td class="percentage"></td>
+                </tr>
+            </tbody>
         </table>
     </div>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const csvUrl = "revenue.csv";
-            fetch(csvUrl)
-                .then(response => response.text())
-                .then(csvText => {
-                    const parsedData = Papa.parse(csvText, { header: true, skipEmptyLines: true });
-                    populateTable(parsedData.data);
-                })
-                .catch(() => {
-                    document.querySelector(".table-container").innerHTML = '<p class="error-message">Revenue data is temporarily unavailable. Please check back later.</p>';
-                });
-        });
-
-        function cleanValue(value) {
-            return parseFloat(value.replace(/[^0-9.-]+/g, "")) || 0;
-        }
-
-        function formatNumber(value) {
-            return cleanValue(value).toLocaleString("en-US", { minimumFractionDigits: 0, maximumFractionDigits: 0 });
-        }
-
-        function populateTable(data) {
-            const tableHeader = document.getElementById("tableHeader");
-            const tableBody = document.getElementById("tableBody");
-            if (data.length === 0) {
-                tableBody.innerHTML = "<tr><td colspan='100%'>No data available.</td></tr>";
-                return;
-            }
-
-            tableHeader.innerHTML = Object.keys(data[0])
-                .map(key => `<th>${key}</th>`)
-                .join("");
-
-            let lastSection = "";
-            let totalSum = 0;
-
-            tableBody.innerHTML = data.map(row => {
-                let sectionRow = "";
-                if (row["Section"] && row["Section"] !== lastSection) {
-                    if (totalSum > 0) {
-                        sectionRow += `<tr class='total-row'><td colspan='100%'>Total for ${lastSection}: $${formatNumber(totalSum)}</td></tr>`;
-                    }
-                    lastSection = row["Section"];
-                    totalSum = 0;
-                    sectionRow += `<tr class='spacer-row'><td colspan='100%'></td></tr>`;
-                    sectionRow += `<tr class='section-header'><td colspan='100%'>${lastSection}</td></tr>`;
-                }
-
-                let sectionTotal = cleanValue(row["Actual Revenue"] || 0);
-                totalSum += sectionTotal;
-
-                const formattedRow = Object.entries(row)
-                    .map(([key, value]) => {
-                        if (key.includes("Actual") || key.includes("Projected") || key.includes("Change ($)")) {
-                            return `<td class='currency'>$${formatNumber(value)}</td>`;
-                        } else if (key.includes("Change (%)")) {
-                            return `<td class='percentage'>${parseFloat(value).toFixed(0)}%</td>`;
-                        }
-                        return `<td>${value}</td>`;
-                    })
-                    .join("");
-
-                return sectionRow + `<tr>${formattedRow}</tr>`;
-            }).join("") + `<tr class='total-row'><td colspan='100%'>Grand Total: $${formatNumber(totalSum)}</td></tr>`;
-        }
-    </script>
 </body>
 </html>
