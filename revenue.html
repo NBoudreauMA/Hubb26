@@ -15,7 +15,6 @@
             padding: 0;
             line-height: 1.6;
         }
-
         nav {
             background: #2d6a4f;
             padding: 15px;
@@ -26,7 +25,6 @@
             top: 0;
             z-index: 1000;
         }
-
         nav a {
             color: white;
             text-decoration: none;
@@ -34,17 +32,14 @@
             font-weight: bold;
             padding: 10px;
         }
-
         nav a:hover {
             text-decoration: underline;
         }
-
         h1 {
             text-align: center;
             margin-top: 100px;
             color: #2d6a4f;
         }
-
         .table-container {
             width: 95%;
             margin: 20px auto;
@@ -55,18 +50,15 @@
             padding: 15px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-
         table {
             width: 100%;
             border-collapse: collapse;
         }
-
         th, td {
             border: 1px solid #ddd;
             padding: 10px;
             text-align: left;
         }
-
         th {
             background-color: #2d6a4f;
             color: white;
@@ -74,34 +66,28 @@
             top: 0;
             z-index: 3;
         }
-
         .section-header {
             background-color: #74c69d;
             font-weight: bold;
             text-transform: uppercase;
         }
-
         .currency, .percentage {
             text-align: right;
         }
-
         .total-row {
             background-color: #e8f5e9;
             font-weight: bold;
         }
-
         .error-message {
             color: red;
             text-align: center;
             padding: 20px;
         }
-
         .spacer-row td {
             height: 15px;
             background-color: #f0f4f8;
             border: none;
         }
-
         @media (max-width: 768px) {
             .table-container {
                 width: 100%;
@@ -124,9 +110,7 @@
         <a href="capital_plan.html">Capital Plan</a>
         <a href="citizens_guide.html">Citizen's Guide</a>
     </nav>
-
     <h1>Revenue Overview for Hubbardston Residents</h1>
-
     <div class="table-container">
         <table id="revenueTable">
             <thead>
@@ -135,7 +119,118 @@
             <tbody id="tableBody"></tbody>
         </table>
     </div>
-
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const csvUrl = "./main/revenue.csv";
+
+            // Fetch and parse the CSV data
+            fetch(csvUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    // Parse CSV
+                    Papa.parse(data, {
+                        header: true,
+                        skipEmptyLines: true,
+                        complete: function(results) {
+                            displayData(results.data, results.meta.fields);
+                        },
+                        error: function(error) {
+                            showError('Error parsing CSV: ' + error.message);
+                        }
+                    });
+                })
+                .catch(error => {
+                    showError('Error fetching data: ' + error.message);
+                });
+
+            // Function to display data in the table
+            function displayData(data, headers) {
+                const tableHeader = document.getElementById('tableHeader');
+                const tableBody = document.getElementById('tableBody');
+                
+                // Clear existing content
+                tableHeader.innerHTML = '';
+                tableBody.innerHTML = '';
+                
+                // Create table headers
+                headers.forEach(header => {
+                    const th = document.createElement('th');
+                    th.textContent = header;
+                    tableHeader.appendChild(th);
+                });
+                
+                // Create table rows
+                data.forEach(row => {
+                    const tr = document.createElement('tr');
+                    
+                    // Check if this is a section header row
+                    if (row.Category && row.Category.trim() !== '' && !row.Description) {
+                        tr.className = 'section-header';
+                        const td = document.createElement('td');
+                        td.textContent = row.Category;
+                        td.colSpan = headers.length;
+                        tr.appendChild(td);
+                    } 
+                    // Check if this is a total row
+                    else if (row.Description && row.Description.toLowerCase().includes('total')) {
+                        tr.className = 'total-row';
+                        headers.forEach(header => {
+                            const td = document.createElement('td');
+                            td.textContent = row[header] || '';
+                            
+                            // Apply special formatting for currency and percentage cells
+                            if (header.includes('FY') || header.includes('$')) {
+                                td.className = 'currency';
+                            } else if (header.includes('%')) {
+                                td.className = 'percentage';
+                            }
+                            
+                            tr.appendChild(td);
+                        });
+                    }
+                    // Regular data row
+                    else {
+                        headers.forEach(header => {
+                            const td = document.createElement('td');
+                            td.textContent = row[header] || '';
+                            
+                            // Apply special formatting for currency and percentage cells
+                            if (header.includes('FY') || header.includes('$')) {
+                                td.className = 'currency';
+                            } else if (header.includes('%')) {
+                                td.className = 'percentage';
+                            }
+                            
+                            tr.appendChild(td);
+                        });
+                    }
+                    
+                    tableBody.appendChild(tr);
+                    
+                    // Add spacer row after total rows
+                    if (row.Description && row.Description.toLowerCase().includes('total')) {
+                        const spacerRow = document.createElement('tr');
+                        spacerRow.className = 'spacer-row';
+                        const spacerTd = document.createElement('td');
+                        spacerTd.colSpan = headers.length;
+                        spacerRow.appendChild(spacerTd);
+                        tableBody.appendChild(spacerRow);
+                    }
+                });
+            }
+            
+            // Function to show error message
+            function showError(message) {
+                const tableContainer = document.querySelector('.table-container');
+                tableContainer.innerHTML = `<div class="error-message">${message}</div>`;
+                console.error(message);
+            }
+        });
+    </script>
+</body>
+</html>
