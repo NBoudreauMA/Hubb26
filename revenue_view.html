@@ -150,8 +150,12 @@
                 });
         });
 
+        function cleanValue(value) {
+            return parseFloat(value.replace(/[^0-9.-]+/g, "")) || 0;
+        }
+
         function formatNumber(value) {
-            return parseFloat(value).toLocaleString("en-US", { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+            return cleanValue(value).toLocaleString("en-US", { minimumFractionDigits: 0, maximumFractionDigits: 0 });
         }
 
         function populateTable(data) {
@@ -181,7 +185,7 @@
                     sectionRow += `<tr class='section-header'><td colspan='100%'>${lastSection}</td></tr>`;
                 }
 
-                let sectionTotal = parseFloat(row["Actual Revenue"] || 0);
+                let sectionTotal = cleanValue(row["Actual Revenue"] || 0);
                 totalSum += sectionTotal;
 
                 const formattedRow = Object.entries(row)
