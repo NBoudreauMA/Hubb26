@@ -60,6 +60,7 @@
         td, th {
             border: 1px solid #e1e7e6;
             padding: 10px;
+            white-space: nowrap;
         }
         .dept-header {
             background-color: #95d5b2;
@@ -68,6 +69,15 @@
         .currency, .percentage {
             text-align: right;
             font-variant-numeric: tabular-nums;
+        }
+        td:first-child, td:nth-child(2), th:first-child, th:nth-child(2) {
+            position: sticky;
+            left: 0;
+            background-color: #ffffff;
+            z-index: 1;
+        }
+        th:first-child, th:nth-child(2) {
+            z-index: 3;
         }
     </style>
 </head>
