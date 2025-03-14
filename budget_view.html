@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Budget Data</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -42,11 +43,11 @@
             background-color: #ffffff;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             border-radius: 8px;
+            max-height: 600px;
         }
         table {
             width: 100%;
             border-collapse: collapse;
-            overflow-x: auto;
         }
         th {
             background-color: #52b788;
@@ -54,6 +55,7 @@
             padding: 10px;
             position: sticky;
             top: 0;
+            z-index: 2;
         }
         td, th {
             border: 1px solid #e1e7e6;
@@ -66,25 +68,6 @@
         .currency, .percentage {
             text-align: right;
             font-variant-numeric: tabular-nums;
-        }
-        @media (max-width: 768px) {
-            nav {
-                flex-direction: column;
-            }
-            nav a {
-                display: block;
-                padding: 5px;
-                font-size: 14px;
-            }
-            .table-container {
-                padding: 5px;
-            }
-            table {
-                font-size: 12px;
-            }
-            th, td {
-                padding: 6px;
-            }
         }
     </style>
 </head>
@@ -105,7 +88,6 @@
         </table>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             fetch('https://raw.githubusercontent.com/NBoudreauMA/Hubb26/main/budget2.csv')
@@ -139,12 +121,12 @@
                     }
                     const rowData = headers.map(header => {
                         const cell = row[header];
-                        if (header.match(/(Actual|Proposed|Budget|Spent)/i)) {
+                        if (header.match(/(Actual|Proposed|Budget|Spent)/i) && !isNaN(parseFloat(cell))) {
                             return `<td class="currency">$${parseFloat(cell).toLocaleString()}</td>`;
-                        } else if (header.match(/Change \(%\)/i)) {
+                        } else if (header.match(/Change \(%\)/i) && !isNaN(parseFloat(cell))) {
                             return `<td class="percentage">${parseFloat(cell).toFixed(0)}%</td>`;
                         }
-                        return `<td>${cell}</td>`;
+                        return `<td>${cell || ''}</td>`;
                     }).join('');
 
                     return `${deptRow}<tr>${rowData}</tr>`;
