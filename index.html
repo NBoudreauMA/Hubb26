@@ -58,12 +58,24 @@
             margin-bottom: 20px;
         }
 
-        .summary-box {
-            background: rgba(75, 192, 192, 0.2);
-            padding: 20px;
-            border-left: 5px solid #4CAF50;
-            border-radius: 8px;
-            margin-bottom: 30px;
+        .button-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .button-container a {
+            display: inline-block;
+            margin: 10px;
+            padding: 12px 20px;
+            background: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+
+        .button-container a:hover {
+            background: #3A8D3A;
         }
 
         .chart-container {
@@ -110,9 +122,12 @@
 
             <p>This year's budget includes targeted investments in <strong>infrastructure upgrades</strong>, <strong>public safety enhancements</strong>, <strong>roads and public works</strong>, and <strong>modernized town operations</strong>. We've also strategically allocated <strong>$108,803 in free cash</strong> for one-time expenses that improve services and reduce future costs — ensuring these funds deliver lasting value. As free cash use declines per our plan, we note that significant cuts or an operational override would be necessary if these funds are not utilized.</p>
 
-            <p>We're proud to introduce this <strong>modernized web portal</strong>, giving residents <strong>real-time access</strong> to budget data, spending priorities, and financial insights. This interactive platform reflects our commitment to <strong>transparency</strong>, <strong>accountability</strong>, and <strong>community engagement</strong>.</p>
-
-            <p>We encourage you to explore the information, ask questions, and share your thoughts. Together, we can ensure Hubbardston continues to thrive as a financially stable and forward-thinking community.</p>
+            <div class="button-container">
+                <a href="budget_view.html">📊 View Budget Overview</a>
+                <a href="revenue_view.html">💰 View Revenue Details</a>
+                <a href="revenue.pdf" target="_blank">📄 Download Revenue Report</a>
+                <a href="budget.pdf" target="_blank">📄 Download Full Budget</a>
+            </div>
 
             <div class="signature-container">
                 Respectfully submitted,<br>
