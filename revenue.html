@@ -1,700 +1,186 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hubbardston FY26 Budget Portal - Revenue</title>
-    <!-- Make sure Chart.js loads first with a specific version -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: #005030;
-            color: white;
-        }
-
-        nav {
-            background: linear-gradient(90deg, rgba(34, 139, 34, 0.9), rgba(0, 100, 0, 0.9));
-            padding: 15px;
-            text-align: center;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            left: 0;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-        }
-
-        nav a {
-            color: white;
-            margin: 0 20px;
-            text-decoration: none;
-            font-size: 18px;
-            font-weight: bold;
-            transition: 0.3s ease-in-out;
-        }
-
-        nav a:hover {
-            text-decoration: underline;
-            color: white;
-            background-color: rgba(0, 100, 0, 0.7);
-            border-radius: 5px;
-            padding: 5px 10px;
-        }
-
-        nav a.active {
-            color: white;
-            text-decoration: underline;
-            background-color: rgba(0, 100, 0, 0.7);
-            padding: 5px 10px;
-            border-radius: 5px;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 100px auto 40px;
-            padding: 30px;
-            background: rgba(0, 0, 0, 0.75);
-            border-radius: 15px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
-        }
-
-        .section {
-            margin-bottom: 40px;
-            background: linear-gradient(135deg, rgba(0, 60, 30, 0.85), rgba(0, 90, 70, 0.75));
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            border-left: 4px solid #4bc0c0;
-        }
-
-        .section-title {
-            color: #4bc0c0;
-            font-size: 28px;
-            margin-bottom: 20px;
-            font-weight: 600;
-        }
-
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .budget-card {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-            border-left: 3px solid #4bc0c0;
-            transition: all 0.3s ease;
-        }
-
-        .budget-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
-        }
-
-        .budget-title {
-            font-size: 18px;
-            margin-bottom: 10px;
-            color: #e0e0e0;
-        }
-
-        .budget-amount {
-            font-size: 24px;
-            font-weight: 600;
-            color: #4bc0c0;
-            margin-bottom: 5px;
-        }
-
-        .budget-percent {
-            font-size: 16px;
-            color: #2ecc71;
-        }
-
-        .chart-container {
-            height: 400px;
-            margin: 20px 0;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 12px;
-            padding: 20px;
-            position: relative;
-        }
-
-        .chart {
-            width: 100%;
-            height: 100%;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 12px;
-            overflow: hidden;
-        }
-
-        th, td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        th {
-            background-color: rgba(0, 0, 0, 0.3);
-            color: #4bc0c0;
-            font-weight: 600;
-        }
-
-        tr:hover {
-            background-color: rgba(75, 192, 192, 0.1);
-        }
-
-        .total-row {
-            font-weight: 700;
-            background-color: rgba(0, 0, 0, 0.4);
-        }
-
-        .note-box {
-            background: rgba(0, 0, 0, 0.3);
-            border-left: 4px solid #f39c12;
-            padding: 15px;
-            margin-top: 20px;
-            border-radius: 8px;
-        }
-
-        footer {
-            text-align: center;
-            margin-top: 40px;
-            padding: 20px;
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 14px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .legend {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .legend-item {
-            display: flex;
-            align-items: center;
-            background: rgba(0, 0, 0, 0.2);
-            padding: 8px 12px;
-            border-radius: 5px;
-        }
-
-        .legend-color {
-            width: 16px;
-            height: 16px;
-            border-radius: 4px;
-            margin-right: 8px;
-        }
-
-        @media (max-width: 768px) {
-            nav a {
-                font-size: 14px;
-                margin: 0 5px;
-            }
-            
-            .container {
-                padding: 15px;
-                margin-top: 80px;
-            }
-            
-            .section {
-                padding: 15px;
-            }
-            
-            .section-title {
-                font-size: 22px;
-            }
-            
-            .chart-container {
-                height: 300px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hubbardston FY26 Budget Portal - Revenue</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #005030;
+      color: white;
+      margin: 0;
+    }
+    nav {
+      background: linear-gradient(90deg, rgba(34,139,34,0.9), rgba(0,100,0,0.9));
+      padding: 15px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    nav a {
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 20px;
+      background: rgba(0,0,0,0.8);
+      border-radius: 12px;
+    }
+    .section {
+      margin-bottom: 40px;
+    }
+    .section h2 {
+      color: #4bc0c0;
+      border-left: 4px solid #4bc0c0;
+      padding-left: 10px;
+    }
+    .card {
+      background: rgba(0,0,0,0.4);
+      padding: 20px;
+      border-left: 3px solid #4bc0c0;
+      margin-bottom: 20px;
+      border-radius: 8px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background: rgba(0,0,0,0.3);
+    }
+    th, td {
+      padding: 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    th {
+      color: #4bc0c0;
+      background: rgba(0,0,0,0.5);
+    }
+    .chart-container {
+      height: 400px;
+      margin-top: 20px;
+    }
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+    }
+    .budget-card {
+      background: rgba(0,0,0,0.3);
+      padding: 20px;
+      border-left: 3px solid #4bc0c0;
+      border-radius: 10px;
+    }
+    .budget-title {
+      font-size: 18px;
+      color: #e0e0e0;
+    }
+    .budget-amount {
+      font-size: 24px;
+      font-weight: bold;
+      color: #4bc0c0;
+    }
+    .budget-percent {
+      font-size: 16px;
+      color: #2ecc71;
+    }
+  </style>
 </head>
 <body>
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="revenue.html" class="active">Revenue</a>
-        <a href="expenditures.html">Spending</a>
-        <a href="capital_plan.html">Capital Plan</a>
-        <a href="citizens_guide.html">Guide</a>
-        <a href="benchmarks-page.html">Benchmarks</a>
-        <a href="Hubbardston_Free_Cash_Report.html">Free Cash</a>
-    </nav>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="revenue.html" class="active">Revenue</a>
+    <a href="expenditures.html">Spending</a>
+    <a href="capital_plan.html">Capital Plan</a>
+    <a href="citizens_guide.html">Guide</a>
+    <a href="benchmarks-page.html">Benchmarks</a>
+    <a href="Hubbardston_Free_Cash_Report.html">Free Cash</a>
+  </nav>
 
-    <div class="container">
-        <h1 style="font-size: 32px; font-weight: bold; text-align: center; margin-bottom: 10px;">Hubbardston FY26 Budget Portal - Revenue</h1>
-        <p style="text-align: center; color: #ccc; margin-bottom: 30px;">Fiscal Year 2026 Budget Analysis and Projections</p>
+  <div class="container">
+    <h1 style="text-align: center;">Hubbardston FY26 Revenue Overview</h1>
 
-        <div class="section" id="revenue-overview">
-            <h2 class="section-title">Revenue Overview</h2>
-            <div class="grid-container">
-                <div class="budget-card">
-                    <h3 class="budget-title">FY26 Total Revenue</h3>
-                    <p class="budget-amount">$11,673,508</p>
-                </div>
-                <div class="budget-card">
-                    <h3 class="budget-title">Increase from FY25</h3>
-                    <p class="budget-amount">$569,748</p>
-                    <p class="budget-percent">+5.13%</p>
-                </div>
-                <div class="budget-card">
-                    <h3 class="budget-title">Property Tax Levy</h3>
-                    <p class="budget-amount">$9,196,823</p>
-                    <p class="budget-percent">78.8% of Revenue</p>
-                </div>
-            </div>
+    <div class="section" id="revenue-summary">
+      <h2>Summary</h2>
+      <div class="grid-container">
+        <div class="budget-card">
+          <h3 class="budget-title">Total Revenue</h3>
+          <p class="budget-amount">$11,703,804</p>
         </div>
-
-        <div class="section" id="revenue-sources">
-            <h2 class="section-title">Revenue Sources</h2>
-            <div class="chart-container">
-                <canvas id="revenue-chart" class="chart"></canvas>
-            </div>
-            <div class="legend" id="revenue-legend"></div>
-            <div class="grid-container">
-                <div class="budget-card">
-                    <h3 class="budget-title">Property Taxes</h3>
-                    <p class="budget-amount">$9,196,823</p>
-                    <p class="budget-percent">78.8% of Revenue</p>
-                </div>
-                <div class="budget-card">
-                    <h3 class="budget-title">Local Receipts</h3>
-                    <p class="budget-amount">$1,662,332</p>
-                    <p class="budget-percent">14.2% of Revenue</p>
-                </div>
-                <div class="budget-card">
-                    <h3 class="budget-title">State Aid</h3>
-                    <p class="budget-amount">$741,587</p>
-                    <p class="budget-percent">6.3% of Revenue</p>
-                </div>
-                <div class="budget-card">
-                    <h3 class="budget-title">Free Cash</h3>
-                    <p class="budget-amount">$108,803</p>
-                    <p class="budget-percent">0.7% of Revenue</p>
-                </div>
-            </div>
+        <div class="budget-card">
+          <h3 class="budget-title">Increase from FY25</h3>
+          <p class="budget-amount">$600,044</p>
+          <p class="budget-percent">+5.4%</p>
         </div>
-
-        <div class="section" id="property-tax-breakdown">
-            <h2 class="section-title">Property Tax Breakdown</h2>
-            <div class="chart-container">
-                <canvas id="tax-chart" class="chart"></canvas>
-            </div>
-            <h3 style="font-size: 20px; font-weight: 600; margin-top: 20px; margin-bottom: 10px;">Tax Levy Components:</h3>
-            <ul style="list-style-type: disc; padding-left: 30px; line-height: 1.6;">
-                <li><span style="font-weight: 500;">Base Tax Levy:</span> $8,770,192</li>
-                <li><span style="font-weight: 500;">Proposition 2½ Increase:</span> $219,255 (+2.5%)</li>
-                <li><span style="font-weight: 500;">New Growth:</span> $125,000 (projected at 90% due to no collections yet)</li>
-                <li><span style="font-weight: 500;">Debt Exclusions:</span> $82,377 (fixed debt amount for school roof)</li>
-            </ul>
+        <div class="budget-card">
+          <h3 class="budget-title">Property Tax Levy</h3>
+          <p class="budget-amount">$9,196,823</p>
+          <p class="budget-percent">78.5% of Revenue</p>
         </div>
-
-        <div class="section" id="local-receipts">
-            <h2 class="section-title">Local Receipts Breakdown</h2>
-            <div class="chart-container">
-                <canvas id="receipts-chart" class="chart"></canvas>
-            </div>
-            <h3 style="font-size: 20px; font-weight: 600; margin-top: 20px; margin-bottom: 10px;">Major Local Revenue Sources:</h3>
-            <ul style="list-style-type: disc; padding-left: 30px; line-height: 1.6;">
-                <li><span style="font-weight: 500;">Motor Vehicle Excise:</span> $763,980 - Strong motor vehicle revenue in Q2</li>
-                <li><span style="font-weight: 500;">PILOT Payments:</span> $427,150 - PILOT adjusted for new assessment values</li>
-                <li><span style="font-weight: 500;">Ambulance Revenue:</span> $200,000 - Increased due to strong Q2 reporting</li>
-                <li><span style="font-weight: 500;">Various Fees & Permits:</span> $217,202 - Multiple local fees and permits</li>
-                <li><span style="font-weight: 500;">Investment Earnings:</span> $25,000 - Higher interest earnings based on market trends</li>
-            </ul>
-        </div>
-
-        <div class="section" id="revenue-trends">
-            <h2 class="section-title">Five-Year Revenue Forecast</h2>
-            <div class="chart-container">
-                <canvas id="forecast-chart" class="chart"></canvas>
-            </div>
-            <h3 style="font-size: 20px; font-weight: 600; margin-top: 20px; margin-bottom: 10px;">Revenue Forecast Analysis:</h3>
-            <ul style="list-style-type: disc; padding-left: 30px; line-height: 1.6;">
-                <li>Property tax growth projected at 2.5% plus new growth each year</li>
-                <li>State aid expected to grow modestly at approximately 3% annually</li>
-                <li>Local receipts projected to increase by 2-3% annually</li>
-                <li>Reduced reliance on Free Cash for recurring expenses over time</li>
-            </ul>
-        </div>
-
-        <div class="section" id="revenue-summary">
-            <h2 class="section-title">FY26 Revenue Summary</h2>
-            <div style="overflow-x: auto;">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Category</th>
-                            <th>FY25 Revenue</th>
-                            <th>FY26 Revenue</th>
-                            <th>$ Change</th>
-                            <th>% Change</th>
-                            <th>% Collected (as of 2/28/25)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Tax Levy</td>
-                            <td>$8,425,343</td>
-                            <td>$8,770,192</td>
-                            <td>$344,849</td>
-                            <td>+4.09%</td>
-                            <td>74.50%</td>
-                        </tr>
-                        <tr>
-                            <td>Prop 2.5%</td>
-                            <td>$210,634</td>
-                            <td>$219,255</td>
-                            <td>$8,621</td>
-                            <td>+4.09%</td>
-                            <td>100.00%</td>
-                        </tr>
-                        <tr>
-                            <td>New Growth</td>
-                            <td>$134,215</td>
-                            <td>$125,000</td>
-                            <td>-$9,215</td>
-                            <td>-6.87%</td>
-                            <td>0.00%</td>
-                        </tr>
-                        <tr>
-                            <td>Debt Exclusions</td>
-                            <td>$82,377</td>
-                            <td>$82,377</td>
-                            <td>$0</td>
-                            <td>0.00%</td>
-                            <td>0.00%</td>
-                        </tr>
-                        <tr>
-                            <td>State Aid</td>
-                            <td>$733,227</td>
-                            <td>$741,587</td>
-                            <td>$8,360</td>
-                            <td>+1.14%</td>
-                            <td>71.00%</td>
-                        </tr>
-                        <tr>
-                            <td>Local Receipts</td>
-                            <td>$1,517,964</td>
-                            <td>$1,662,332</td>
-                            <td>$144,368</td>
-                            <td>+9.51%</td>
-                            <td>Various</td>
-                        </tr>
-                        <tr>
-                            <td>Free Cash</td>
-                            <td>$145,611</td>
-                            <td>$108,803</td>
-                            <td>-$36,808</td>
-                            <td>-25.28%</td>
-                            <td>100.00%</td>
-                        </tr>
-                        <tr class="total-row">
-                            <td>Total Revenue</td>
-                            <td>$11,103,760</td>
-                            <td>$11,673,508</td>
-                            <td>$569,748</td>
-                            <td>+5.13%</td>
-                            <td>--</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <div class="section" id="state-aid">
-            <h2 class="section-title">State Aid Details</h2>
-            <div class="grid-container">
-                <div class="budget-card">
-                    <h3 class="budget-title">Unrestricted Government Aid</h3>
-                    <p class="budget-amount">$579,659</p>
-                    <p class="budget-percent">+$25,000 (+4.5%)</p>
-                </div>
-                <div class="budget-card">
-                    <h3 class="budget-title">State Owned Land</h3>
-                    <p class="budget-amount">$122,303</p>
-                    <p class="budget-percent">+$3,562 (+3.0%)</p>
-                </div>
-                <div class="budget-card">
-                    <h3 class="budget-title">Veterans & Blind Abatements</h3>
-                    <p class="budget-amount">$26,477</p>
-                    <p class="budget-percent">+$771 (+3.0%)</p>
-                </div>
-                <div class="budget-card">
-                    <h3 class="budget-title">Library Offset</h3>
-                    <p class="budget-amount">$13,148</p>
-                    <p class="budget-percent">+$383 (+3.0%)</p>
-                </div>
-            </div>
-            <div class="note-box">
-                <p><span style="font-weight: bold;">Note:</span> State Aid figures are based on the Governor's H1 state budget estimates and may be subject to change as the state budget process continues.</p>
-            </div>
-        </div>
-
-        <footer>
-            <p>Data sourced from FY26 Budget Proposal 2 Submission - March 12, 2025</p>
-            <p style="margin-top: 10px;">Town of Hubbardston, Massachusetts</p>
-        </footer>
+      </div>
     </div>
 
-    <script>
-        // Wait for the DOM to fully load
-        document.addEventListener('DOMContentLoaded', function() {
-            // Revenue sources data
-            const revenueData = [
-                { name: 'Property Taxes', value: 9196823, percentage: 78.8, color: '#3498db' },
-                { name: 'Local Receipts', value: 1662332, percentage: 14.2, color: '#2ecc71' },
-                { name: 'State Aid', value: 741587, percentage: 6.3, color: '#e67e22' },
-                { name: 'Free Cash', value: 108803, percentage: 0.7, color: '#9b59b6' }
-            ];
+    <div class="section" id="source-table">
+      <h2>FY26 Revenue by Source</h2>
+      <table>
+        <thead>
+          <tr><th>Category</th><th>Revenue ($)</th><th>Percent of Total</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Property Tax</td><td>$9,196,823</td><td>78.5%</td></tr>
+          <tr><td>Local Receipts</td><td>$1,662,332</td><td>14.2%</td></tr>
+          <tr><td>State Aid</td><td>$735,846</td><td>6.3%</td></tr>
+          <tr><td>Free Cash</td><td>$108,803</td><td>0.9%</td></tr>
+        </tbody>
+      </table>
+    </div>
 
-            // Property tax breakdown data
-            const taxData = [
-                { name: 'Base Tax Levy', value: 8770192, percentage: 95.4, color: '#3498db' },
-                { name: 'Prop 2.5% Increase', value: 219255, percentage: 2.4, color: '#2ecc71' },
-                { name: 'New Growth', value: 125000, percentage: 1.4, color: '#e67e22' },
-                { name: 'Debt Exclusions', value: 82377, percentage: 0.9, color: '#9b59b6' }
-            ];
+    <div class="section" id="charts">
+      <h2>Revenue Distribution</h2>
+      <div class="chart-container">
+        <canvas id="revenueChart"></canvas>
+      </div>
+    </div>
+  </div>
 
-            // Local receipts breakdown data
-            const receiptsData = [
-                { name: 'Motor Vehicle Excise', value: 763980, percentage: 46.0, color: '#3498db' },
-                { name: 'PILOT Payments', value: 427150, percentage: 25.7, color: '#2ecc71' },
-                { name: 'Ambulance Revenue', value: 200000, percentage: 12.0, color: '#e67e22' },
-                { name: 'Fees & Permits', value: 217202, percentage: 13.1, color: '#9b59b6' },
-                { name: 'Interest & Penalties', value: 29000, percentage: 1.7, color: '#f1c40f' },
-                { name: 'Investment Earnings', value: 25000, percentage: 1.5, color: '#1abc9c' }
-            ];
-
-            // Five-year revenue forecast data
-            const forecastData = [
-                { year: 'FY25', amount: 11103760 },
-                { year: 'FY26', amount: 11673508 },
-                { year: 'FY27', amount: 12023713 },
-                { year: 'FY28', amount: 12384424 },
-                { year: 'FY29', amount: 12755957 },
-                { year: 'FY30', amount: 13138636 }
-            ];
-
-            // Format dollar amounts
-            const formatDollar = (amount) => {
-                return new Intl.NumberFormat('en-US', {
-                    style: 'currency',
-                    currency: 'USD',
-                    minimumFractionDigits: 0,
-                    maximumFractionDigits: 0
-                }).format(amount);
-            };
-
-            // Create revenue sources chart
-            const createRevenueChart = () => {
-                const ctx = document.getElementById('revenue-chart').getContext('2d');
-                
-                new Chart(ctx, {
-                    type: 'doughnut',
-                    data: {
-                        labels: revenueData.map(d => d.name),
-                        datasets: [{
-                            data: revenueData.map(d => d.value),
-                            backgroundColor: revenueData.map(d => d.color),
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            tooltip: {
-                                callbacks: {
-                                    label: function(context) {
-                                        const value = context.raw;
-                                        const percentage = ((value / 11673508) * 100).toFixed(1);
-                                        return `${formatDollar(value)} (${percentage}%)`;
-                                    }
-                                }
-                            },
-                            legend: {
-                                display: false
-                            }
-                        }
-                    }
-                });
-
-                // Create legend
-                const legendContainer = document.getElementById('revenue-legend');
-                legendContainer.innerHTML = ''; // Clear any existing content
-                
-                revenueData.forEach(item => {
-                    const legendItem = document.createElement('div');
-                    legendItem.className = 'legend-item';
-                    
-                    const colorBox = document.createElement('div');
-                    colorBox.className = 'legend-color';
-                    colorBox.style.backgroundColor = item.color;
-                    
-                    const label = document.createElement('span');
-                    label.textContent = `${item.name}: ${formatDollar(item.value)} (${item.percentage}%)`;
-                    
-                    legendItem.appendChild(colorBox);
-                    legendItem.appendChild(label);
-                    legendContainer.appendChild(legendItem);
-                });
-            };
-
-            // Create property tax breakdown chart
-            const createTaxChart = () => {
-                const ctx = document.getElementById('tax-chart').getContext('2d');
-                
-                new Chart(ctx, {
-                    type: 'pie',
-                    data: {
-                        labels: taxData.map(d => d.name),
-                        datasets: [{
-                            data: taxData.map(d => d.value),
-                            backgroundColor: taxData.map(d => d.color),
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            tooltip: {
-                                callbacks: {
-                                    label: function(context) {
-                                        const value = context.raw;
-                                        const percentage = ((value / 9196823) * 100).toFixed(1);
-                                        return `${formatDollar(value)} (${percentage}%)`;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                });
-            };
-
-            // Create local receipts breakdown chart
-            const createReceiptsChart = () => {
-                const ctx = document.getElementById('receipts-chart').getContext('2d');
-                
-                new Chart(ctx, {
-                    type: 'pie',
-                    data: {
-                        labels: receiptsData.map(d => d.name),
-                        datasets: [{
-                            data: receiptsData.map(d => d.value),
-                            backgroundColor: receiptsData.map(d => d.color),
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            tooltip: {
-                                callbacks: {
-                                    label: function(context) {
-                                        const value = context.raw;
-                                        const percentage = ((value / 1662332) * 100).toFixed(1);
-                                        return `${formatDollar(value)} (${percentage}%)`;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                });
-            };
-
-            // Create revenue forecast chart
-            const createForecastChart = () => {
-                const ctx = document.getElementById('forecast-chart').getContext('2d');
-                
-                new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: forecastData.map(d => d.year),
-                        datasets: [{
-                            label: 'Total Revenue',
-                            data: forecastData.map(d => d.amount),
-                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                            borderColor: '#4bc0c0',
-                            borderWidth: 3,
-                            tension: 0.2,
-                            pointBackgroundColor: '#005030',
-                            pointBorderColor: '#4bc0c0',
-                            pointBorderWidth: 2,
-                            pointRadius: 6
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            tooltip: {
-                                callbacks: {
-                                    label: function(context) {
-                                        return formatDollar(context.raw);
-                                    }
-                                }
-                            }
-                        },
-                        scales: {
-                            y: {
-                                ticks: {
-                                    callback: function(value) {
-                                        return `$${(value / 1000000).toFixed(1)}M`;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                });
-            };
-
-            // Make sure Chart.js is loaded before trying to use it
-            if (typeof Chart !== 'undefined') {
-                // Initialize charts
-                createRevenueChart();
-                createTaxChart();
-                createReceiptsChart();
-                createForecastChart();
-            } else {
-                console.error('Chart.js is not loaded properly. Trying to load it again...');
-                // Try loading Chart.js again
-                const script = document.createElement('script');
-                script.src = 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js';
-                script.onload = function() {
-                    console.log('Chart.js loaded successfully');
-                    createRevenueChart();
-                    createTaxChart();
-                    createReceiptsChart();
-                    createForecastChart();
-                };
-                script.onerror = function() {
-                    console.error('Failed to load Chart.js');
-                    // Show a message to the user
-                    document.getElementById('revenue-chart').innerHTML = 'Charts could not be loaded. Please check your internet connection.';
-                };
-                document.head.appendChild(script);
+  <script>
+    const ctx = document.getElementById('revenueChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Property Tax', 'Local Receipts', 'State Aid', 'Free Cash'],
+        datasets: [{
+          data: [9196823, 1662332, 735846, 108803],
+          backgroundColor: ['#3498db', '#2ecc71', '#e67e22', '#9b59b6'],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { position: 'bottom' },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                const val = context.raw;
+                const percent = ((val / 11703804) * 100).toFixed(1);
+                return `$${val.toLocaleString()} (${percent}%)`;
+              }
             }
-        });
-    </script>
+          }
+        }
+      }
+    });
+  </script>
 </body>
 </html>
