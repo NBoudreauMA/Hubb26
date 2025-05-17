@@ -67,7 +67,7 @@
       background: rgba(0,0,0,0.5);
     }
     .chart-container {
-      height: 400px;
+      height: 300px;
       margin-top: 20px;
     }
     .grid-container {
@@ -115,17 +115,17 @@
       <div class="grid-container">
         <div class="budget-card">
           <h3 class="budget-title">Total Revenue</h3>
-          <p class="budget-amount">$11,703,804</p>
+          <p class="budget-amount">$11,531,426</p>
         </div>
         <div class="budget-card">
           <h3 class="budget-title">Increase from FY25</h3>
           <p class="budget-amount">$600,044</p>
-          <p class="budget-percent">+5.4%</p>
+          <p class="budget-percent">+5.5%</p>
         </div>
         <div class="budget-card">
           <h3 class="budget-title">Property Tax Levy</h3>
           <p class="budget-amount">$9,196,823</p>
-          <p class="budget-percent">78.5% of Revenue</p>
+          <p class="budget-percent">79.7% of Revenue</p>
         </div>
       </div>
     </div>
@@ -137,10 +137,9 @@
           <tr><th>Category</th><th>Revenue ($)</th><th>Percent of Total</th></tr>
         </thead>
         <tbody>
-          <tr><td>Property Tax</td><td>$9,196,823</td><td>78.5%</td></tr>
-          <tr><td>Local Receipts</td><td>$1,662,332</td><td>14.2%</td></tr>
-          <tr><td>State Aid</td><td>$735,846</td><td>6.3%</td></tr>
-          <tr><td>Free Cash</td><td>$108,803</td><td>0.9%</td></tr>
+          <tr><td>Property Tax</td><td>$9,196,823</td><td>79.7%</td></tr>
+          <tr><td>Local Receipts</td><td>$1,598,757</td><td>13.9%</td></tr>
+          <tr><td>State Aid</td><td>$735,846</td><td>6.4%</td></tr>
         </tbody>
       </table>
     </div>
@@ -158,10 +157,10 @@
     new Chart(ctx, {
       type: 'doughnut',
       data: {
-        labels: ['Property Tax', 'Local Receipts', 'State Aid', 'Free Cash'],
+        labels: ['Property Tax', 'Local Receipts', 'State Aid'],
         datasets: [{
-          data: [9196823, 1662332, 735846, 108803],
-          backgroundColor: ['#3498db', '#2ecc71', '#e67e22', '#9b59b6'],
+          data: [9196823, 1598757, 735846],
+          backgroundColor: ['#3498db', '#2ecc71', '#e67e22'],
           borderWidth: 1
         }]
       },
@@ -173,7 +172,7 @@
             callbacks: {
               label: function(context) {
                 const val = context.raw;
-                const percent = ((val / 11703804) * 100).toFixed(1);
+                const percent = ((val / 11531426) * 100).toFixed(1);
                 return `$${val.toLocaleString()} (${percent}%)`;
               }
             }
