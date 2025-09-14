@@ -76,7 +76,6 @@
 
 /* =========================================================
    HubbTIME Module (namespaced; runs only on HubbTIME pages)
-   Pulls GL + roster from your master upload. :contentReference[oaicite:1]{index=1}
    ========================================================= */
 window.HubbTIME = (function(){
   const container = document.getElementById('hubbtimeContainer');
