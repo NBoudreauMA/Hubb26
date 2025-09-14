@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HubbTIME · Hubbardston Budget</title>
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="css/hubbtime.css">
+</head>
+<body>
+  <header class="site">
+    <div class="container header-wrap">
+      <div class="brand">
+        <div class="seal" aria-hidden="true">H</div>
+        <div>
+          <div class="title">Town of Hubbardston</div>
+          <div class="tagline">HubbTIME</div>
+        </div>
+      </div>
+      <nav class="primary">
+        <a href="index.html">Home</a>
+        <a href="fy27/index.html">FY27 Budget</a>
+        <a href="reports/index.html">Reports</a>
+        <a href="benchmarks/index.html">Benchmarks</a>
+        <a href="capital/index.html">Capital</a>
+        <a href="grants/index.html">Grants</a>
+        <a href="checkbook/index.html">Open Checkbook</a>
+        <a href="meetings/index.html">Meetings</a>
+        <a href="participate/index.html">Participate</a>
+        <a href="Hubbtime.html">HubbTIME</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div id="hubbtimeContainer">
+      <div class="header">
+        <h1>HubbTIME</h1>
+        <p>Timesheet entry & GL allocation review</p>
+      </div>
+      <div id="systemMsg" class="alert info" style="display:none"></div>
+      <div class="section"><p>Use the tools below to enter time and review allocations.</p></div>
+      <div class="section"><div id="glReviewWrap"></div></div>
+      <div class="section">
+        <form id="timesheetForm">
+          <button id="submitBtn" class="btn">Open Timesheet</button>
+          <span id="submitStatus" class="hint" style="margin-left:8px"></span>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site">
+    <div class="container">© 2025 Town of Hubbardston, MA</div>
+  </footer>
+
+  <script src="js/hubbtime.js"></script>
+</body>
+</html>
