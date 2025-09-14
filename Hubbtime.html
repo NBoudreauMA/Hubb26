@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HubbTIME — Town of Hubbardston Timesheet</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { 
+      margin: 0; 
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: #f8f9fa;
+      color: #212529;
+      line-height: 1.5;
+    }
+    .container { 
+      max-width: 1200px; 
+      margin: 0 auto; 
+      padding: 20px;
+    }
+    .header {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+      border-left: 4px solid #007bff;
+    }
+    .section {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+    .section h3 {
+      margin: 0 0 15px 0;
+      color: #495057;
+      font-size: 18px;
+      font-weight: 600;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+    }
+    .grid-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 10px;
+    }
+    .card-total {
+      background: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 6px;
+      padding: 15px;
+      text-align: center;
+    }
+    .pill {
+      border-radius: 6px;
+      padding: 10px;
+      text-align: center;
+    }
+    .lbl {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 600;
+      color: #495057;
+      font-size: 14px;
+    }
+    .input {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    .input:focus {
+      outline: none;
+      border-color: #007bff;
+      box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
+    }
+    .btn {
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .btn:hover { background: #0056b3; }
+    .btn.secondary { background: #6c757d; }
+    .btn.secondary:hover { background: #545b62; }
+    .btn.danger { background: #dc3545; }
+    .btn.danger:hover { background: #c82333; }
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 15px;
+    }
+    .tableWrap {
+      overflow-x: auto;
+      border: 1px solid #dee2e6;
+      border-radius: 4px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+    }
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #dee2e6;
+    }
+    th {
+      background: #f8f9fa;
+      font-weight: 600;
+      font-size: 13px;
+      color: #495057;
+    }
+    td input, td select {
+      width: 100%;
+      padding: 4px 6px;
+      border: 1px solid #ced4da;
+      border-radius: 3px;
+      font-size: 13px;
+    }
+    .action-btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+    .action-btns button {
+      padding: 4px 8px;
+      font-size: 11px;
+    }
+    .hint {
+      font-size: 13px;
+      color: #6c757d;
+      margin-top: 10px;
+      padding: 10px;
+      background: #f8f9fa;
+      border-radius: 4px;
+    }
+    .alert {
+      padding: 12px;
+      border-radius: 4px;
+      margin-bottom: 15px;
+    }
+    .alert.info { background: #d1ecf1; border: 1px solid #bee5eb; color: #0c5460; }
+    .alert.success { background: #d4edda; border: 1px solid #c3e6cb; color: #155724; }
+    .alert.error { background: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; }
+  </style>
+</head>
+<body>
+
+<div class="container" id="hubbtimeContainer">
+  <div class="header">
+    <h1 style="margin:0 0 5px 0; font-size:24px;">Town of Hubbardston — Non-Union Biweekly Timesheet</h1>
+    <p style="margin:0; opacity:.9;">Biweekly timesheet system for non-union employees</p>
+  </div>
+
+  <form id="timesheetForm" style="padding:0 0 20px;">
+    <div id="systemMsg" class="alert info" role="status" aria-live="polite" style="display:none;"></div>
+
+    <div class="section">
+      <h3>Employee Information</h3>
+      <div class="grid">
+        <div>
+          <label class="lbl">Employee (search by name)</label>
+          <div style="display:flex; gap:8px; align-items:center;">
+            <input id="employeeSearch" list="employeeList" placeholder="Start typing a name…" autocomplete="off" class="input">
+            <button type="button" class="btn danger" id="clearEmployeeBtn">Clear</button>
+          </div>
+          <datalist id="employeeList"></datalist>
+          <input type="hidden" id="employeeIndex" value="">
+        </div>
+        <div>
+          <label class="lbl">Department</label>
+          <input id="department" class="input" readonly>
+        </div>
+        <div>
+          <label class="lbl">Pay Type</label>
+          <input id="payType" class="input" readonly>
+        </div>
+        <div>
+          <label class="lbl">Rate / Salary</label>
+          <input id="rate" class="input" readonly>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>Time Entries</h3>
+
+      <div style="margin-bottom:12px;">
+        <label class="lbl">Pay Period</label>
+        <select id="warrant" class="input" style="max-width:520px;">
+          <option value="">Select Pay Period…</option>
+        </select>
+      </div>
+
+      <div class="toolbar">
+        <button type="button" class="btn" id="addRowBtn">+ Add Row</button>
+        <button type="button" class="btn secondary" id="townHallBtn">Town Hall Hours</button>
+        <button type="button" class="btn secondary" onclick="addQuickTemplate('split')">Split Shift</button>
+        <button type="button" class="btn secondary" onclick="addQuickTemplate('overtime')">Overtime Day</button>
+        <button type="button" class="btn secondary" onclick="addQuickTemplate('sick')">Sick Day</button>
+        <button type="button" class="btn secondary" onclick="addQuickTemplate('vacation')">Vacation Day</button>
+        <button type="button" class="btn danger" id="clearAllBtn">Clear All</button>
+      </div>
+
+      <div class="tableWrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="min-width:120px;">Date</th>
+              <th>Start</th>
+              <th>End</th>
+              <th style="min-width:110px;">Hours</th>
+              <th>Type</th>
+              <th style="min-width:180px;">GL Code</th>
+              <th>Description</th>
+              <th style="min-width:200px;">Action</th>
+            </tr>
+          </thead>
+          <tbody id="timeBody"></tbody>
+        </table>
+      </div>
+
+      <div class="hint">
+        <strong>Fast Entry Tips:</strong> Use Enter to move between fields. Click buttons to insert rows anywhere. 
+        <strong>Time Types:</strong> Regular, Sick, Personal, Vacation, Holiday. 
+        <strong>Overtime:</strong> Hourly employees get OT when weekly Regular hours exceed 40.
+        <strong>GL Codes:</strong> Dropdown with all departments - easily changeable.
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>Summary</h3>
+
+      <div class="grid-cards" style="margin-bottom:10px;">
+        <div class="card-total">
+          <div style="font-size:11px; opacity:.9; margin-bottom:5px;">TOTAL HOURS</div>
+          <div id="totalHours" style="font-size:18px; font-weight:bold;">0.00</div>
+        </div>
+        <div class="card-total">
+          <div style="font-size:11px; opacity:.9; margin-bottom:5px;">GROSS PAY</div>
+          <div id="grossPay" style="font-size:18px; font-weight:bold;">$0.00</div>
+        </div>
+      </div>
+
+      <div class="grid-cards">
+        <div class="pill" style="background:#eef7f0; border:1px solid #d7eadb;">
+          <div style="font-size:11px; color:#1e8449;">Regular</div>
+          <div id="sumRegular" style="font-weight:bold;">0.00</div>
+        </div>
+        <div class="pill" style="background:#fff4e6; border:1px solid #ffe0b2;">
+          <div style="font-size:11px; color:#ff8c00;">Sick</div>
+          <div id="sumSick" style="font-weight:bold;">0.00</div>
+        </div>
+        <div class="pill" style="background:#e8f4fa; border:1px solid #cfe8f5;">
+          <div style="font-size:11px; color:#0f6ecd;">Personal</div>
+          <div id="sumPersonal" style="font-weight:bold;">0.00</div>
+        </div>
+        <div class="pill" style="background:#fff7fb; border:1px solid #f3d7ef;">
+          <div style="font-size:11px; color:#b02786;">Vacation</div>
+          <div id="sumVacation" style="font-weight:bold;">0.00</div>
+        </div>
+        <div class="pill" style="background:#f0fff4; border:1px solid #c6f6d5;">
+          <div style="font-size:11px; color:#1e8449;">Holiday</div>
+          <div id="sumHoliday" style="font-weight:bold;">0.00</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>GL Review — Hours & Cost Allocation</h3>
+      <div id="glReviewWrap" class="tableWrap">
+        <!-- JS renders a table here -->
+      </div>
+      <div class="hint">Hourly: Regular reclassified to OT per week > 40 and distributed across GLs proportionally. Salary: biweekly salary split across GLs based on share of total entered hours.</div>
+    </div>
+
+    <div style="padding:0 15px 15px; text-align:center;">
+      <button type="submit" class="btn" id="submitBtn" style="padding:12px 24px; font-size:16px;">Submit Timesheet</button>
+      <div id="submitStatus" class="hint" style="margin-top:8px;"></div>
+    </div>
+  </form>
+</div>
+
+<script>
+/********************
+ * HubbTIME – Complete System with Updated Employee Data
+ ********************/
+
+// --- Config ---
+var FLOW_URL = "https://prod-58.usgovtexas.logic.azure.us:443/workflows/ceefc1e6e256421c9a5a83416ff6c167/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lh1qRrhhVYUZ3ZhxuPpHYJPsdhdMmZDRSDndshkjiB0";
+var NOTIFY = ["admin@hubbardstonma.gov", "accountant@hubbardstonma.gov"];
+
+var currentEmployee = null;
+var currentWarrant = null;
+
+// --- Updated GL Codes (from master data) ---
+var GL_CODES = {
+  "Select Board": "1000-122-5100",
+  "Accounting": "1000-135-5100", 
+  "Assessors/Land Use": "1000-141-5100",
+  "Treasurer/Collector": "1000-149-5100",
+  "Building & Maintenance": "1000-192-5100",
+  "Police/Health": "1000-210-5100",
+  "Fire": "1000-220-5100",
+  "Land Use": "1000-241-5100",
+  "Public Works": "1000-420-5100",
+  "COA/MART": "1000-541-5100",
+  "Senior Center": "1000-541-5100",
+  "Library": "1000-610-5100"
+};
+
+// --- Complete Employee List (from master CSV data) ---
+var EMPLOYEES = [
+  // A - Alphabetical order from master data
+  {"name":"ALBERT AFONSO","department":"COA/MART","payType":"hourly","rate":16.13,"isAdmin":false,"position":"MART Driver","id":"E017"},
+  {"name":"ANNE GOEWEY","department":"Library","payType":"hourly","rate":17.57,"isAdmin":false,"position":"Library Assistant","id":"E014"},
+  {"name":"BRYAN COLWELL","department":"Fire","payType":"hourly","rate":17.84,"isAdmin":false,"position":"Call Firefighter","id":"E022"},
+  {"name":"CLAUDIA PROVENCAL","department":"Senior Center","payType":"hourly","rate":25.00,"isAdmin":false,"position":"COA Director","id":"E013"},
+  {"name":"DAVID HORNE","department":"Building","payType":"salary","rate":42734,"isAdmin":false,"position":"Building Commissioner","id":"E009"},
+  {"name":"DAVIS BOWLEY","department":"COA/MART","payType":"hourly","rate":16.13,"isAdmin":false,"position":"MART Driver","id":"E018"},
+  {"name":"DENNIS HAMEL","department":"Fire","payType":"hourly","rate":23.30,"isAdmin":false,"position":"Firefighter/Paramedic","id":"E025"},
+  {"name":"EDWARD GALLANT","department":"COA/MART","payType":"hourly","rate":16.13,"isAdmin":false,"position":"MART Driver","id":"E019"},
+  {"name":"ERIK ARES","department":"Fire","payType":"hourly","rate":23.12,"isAdmin":false,"position":"Call LT/Paramedic","id":"E029"},
+  {"name":"HUNTER YOUNG","department":"Building & Maintenance","payType":"hourly","rate":17.57,"isAdmin":false,"position":"Facilities Maintenance","id":"E012"},
+  {"name":"IZAIAH GONZALEZ","department":"Fire","payType":"hourly","rate":15.93,"isAdmin":false,"position":"Call Firefighter","id":"E028"},
+  {"name":"JAMES DIXSON","department":"Fire","payType":"hourly","rate":24.67,"isAdmin":false,"position":"Call LT/EMT","id":"E030"},
+  {"name":"JOHN DEMALIA JR","department":"Fire","payType":"hourly","rate":18.84,"isAdmin":false,"position":"Call Firefighter/EMT","id":"E023"},
+  {"name":"LEEANNE MOSES","department":"Assessors/Land Use","payType":"hourly","rate":23.38,"isAdmin":true,"position":"Administrative Services Coordinator","id":"E002"},
+  {"name":"MARY LEROUX","department":"Treasurer/Collector","payType":"salary","rate":70914,"isAdmin":false,"position":"Treasurer/Collector","id":"E007"},
+  {"name":"MITCHELL MABARDY","department":"Fire","payType":"hourly","rate":20.82,"isAdmin":false,"position":"Call Firefighter/Paramedic","id":"E026"},
+  {"name":"NANCY PERRON","department":"Police/Health","payType":"hourly","rate":22.03,"isAdmin":true,"position":"Police Admin / BOH Clerk","id":"E004"},
+  {"name":"PATRICIA LOWE","department":"Select Board","payType":"hourly","rate":23.38,"isAdmin":true,"position":"Executive Assistant / Cable Clerk","id":"E001"},
+  {"name":"PAUL SWEENEY","department":"Public Works","payType":"hourly","rate":17.57,"isAdmin":false,"position":"DPW Seasonal","id":"E021"},
+  {"name":"PHILLIP THERIAULT JR","department":"Fire","payType":"hourly","rate":17.80,"isAdmin":false,"position":"Call Firefighter","id":"E027"},
+  {"name":"ROBERT HAYES JR","department":"Fire","payType":"salary","rate":100500,"isAdmin":false,"position":"Fire Chief","id":"E011"},
+  {"name":"ROBERT M BRADY","department":"Public Works","payType":"hourly","rate":16.89,"isAdmin":false,"position":"DPW Seasonal","id":"E020"},
+  {"name":"SADIE SAINT","department":"Land Use","payType":"hourly","rate":22.00,"isAdmin":true,"position":"Inspectional Services Coordinator","id":"E005"},
+  {"name":"SAMANTHA CHATTERTON","department":"Accounting","payType":"salary","rate":33800,"isAdmin":false,"position":"Town Accountant","id":"E008"},
+  {"name":"SARA RISH","department":"Treasurer/Collector","payType":"hourly","rate":24.01,"isAdmin":true,"position":"Assistant Treasurer Collector","id":"E015"},
+  {"name":"SHARON HARDAKER","department":"COA/MART","payType":"hourly","rate":18.92,"isAdmin":false,"position":"MART Supervisor","id":"E016"},
+  {"name":"TINA DIXSON","department":"Fire","payType":"hourly","rate":22.22,"isAdmin":false,"position":"Firefighter/AEMT","id":"E024"},
+  {"name":"TINA WHITE","department":"Public Works","payType":"hourly","rate":22.03,"isAdmin":true,"position":"DPW Assistant","id":"E003"},
+  {"name":"TRAVIS BROWN","department":"Public Works","payType":"salary","rate":94369,"isAdmin":false,"position":"DPW Director","id":"E010"}
+];
+
+// --- Hard-coded Warrant periods ---
+var WARRANTS = [
+  {number: 5, start: "2025-08-24", end: "2025-09-06", due: "2025-09-08", check: "2025-09-11"},
+  {number: 6, start: "2025-09-07", end: "2025-09-20", due: "2025-09-22", check: "2025-09-25"},
+  {number: 7, start: "2025-09-21", end: "2025-10-04", due: "2025-10-06", check: "2025-10-09"},
+  {number: 8, start: "2025-10-05", end: "2025-10-18", due: "2025-10-20", check: "2025-10-23"}
+];
+
+// --- Utils ---
+function $(s){ return document.querySelector(s); }
+function currency(n){ return new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(Number(n||0)); }
+function fmt(n){ return (Number(n||0)).toFixed(2); }
+function showMessage(text, type, show){
+  var msgEl = $('#systemMsg');
+  if(!show){ msgEl.style.display='none'; return; }
+  msgEl.className = 'alert ' + (type||'info');
+  msgEl.textContent = text;
+  msgEl.style.display='block';
+}
+function getGLCode(emp){ return emp && emp.department ? (GL_CODES[emp.department] || '') : ''; }
+function toMinutes(hhmm){ if(!hhmm) return null; var p = hhmm.split(':'); return (parseInt(p[0],10)*60)+parseInt(p[1],10); }
+function hoursBetween(start, end){
+  if(!start || !end) return 0;
+  var s = toMinutes(start), e = toMinutes(end);
+  if(s==null || e==null) return 0;
+  if(e < s) e += 24*60;
+  return Math.round(((e - s)/60)*100)/100;
+}
+function dateISO(d){ return (d instanceof Date)? d.toISOString().slice(0,10) : d; }
+
+// --- Build GL select widget ---
+function buildGLSelect(selectedValue){
+  var sel = document.createElement('select');
+  var opt = document.createElement('option'); opt.value=""; opt.textContent="Select…"; sel.appendChild(opt);
+  Object.keys(GL_CODES).forEach(function(k){
+    var o = document.createElement('option');
+    o.value = GL_CODES[k];
+    o.textContent = k + " — " + GL_CODES[k];
+    if(selectedValue && selectedValue === o.value) o.selected = true;
+    sel.appendChild(o);
+  });
+  return sel;
+}
+
+// --- Table row ops ---
+function addTimeRow(date, start, end, hours, type, glCode, description, insertAfterRow){
+  var tbody = $('#timeBody');
+  var tr = document.createElement('tr');
+  var glDefault = glCode || (currentEmployee ? getGLCode(currentEmployee) : "");
+
+  tr.innerHTML = ''
+    + '<td><input type="date" value="'+(date||'')+'"></td>'
+    + '<td><input type="time" value="'+(start||'')+'"></td>'
+    + '<td><input type="time" value="'+(end||'')+'"></td>'
+    + '<td><input type="number" step="0.25" min="0" value="'+(hours||'')+'" placeholder="0.00"></td>'
+    + '<td>'
+      + '<select>'
+        + '<option value="Regular">Regular</option>'
+        + '<option value="Sick">Sick</option>'
+        + '<option value="Personal">Personal</option>'
+        + '<option value="Vacation">Vacation</option>'
+        + '<option value="Holiday">Holiday</option>'
+        + '<option value="Overtime">Overtime</option>'
+      + '</select>'
+    + '</td>'
+    + '<td class="glcell"></td>'
+    + '<td><input type="text" placeholder="Optional description" value="'+(description||'')+'"></td>'
+    + '<td>'
+      + '<div class="action-btns">'
+        + '<button type="button" class="btn secondary btn-insert-above">Insert ↑</button>'
+        + '<button type="button" class="btn secondary btn-insert-below">Insert ↓</button>'
+        + '<button type="button" class="btn secondary btn-dup">Duplicate</button>'
+        + '<button type="button" class="btn danger btn-del">Delete</button>'
+      + '</div>'
+    + '</td>';
+
+  if(type){ tr.querySelector('td:nth-child(5) select').value = type; }
+
+  var glCell = tr.querySelector('.glcell');
+  var glSel = buildGLSelect(glDefault);
+  glCell.appendChild(glSel);
+
+  if(insertAfterRow && insertAfterRow.parentNode === tbody){
+    insertAfterRow.insertAdjacentElement('afterend', tr);
+  } else {
+    tbody.appendChild(tr);
+  }
+
+  tr.addEventListener('input', function(){
+    var s = tr.querySelector('td:nth-child(2) input').value;
+    var e = tr.querySelector('td:nth-child(3) input').value;
+    var hrsEl = tr.querySelector('td:nth-child(4) input');
+    if(s && e){ hrsEl.value = fmt(hoursBetween(s,e)); }
+    calculateTotals();
+  });
+  tr.querySelector('.btn-del').addEventListener('click', function(){ tr.remove(); calculateTotals(); });
+  tr.querySelector('.btn-dup').addEventListener('click', function(){
+    var v = getRowValues(tr);
+    addTimeRow(v.date, v.start, v.end, v.hours, v.type, v.gl, v.desc, tr);
+    calculateTotals();
+  });
+  tr.querySelector('.btn-insert-above').addEventListener('click', function(){
+    addTimeRow('', '', '', '', 'Regular', glSel.value || glDefault, '', tr.previousElementSibling || null);
+  });
+  tr.querySelector('.btn-insert-below').addEventListener('click', function(){
+    addTimeRow('', '', '', '', 'Regular', glSel.value || glDefault, '', tr);
+  });
+
+  return tr;
+}
+
+function getRowValues(tr){
+  var tds = tr.children;
+  return {
+    date: tds[0].querySelector('input').value,
+    start: tds[1].querySelector('input').value,
+    end: tds[2].querySelector('input').value,
+    hours: parseFloat(tds[3].querySelector('input').value || 0),
+    type: tds[4].querySelector('select').value,
+    gl: tds[5].querySelector('select').value || '',
+    desc: tds[6].querySelector('input').value || ''
+  };
+}
+
+function getAllRows(){ return Array.from(document.querySelectorAll('#timeBody tr')).map(getRowValues); }
+
+// --- Employee select / clear ---
+function handleEmployeeSelect(e){
+  var name = e.target.value.trim();
+  var emp = EMPLOYEES.find(x => x.name && x.name.toLowerCase() === name.toLowerCase());
+  if(!emp) return;
+  currentEmployee = emp;
+  $('#department').value = emp.department || '';
+  $('#payType').value = emp.payType ? (emp.payType.charAt(0).toUpperCase()+emp.payType.slice(1)) : '';
+  $('#rate').value = emp.payType === 'salary'
+    ? (emp.rate ? (currency(emp.rate) + ' annually') : '—')
+    : (emp.rate ? (currency(emp.rate) + ' per hour') : '—');
+
+  var gl = getGLCode(emp);
+  document.querySelectorAll('#timeBody tr').forEach(function(tr){
+    var sel = tr.querySelector('td:nth-child(6) select');
+    if(sel && !sel.value){ sel.value = gl; }
+  });
+
+  calculateTotals();
+  showMessage('Selected: ' + emp.name + ' (' + (emp.department||'') + ') GL: ' + (gl||'—'), 'success', true);
+}
+
+function clearEmployee(){
+  currentEmployee = null;
+  $('#employeeSearch').value = '';
+  $('#department').value = '';
+  $('#payType').value = '';
+  $('#rate').value = '';
+  calculateTotals();
+}
+
+// --- Warrants select ---
+function handleWarrantSelect(e){
+  var idx = e.target.value;
+  currentWarrant = (idx === '') ? null : WARRANTS[parseInt(idx,10)];
+  calculateTotals();
+}
+
+// --- Week key (Mon-based) for OT calc ---
+function weekKey(isoDate){
+  if(!isoDate) return 'unknown';
+  var d = new Date(isoDate + 'T00:00:00');
+  var day = d.getDay(); // 0..6
+  var diffToMon = (day === 0 ? -6 : 1 - day);
+  var monday = new Date(d); monday.setDate(d.getDate() + diffToMon);
+  var y = monday.getFullYear();
+  var jan4 = new Date(y,0,4);
+  var mondayOfWeek1 = new Date(jan4);
+  var dow = jan4.getDay()||7;
+  mondayOfWeek1.setDate(jan4.getDate() - dow + 1);
+  var week = Math.floor((monday - mondayOfWeek1)/(7*24*3600*1000)) + 1;
+  return y + '-W' + String(week).padStart(2,'0');
+}
+
+// --- Totals, Gross, and GL Review ---
+function calculateTotals(){
+  var rows = getAllRows();
+
+  // Sum by type (display)
+  var sums = { Regular:0, Sick:0, Personal:0, Vacation:0, Holiday:0, Overtime:0 };
+  rows.forEach(function(r){ if(sums[r.type]==null) sums[r.type]=0; sums[r.type] += (r.hours||0); });
+
+  var totalHours = Object.values(sums).reduce((a,b)=>a+b,0);
+
+  // Gross pay & OT handling
+  var gross = 0;
+  var rate = currentEmployee && currentEmployee.rate ? currentEmployee.rate : 0;
+
+  // Build per-GL aggregates for review
+  var glAgg = {}; // glCode -> { label, reg, sick, pers, vac, hol, otEntered, otAuto, totalHrs, cost }
+  function ensureGL(glCode){
+    if(!glAgg[glCode]){
+      var label = Object.keys(GL_CODES).find(k => GL_CODES[k]===glCode) || 'Unknown';
+      glAgg[glCode] = { label: label, gl: glCode, reg:0, sick:0, pers:0, vac:0, hol:0, otEntered:0, otAuto:0 };
+    }
+    return glAgg[glCode];
+  }
+
+  rows.forEach(function(r){
+    var g = ensureGL(r.gl || '');
+    if(r.type==='Regular') g.reg += (r.hours||0);
+    else if(r.type==='Sick') g.sick += (r.hours||0);
+    else if(r.type==='Personal') g.pers += (r.hours||0);
+    else if(r.type==='Vacation') g.vac += (r.hours||0);
+    else if(r.type==='Holiday') g.hol += (r.hours||0);
+    else if(r.type==='Overtime') g.otEntered += (r.hours||0);
+  });
+
+  // Hourly: compute weekly OT and allocate proportionally per GL within each week
+  if(currentEmployee && currentEmployee.payType === 'hourly'){
+    var weekGLReg = {}; // week -> gl -> reg hours
+    rows.forEach(function(r){
+      if(r.type!=='Regular' || !r.date) return;
+      var wk = weekKey(r.date);
+      if(!weekGLReg[wk]) weekGLReg[wk] = {};
+      var store = weekGLReg[wk];
+      store[r.gl||''] = (store[r.gl||'']||0) + (r.hours||0);
+    });
+    Object.keys(weekGLReg).forEach(function(wk){
+      var glMap = weekGLReg[wk];
+      var weekTotalReg = Object.values(glMap).reduce((a,b)=>a+b,0);
+      var over = Math.max(0, weekTotalReg - 40);
+      if(over>0 && weekTotalReg>0){
+        Object.keys(glMap).forEach(function(gl){
+          var share = over * (glMap[gl] / weekTotalReg);
+          ensureGL(gl).otAuto += share; // proportional reclass from regular
+        });
+      }
+    });
+
+    // Compute gross & per-GL cost
+    var totalCost = 0;
+    Object.keys(glAgg).forEach(function(gl){
+      var a = glAgg[gl];
+      var regForPay = Math.max(0, a.reg - a.otAuto);
+      var otForPay  = a.otEntered + a.otAuto;
+      var leave1x = a.sick + a.pers + a.vac + a.hol;
+      a.totalHrs = a.reg + a.sick + a.pers + a.vac + a.hol + a.otEntered; // display total (entered)
+      a.cost = (regForPay * rate) + (otForPay * rate * 1.5) + (leave1x * rate);
+      totalCost += a.cost;
+    });
+    gross = totalCost;
+  } else if(currentEmployee && currentEmployee.payType === 'salary'){
+    // Salary: biweekly check
+    var biweekly = (rate||0)/26;
+    // allocate by share of hours across GLs (if no hours, show 0; gross shows full)
+    var byGLHours = {};
+    var totalEnteredHours = 0;
+    Object.keys(glAgg).forEach(function(gl){
+      var a = glAgg[gl];
+      var hrs = a.reg + a.sick + a.pers + a.vac + a.hol + a.otEntered;
+      byGLHours[gl] = hrs; totalEnteredHours += hrs;
+      a.totalHrs = hrs;
+    });
+    Object.keys(glAgg).forEach(function(gl){
+      var a = glAgg[gl];
+      a.cost = totalEnteredHours>0 ? biweekly * (byGLHours[gl]/totalEnteredHours) : 0;
+    });
+    gross = biweekly;
+  } else {
+    gross = 0;
+    Object.keys(glAgg).forEach(gl => glAgg[gl].totalHrs = glAgg[gl].reg + glAgg[gl].sick + glAgg[gl].pers + glAgg[gl].vac + glAgg[gl].hol + glAgg[gl].otEntered);
+  }
+
+  // Render totals
+  $('#sumRegular').textContent  = fmt(sums.Regular);
+  $('#sumSick').textContent     = fmt(sums.Sick);
+  $('#sumPersonal').textContent = fmt(sums.Personal);
+  $('#sumVacation').textContent = fmt(sums.Vacation);
+  $('#sumHoliday').textContent  = fmt(sums.Holiday);
+  $('#totalHours').textContent  = fmt(totalHours);
+  $('#grossPay').textContent    = currency(gross);
+
+  // Render GL Review
+  renderGLReview(glAgg, gross);
+}
+
+function renderGLReview(glAgg, gross){
+  var keys = Object.keys(glAgg);
+  // Remove empty GLs
+  var rows = keys.map(k => glAgg[k]).filter(a => a.totalHrs && a.totalHrs>0);
+
+  // Sort by cost desc
+  rows.sort((a,b)=> (b.cost||0) - (a.cost||0));
+
+  var totalCost = rows.reduce((s,a)=>s+(a.cost||0), 0) || gross || 0;
+
+  var html = '<table><thead><tr>'
+    + '<th>GL Code</th><th>Label</th>'
+    + '<th style="text-align:right;">Regular</th>'
+    + '<th style="text-align:right;">Sick</th>'
+    + '<th style="text-align:right;">Personal</th>'
+    + '<th style="text-align:right;">Vacation</th>'
+    + '<th style="text-align:right;">Holiday</th>'
+    + '<th style="text-align:right;">Overtime (incl. auto)</th>'
+    + '<th style="text-align:right;">Total Hrs</th>'
+    + '<th style="text-align:right;">Allocated Cost</th>'
+    + '<th style="text-align:right;">% of Cost</th>'
+    + '</tr></thead><tbody>';
+
+  rows.forEach(function(a){
+    var otTotal = a.otEntered + a.otAuto;
+    var pct = totalCost>0 ? (a.cost/totalCost*100) : 0;
+    html += '<tr>'
+      + '<td>'+ (a.gl||'') +'</td>'
+      + '<td>'+ a.label +'</td>'
+      + '<td style="text-align:right;">'+ fmt(a.reg) +'</td>'
+      + '<td style="text-align:right;">'+ fmt(a.sick) +'</td>'
+      + '<td style="text-align:right;">'+ fmt(a.pers) +'</td>'
+      + '<td style="text-align:right;">'+ fmt(a.vac) +'</td>'
+      + '<td style="text-align:right;">'+ fmt(a.hol) +'</td>'
+      + '<td style="text-align:right;">'+ fmt(otTotal) +'</td>'
+      + '<td style="text-align:right;">'+ fmt(a.totalHrs||0) +'</td>'
+      + '<td style="text-align:right; font-weight:600;">'+ currency(a.cost||0) +'</td>'
+      + '<td style="text-align:right;">'+ fmt(pct) +'%</td>'
+      + '</tr>';
+  });
+
+  // Footer totals
+  var totals = {
+    reg: rows.reduce((s,a)=>s+a.reg,0),
+    sick: rows.reduce((s,a)=>s+a.sick,0),
+    pers: rows.reduce((s,a)=>s+a.pers,0),
+    vac: rows.reduce((s,a)=>s+a.vac,0),
+    hol: rows.reduce((s,a)=>s+a.hol,0),
+    ot: rows.reduce((s,a)=>s+a.otEntered+a.otAuto,0),
+    hrs: rows.reduce((s,a)=>s+(a.totalHrs||0),0),
+    cost: rows.reduce((s,a)=>s+(a.cost||0),0)
+  };
+
+  html += '</tbody><tfoot><tr>'
+    + '<th colspan="2" style="text-align:right;">Totals:</th>'
+    + '<th style="text-align:right;">'+ fmt(totals.reg) +'</th>'
+    + '<th style="text-align:right;">'+ fmt(totals.sick) +'</th>'
+    + '<th style="text-align:right;">'+ fmt(totals.pers) +'</th>'
+    + '<th style="text-align:right;">'+ fmt(totals.vac) +'</th>'
+    + '<th style="text-align:right;">'+ fmt(totals.hol) +'</th>'
+    + '<th style="text-align:right;">'+ fmt(totals.ot) +'</th>'
+    + '<th style="text-align:right;">'+ fmt(totals.hrs) +'</th>'
+    + '<th style="text-align:right;">'+ currency(totals.cost) +'</th>'
+    + '<th style="text-align:right;">'+ (totals.cost>0? '100.00%':'0.00%') +'</th>'
+    + '</tr></tfoot></table>';
+
+  $('#glReviewWrap').innerHTML = html;
+}
+
+// --- Quick templates ---
+function addQuickTemplate(kind){
+  var today = dateISO(new Date());
+  var gl = currentEmployee ? getGLCode(currentEmployee) : '';
+  if(kind==='split'){
+    var r1 = addTimeRow(today,'08:00','12:00','', 'Regular', gl, 'AM shift');
+    var r2 = addTimeRow(today,'13:00','17:00','', 'Regular', gl, 'PM shift');
+    [r1,r2].forEach(r=>{
+      var s=r.querySelector('td:nth-child(2) input').value;
+      var e=r.querySelector('td:nth-child(3) input').value;
+      r.querySelector('td:nth-child(4) input').value = fmt(hoursBetween(s,e));
+    });
+  } else if(kind==='overtime'){
+    var a = addTimeRow(today,'08:00','16:00','', 'Regular', gl, 'Extended day (regular)');
+    var b = addTimeRow(today,'16:00','18:00','', 'Overtime', gl, 'Extended day (OT)');
+    [a,b].forEach(r=>{
+      var s=r.querySelector('td:nth-child(2) input').value;
+      var e=r.querySelector('td:nth-child(3) input').value;
+      r.querySelector('td:nth-child(4) input').value = fmt(hoursBetween(s,e));
+    });
+  } else if(kind==='sick'){
+    addTimeRow(today,'','',8,'Sick',gl,'Sick leave (full day)');
+  } else if(kind==='vacation'){
+    addTimeRow(today,'','',8,'Vacation',gl,'Vacation (full day)');
+  }
+  calculateTotals();
+}
+
+// --- Town Hall Hours (Mon/Wed/Thu 8:00–16:00, Tue 8:00–18:00) ---
+function addTownHallHours(){
+  if(!currentWarrant){ showMessage('Select a Pay Period first to add Town Hall hours.', 'error', true); return; }
+  var start = new Date(currentWarrant.start+'T00:00:00');
+  var end   = new Date(currentWarrant.end+'T00:00:00');
+  var gl = currentEmployee ? getGLCode(currentEmployee) : '';
+  for(var d=new Date(start); d<=end; d.setDate(d.getDate()+1)){
+    var dow = d.getDay(), iso = dateISO(new Date(d));
+    if(dow === 1 || dow === 3 || dow === 4){ // Monday, Wednesday, Thursday
+      var r = addTimeRow(iso,'08:00','16:00','', 'Regular', gl, 'Town Hall');
+      r.querySelector('td:nth-child(4) input').value = fmt(hoursBetween('08:00','16:00')); // 8 hours
+    } else if(dow === 2){ // Tuesday
+      var r2 = addTimeRow(iso,'08:00','18:00','', 'Regular', gl, 'Town Hall');
+      r2.querySelector('td:nth-child(4) input').value = fmt(hoursBetween('08:00','18:00')); // 10 hours
+    }
+    // Friday (dow === 5) and weekends - no hours added (Town Hall closed)
+  }
+  calculateTotals();
+}
+
+// --- Clear all ---
+function clearAllTimeRows(){ $('#timeBody').innerHTML=''; calculateTotals(); }
+
+// --- Submit to Flow ---
+async function handleFormSubmit(e){
+  e.preventDefault();
+  if(!currentEmployee){ showMessage('Please select an employee before submitting.', 'error', true); return; }
+  if(!currentWarrant){ showMessage('Please select a Pay Period before submitting.', 'error', true); return; }
+
+  var payload = {
+    meta: { submittedAt: new Date().toISOString(), notify: NOTIFY },
+    employee: {
+      name: currentEmployee.name,
+      department: currentEmployee.department,
+      payType: currentEmployee.payType,
+      rate: currentEmployee.rate
+    },
+    warrant: currentWarrant,
+    totals: {
+      regular: parseFloat($('#sumRegular').textContent),
+      sick: parseFloat($('#sumSick').textContent),
+      personal: parseFloat($('#sumPersonal').textContent),
+      vacation: parseFloat($('#sumVacation').textContent),
+      holiday: parseFloat($('#sumHoliday').textContent),
+      totalHours: parseFloat($('#totalHours').textContent),
+      grossPay: $('#grossPay').textContent
+    },
+    rows: getAllRows()
+  };
+
+  try{
+    $('#submitBtn').disabled = true;
+    showMessage('Submitting timesheet…', 'info', true);
+    $('#submitStatus').textContent = 'Sending to payroll…';
+    var res = await fetch(FLOW_URL, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
+    if(!res.ok) throw new Error('Submission failed with status ' + res.status);
+    showMessage('Timesheet submitted successfully.', 'success', true);
+    $('#submitStatus').textContent = 'Submitted ✔';
+  } catch(err){
+    console.error(err);
+    showMessage('Error submitting timesheet: ' + err.message, 'error', true);
+    $('#submitStatus').textContent = 'There was a problem submitting. Please try again.';
+  } finally {
+    $('#submitBtn').disabled = false;
+  }
+}
+
+// --- Init ---
+window.addEventListener('DOMContentLoaded', function(){
+  // Employees list
+  var list = $('#employeeList');
+  EMPLOYEES.forEach(function(emp){
+    var o = document.createElement('option');
+    o.value = emp.name;
+    list.appendChild(o);
+  });
+
+  // Warrants
+  var warrantSel = $('#warrant');
+  WARRANTS.forEach(function(w, idx){
+    var o = document.createElement('option');
+    o.value = idx;
+    o.textContent = 'Warrant #' + w.number + ' — ' + w.start + ' to ' + w.end + ' — Due ' + w.due;
+    warrantSel.appendChild(o);
+  });
+
+  // Bind UI
+  $('#employeeSearch').addEventListener('input', handleEmployeeSelect);
+  $('#clearEmployeeBtn').addEventListener('click', clearEmployee);
+  $('#warrant').addEventListener('change', handleWarrantSelect);
+  $('#addRowBtn').addEventListener('click', function(){ addTimeRow(); });
+  $('#townHallBtn').addEventListener('click', addTownHallHours);
+  $('#clearAllBtn').addEventListener('click', clearAllTimeRows);
+  $('#timesheetForm').addEventListener('submit', handleFormSubmit);
+
+  // Enter key advances fields
+  document.addEventListener('keydown', function(ev){
+    if(ev.key === 'Enter' && ev.target.matches('#timeBody input, #timeBody select')){
+      ev.preventDefault();
+      var fields = Array.from(document.querySelectorAll('#timeBody input, #timeBody select'));
+      var idx = fields.indexOf(ev.target);
+      if(idx >= 0 && idx < fields.length - 1){ fields[idx+1].focus(); }
+    }
+  });
+
+  showMessage('Select an employee and pay period to begin.', 'info', true);
+});
+
+// Expose for HTML buttons
+window.addQuickTemplate = addQuickTemplate;
+window.addTownHallHours = addTownHallHours;
+</script>
+
+</body>
+</html>
