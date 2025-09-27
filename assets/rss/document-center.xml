@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Town of Sutton Document Center – FY27 Budget</title>
+    <link>https://www.suttonma.gov/document_center/index.php</link>
+    <description>Auto-generated feed of FY27 budget files.</description>
+    <item>
+      <title>FY27 Budget Book – Draft 2</title>
+      <link>https://www.suttonma.gov/document_center/FY27/Budget/FY27_Budget_Book_Draft_2.pdf</link>
+      <category>Draft</category>
+      <pubDate>Mon, 10 Feb 2026 14:00:00 -0500</pubDate>
+    </item>
+    <item>
+      <title>FY27 Capital Plan Presentation</title>
+      <link>https://www.suttonma.gov/document_center/FY27/Budget/FY27_Capital_Plan_Presentation.pdf</link>
+      <category>Hearing</category>
+      <pubDate>Thu, 20 Feb 2026 09:30:00 -0500</pubDate>
+    </item>
+    <item>
+      <title>FY27 Budget In Brief</title>
+      <link>https://www.suttonma.gov/document_center/FY27/Budget/FY27_Budget_In_Brief.pdf</link>
+      <category>Hearing</category>
+      <pubDate>Thu, 27 Feb 2026 17:15:00 -0500</pubDate>
+    </item>
+    <item>
+      <title>FY27 Omnibus Warrant Article</title>
+      <link>https://www.suttonma.gov/document_center/FY27/Budget/FY27_Omnibus_Warrant.pdf</link>
+      <category>Adopted</category>
+      <pubDate>Mon, 11 May 2026 21:30:00 -0500</pubDate>
+    </item>
+  </channel>
+</rss>
