@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:event="https://purl.org/rss/1.0/modules/event/">
+  <channel>
+    <title>Town of Hubbardston Agenda Center – Budget FY27</title>
+    <link>https://www.hubbardstonma.us/agendacenter</link>
+    <description>Upcoming FY27 budget hearings and milestones.</description>
+    <item>
+      <title>Finance Committee Hearing #2</title>
+      <link>https://www.hubbardstonma.us/agendacenter/ViewFile/Agenda/_02202026-1</link>
+      <category>Posted</category>
+      <pubDate>Fri, 14 Feb 2026 08:00:00 -0500</pubDate>
+      <event:startdate>2026-02-20T19:00:00-05:00</event:startdate>
+      <event:location>Town Hall Auditorium &amp; Teams</event:location>
+    </item>
+    <item>
+      <title>Finance Committee Budget Workshop</title>
+      <link>https://www.hubbardstonma.us/agendacenter/ViewFile/Agenda/_03052026-2</link>
+      <category>Posted</category>
+      <pubDate>Mon, 24 Feb 2026 09:00:00 -0500</pubDate>
+      <event:startdate>2026-03-05T18:30:00-05:00</event:startdate>
+      <event:location>Town Hall Conference Room</event:location>
+    </item>
+    <item>
+      <title>Annual Town Meeting – Budget Adoption</title>
+      <link>https://www.hubbardstonma.us/agendacenter/ViewFile/Agenda/_05112026-3</link>
+      <category>Posted</category>
+      <pubDate>Mon, 06 Apr 2026 07:30:00 -0500</pubDate>
+      <event:startdate>2026-05-11T19:00:00-05:00</event:startdate>
+      <event:location>Hubbardston Town Offices</event:location>
+    </item>
+  </channel>
+</rss>

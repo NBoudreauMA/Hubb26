@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Town of Hubbardston FY27 Budget Hub</title>
+  <meta name="description" content="Town of Hubbardston FY27 Budget: revenues, expenditures, hearings, and public input portal." />
+  <meta property="og:title" content="Town of Hubbardston FY27 Budget Hub" />
+  <meta property="og:description" content="Follow the FY27 budget from draft to adoption with documents, dashboards, hearings, and public input." />
+  <meta property="og:image" content="../hubbardston_bg.jpg" />
+  <meta property="og:type" content="website" />
+  <link rel="stylesheet" href="../css/fy27.css" />
+  <link rel="icon" href="../hubbardston_bg.jpg" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header>
+    <div class="top-bar" role="banner">
+      <div class="brand">
+        <img src="../hubbardston_bg.jpg" alt="Town of Hubbardston seal" />
+        <span>FY27 Budget Hub</span>
+      </div>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primaryNav">Menu</button>
+      <nav id="primaryNav" aria-label="Primary" hidden>
+        <ul>
+          <li><a href="index.html">Overview</a></li>
+          <li><a href="documents.html">Documents</a></li>
+          <li><a href="hearings.html">Hearings</a></li>
+          <li><a href="faq-contact.html">FAQ &amp; Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero">
+      <div>
+        <h1>Town of Hubbardston FY27 Budget</h1>
+        <p>
+          Track the FY27 municipal budget from the first draft through adoption. Explore revenues, expenditures, major capital
+          initiatives, and see how to participate in upcoming hearings.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="documents.html">Browse budget documents</a>
+          <a class="btn btn-secondary" href="hearings.html">View hearings calendar</a>
+        </div>
+      </div>
+      <figure>
+        <img src="../hubbardston_bg.jpg" alt="Hubbardston civic campus" />
+      </figure>
+    </section>
+
+    <section class="stat-cards" aria-label="Budget highlights">
+      <article class="card">
+        <h3>FY27 Draft Budget</h3>
+        <p>
+          $42.6M proposed spending plan focused on sustaining core services, investing in public safety, and modernizing
+          infrastructure.
+        </p>
+      </article>
+      <article class="card">
+        <h3>Capital Investment</h3>
+        <p>
+          $5.2M in capital requests prioritized for roadway rehabilitation, ladder truck replacement, and broadband expansion.
+        </p>
+      </article>
+      <article class="card">
+        <h3>Public Engagement</h3>
+        <p>
+          Participate through hearings, public comment forms, and Notify Me alerts tailored to the budget lifecycle.
+        </p>
+      </article>
+    </section>
+
+    <section class="section alt" aria-labelledby="next-steps">
+      <div class="grid-two">
+        <div>
+          <h2 id="next-steps">Budget workflow</h2>
+          <p>
+            Finance staff manage the FY27 workflow within the Document Center. Drafts move through public hearing and Select Board
+            review before adoption. Once FY28 goes live, files will be archived to <code>/budget/archive/fy27/</code> with
+            redirects maintained for transparency.
+          </p>
+          <div class="timeline" role="list">
+            <article role="listitem">
+              <span class="tag">Draft</span>
+              <h3>Department submissions</h3>
+              <p>Operating and capital requests due to Finance on January 12, 2026.</p>
+            </article>
+            <article role="listitem">
+              <span class="tag">Hearing</span>
+              <h3>Finance Committee review</h3>
+              <p>Public hearing series scheduled through March with agenda packets posted two weeks prior.</p>
+            </article>
+            <article role="listitem">
+              <span class="tag">Adopted</span>
+              <h3>Town Meeting vote</h3>
+              <p>Proposed FY27 budget slated for Annual Town Meeting on May 11, 2026.</p>
+            </article>
+          </div>
+        </div>
+        <aside class="widget" aria-labelledby="latest-files">
+          <header>
+            <h3 id="latest-files">Latest files</h3>
+            <p class="helper-text">Auto-populated from the Document Center RSS feed.</p>
+          </header>
+          <div data-latest-files>
+            <p class="empty-state">Loading the latest uploads…</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="dashboards">
+      <h2 id="dashboards">FY27 dashboards</h2>
+      <p class="helper-text" style="text-align:center; max-width:760px; margin:0 auto 2rem;">
+        Explore interactive dashboards for revenues, expenditures, and capital projects. These embeds pull live data from the
+        HubbCONNECT source of truth while presenting a public-friendly view.
+      </p>
+      <div class="hero-actions" style="justify-content:center; margin-bottom:1.5rem;">
+        <button class="btn btn-primary active" type="button" data-dashboard-tab="revenues">Revenues</button>
+        <button class="btn btn-secondary" type="button" data-dashboard-tab="expenditures">Expenditures</button>
+        <button class="btn btn-secondary" type="button" data-dashboard-tab="capital">Capital</button>
+      </div>
+      <div class="dashboard-embed" style="max-width:1100px; margin:0 auto;">
+        <div id="revenues" data-dashboard-panel>
+          <iframe title="FY27 revenue dashboard" src="https://app.powerbi.com/view?r=example-revenues"></iframe>
+        </div>
+        <div id="expenditures" data-dashboard-panel hidden>
+          <iframe title="FY27 expenditure dashboard" src="https://app.powerbi.com/view?r=example-expenditures"></iframe>
+        </div>
+        <div id="capital" data-dashboard-panel hidden>
+          <iframe title="FY27 capital dashboard" src="https://app.powerbi.com/view?r=example-capital"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt" aria-labelledby="news">
+      <h2 id="news">Budget news</h2>
+      <p class="helper-text" style="text-align:center; max-width:760px; margin:0 auto 2rem;">
+        News Flash updates keep residents informed. Each post links back to the Budget Hub with additional detail.
+      </p>
+      <div class="news-grid">
+        <article class="news-card">
+          <span class="badge">News Flash</span>
+          <h3><a href="#">FY27 budget preview released</a></h3>
+          <p>Finance Committee posts the preliminary FY27 book with an interactive budget in brief.</p>
+          <time datetime="2026-01-22">January 22, 2026</time>
+        </article>
+        <article class="news-card">
+          <span class="badge">News Flash</span>
+          <h3><a href="#">Capital plan listening session</a></h3>
+          <p>Share your priorities for roadway, facility, and broadband investments at the February 6 session.</p>
+          <time datetime="2026-01-30">January 30, 2026</time>
+        </article>
+        <article class="news-card">
+          <span class="badge">News Flash</span>
+          <h3><a href="#">Public hearing schedule posted</a></h3>
+          <p>Finance Committee confirms the March hearing schedule with hybrid participation options.</p>
+          <time datetime="2026-02-14">February 14, 2026</time>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="subscribe">
+      <h2 id="subscribe">Stay informed</h2>
+      <div class="subscribe">
+        <h3>Notify Me: Budget FY27</h3>
+        <p class="helper-text">Sign up for email or SMS alerts whenever the budget workflow advances.</p>
+        <form data-subscribe-form>
+          <fieldset>
+            <label for="sub-name">Name</label>
+            <input id="sub-name" name="name" type="text" autocomplete="name" required />
+            <label for="sub-email">Email address</label>
+            <input id="sub-email" name="email" type="email" autocomplete="email" />
+            <label for="sub-sms">Mobile number (SMS)</label>
+            <input id="sub-sms" name="sms" type="tel" autocomplete="tel" pattern="[0-9\-\+\(\)\s]{7,}" />
+            <p class="helper-text">At least one method is required. Message/data rates may apply.</p>
+            <button class="btn btn-primary" type="submit">Subscribe</button>
+          </fieldset>
+          <div data-subscribe-alert class="alert-success" role="status" hidden></div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="inner">
+      <div>
+        <h3>Finance &amp; Town Administration</h3>
+        <p>
+          Finance/Town Administration staff author and publish Budget Hub content. The Town Clerk publishes agendas and minutes,
+          while residents have read-only access to public pages and documents.
+        </p>
+      </div>
+      <div>
+        <h3>Need help?</h3>
+        <p>
+          Visit the <a href="faq-contact.html">FAQ &amp; Contact page</a> to share feedback or questions about the FY27 budget.
+        </p>
+      </div>
+    </div>
+  </footer>
+  <script src="../js/fy27.js" defer></script>
+</body>
+</html>

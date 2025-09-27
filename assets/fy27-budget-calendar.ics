@@ -1,0 +1,32 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Town of Hubbardston//FY27 Budget//EN
+CALSCALE:GREGORIAN
+BEGIN:VEVENT
+UID:fc-hearing2@hubbardstonma.us
+DTSTAMP:20260210T150000Z
+DTSTART:20260221T000000Z
+DTEND:20260221T013000Z
+SUMMARY:Finance Committee Hearing #2
+LOCATION:Town Hall Auditorium & Teams
+DESCRIPTION:Finance Committee reviews General Government budgets and public comment.
+END:VEVENT
+BEGIN:VEVENT
+UID:fc-workshop@hubbardstonma.us
+DTSTAMP:20260224T140000Z
+DTSTART:20260305T233000Z
+DTEND:20260306T010000Z
+SUMMARY:Finance Committee Budget Workshop
+LOCATION:Town Hall Conference Room
+DESCRIPTION:Detailed review of enterprise funds and capital plan.
+END:VEVENT
+BEGIN:VEVENT
+UID:town-meeting@hubbardstonma.us
+DTSTAMP:20260406T123000Z
+DTSTART:20260511T230000Z
+DTEND:20260512T020000Z
+SUMMARY:Annual Town Meeting – FY27 Budget Vote
+LOCATION:Hubbardston Town Offices
+DESCRIPTION:Town Meeting considers FY27 appropriations and capital plan.
+END:VEVENT
+END:VCALENDAR
