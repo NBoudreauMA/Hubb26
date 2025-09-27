@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 120" role="img" aria-labelledby="plTitle plDesc">
+  <title id="plTitle">PublicLogic Logo</title>
+  <desc id="plDesc">Stylized PublicLogic logomark with interlocking shield and circuit leaf.</desc>
+  <defs>
+    <linearGradient id="leaf" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#8ad17c" />
+      <stop offset="100%" stop-color="#1f7043" />
+    </linearGradient>
+    <linearGradient id="shield" x1="0%" x2="100%" y1="0%" y2="0%">
+      <stop offset="0%" stop-color="#0f3c27" />
+      <stop offset="100%" stop-color="#2fa86b" />
+    </linearGradient>
+  </defs>
+  <rect width="320" height="120" rx="18" fill="#eff9f2" />
+  <g transform="translate(30 20)">
+    <path d="M48 0h24c26 0 48 22 48 48s-22 48-48 48H48z" fill="url(#shield)" />
+    <path d="M60 22c15-12 38-10 38 14 0 27-24 40-42 38 9-6 21-17 21-30 0-11-6-16-17-17z" fill="#ecf9f1" opacity="0.9" />
+    <path d="M20 12l28-12 28 12v32c0 22-12 40-28 52C32 84 20 66 20 44z" fill="#124f34" />
+    <path d="M48 28c-9 0-16 7-16 16 0 7 9 17 16 22 7-5 16-15 16-22 0-9-7-16-16-16zm0 24a8 8 0 118-8 8 8 0 01-8 8z" fill="url(#leaf)" />
+  </g>
+  <g transform="translate(150 42)" fill="#0f3c27">
+    <path d="M8 0h18c16 0 26 9 26 23S42 46 26 46H8zm18 36c7 0 12-4 12-13S33 10 26 10h-8v26z" />
+    <path d="M66 0h14v36h24v10H66z" />
+    <path d="M112 0h14v20l18-20h16l-18 20 20 26h-16l-12-16-8 8v8h-14z" />
+  </g>
+</svg>
