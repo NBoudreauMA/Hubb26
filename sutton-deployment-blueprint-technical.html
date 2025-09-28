@@ -1,0 +1,1508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Final confidential deployment blueprint for the Polimorphic AI Municipal Platform in Sutton, MA authored by Nathan Boudreau." />
+  <title>CONFIDENTIAL – PublicLogic Sutton Deployment Blueprint</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --background: #f4f7f5;
+      --surface: #ffffff;
+      --surface-alt: #e9f1ec;
+      --text: #0f241a;
+      --muted: #335343;
+      --accent: #0a4d32;
+      --accent-alt: #1d7a52;
+      --accent-soft: #c2dfd0;
+      --border: #9bb9a9;
+      --focus: #ffbf47;
+      --callout-note: #e8f5e9;
+      --callout-warning: #fff3cd;
+      --callout-compliance: #e3f2fd;
+      --callout-grant: #f1f8e9;
+      --code-bg: #082d20;
+      --code-text: #e3fff1;
+      --shadow: 0 12px 32px rgba(15, 36, 26, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      background: var(--background);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: var(--accent-alt);
+    }
+
+    a:focus-visible,
+    button:focus-visible,
+    summary:focus-visible,
+    [tabindex]:focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 3px;
+    }
+
+    header[role="banner"] {
+      background: linear-gradient(135deg, rgba(10, 77, 50, 0.98), rgba(22, 122, 82, 0.92));
+      color: #f4fff8;
+      padding: 1.25rem 1.5rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: var(--shadow);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.1rem;
+      letter-spacing: 0.35em;
+      text-align: center;
+    }
+
+    header p {
+      margin: 0.35rem 0 0;
+      text-align: center;
+      font-size: 0.9rem;
+      letter-spacing: 0.18em;
+    }
+
+    .skip-link {
+      position: absolute;
+      top: -100px;
+      left: 1rem;
+      background: #ffffff;
+      color: var(--accent);
+      padding: 0.75rem 1rem;
+      z-index: 1001;
+      border-radius: 0.5rem;
+      border: 2px solid var(--accent);
+    }
+
+    .skip-link:focus {
+      top: 1rem;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 260px) minmax(0, 1fr);
+      gap: 1.5rem;
+      align-items: start;
+      padding: 2rem 1.5rem 3rem;
+      max-width: 1240px;
+      margin: 0 auto;
+    }
+
+    nav.toc {
+      position: sticky;
+      top: 6.5rem;
+      align-self: start;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+    }
+
+    nav.toc h2 {
+      margin-top: 0;
+      font-size: 1rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    nav.toc ol {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    nav.toc a {
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    nav.toc a:hover,
+    nav.toc a:focus-visible {
+      text-decoration: underline;
+    }
+
+    main {
+      background: var(--surface);
+      border-radius: 1.5rem;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      padding: 2.5rem 2.25rem 3rem;
+    }
+
+    section {
+      margin-bottom: 3rem;
+    }
+
+    section:last-of-type {
+      margin-bottom: 0;
+    }
+
+    h2 {
+      margin-top: 0;
+      font-size: 1.9rem;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+    }
+
+    h3 {
+      font-size: 1.35rem;
+      color: var(--muted);
+      margin-top: 1.75rem;
+    }
+
+    h4 {
+      font-size: 1.1rem;
+      margin-top: 1.25rem;
+    }
+
+    p,
+    li {
+      font-size: 1rem;
+    }
+
+    ul,
+    ol {
+      padding-left: 1.5rem;
+    }
+
+    .cover {
+      background: linear-gradient(160deg, rgba(13, 94, 60, 0.12), rgba(255, 255, 255, 0.95));
+      border-radius: 1.5rem;
+      border: 1px solid var(--border);
+      padding: 2.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .metadata-grid {
+      display: grid;
+      gap: 1.25rem;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    .metadata-grid div {
+      background: var(--surface-alt);
+      padding: 1rem 1.25rem;
+      border-radius: 0.9rem;
+      border: 1px solid var(--border);
+    }
+
+    .version-block {
+      margin-top: 2rem;
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      overflow: hidden;
+    }
+
+    .version-header {
+      background: var(--accent);
+      color: #ffffff;
+      padding: 1rem 1.5rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-size: 0.95rem;
+    }
+
+    .version-body {
+      padding: 1.5rem;
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+
+    .version-body dl {
+      margin: 0;
+    }
+
+    .version-body dt {
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+
+    .version-body dd {
+      margin: 0.25rem 0 0.75rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+    }
+
+    caption {
+      caption-side: top;
+      font-weight: 600;
+      text-align: left;
+      margin-bottom: 0.5rem;
+      color: var(--muted);
+    }
+
+    thead th {
+      background: var(--surface-alt);
+      color: var(--muted);
+    }
+
+    th,
+    td {
+      border: 1px solid var(--border);
+      padding: 0.75rem;
+      vertical-align: top;
+    }
+
+    code,
+    pre {
+      font-family: "Cascadia Code", "Source Code Pro", Menlo, Monaco, Consolas, "Courier New", monospace;
+    }
+
+    pre {
+      background: var(--code-bg);
+      color: var(--code-text);
+      padding: 1.25rem;
+      border-radius: 0.9rem;
+      overflow-x: auto;
+    }
+
+    details {
+      border: 1px solid var(--border);
+      border-radius: 0.9rem;
+      background: var(--surface-alt);
+      margin: 1.5rem 0;
+    }
+
+    details summary {
+      padding: 0.85rem 1.1rem;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    details[open] {
+      background: var(--surface);
+    }
+
+    .callout {
+      border-radius: 0.9rem;
+      padding: 1rem 1.25rem;
+      border-left: 6px solid var(--accent);
+      margin: 1.5rem 0;
+    }
+
+    .callout.note { background: var(--callout-note); }
+    .callout.warning { background: var(--callout-warning); border-color: #b77a00; }
+    .callout.compliance { background: var(--callout-compliance); border-color: #0f4a7c; }
+    .callout.grant { background: var(--callout-grant); border-color: #5b8a1d; }
+
+    .architecture-diagram {
+      margin: 1.5rem 0;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      padding: 1rem;
+    }
+
+    footer[role="contentinfo"] {
+      background: linear-gradient(135deg, rgba(10, 77, 50, 0.95), rgba(22, 122, 82, 0.92));
+      color: #f4fff8;
+      padding: 1.5rem 1rem 2rem;
+      text-align: center;
+      letter-spacing: 0.12em;
+    }
+
+    footer p {
+      margin: 0.35rem auto;
+      max-width: 960px;
+      font-size: 0.85rem;
+      line-height: 1.4;
+    }
+
+    @media (max-width: 1024px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      nav.toc {
+        position: static;
+      }
+    }
+
+    @media (max-width: 640px) {
+      main {
+        padding: 1.75rem 1.25rem 2.5rem;
+      }
+
+      h2 {
+        font-size: 1.6rem;
+      }
+
+      h3 {
+        font-size: 1.2rem;
+      }
+    }
+
+    @media print {
+      body {
+        background: #ffffff;
+        color: #000000;
+        font-size: 11pt;
+      }
+
+      header[role="banner"],
+      nav.toc,
+      .skip-link {
+        display: none;
+      }
+
+      main {
+        box-shadow: none;
+        border: none;
+        padding: 0;
+      }
+
+      a::after {
+        content: " (" attr(href) ")";
+        font-size: 9pt;
+      }
+
+      h2 {
+        page-break-before: always;
+      }
+
+      table,
+      pre,
+      details {
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header role="banner">
+    <h1>CONFIDENTIAL – PUBLICLOGIC</h1>
+    <p>Polimorphic AI Municipal Platform • Sutton, Massachusetts</p>
+  </header>
+  <div class="layout">
+    <nav id="toc" class="toc" aria-label="Table of Contents">
+      <h2>Contents</h2>
+      <ol>
+        <li><a href="#cover">Cover &amp; Metadata</a></li>
+        <li><a href="#executive-summary">Executive Summary</a></li>
+        <li><a href="#problem-solution">Problem &rarr; Solution Mapping</a></li>
+        <li><a href="#system-architecture">System Architecture</a></li>
+        <li><a href="#data-model">Data Model &amp; Schemas</a></li>
+        <li><a href="#workflows">Workflows (SOP-ready)</a></li>
+        <li><a href="#compliance-risk">Compliance &amp; Risk</a></li>
+        <li><a href="#security-retention">Security, Privacy, and Retention</a></li>
+        <li><a href="#implementation-plan">Implementation Plan</a></li>
+        <li><a href="#funding-roi">Funding &amp; ROI</a></li>
+        <li><a href="#resident-experience">Resident Experience &amp; Accessibility</a></li>
+        <li><a href="#vendor-guardrails">Vendor Guardrails &amp; Ownership</a></li>
+        <li><a href="#appendices">Appendices</a></li>
+      </ol>
+    </nav>
+    <main id="main" role="main">
+      <section id="cover" class="cover" aria-labelledby="cover-title">
+        <h2 id="cover-title">Sutton Deployment Blueprint – Technical Edition</h2>
+        <p><strong>Subtitle:</strong> PublicLogic VAULT™ &amp; ARCHIEVE™ enabled municipal service modernization for the Town of Sutton, MA.</p>
+        <p><strong>Author:</strong> Nathan Boudreau, MPA, MCPPO — Senior Municipal Systems Architect (PublicLogic™ / Town of Hubbardston, MA).</p>
+        <p><strong>Date Generated:</strong> September 27, 2025 — 9:45 PM (America/New_York).</p>
+        <p><strong>Audience:</strong> Sutton Select Board, Town Administrator, department heads, procurement staff, vendor partners, and grant reviewers.</p>
+        <div class="metadata-grid" role="group" aria-label="Document metadata">
+          <div>
+            <h3>Document Identity</h3>
+            <p><strong>Document ID:</strong> PL-SUT-VAULT-TECH-001</p>
+            <p><strong>Semantic Version:</strong> v1.0.0</p>
+            <p><strong>Contact:</strong> nboudreau@publiclogic.us | +1 (978) 555-0147</p>
+          </div>
+          <div>
+            <h3>Municipality</h3>
+            <p>Town of Sutton, Worcester County, Commonwealth of Massachusetts.</p>
+            <p>Time Zone: America/New_York (Eastern Time).</p>
+            <p>Jurisdictional focus: Massachusetts General Laws, 201 CMR 17.00, ADA Title II.</p>
+          </div>
+          <div>
+            <h3>Grant Keywords</h3>
+            <p>Community Compact, One Stop for Growth, MassWorks, Local Rapid Recovery (LRPIP), Shared Services, ADA, Zero-Trust, VAULT™.</p>
+            <p>Additional search tags: SuttonCLERK, SuttonFIX, Polimorphic, Public Records Modernization.</p>
+          </div>
+        </div>
+        <div class="version-block">
+          <div class="version-header">Version &amp; Change Log</div>
+          <div class="version-body">
+            <dl>
+              <dt>Edition</dt>
+              <dd>Technical Master Blueprint — FINAL CONFIDENTIAL</dd>
+              <dt>Prepared For</dt>
+              <dd>Town Administrator, Select Board Chair, Finance Director, Town Clerk, Procurement Officer</dd>
+            </dl>
+            <dl>
+              <dt>Change Log</dt>
+              <dd>
+                <table>
+                  <caption>Document Change History</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Version</th>
+                      <th scope="col">Date</th>
+                      <th scope="col">Summary</th>
+                      <th scope="col">Author</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>v1.0.0</td>
+                      <td>2025-09-27</td>
+                      <td>Initial technical consolidation of Sutton deployment blueprint incorporating VAULT™/ARCHIEVE™ guardrails, compliance matrices, and module SOPs.</td>
+                      <td>Nathan Boudreau</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </dd>
+            </dl>
+          </div>
+        </div>
+        <div class="callout note" role="note">
+          <strong>Confidential Handling:</strong> Circulation limited to Sutton leadership, designated vendors, and authorized grant reviewers under NDA. Reference copies stored in VAULT™ with ARCHIEVE™ evidence tracking.
+        </div>
+      </section>
+
+      <section id="executive-summary" aria-labelledby="executive-summary-title">
+        <h2 id="executive-summary-title">Executive Summary</h2>
+        <p>This plain-language briefing describes how Sutton, MA will adopt the Polimorphic municipal platform with PublicLogic VAULT™ and ARCHIEVE™ safeguards while centering staff comfort, municipal ownership, and vendor accountability.</p>
+        <ul>
+          <li><strong>Outcomes:</strong> Unified resident services, statutory retention by design, evidentiary audit trails, and measurable improvements to permitting, licensing, and public works response times.</li>
+          <li><strong>Scope:</strong> Resident portal (Polimorphic UI), SuttonCLERK licensing and meeting administration, SuttonFIX service desk, ERP/GIS integrations, VAULT™ retention enforcement, ARCHIEVE™ evidence chain, zero-trust infrastructure.</li>
+          <li><strong>Timeline:</strong> Three-phase deployment (Pilot → Expand → Institutionalize) across a 12-month cadence anchored by quarterly governance reviews.</li>
+          <li><strong>Cost Drivers:</strong> SaaS licensing, integrations (Munis, Cartegraph, MassGIS), AI governance staffing, and change management artifacts. Cost optimized through grant stacking and shared services participation.</li>
+          <li><strong>Risk Posture:</strong> Compliance-first with legal holds, municipal data ownership, and vendor contracts tied to VAULT™/ARCHIEVE™ service-level evidence. Residual risk tracked in the program risk register.</li>
+        </ul>
+      </section>
+
+      <section id="problem-solution" aria-labelledby="problem-solution-title">
+        <h2 id="problem-solution-title">Problem → Solution Mapping</h2>
+        <p>The following matrix maps Sutton’s current-state challenges to the proposed PublicLogic-led interventions. Each solution is grounded in Massachusetts law, municipal best practice, and vendor success within municipal guardrails.</p>
+        <table>
+          <caption>Current Pain Points and Targeted Solutions</caption>
+          <thead>
+            <tr>
+              <th scope="col">Current Pain Point</th>
+              <th scope="col">Impacts</th>
+              <th scope="col">Solution Module</th>
+              <th scope="col">Mitigation Mechanism</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Fragmented records spread across file shares, email, and paper archives.</td>
+              <td>Delayed responses to M.G.L. c.66 §10 public records requests; inconsistent retention.</td>
+              <td>SuttonCLERK + VAULT™</td>
+              <td>Central licensing and meeting workflows with automated retention tagging and ARCHIEVE™ audit exports.</td>
+            </tr>
+            <tr>
+              <td>Manual service intake via phone/email with no shared queue.</td>
+              <td>Untracked service levels, duplicated crew dispatch, limited analytics.</td>
+              <td>SuttonFIX Service Desk</td>
+              <td>Omnichannel resident portal, AI triage, SLA dashboards, GIS-linked work orders.</td>
+            </tr>
+            <tr>
+              <td>Legacy ERP and permitting tools lack integrations.</td>
+              <td>Double data entry, delayed reconciliation, finance blind spots.</td>
+              <td>Integration Gateway &amp; Financial Ledger Adapter</td>
+              <td>Event-driven sync, API gateway contracts, nightly SFTP for Munis, GraphQL for Polimorphic UI.</td>
+            </tr>
+            <tr>
+              <td>Compliance tracking handled via spreadsheets.</td>
+              <td>Audit readiness risk, no evidence chain, difficult grant reporting.</td>
+              <td>VAULT™/ARCHIEVE™ Compliance Fabric</td>
+              <td>Policy-as-code enforcement, immutable evidence hashes, retention dashboards with exportable reports.</td>
+            </tr>
+            <tr>
+              <td>Staff discomfort with AI and automation tooling.</td>
+              <td>Slow adoption, inconsistent configuration, training gaps.</td>
+              <td>Practitioner Training Academy</td>
+              <td>Role-based curriculum, office hours, and acceptance criteria tied to change management milestones.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="system-architecture" aria-labelledby="system-architecture-title">
+        <h2 id="system-architecture-title">System Architecture</h2>
+        <p>PublicLogic’s architecture for Sutton is event-driven, compliance-first, and human-centered. Resident experiences are delivered through the Polimorphic front end while VAULT™ and ARCHIEVE™ enforce retention and auditability behind the scenes. Integrations with Massachusetts systems happen through secured adapters and a managed API gateway.</p>
+        <h3>Architecture Narrative</h3>
+        <p>Events move through four domains—Civic Services, Finance, Infrastructure, and Records. Each domain publishes to Confluent Kafka with schema-registry governance. Microservices operate within a Kubernetes-backed service mesh (Istio with mutual TLS) and apply policy-as-code modules to every transaction. VAULT™ attaches statutory retention metadata at ingestion, while ARCHIEVE™ provides notarized evidence snapshots for each workflow milestone.</p>
+        <div class="architecture-diagram" role="img" aria-label="Layered architecture diagram showing resident portal, workflow layer, VAULT logic, ARCHIEVE enforcement, integrations, and audit/reporting.">
+          <svg viewBox="0 0 800 420" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+              <linearGradient id="grad" x1="0" x2="1" y1="0" y2="1">
+                <stop offset="0%" stop-color="#0a4d32" stop-opacity="0.9" />
+                <stop offset="100%" stop-color="#1d7a52" stop-opacity="0.8" />
+              </linearGradient>
+            </defs>
+            <rect x="20" y="20" width="760" height="380" rx="24" fill="#f7fbf8" stroke="#9bb9a9" stroke-width="2" />
+            <text x="400" y="50" text-anchor="middle" font-size="18" fill="#0f241a">Sutton Municipal Platform — PublicLogic Reference Stack</text>
+            <rect x="60" y="80" width="680" height="50" rx="12" fill="url(#grad)" />
+            <text x="400" y="110" text-anchor="middle" font-size="16" fill="#ffffff">Resident Portal (Polimorphic Web/Mobile) &amp; Clerk Consoles</text>
+            <rect x="100" y="150" width="600" height="50" rx="12" fill="#c2dfd0" stroke="#0a4d32" stroke-width="1.5" />
+            <text x="400" y="180" text-anchor="middle" font-size="15" fill="#0f241a">Workflow Layer: SuttonCLERK, SuttonFIX, Permit Engine, Service Desk</text>
+            <rect x="130" y="220" width="540" height="50" rx="12" fill="#e6f2ec" stroke="#1d7a52" stroke-width="1.5" />
+            <text x="400" y="250" text-anchor="middle" font-size="15" fill="#0f241a">VAULT™ Logic Layer — Retention tagging, policy-as-code, legal holds (high-level only)</text>
+            <rect x="160" y="290" width="480" height="50" rx="12" fill="#d4e8f5" stroke="#0f4a7c" stroke-width="1.5" />
+            <text x="400" y="320" text-anchor="middle" font-size="15" fill="#0f241a">ARCHIEVE™ Enforcement — Hold enforcement, disposition scheduling, evidence export (high-level)</text>
+            <rect x="80" y="360" width="160" height="40" rx="10" fill="#fef9e7" stroke="#b77a00" stroke-width="1.5" />
+            <text x="160" y="385" text-anchor="middle" font-size="13" fill="#0f241a">Email &amp; M365</text>
+            <rect x="260" y="360" width="120" height="40" rx="10" fill="#fef9e7" stroke="#b77a00" stroke-width="1.5" />
+            <text x="320" y="385" text-anchor="middle" font-size="13" fill="#0f241a">Payments</text>
+            <rect x="400" y="360" width="120" height="40" rx="10" fill="#fef9e7" stroke="#b77a00" stroke-width="1.5" />
+            <text x="460" y="385" text-anchor="middle" font-size="13" fill="#0f241a">GIS / Permitting</text>
+            <rect x="540" y="360" width="120" height="40" rx="10" fill="#fef9e7" stroke="#b77a00" stroke-width="1.5" />
+            <text x="600" y="385" text-anchor="middle" font-size="13" fill="#0f241a">Audit &amp; Reporting</text>
+          </svg>
+        </div>
+        <h3>Technical Stack &amp; Microservices</h3>
+        <table>
+          <caption>Reference Microservices and Responsibilities</caption>
+          <thead>
+            <tr>
+              <th scope="col">Service</th>
+              <th scope="col">Responsibility</th>
+              <th scope="col">Key Interfaces</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Identity Broker</td>
+              <td>Federates MA eAuthentication, OIDC, and clerk SSO with role-based access.</td>
+              <td>REST <code>/oauth2/*</code>, SCIM, LDAP proxy.</td>
+            </tr>
+            <tr>
+              <td>Records Orchestrator</td>
+              <td>Applies VAULT™ retention tags and requests ARCHIEVE™ notarization events.</td>
+              <td>gRPC <code>retention.Apply</code>, Kafka <code>records.events</code>.</td>
+            </tr>
+            <tr>
+              <td>Permit Engine</td>
+              <td>Processes permit applications, inspections, fee schedules, and notifications.</td>
+              <td>GraphQL civicPortal schema, REST <code>/permits/v1</code>.</td>
+            </tr>
+            <tr>
+              <td>Service Desk</td>
+              <td>Supports SuttonFIX omnichannel intake with SLA clocks and GIS overlays.</td>
+              <td>Webhook intake, REST <code>/cases</code>, Kafka <code>service.events</code>.</td>
+            </tr>
+            <tr>
+              <td>Financial Ledger Adapter</td>
+              <td>Synchronizes Munis ERP transactions with the Open Checkbook reporting stack.</td>
+              <td>SFTP batches, REST <code>/erp-sync</code>, OData.</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="callout note" role="note">
+          <strong>Practitioner Insight:</strong> Each microservice ships with PublicLogic deployment playbooks, infrastructure-as-code templates, and retention mappings so technology and policy teams stay aligned sprint to sprint.
+        </div>
+        <h3>AI and Automation Framework</h3>
+        <p>We treat Sutton as the proving ground for progressive municipal AI adoption. PublicLogic’s practitioner guardrails ensure automation augments staff rather than replacing judgment.</p>
+        <ul>
+          <li><strong>Maturity Ladder:</strong> Assistive (AI suggestions logged for review) → Augmented (low-risk automation with human-on-the-loop) → Bounded Autonomy (automated actions with escalation, VAULT™ tags, and ARCHIEVE™ evidence).</li>
+          <li><strong>Pipeline Architecture:</strong> Airflow DAGs orchestrate ETL, feature store (Feast) standardizes training data, and model monitoring dashboards track drift, fairness, and retention compliance.</li>
+          <li><strong>Natural Language Understanding:</strong> Azure OpenAI models trained on municipal vocabulary operate inside a private network with policy-aware prompt templates and redaction guardrails.</li>
+          <li><strong>Bounded Autonomy Safeguards:</strong> Multi-factor approvals, sandbox testing, and red-team simulations ensure compliance posture remains intact.</li>
+        </ul>
+      </section>
+
+      <section id="data-model" aria-labelledby="data-model-title">
+        <h2 id="data-model-title">Data Model &amp; Schemas</h2>
+        <p>PublicLogic codifies Sutton’s core entities to support VAULT™ retention and ARCHIEVE™ audit evidence. Plain-language descriptions come first, followed by detailed tables and schemas.</p>
+        <h3>Core Entity Summary</h3>
+        <p>Requests, cases, residents, departments, tasks, service-level agreements, documents, and retention rules form the canonical data model. Each entity is tagged with policy identifiers so that data exports and legal holds stay consistent across systems.</p>
+        <table>
+          <caption>Core Entity Catalogue</caption>
+          <thead>
+            <tr>
+              <th scope="col">Entity</th>
+              <th scope="col">Description</th>
+              <th scope="col">Key Attributes</th>
+              <th scope="col">Retention Anchor</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Requests</td>
+              <td>Resident-facing submissions (service issues, records requests, permit starts).</td>
+              <td>Request ID, channel, resident ID, location, status, submitted timestamp.</td>
+              <td>VAULT-RULE-SERVICE-02 — 3 years, pause during open holds.</td>
+            </tr>
+            <tr>
+              <td>Cases</td>
+              <td>Internal work units managed by SuttonFIX and SuttonCLERK.</td>
+              <td>Case number, owning department, SLA stage, assigned staff.</td>
+              <td>VAULT-RULE-CASE-04 — 7 years or until litigation resolved.</td>
+            </tr>
+            <tr>
+              <td>Residents</td>
+              <td>Constituent profiles with consent history and communication preferences.</td>
+              <td>Resident GUID, preferred language, accessibility needs, consent flags.</td>
+              <td>VAULT-RULE-RESIDENT-01 — Retain while active + 2 years.</td>
+            </tr>
+            <tr>
+              <td>Departments</td>
+              <td>Organizational units tied to RACI and budgetary ownership.</td>
+              <td>Department code, leadership contact, operating hours, grant tags.</td>
+              <td>VAULT-RULE-GOV-03 — Permanent.</td>
+            </tr>
+            <tr>
+              <td>Tasks</td>
+              <td>Actionable steps within a workflow (inspection, approval, communication).</td>
+              <td>Task ID, SLA clock, status, evidence link, ARCHIEVE™ hash.</td>
+              <td>Inherits parent case policy with sub-retention for attachments.</td>
+            </tr>
+            <tr>
+              <td>SLAs</td>
+              <td>Response and resolution targets defined per service and channel.</td>
+              <td>Service code, response hours, pause conditions, escalation matrix.</td>
+              <td>VAULT-RULE-SLA-02 — 6 years.</td>
+            </tr>
+            <tr>
+              <td>Documents</td>
+              <td>Files ingested from residents or generated internally.</td>
+              <td>Document ID, classification, checksum, retention policy ID.</td>
+              <td>Mapped via VAULT™ classification; destruction certificates stored.</td>
+            </tr>
+            <tr>
+              <td>Retention Rules</td>
+              <td>Policy-as-code objects that drive VAULT™ actions.</td>
+              <td>Policy ID, legal basis, trigger, duration, disposition method.</td>
+              <td>Managed centrally with legal hold toggles.</td>
+            </tr>
+          </tbody>
+        </table>
+        <h3>JSON Schemas</h3>
+        <details>
+          <summary>PublicRecordsRequest Schema</summary>
+          <pre>{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "PublicRecordsRequest",
+  "type": "object",
+  "properties": {
+    "requestId": { "type": "string", "format": "uuid" },
+    "residentId": { "type": "string", "format": "uuid" },
+    "received": { "type": "string", "format": "date-time" },
+    "description": { "type": "string", "maxLength": 4000 },
+    "statute": { "type": "string", "enum": ["MGLc66s10"] },
+    "sensitive": { "type": "boolean", "default": false },
+    "assignedDepartment": { "type": "string" },
+    "dueDate": { "type": "string", "format": "date-time" },
+    "retentionPolicy": { "type": "string", "pattern": "VAULT-RULE-[A-Z]+-[0-9]+" },
+    "archieveEvidenceId": { "type": "string" }
+  },
+  "required": ["requestId", "received", "description", "assignedDepartment", "dueDate", "retentionPolicy"],
+  "additionalProperties": false
+}</pre>
+        </details>
+        <details>
+          <summary>ServiceRequest Schema</summary>
+          <pre>{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ServiceRequest",
+  "type": "object",
+  "properties": {
+    "issueId": { "type": "string", "format": "uuid" },
+    "channel": { "type": "string", "enum": ["web", "mobile", "voice", "email", "walk-in"] },
+    "summary": { "type": "string", "maxLength": 255 },
+    "details": { "type": "string", "maxLength": 5000 },
+    "location": {
+      "type": "object",
+      "properties": {
+        "address": { "type": "string" },
+        "parcelId": { "type": "string" },
+        "coordinates": { "type": "array", "items": { "type": "number" }, "minItems": 2, "maxItems": 2 }
+      },
+      "required": ["address"]
+    },
+    "priority": { "type": "string", "enum": ["low", "medium", "high", "critical"] },
+    "sla": { "type": "string" },
+    "attachments": {
+      "type": "array",
+      "items": { "type": "string", "format": "uri" }
+    },
+    "retentionPolicy": { "type": "string" },
+    "archieveHash": { "type": "string" }
+  },
+  "required": ["issueId", "channel", "summary", "location", "priority", "retentionPolicy"],
+  "additionalProperties": false
+}</pre>
+        </details>
+        <details>
+          <summary>WorkflowStep Schema</summary>
+          <pre>{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "WorkflowStep",
+  "type": "object",
+  "properties": {
+    "stepId": { "type": "string", "format": "uuid" },
+    "caseId": { "type": "string", "format": "uuid" },
+    "status": { "type": "string", "enum": ["queued", "in_progress", "paused", "completed", "cancelled"] },
+    "started": { "type": "string", "format": "date-time" },
+    "completed": { "type": ["string", "null"], "format": "date-time" },
+    "pauseReason": { "type": ["string", "null"] },
+    "slaClock": {
+      "type": "object",
+      "properties": {
+        "targetHours": { "type": "integer", "minimum": 1 },
+        "elapsedHours": { "type": "number" },
+        "paused": { "type": "boolean" }
+      },
+      "required": ["targetHours", "elapsedHours", "paused"]
+    },
+    "notifications": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "channel": { "type": "string" },
+          "recipient": { "type": "string" },
+          "timestamp": { "type": "string", "format": "date-time" }
+        },
+        "required": ["channel", "recipient", "timestamp"]
+      }
+    },
+    "archieveEvidenceId": { "type": "string" }
+  },
+  "required": ["stepId", "caseId", "status", "started", "slaClock"],
+  "additionalProperties": false
+}</pre>
+        </details>
+        <details>
+          <summary>RetentionPolicy Schema</summary>
+          <pre>{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "RetentionPolicy",
+  "type": "object",
+  "properties": {
+    "policyId": { "type": "string" },
+    "service": { "type": "string" },
+    "legalBasis": { "type": "string" },
+    "trigger": { "type": "string" },
+    "duration": { "type": "string" },
+    "disposition": { "type": "string" },
+    "holdEligible": { "type": "boolean" }
+  },
+  "required": ["policyId", "service", "legalBasis", "trigger", "duration", "disposition"],
+  "additionalProperties": false
+}</pre>
+        </details>
+      </section>
+
+      <section id="workflows" aria-labelledby="workflows-title">
+        <h2 id="workflows-title">Workflows (SOP-ready)</h2>
+        <p>Each module includes clear triggers, decision points, SLA clocks, notifications, escalations, and audit evidence requirements. Staff can operationalize these SOPs immediately while vendors align automation to the same blueprint.</p>
+        <h3>SuttonCLERK — Licensing and Board Administration</h3>
+        <ul>
+          <li><strong>Trigger:</strong> Resident submits application or agenda item via civic portal or clerk intake desk.</li>
+          <li><strong>Inputs:</strong> Completed form, supporting documents, fee payment reference, statutory citations.</li>
+          <li><strong>Decision Points:</strong> Completeness review, board scheduling, vote outcome, appeal condition.</li>
+          <li><strong>SLA:</strong> <span aria-label="Service level">[SLA_HOURS=72]</span> from submission to completeness determination with pauses for applicant action.</li>
+          <li><strong>Notifications:</strong> Automated acknowledgement, board docket notice, decision email with retention summary.</li>
+          <li><strong>Escalation:</strong> If awaiting board action beyond [BOARD_WAIT=14] calendar days, escalate to Town Administrator.</li>
+          <li><strong>Audit Trail:</strong> ARCHIEVE™ stores meeting agenda reference, roll call vote, and disposition certificate.</li>
+        </ul>
+        <details>
+          <summary>workflow: suttonclerk-licensing.yaml</summary>
+          <pre>workflow: suttonclerk-licensing
+trigger: civic_portal_submission
+sla:
+  start: submission_timestamp
+  target_hours: 72
+  pause_conditions:
+    - awaiting_applicant_documents
+    - legal_hold_active
+steps:
+  - id: intake-review
+    owner: Town Clerk
+    actions:
+      - validate_required_fields
+      - request_missing_info
+    notifications:
+      - channel: email
+        recipient: applicant
+        template: clerk-intake-confirmation
+  - id: board-scheduling
+    owner: Clerk Operations
+    conditions:
+      - if license_type in ["alcohol", "entertainment"] then require_public_hearing: true
+    outputs:
+      - agenda_reference
+      - meeting_date
+  - id: decision-record
+    owner: Board Chair
+    completion:
+      - capture_vote_result
+      - attach_archieve_evidence
+      - issue_decision_letter
+holds:
+  - type: legal_hold
+    authority: Town Counsel
+    effect: pause_disposition
+retention_policy: VAULT-RULE-CLERK-01
+</pre>
+        </details>
+        <h3>SuttonFIX — Resident Issue Reporting</h3>
+        <ul>
+          <li><strong>Trigger:</strong> Report via web, mobile app, SMS/voice, or email ingestion.</li>
+          <li><strong>Inputs:</strong> Location, media uploads, category hints, accessibility flags.</li>
+          <li><strong>Decision Points:</strong> AI classification vs. manual triage, field crew assignment, closure validation.</li>
+          <li><strong>SLA:</strong> Priority-specific clocks: <span aria-label="Priority high response">[PRIORITY_HIGH_RESPONSE=4]</span> hours for response, [PRIORITY_HIGH_RESOLVE=48] hours for resolution unless weather exception.</li>
+          <li><strong>Notifications:</strong> Resident acknowledgement, crew dispatch, closure summary with evidence.</li>
+          <li><strong>Escalation:</strong> Cases breaching SLA escalate to DPW Director with automated dashboard highlights.</li>
+          <li><strong>Audit Trail:</strong> ARCHIEVE™ records before/after photos and field notes with GIS coordinates.</li>
+        </ul>
+        <details>
+          <summary>workflow: suttonfix-service.yaml</summary>
+          <pre>workflow: suttonfix-service
+trigger: resident_issue_report
+sla:
+  response_hours:
+    low: 24
+    medium: 12
+    high: 4
+    critical: 1
+  resolution_hours:
+    low: 168
+    medium: 72
+    high: 48
+    critical: 24
+classification:
+  ai_model: azure-openai-gpt-4o-mini
+  fallback_role: Clerk Dispatcher
+assignment:
+  routing_matrix:
+    "roadway": "DPW Roads"
+    "tree": "Tree Warden"
+    "water": "Water/Sewer"
+notifications:
+  - channel: sms
+    recipient: resident
+    template: issue-ack
+  - channel: email
+    recipient: assigned_team
+    template: crew-dispatch
+closure_requirements:
+  - evidence_photo
+  - crew_notes
+  - resident_confirmation
+retention_policy: VAULT-RULE-SERVICE-02
+</pre>
+        </details>
+        <h3>Public Records Request (PRR) Handling</h3>
+        <ul>
+          <li><strong>Trigger:</strong> Submission via SuttonCLERK portal or email to records@sutton-ma.gov.</li>
+          <li><strong>Inputs:</strong> Request description, statutory timeline, requester contact, fee waiver eligibility.</li>
+          <li><strong>Decision Points:</strong> Clarification required, exemption review, legal hold checks.</li>
+          <li><strong>SLA:</strong> <span aria-label="Records SLA">[PRR_INITIAL_RESPONSE=10]</span> business days pursuant to M.G.L. c.66 §10, with trackable extensions.</li>
+          <li><strong>Notifications:</strong> Acknowledgement letter, extension notice, production delivery with retention summary.</li>
+          <li><strong>Escalation:</strong> Missed deadlines escalate to Records Access Officer and Town Counsel.</li>
+          <li><strong>Audit Trail:</strong> ARCHIEVE™ captures each correspondence, exemption citation, and final delivery manifest.</li>
+        </ul>
+      </section>
+
+      <section id="compliance-risk" aria-labelledby="compliance-risk-title">
+        <h2 id="compliance-risk-title">Compliance &amp; Risk (M.G.L., 201 CMR 17.00, ADA)</h2>
+        <p>Sutton’s modernization hinges on meeting Massachusetts statutory obligations while making audit evidence a built-in capability. VAULT™ and ARCHIEVE™ are referenced only at a high level, focusing on outcomes: retention enforcement, legal hold management, and evidentiary proof.</p>
+        <div class="callout compliance" role="note">
+          <strong>Compliance-first principle:</strong> Municipal staff remain in control of policies, approvals, and releases. Vendors provide tooling and support but cannot alter statutory retention or disclosure requirements without municipal authorization.</div>
+        <table>
+          <caption>Compliance Matrix</caption>
+          <thead>
+            <tr>
+              <th scope="col">Requirement</th>
+              <th scope="col">Control / Process</th>
+              <th scope="col">Evidence / Log</th>
+              <th scope="col">Owner</th>
+              <th scope="col">Retention</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>M.G.L. c.30A – Open Meeting Law</td>
+              <td>Agenda publication, roll call vote capture, remote participation tracking.</td>
+              <td>ARCHIEVE™ meeting package, VAULT™ agenda metadata, livestream archive manifest.</td>
+              <td>Town Clerk (Accountable); Board Chair (Responsible)</td>
+              <td>Permanent via VAULT-RULE-CLERK-01.</td>
+            </tr>
+            <tr>
+              <td>M.G.L. c.66 §10 – Public Records</td>
+              <td>Records Access Officer workflow with automated deadline alerts and exemption catalog.</td>
+              <td>PRR case log, response letters, fee calculations, legal hold toggles.</td>
+              <td>Records Access Officer</td>
+              <td>6 years after closure per VAULT-RULE-PRR-06.</td>
+            </tr>
+            <tr>
+              <td>M.G.L. c.140 / c.138 – Licensing</td>
+              <td>Structured licensing templates, background check attestations, board approvals.</td>
+              <td>ARCHIEVE™ license decision files, VAULT™ disposition certificates.</td>
+              <td>Town Clerk</td>
+              <td>7 years post expiration.</td>
+            </tr>
+            <tr>
+              <td>M.G.L. c.143 – Inspections</td>
+              <td>Inspection scheduling with GIS overlays, photo documentation, redaction workflow.</td>
+              <td>Inspection reports, geo-stamped photos, redaction audit log.</td>
+              <td>Building Commissioner</td>
+              <td>10 years per state schedule.</td>
+            </tr>
+            <tr>
+              <td>M.G.L. c.40 §§6C–6D – Roads/Private Ways</td>
+              <td>Work order prioritization, resident notification, ADA compliance checks.</td>
+              <td>SuttonFIX maintenance log, accessible detour notices, GIS overlays.</td>
+              <td>DPW Director</td>
+              <td>7 years.</td>
+            </tr>
+            <tr>
+              <td>201 CMR 17.00 – Data Security</td>
+              <td>Encryption at rest/in transit, role-based access, multi-factor authentication.</td>
+              <td>IAM reports, encryption key attestations, security event logs.</td>
+              <td>IT Director</td>
+              <td>Rolling 3 years.</td>
+            </tr>
+            <tr>
+              <td>ADA Title II</td>
+              <td>WCAG 2.1 AA resident portal, accessible meeting notices, translation assistance.</td>
+              <td>Accessibility compliance scans, translation service logs, accommodation records.</td>
+              <td>ADA Coordinator</td>
+              <td>Life of program.</td>
+            </tr>
+            <tr>
+              <td>Massachusetts Retention Schedules</td>
+              <td>Policy-as-code mapping, legal hold toggles, destruction certificate workflow.</td>
+              <td>VAULT™ retention dashboard exports, destruction certificates, hold releases.</td>
+              <td>Records Management Team</td>
+              <td>Per schedule; certificates permanent.</td>
+            </tr>
+          </tbody>
+        </table>
+        <h3>Risk Register Snapshot</h3>
+        <table>
+          <caption>Program Risk Register (Excerpt)</caption>
+          <thead>
+            <tr>
+              <th scope="col">Risk</th>
+              <th scope="col">Likelihood</th>
+              <th scope="col">Impact</th>
+              <th scope="col">Mitigation</th>
+              <th scope="col">Owner</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Legacy data migration delays.</td>
+              <td>Medium</td>
+              <td>High</td>
+              <td>Run staged migrations with validation scripts; maintain rollback snapshots.</td>
+              <td>IT Director</td>
+            </tr>
+            <tr>
+              <td>AI model drift affecting classification accuracy.</td>
+              <td>Low</td>
+              <td>Medium</td>
+              <td>Monthly drift reports, human review queue, retraining with local data.</td>
+              <td>PublicLogic AI Team</td>
+            </tr>
+            <tr>
+              <td>Grant funding delays.</td>
+              <td>Medium</td>
+              <td>Medium</td>
+              <td>Stack Community Compact with One Stop for Growth; maintain contingency reserve.</td>
+              <td>Finance Director</td>
+            </tr>
+            <tr>
+              <td>Change management fatigue among frontline staff.</td>
+              <td>Medium</td>
+              <td>High</td>
+              <td>Office hours, modular training, peer champions, incremental releases.</td>
+              <td>Town Administrator</td>
+            </tr>
+            <tr>
+              <td>Cyber incident affecting hosted environment.</td>
+              <td>Low</td>
+              <td>High</td>
+              <td>Zero-trust posture, tabletop exercises, 1-hour RTO/15-minute RPO commitments.</td>
+              <td>PublicLogic CTO</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="security-retention" aria-labelledby="security-retention-title">
+        <h2 id="security-retention-title">Security, Privacy, and Retention (VAULT™/ARCHIEVE™ – high level)</h2>
+        <p>Sutton’s security architecture aligns zero-trust operations with municipal oversight. VAULT™ and ARCHIEVE™ are described only by their outcomes: retention enforcement, legal hold management, audit evidence, and immutable logging.</p>
+        <h3>Role-Based Access &amp; Least Privilege</h3>
+        <ul>
+          <li>Identity Broker integrates MA eAuthentication and municipal AD with just-in-time provisioning.</li>
+          <li>Role catalog covers Clerk, DPW Dispatcher, Field Crew, Records Access Officer, Town Administrator, Vendor Support.</li>
+          <li>Access review cadence: quarterly certifications with automated reminders and revocation workflows.</li>
+        </ul>
+        <h3>Logging, Redaction, and Privacy</h3>
+        <ul>
+          <li>Audit logs streamed to Elastic SIEM with retention aligned to VAULT™ policies.</li>
+          <li>Redaction workflow: designate segments for review, apply redaction templates, document reason codes.</li>
+          <li>Encryption at rest via Azure-managed keys; in transit via TLS 1.2+ with Perfect Forward Secrecy.</li>
+        </ul>
+        <h3>Infrastructure, Observability, and DR</h3>
+        <details>
+          <summary>Kubernetes Deployment (suttonfix-service)</summary>
+          <pre>apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: suttonfix-service
+  labels:
+    app: suttonfix
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: suttonfix
+  template:
+    metadata:
+      labels:
+        app: suttonfix
+        retention.policy: "VAULT-RULE-2024-09"
+    spec:
+      serviceAccountName: suttonfix-sa
+      containers:
+        - name: suttonfix-api
+          image: registry.publiclogic.com/suttonfix:1.4.2
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "512Mi"
+            limits:
+              cpu: "1"
+              memory: "1Gi"
+          env:
+            - name: ARCHIEVE_ENDPOINT
+              valueFrom:
+                secretKeyRef:
+                  name: archieve-secrets
+                  key: endpoint
+          volumeMounts:
+            - name: retention-policy
+              mountPath: /etc/policies
+      volumes:
+        - name: retention-policy
+          configMap:
+            name: vault-retention-suttonfix
+</pre>
+        </details>
+        <ul>
+          <li>Prometheus metrics feed Grafana dashboards overlaying VAULT™ state changes.</li>
+          <li>Elastic SIEM correlates security events with ARCHIEVE™ evidence IDs.</li>
+          <li>Synthetic monitoring validates resident journeys; alerts route to practitioner response teams.</li>
+          <li>Active-active clusters operate in Azure East US and Azure Gov MA with 15-minute RPO and 1-hour RTO. Daily immutable backups land in VAULT™ to preserve retention context.</li>
+        </ul>
+        <div class="callout warning" role="note">
+          <strong>Warning:</strong> Vendors must never alter VAULT™ retention or ARCHIEVE™ evidence policies without municipal written approval. Configuration changes trigger automated notifications to the Town Administrator and Records Access Officer.</div>
+      </section>
+
+      <section id="implementation-plan" aria-labelledby="implementation-plan-title">
+        <h2 id="implementation-plan-title">Implementation Plan (Phases, RACI, Training)</h2>
+        <p>The phased rollout keeps policy, technology, and resident communication synchronized. Each phase concludes with a Definition of Done checklist to confirm municipal acceptance before moving forward.</p>
+        <h3>Phased Schedule</h3>
+        <table>
+          <caption>Implementation Phases</caption>
+          <thead>
+            <tr>
+              <th scope="col">Phase</th>
+              <th scope="col">Timeline</th>
+              <th scope="col">Focus</th>
+              <th scope="col">Definition of Done</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Pilot</td>
+              <td>Months 1–4</td>
+              <td>Discovery, data inventory, compliance baseline, SuttonCLERK pilot, core microservices deployment.</td>
+              <td>Data migration rehearsal completed, VAULT™ baseline configured, Select Board demo approved.</td>
+            </tr>
+            <tr>
+              <td>Expand</td>
+              <td>Months 5–8</td>
+              <td>SuttonFIX launch, ERP adapters, AI model calibration, public communications, staff training cohorts.</td>
+              <td>SLA dashboards live, GIS integration validated, training cohort #1 sign-off, vendor support runbook delivered.</td>
+            </tr>
+            <tr>
+              <td>Institutionalize</td>
+              <td>Months 9–12</td>
+              <td>Full production cutover, change management reinforcement, grant reporting, investor and board review.</td>
+              <td>Metrics meeting targets, archival workflows tested, contingency drills executed, grant reporting package submitted.</td>
+            </tr>
+          </tbody>
+        </table>
+        <h3>Governance RACI</h3>
+        <table>
+          <caption>RACI Matrix</caption>
+          <thead>
+            <tr>
+              <th scope="col">Function</th>
+              <th scope="col">Responsible</th>
+              <th scope="col">Accountable</th>
+              <th scope="col">Consulted</th>
+              <th scope="col">Informed</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Platform Operations</td>
+              <td>Polimorphic DevOps</td>
+              <td>PublicLogic CTO</td>
+              <td>Sutton IT, Vendor SMEs</td>
+              <td>Town Administrator</td>
+            </tr>
+            <tr>
+              <td>Compliance Oversight</td>
+              <td>PublicLogic Compliance Office</td>
+              <td>Town Clerk</td>
+              <td>Town Counsel</td>
+              <td>Select Board</td>
+            </tr>
+            <tr>
+              <td>AI Governance</td>
+              <td>Polimorphic AI Team</td>
+              <td>PublicLogic AI Ethics Officer</td>
+              <td>Sutton Advisory Committee</td>
+              <td>Residents, Grant Reviewers</td>
+            </tr>
+            <tr>
+              <td>Communications &amp; Training</td>
+              <td>PublicLogic Change Management Lead</td>
+              <td>Town Administrator</td>
+              <td>HR Director, Department Heads</td>
+              <td>All Staff</td>
+            </tr>
+            <tr>
+              <td>Data Governance</td>
+              <td>Records Management Team</td>
+              <td>Records Access Officer</td>
+              <td>IT Director, Vendor Data Stewards</td>
+              <td>Finance Committee</td>
+            </tr>
+          </tbody>
+        </table>
+        <h3>Training Plan</h3>
+        <ul>
+          <li><strong>Milestones:</strong> Orientation (Month 2), Role deep-dives (Month 5), Refresher &amp; new hire onboarding (Month 9).</li>
+          <li><strong>Artifacts:</strong> Quick-reference cards, video walkthroughs, ADA-compliant transcripts, policy cheat sheets.</li>
+          <li><strong>Office Hours:</strong> Weekly drop-ins hosted by PublicLogic practitioners; attendance logged for grant reporting.</li>
+          <li><strong>Acceptance Criteria:</strong> 90% course completion, proficiency checks via scenario testing, signed acknowledgment of retention responsibilities.</li>
+        </ul>
+        <h3>Performance Metrics</h3>
+        <ul>
+          <li>Average permit processing time reduced from 21 to 12 days by Quarter 4.</li>
+          <li>SuttonFIX first-response time under 4 hours for priority issues; 48-hour resolution target for high-priority cases.</li>
+          <li>99.95% platform uptime with zero unplanned outages longer than 30 minutes.</li>
+          <li>Audit findings resolved within 10 business days; ARCHIEVE™ notarization coverage for all board actions.</li>
+        </ul>
+      </section>
+
+      <section id="funding-roi" aria-labelledby="funding-roi-title">
+        <h2 id="funding-roi-title">Funding &amp; ROI</h2>
+        <p>We align Sutton’s blueprint with Massachusetts funding channels while quantifying return on investment for leadership and investors.</p>
+        <div class="callout grant" role="note">
+          <strong>Grant Tip:</strong> Package Community Compact, One Stop for Growth, MassWorks, LRPIP, and Shared Services applications with consistent metrics and VAULT™ evidence attachments to accelerate approvals.</div>
+        <table>
+          <caption>Funding Alignment Matrix</caption>
+          <thead>
+            <tr>
+              <th scope="col">Program</th>
+              <th scope="col">Eligibility Rationale</th>
+              <th scope="col">Deliverables</th>
+              <th scope="col">Evidence Produced</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Community Compact IT Grant</td>
+              <td>Supports municipal modernization and digital records improvements.</td>
+              <td>SuttonCLERK automation, VAULT™ retention dashboards.</td>
+              <td>ARCHIEVE™ meeting evidence, training completion logs.</td>
+            </tr>
+            <tr>
+              <td>One Stop for Growth</td>
+              <td>Infrastructure readiness and permitting acceleration.</td>
+              <td>Permit Engine integration, SLA reductions.</td>
+              <td>Permitting metrics exports, GIS-enabled reports.</td>
+            </tr>
+            <tr>
+              <td>MassWorks</td>
+              <td>Public works coordination and economic development support.</td>
+              <td>SuttonFIX capital planning analytics.</td>
+              <td>Work order heat maps, project timelines, retention certificates.</td>
+            </tr>
+            <tr>
+              <td>LRPIP</td>
+              <td>Revitalization planning for local recovery.</td>
+              <td>Resident engagement portal and outreach dashboards.</td>
+              <td>Engagement metrics, translation logs, accessibility audits.</td>
+            </tr>
+            <tr>
+              <td>Shared Services</td>
+              <td>Regional collaboration with Worcester County partners.</td>
+              <td>Integration adapters, policy templates, joint governance playbooks.</td>
+              <td>Memoranda of understanding, shared metrics, VAULT™ export packages.</td>
+            </tr>
+          </tbody>
+        </table>
+        <h3>Cost &amp; Benefit Model</h3>
+        <table>
+          <caption>Cost Drivers and Benefits</caption>
+          <thead>
+            <tr>
+              <th scope="col">Category</th>
+              <th scope="col">Assumption</th>
+              <th scope="col">Annual Cost</th>
+              <th scope="col">Quantified Benefit</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>SaaS Licensing</td>
+              <td>Platform subscription for 120 staff users.</td>
+              <td>$210,000</td>
+              <td>30% reduction in manual processing hours (~$145,000).</td>
+            </tr>
+            <tr>
+              <td>Integrations</td>
+              <td>ERP, GIS, payments, MassGIS connectors.</td>
+              <td>$95,000</td>
+              <td>Eliminates double-entry for finance &amp; DPW (1.5 FTE saved).</td>
+            </tr>
+            <tr>
+              <td>Change Management</td>
+              <td>Training academy, office hours, translation services.</td>
+              <td>$60,000</td>
+              <td>Higher adoption yields 12-point NPS improvement and compliance risk reduction.</td>
+            </tr>
+            <tr>
+              <td>AI Governance</td>
+              <td>Model monitoring, fairness reviews, practitioner oversight.</td>
+              <td>$45,000</td>
+              <td>Prevents adverse incidents, accelerates grant reporting, supports investor confidence.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="resident-experience" aria-labelledby="resident-experience-title">
+        <h2 id="resident-experience-title">Resident Experience &amp; Accessibility</h2>
+        <p>Resident trust and accessibility define success. The Polimorphic portal and municipal workflows prioritize inclusive design, plain language, and predictable response times.</p>
+        <ul>
+          <li><strong>Plain Language:</strong> All public communications use grade 8 reading level, with jargon explained in tooltips and glossary references.</li>
+          <li><strong>Mobile-First:</strong> Responsive layouts ensure services function on mobile, tablet, and desktop devices.</li>
+          <li><strong>Translation Posture:</strong> Integration with Microsoft Translator for on-demand translations; community partner review for key templates.</li>
+          <li><strong>Inclusive Forms:</strong> Accessible labels, real-time validation, keyboard navigation, and error prevention guidance.</li>
+          <li><strong>Response SLAs:</strong> Transparent dashboards show SLA targets and actual performance to reinforce accountability.</li>
+        </ul>
+      </section>
+
+      <section id="vendor-guardrails" aria-labelledby="vendor-guardrails-title">
+        <h2 id="vendor-guardrails-title">Vendor Guardrails &amp; Ownership</h2>
+        <p>Sutton retains full ownership of municipal data, configurations, and workflows. Vendors operate within PublicLogic-defined guardrails to ensure municipal control, compliance, and portability.</p>
+        <ul>
+          <li>Data ownership clauses specify that all records, configurations, and audit evidence belong to the Town of Sutton.</li>
+          <li>Export paths include scheduled VAULT™ package exports (JSON, CSV, PDF/A) and on-demand API pulls.</li>
+          <li>Vendor success criteria: timely support responses, adherence to zero-trust requirements, collaborative participation in quarterly governance councils.</li>
+          <li>Transition planning: if services migrate, PublicLogic provides exit playbooks, VAULT™ retention carryover scripts, and ARCHIEVE™ evidence transfer instructions.</li>
+        </ul>
+      </section>
+
+      <section id="appendices" aria-labelledby="appendices-title">
+        <h2 id="appendices-title">Appendices (Field Dictionary, API, Risk, DR, Change Log)</h2>
+        <details open>
+          <summary>Field Dictionary</summary>
+          <table>
+            <caption>Field Dictionary (Excerpt)</caption>
+            <thead>
+              <tr>
+                <th scope="col">Field Name</th>
+                <th scope="col">Type</th>
+                <th scope="col">Required</th>
+                <th scope="col">Validation</th>
+                <th scope="col">Source System</th>
+                <th scope="col">Retention Policy</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>requestId</td>
+                <td>UUID</td>
+                <td>Yes</td>
+                <td>UUIDv4</td>
+                <td>Polimorphic Portal</td>
+                <td>VAULT-RULE-SERVICE-02</td>
+              </tr>
+              <tr>
+                <td>archieveEvidenceId</td>
+                <td>String</td>
+                <td>Yes</td>
+                <td>Hash format SHA-512</td>
+                <td>ARCHIEVE™</td>
+                <td>Permanent evidence</td>
+              </tr>
+              <tr>
+                <td>slaTargetHours</td>
+                <td>Integer</td>
+                <td>Yes</td>
+                <td>&gt; 0</td>
+                <td>SuttonFIX</td>
+                <td>VAULT-RULE-SLA-02</td>
+              </tr>
+              <tr>
+                <td>departmentCode</td>
+                <td>String</td>
+                <td>Yes</td>
+                <td>Pattern <code>[A-Z]{2,6}</code></td>
+                <td>HRIS / Munis</td>
+                <td>VAULT-RULE-GOV-03</td>
+              </tr>
+              <tr>
+                <td>geoParcelId</td>
+                <td>String</td>
+                <td>No</td>
+                <td>MassGIS Parcel ID format</td>
+                <td>GIS Adapter</td>
+                <td>Inherits parent case</td>
+              </tr>
+              <tr>
+                <td>legalHoldFlag</td>
+                <td>Boolean</td>
+                <td>Yes</td>
+                <td>True/False</td>
+                <td>VAULT™</td>
+                <td>Persistent until release</td>
+              </tr>
+            </tbody>
+          </table>
+        </details>
+        <details>
+          <summary>API Contract Examples</summary>
+          <pre>{
+  "endpoint": "POST https://api.publiclogic.com/suttonfix/issues",
+  "request": {
+    "summary": "Streetlight out near Town Hall",
+    "category": "facilities",
+    "channel": "web",
+    "location": {
+      "address": "4 Uxbridge Road, Sutton, MA",
+      "parcelId": "SUTT-123-456",
+      "coordinates": [-71.763, 42.150]
+    },
+    "attachments": [
+      "https://media.publiclogic.com/uploads/streetlight.jpg"
+    ],
+    "retentionPolicy": "VAULT-RULE-2024-03"
+  },
+  "response": {
+    "issueId": "9c2a217a-9a4d-4e2a-8c1e-6f6a8f8c1234",
+    "status": "queued",
+    "archieveEvidenceId": "ARCHIEVE-ISSUE-2025-00045",
+    "sla": {
+      "responseHours": 4,
+      "resolutionHours": 48
+    }
+  }
+}
+---
+{
+  "endpoint": "PATCH https://api.publiclogic.com/suttonclerk/licenses/{licenseId}",
+  "request": {
+    "status": "approved",
+    "decisionDate": "2025-10-15T18:45:00-04:00",
+    "archieveEvidenceId": "ARCHIEVE-LIC-2025-0089",
+    "retentionPolicy": "VAULT-RULE-CLERK-01"
+  },
+  "response": {
+    "licenseId": "af3b2d4c-9c44-4c5f-9d77-3a6f88765432",
+    "status": "approved",
+    "nextReview": "2026-10-01",
+    "documentUrl": "https://vault.publiclogic.com/licenses/af3b2d4c-9c44.pdf"
+  }
+}
+</pre>
+        </details>
+        <details>
+          <summary>Risk Register (Expanded)</summary>
+          <table>
+            <caption>Detailed Risk Register</caption>
+            <thead>
+              <tr>
+                <th scope="col">Risk</th>
+                <th scope="col">Likelihood</th>
+                <th scope="col">Impact</th>
+                <th scope="col">Mitigation</th>
+                <th scope="col">Owner</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Vendor resource turnover</td>
+                <td>Low</td>
+                <td>Medium</td>
+                <td>Cross-train vendor staff, maintain runbooks in VAULT™, require 30-day transition notices.</td>
+                <td>Vendor Success Lead</td>
+              </tr>
+              <tr>
+                <td>Regulatory changes (state retention schedules)</td>
+                <td>Medium</td>
+                <td>Medium</td>
+                <td>Quarterly legal review, VAULT™ policy update workflow, ARCHIEVE™ audit confirmation.</td>
+                <td>Records Access Officer</td>
+              </tr>
+              <tr>
+                <td>Resident adoption lag</td>
+                <td>Medium</td>
+                <td>Medium</td>
+                <td>Targeted outreach, translation partnerships, mobile-first enhancements.</td>
+                <td>Communications Director</td>
+              </tr>
+            </tbody>
+          </table>
+        </details>
+        <details>
+          <summary>Continuity / DR Runbook Summary</summary>
+          <ul>
+            <li>Trigger conditions: outage exceeding 15 minutes, data integrity alert, cyber incident declaration.</li>
+            <li>Immediate actions: engage incident command, activate communication plan, freeze non-essential changes.</li>
+            <li>Failover steps: promote secondary cluster, reissue DNS, verify VAULT™ metadata integrity, confirm ARCHIEVE™ evidence synchronization.</li>
+            <li>Recovery validation: execute smoke tests, review audit logs, notify stakeholders, file after-action report within 72 hours.</li>
+          </ul>
+        </details>
+        <details>
+          <summary>Change Log Reference</summary>
+          <p>All updates to this blueprint are tracked in VAULT™ with ARCHIEVE™ evidence packages. Municipal leadership approves revisions through quarterly governance councils.</p>
+        </details>
+      </section>
+    </main>
+  </div>
+  <footer role="contentinfo">
+    <p>IP Notice: PublicLogic™, VAULT™, and ARCHIEVE™ are trademarks of PublicLogic. Concepts are presented at a high level to protect proprietary methods. Municipalities retain ownership of data, configurations, and workflows. Do not reproduce mechanics of VAULT/ARCHIEVE.</p>
+    <p>Prepared by Nathan Boudreau, MPA, MCPPO • PublicLogic™ / Town of Hubbardston, MA • Generated September 27, 2025 (America/New_York)</p>
+  </footer>
+</body>
+</html>
