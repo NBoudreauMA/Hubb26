@@ -2,781 +2,174 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Polimorphic Final Technical Piece — [MUNICIPALITY_NAME] (Confirm with municipality)</title>
+  <title>Polimorphic Comprehensive Technical Site — Sutton Deployment</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docVersion" content="v2.0" />
+  <meta name="lastReviewedBy" content="Nathan Boudreau, MPA, MCPPO" />
+  <meta name="reviewDate" content="2025-09-27" />
   <style>
-    :root {
-      --bg: #f7f9fb;
-      --surface: #ffffff;
-      --accent: #0b5c4d;
-      --accent-muted: #128063;
-      --text: #1f2a30;
-      --muted-text: #4a5b63;
-      --border: #d7e1e6;
-      --table-stripe: #eef5f2;
-      --code-bg: #172b36;
-      --code-text: #e8f5f2;
-    }
-    body {
-      margin: 0;
-      font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-    }
-    header {
-      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-muted) 100%);
-      color: #fff;
-      padding: 3rem 1.5rem 2rem;
-      text-align: center;
-    }
-    header h1 {
-      margin: 0 0 0.5rem;
-      font-size: 2rem;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
-    header p {
-      margin: 0.25rem 0;
-      font-size: 1rem;
-    }
-    main {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 2rem 1.5rem 4rem;
-    }
-    h2 {
-      border-bottom: 3px solid var(--accent);
-      padding-bottom: 0.4rem;
-      margin-top: 2.5rem;
-      font-size: 1.6rem;
-    }
-    h3 {
-      margin-top: 1.75rem;
-      color: var(--accent);
-      font-size: 1.25rem;
-    }
-    h4 {
-      margin-top: 1.25rem;
-      font-size: 1.1rem;
-    }
-    ul {
-      padding-left: 1.2rem;
-    }
-    .section-intro {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 0.6rem;
-      padding: 1rem 1.25rem;
-      box-shadow: 0 6px 20px rgba(11, 92, 77, 0.08);
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 1.25rem 0;
-      background: var(--surface);
-      border: 1px solid var(--border);
-    }
-    table caption {
-      text-align: left;
-      font-weight: 600;
-      padding: 0.75rem 1rem;
-      background: rgba(11, 92, 77, 0.1);
-    }
-    table th,
-    table td {
-      border: 1px solid var(--border);
-      padding: 0.75rem 1rem;
-      text-align: left;
-      vertical-align: top;
-    }
-    table thead th {
-      background: var(--accent);
-      color: #fff;
-      font-weight: 600;
-    }
-    table tbody tr:nth-child(even) {
-      background: var(--table-stripe);
-    }
-    code, pre {
-      font-family: "Fira Code", "Source Code Pro", monospace;
-    }
-    pre {
-      background: var(--code-bg);
-      color: var(--code-text);
-      padding: 1rem 1.25rem;
-      border-radius: 0.5rem;
-      overflow-x: auto;
-      margin: 1rem 0 1.5rem;
-    }
-    .callout {
-      border-left: 6px solid var(--accent);
-      background: rgba(11, 92, 77, 0.12);
-      padding: 1rem 1.25rem;
-      border-radius: 0.6rem;
-      margin: 1.25rem 0;
-    }
-    footer {
-      background: #0c2f25;
-      color: #fff;
-      padding: 2rem 1.5rem;
-      text-align: center;
-      font-size: 0.9rem;
-    }
+    body { font-family: "Segoe UI", Helvetica, Arial, sans-serif; background: #f8fafc; color: #1e293b; line-height: 1.6; margin: 0; }
+    header { background: linear-gradient(135deg, #0b5c4d, #128063); color: #fff; padding: 2.5rem 1.5rem; text-align: center; }
+    header h1 { margin: 0 0 0.5rem; font-size: 2rem; letter-spacing: 0.05em; text-transform: uppercase; }
+    header p { margin: 0.25rem 0; font-size: 1rem; }
+    main { max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+    h2 { border-bottom: 3px solid #0b5c4d; padding-bottom: 0.3rem; margin-top: 2.5rem; font-size: 1.6rem; color: #0b5c4d; }
+    h3 { margin-top: 1.5rem; font-size: 1.25rem; color: #128063; }
+    h4 { margin-top: 1rem; font-size: 1.1rem; }
+    .callout { border-left: 6px solid #0b5c4d; background: #ecfdf5; padding: 1rem 1.25rem; border-radius: 0.5rem; margin: 1rem 0; }
+    table { width: 100%; border-collapse: collapse; margin: 1.25rem 0; background: #fff; border: 1px solid #cbd5e1; }
+    th, td { border: 1px solid #cbd5e1; padding: 0.75rem 1rem; text-align: left; vertical-align: top; }
+    thead th { background: #0b5c4d; color: #fff; }
+    tbody tr:nth-child(even) { background: #f1f5f9; }
+    pre { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; font-family: "Fira Code", monospace; }
+    footer { background: #0c2f25; color: #fff; padding: 2rem 1.5rem; text-align: center; font-size: 0.9rem; }
   </style>
 </head>
 <body>
   <header>
-    <p class="header-tag">CONFIDENTIAL – PUBLICLOGIC</p>
-    <h1>Polimorphic Final Technical Piece — [MUNICIPALITY_NAME] (Confirm with municipality)</h1>
-    <p>Author: Nathan Boudreau, MPA, MCPPO — Town Administrator (Hubbardston, MA) &amp; Founder, PublicLogic™</p>
-    <p>Audience: Polimorphic Engineering &amp; Delivery Leadership, Product, Solutions, Implementation Partners</p>
+    <p>CONFIDENTIAL – PUBLICLOGIC</p>
+    <h1>Polimorphic Comprehensive Technical Site — Sutton Deployment</h1>
+    <p>Prepared by Nathan Boudreau, MPA, MCPPO — Town Administrator (Hubbardston, MA) &amp; Founder, PublicLogic™</p>
   </header>
   <main>
-    <section id="executive-summary">
-      <h2>Executive Summary</h2>
-      <div class="section-intro">
-        <ul>
-          <li>Retention-by-design anchors every transaction across [CLERK_MODULE_NAME], [SERVICE_DESK_NAME], and [PERMIT_MODULE_NAME], binding policy identifiers and evidence packages for demonstrable compliance. (Confirm with municipality)</li>
-          <li>Scope includes workflow modernization, AI-informed intake, configurable exports (JSON/CSV/PDF-A), and zero-trust integrations that honor municipal ownership of data. (Confirm with municipality)</li>
-          <li>Delivery is sequenced over approximately 12 months with phased pilots, cross-training, and incremental capability unlocks. (Confirm with municipality)</li>
-          <li>Cost drivers concentrate around platform licensing, integration adapters to [ERP_NAME] (Confirm with municipality) and [GIS_NAME] (Confirm with municipality), and staff enablement activities.</li>
-          <li>Risk posture mitigated through VAULT™-backed retention enforcement, ARCHIEVE™ evidence trails, and shared accountability for security, accessibility, and public transparency.</li>
-        </ul>
-      </div>
-    </section>
-
-    <section id="problem-solution">
-      <h2>Problem → Solution Mapping</h2>
-      <table>
-        <caption>Pain Points and Mitigation Mechanisms</caption>
-        <thead>
-          <tr>
-            <th scope="col">Current-State Pain Point</th>
-            <th scope="col">Module Intervention</th>
-            <th scope="col">Mitigation Mechanism</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Fragmented records dispersed across shared drives, paper files, and inboxes.</td>
-            <td>[CLERK_MODULE_NAME] (Confirm with municipality)</td>
-            <td>Centralized records orchestration with retentionPolicy tagging, evidence manifests, and automated meeting lifecycle controls.</td>
-          </tr>
-          <tr>
-            <td>Manual service intake leading to SLA misses and limited visibility.</td>
-            <td>[SERVICE_DESK_NAME] (Confirm with municipality)</td>
-            <td>Guided resident intake, queue management, and SLA timers tied to VAULT policy IDs and escalations.</td>
-          </tr>
-          <tr>
-            <td>Permit review delays due to disjointed inspections and licensing workflows.</td>
-            <td>[PERMIT_MODULE_NAME] (Confirm with municipality)</td>
-            <td>Event-driven coordination with inspectors, integrated fee payments, and immutable ARCHIEVE evidence packages.</td>
-          </tr>
-          <tr>
-            <td>Spreadsheet-based compliance reporting with limited audit-readiness.</td>
-            <td>VAULT™ / ARCHIEVE™ Outcomes</td>
-            <td>Policy-as-code references, legal hold toggles, and export-ready evidence receipts aligned to statutory retention schedules.</td>
-          </tr>
-          <tr>
-            <td>Staff onboarding fatigue and change resistance across departments.</td>
-            <td>Training &amp; Governance Enablement</td>
-            <td>Role-based playbooks, office hours, and acceptance criteria ensuring staff proficiency before cutover.</td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-
-    <section id="system-architecture">
-      <h2>System Architecture</h2>
-      <p>The platform is delivered as an event-driven mesh where the Polimorphic resident portal feeds structured requests into a workflow layer spanning [CLERK_MODULE_NAME], [SERVICE_DESK_NAME], and [PERMIT_MODULE_NAME]. VAULT™ outcomes apply policy IDs, legal hold flags, and retention timelines; ARCHIEVE™ outcomes generate immutable evidence packages. Adapter services connect to [ERP_NAME] (Confirm with municipality), [GIS_NAME] (Confirm with municipality), payments, and Microsoft 365 while audit/reporting services expose filtered exports without duplicating source-of-truth records.</p>
-      <div class="callout" role="note" aria-label="Architecture Diagram Caption">
-        <strong>Diagram (textual):</strong> Resident Portal → Workflow Orchestrator → VAULT™ Outcome Layer → ARCHIEVE™ Evidence Layer → Integration Adapters (ERP/GIS/Payments/O365/Audit) → Reporting &amp; Exports.
-      </div>
-    </section>
-
-    <section id="data-model">
-      <h2>Data Model &amp; Field Dictionary (Excerpt)</h2>
-      <p>Core entities share consistent identifiers so every action can reference retentionPolicy values and archieveEvidenceId artifacts where applicable.</p>
-      <table>
-        <caption>Entity Overview</caption>
-        <thead>
-          <tr>
-            <th scope="col">Entity</th>
-            <th scope="col">Key Fields</th>
-            <th scope="col">Purpose</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Request</td>
-            <td>requestId, residentId, retentionPolicy, archieveEvidenceId, legalHoldFlag</td>
-            <td>Captures intake metadata for public records, service tickets, or permits.</td>
-          </tr>
-          <tr>
-            <td>Case</td>
-            <td>caseId, module, assignedDepartment, status, slaClockStart, retentionPolicy</td>
-            <td>Tracks lifecycle of complex workflows with SLA checkpoints.</td>
-          </tr>
-          <tr>
-            <td>Task</td>
-            <td>taskId, caseId, assignee, dueDate, evidenceRequired</td>
-            <td>Operational work units tied to case milestones and evidence capture.</td>
-          </tr>
-          <tr>
-            <td>Document</td>
-            <td>documentId, requestId, fileType, checksum, archieveEvidenceId</td>
-            <td>Stores references to controlled documents with integrity verifications.</td>
-          </tr>
-          <tr>
-            <td>RetentionRule</td>
-            <td>policyId, triggerEvent, duration, disposition, legalHoldToggle</td>
-            <td>Defines governance parameters for VAULT™ outcomes.</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <table>
-        <caption>Field Dictionary Excerpt</caption>
-        <thead>
-          <tr>
-            <th scope="col">Field</th>
-            <th scope="col">Type</th>
-            <th scope="col">Required</th>
-            <th scope="col">Validation</th>
-            <th scope="col">Source System</th>
-            <th scope="col">Retention</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>requestId</td>
-            <td>UUID</td>
-            <td>Yes</td>
-            <td>Format: uuid4</td>
-            <td>Polimorphic Workflow Core</td>
-            <td>Lifecycle of associated case</td>
-          </tr>
-          <tr>
-            <td>retentionPolicy</td>
-            <td>String</td>
-            <td>Yes</td>
-            <td>Pattern: VAULT-RULE-[A-Z]+-[0-9]+</td>
-            <td>Assigned by VAULT™ outcomes</td>
-            <td>Per policy duration</td>
-          </tr>
-          <tr>
-            <td>archieveEvidenceId</td>
-            <td>String</td>
-            <td>Conditional</td>
-            <td>Pattern: ARCHIEVE-EVID-[0-9A-Z]{8}</td>
-            <td>ARCHIEVE™ outcome package</td>
-            <td>Immutable evidence; permanent</td>
-          </tr>
-          <tr>
-            <td>legalHoldFlag</td>
-            <td>Boolean</td>
-            <td>No</td>
-            <td>True when legal hold active</td>
-            <td>VAULT™ outcomes</td>
-            <td>Hold until released</td>
-          </tr>
-          <tr>
-            <td>slaClockStart</td>
-            <td>DateTime</td>
-            <td>Yes</td>
-            <td>ISO 8601, timezone America/New_York</td>
-            <td>Workflow Engine</td>
-            <td>Audit trail per statute</td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-
-    <section id="workflows">
-      <h2>Workflows (SOP-Ready)</h2>
-      <h3>[CLERK_MODULE_NAME] Workflow (Confirm with municipality)</h3>
+    <section id="overview">
+      <h2>Executive Technical Overview</h2>
+      <p>This site consolidates blueprint, integration, compliance, and operational specifications for Sutton’s deployment of the Polimorphic platform with PublicLogic’s VAULT™ and ARCHIEVE™ frameworks.</p>
       <ul>
-        <li><strong>Trigger:</strong> Resident submits meeting agenda or public records request via portal.</li>
-        <li><strong>SLA Clock:</strong> Starts at submission; target response within [SLA_PRR_HRS] hours (Confirm with municipality).</li>
-        <li><strong>Escalation:</strong> If no action within [SLA_PRR_HRS] hours, escalate to Town Clerk and Town Counsel.</li>
-        <li><strong>Notifications:</strong> Acknowledgment email/SMS to resident; internal alert to records team; legal hold banner if initiated.</li>
-        <li><strong>Evidence Checkpoints:</strong> Agenda approvals, meeting minutes upload, archieveEvidenceId recorded after ARCHIEVE™ capture.</li>
-      </ul>
-      <pre><code>workflow:
-  name: clerk_public_record
-  trigger: resident_submission
-  sla:
-    targetHours: [SLA_PRR_HRS]  # Confirm with municipality
-    escalation: clerk_office
-  steps:
-    - id: intake_validation
-      actions:
-        - verify_required_fields
-        - assign_retention_policy
-    - id: records_assignment
-      actions:
-        - notify_records_coordinator
-        - set_legal_hold_flag: conditional
-    - id: response_delivery
-      actions:
-        - compile_response_package
-        - attach_archieveEvidenceId
-        - send_response_notice
-</code></pre>
-
-      <h3>[SERVICE_DESK_NAME] Workflow (Confirm with municipality)</h3>
-      <ul>
-        <li><strong>Trigger:</strong> Resident or staff logs service issue via portal or hotline.</li>
-        <li><strong>SLA Clock:</strong> Begins upon classification; pauses when resident input required.</li>
-        <li><strong>Escalation:</strong> If pending beyond [SLA_SERVICE_HRS] hours (Confirm with municipality), escalate to Department Lead and DPW Supervisor.</li>
-        <li><strong>Notifications:</strong> Status updates at assignment, dispatch, resolution; archival notice when evidence stored.</li>
-        <li><strong>Evidence Checkpoints:</strong> Before/after photos, crew log upload, archieveEvidenceId inserted into case history.</li>
-      </ul>
-      <pre><code>workflow:
-  name: service_request_lifecycle
-  trigger: intake_classified
-  sla:
-    targetHours: [SLA_SERVICE_HRS]  # Confirm with municipality
-    pauseConditions:
-      - awaiting_resident_info
-    escalation: dpw_supervisor
-  steps:
-    - id: schedule_dispatch
-      actions:
-        - route_to_department
-        - confirm_equipment
-    - id: field_work
-      actions:
-        - capture_before_after_photos
-        - update_task_status
-    - id: quality_closeout
-      actions:
-        - verify_completion
-        - archive_evidence_package
-        - notify_resident_completion
-</code></pre>
-
-      <h3>[PERMIT_MODULE_NAME] Workflow (Confirm with municipality)</h3>
-      <ul>
-        <li><strong>Trigger:</strong> Applicant submits permit with required documents and fee.</li>
-        <li><strong>SLA Clock:</strong> Starts on payment confirmation; pauses during applicant revisions or inspections pending.</li>
-        <li><strong>Escalation:</strong> Automatic escalation to Building Commissioner at [PERMIT_ESCALATION_DAYS] days (Confirm with municipality) with legal review if flagged.</li>
-        <li><strong>Notifications:</strong> Submission receipt, review status changes, inspection scheduling alerts, approval/denial letter.</li>
-        <li><strong>Evidence Checkpoints:</strong> Inspection reports, licensing certificates, archieveEvidenceId appended to permit record.</li>
-      </ul>
-      <pre><code>workflow:
-  name: permit_full_cycle
-  trigger: payment_confirmed
-  sla:
-    targetDays: [PERMIT_DECISION_DAYS]  # Confirm with municipality
-    pauseConditions:
-      - applicant_revision_requested
-      - inspection_pending
-    escalation: building_commissioner
-  steps:
-    - id: completeness_review
-      actions:
-        - validate_documents
-        - assign_retention_policy
-    - id: multi_department_review
-      actions:
-        - route_to_fire_inspection
-        - route_to_health_inspection
-    - id: decision_and_issue
-      actions:
-        - finalize_decision
-        - issue_certificate
-        - record_archieveEvidenceId
-</code></pre>
-    </section>
-
-    <section id="compliance-risk">
-      <h2>Compliance &amp; Risk</h2>
-      <table>
-        <caption>Compliance Matrix</caption>
-        <thead>
-          <tr>
-            <th scope="col">Requirement</th>
-            <th scope="col">Control / Process</th>
-            <th scope="col">Evidence / Log</th>
-            <th scope="col">Owner</th>
-            <th scope="col">Retention</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>M.G.L. c.30A (Open Meeting Law)</td>
-            <td>Agenda/minute publishing workflow in [CLERK_MODULE_NAME] (Confirm with municipality)</td>
-            <td>archieveEvidenceId linked to meeting record; public posting logs</td>
-            <td>Town Clerk</td>
-            <td>Per VAULT-RULE-AGENDA-## policy</td>
-          </tr>
-          <tr>
-            <td>M.G.L. c.66 §10 (Public Records)</td>
-            <td>PRR intake queue with statutory response timers</td>
-            <td>Retention audit log, response package receipts, legal hold banner history</td>
-            <td>Records Access Officer</td>
-            <td>VAULT-RULE-PRR-06 duration</td>
-          </tr>
-          <tr>
-            <td>M.G.L. c.140 / c.138 (Licensing)</td>
-            <td>Permit module licensing workflow with fee ledger sync</td>
-            <td>Permit decision log, payment reconciliation, evidence manifest</td>
-            <td>Licensing Authority</td>
-            <td>VAULT-RULE-LIC-## duration</td>
-          </tr>
-          <tr>
-            <td>M.G.L. c.143 (Inspections)</td>
-            <td>Inspection scheduling, fail/pass recording, cross-department review</td>
-            <td>Inspection reports, inspector sign-off with archieveEvidenceId</td>
-            <td>Building Department</td>
-            <td>VAULT-RULE-INSP-## duration</td>
-          </tr>
-          <tr>
-            <td>M.G.L. c.40 §§6C–6D (Roads/Private Ways)</td>
-            <td>Service desk workflow for roadway maintenance requests</td>
-            <td>Work order history, crew logs, photo evidence packages</td>
-            <td>DPW</td>
-            <td>VAULT-RULE-SR-## duration</td>
-          </tr>
-          <tr>
-            <td>201 CMR 17.00 (Data Security)</td>
-            <td>Role-based access, encryption, access review cadence</td>
-            <td>Access logs, security incident runbook, quarterly attestations</td>
-            <td>IT Director</td>
-            <td>Per security retention schedule</td>
-          </tr>
-          <tr>
-            <td>ADA Title II</td>
-            <td>Accessible forms, translation posture, assistive tech compatibility</td>
-            <td>WCAG audit logs, accommodation request tracking</td>
-            <td>ADA Coordinator</td>
-            <td>VAULT-RULE-ADA-## duration</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <h3>Risk Register</h3>
-      <table>
-        <caption>Risk Register Summary</caption>
-        <thead>
-          <tr>
-            <th scope="col">Risk</th>
-            <th scope="col">Likelihood</th>
-            <th scope="col">Impact</th>
-            <th scope="col">Mitigation</th>
-            <th scope="col">Owner</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Legacy data migration gaps</td>
-            <td>Medium</td>
-            <td>High</td>
-            <td>Pilot migrations with checksum verification and retentionPolicy mapping workshops.</td>
-            <td>IT Director</td>
-          </tr>
-          <tr>
-            <td>Model drift in AI assisted triage</td>
-            <td>Medium</td>
-            <td>Medium</td>
-            <td>Quarterly model review, human-in-the-loop overrides, bias monitoring playbooks.</td>
-            <td>Polimorphic AI Lead</td>
-          </tr>
-          <tr>
-            <td>Funding shortfall mid-implementation</td>
-            <td>Low</td>
-            <td>High</td>
-            <td>Align milestones to grant reimbursement windows and maintain contingency budget.</td>
-            <td>Town Administrator</td>
-          </tr>
-          <tr>
-            <td>Change fatigue among staff</td>
-            <td>Medium</td>
-            <td>Medium</td>
-            <td>Staggered training, office hours, peer champions, and measurable proficiency checks.</td>
-            <td>Department Heads</td>
-          </tr>
-          <tr>
-            <td>Cyber incident targeting integrations</td>
-            <td>Low</td>
-            <td>High</td>
-            <td>Zero-trust adapter design, MFA, incident response tabletop exercises.</td>
-            <td>Security Officer</td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-
-    <section id="security">
-      <h2>Security, Privacy &amp; Retention</h2>
-      <ul>
-        <li><strong>Role-Based Access:</strong> Least privilege roles spanning Clerk, DPW, Inspectional Services, Finance, Vendor Support, each mapped to specific workflows and export capabilities.</li>
-        <li><strong>Encryption:</strong> TLS 1.2+ for all transport channels; AES-256-backed storage with secret rotation aligned to 201 CMR 17.00 guidance.</li>
-        <li><strong>Logging &amp; Redaction:</strong> Immutable audit logs with redact-once workflows for sensitive data, maintaining archieveEvidenceId continuity.</li>
-        <li><strong>Legal Holds:</strong> Authorized by Town Counsel; banners applied; retention clock paused until dual acknowledgement release recorded.</li>
-      </ul>
-      <pre><code># Illustrative deployment label pattern (no internal endpoints)
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: workflow-engine
-  labels:
-    app: polimorphic-workflow
-    retention.policy: VAULT-RULE-CORE-01
-spec:
-  template:
-    metadata:
-      annotations:
-        vault.policyBinding: "retentionPolicy=VAULT-RULE-CORE-01"
-    spec:
-      containers:
-        - name: workflow
-          image: [CONTAINER_IMAGE]  # Confirm with municipality
-          envFrom:
-            - secretRef:
-                name: workflow-secrets
-</code></pre>
-    </section>
-
-    <section id="implementation">
-      <h2>Implementation Plan (Phases, RACI, Training)</h2>
-      <h3>Phased Timeline (~12 Months)</h3>
-      <table>
-        <caption>Phased Delivery Plan</caption>
-        <thead>
-          <tr>
-            <th scope="col">Phase</th>
-            <th scope="col">Focus</th>
-            <th scope="col">Definition of Done</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Pilot</td>
-            <td>Deploy [CLERK_MODULE_NAME] core features, PRR intake, initial integrations with [ERP_NAME] (Confirm with municipality).</td>
-            <td>Records staff trained; retentionPolicy tags validated; initial exports tested.</td>
-          </tr>
-          <tr>
-            <td>Expand</td>
-            <td>Roll out [SERVICE_DESK_NAME], integrate GIS/payments, activate AI triage with human oversight.</td>
-            <td>SLA dashboards live; archieveEvidenceId referenced in 90% of service closures; staff proficiency ≥85%.</td>
-          </tr>
-          <tr>
-            <td>Institutionalize</td>
-            <td>Launch [PERMIT_MODULE_NAME], finalize change management, document SOPs, and conduct continuity drills.</td>
-            <td>All modules on VAULT policies; legal hold process exercised; DR test completed with evidence package.</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <h3>RACI</h3>
-      <table>
-        <caption>Governance RACI</caption>
-        <thead>
-          <tr>
-            <th scope="col">Activity</th>
-            <th scope="col">Town Administrator</th>
-            <th scope="col">Clerk</th>
-            <th scope="col">IT Director</th>
-            <th scope="col">Department Leads</th>
-            <th scope="col">Polimorphic</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Strategic Alignment</td>
-            <td>R</td>
-            <td>C</td>
-            <td>A</td>
-            <td>C</td>
-            <td>I</td>
-          </tr>
-          <tr>
-            <td>Data Migration &amp; Retention Mapping</td>
-            <td>A</td>
-            <td>R</td>
-            <td>C</td>
-            <td>I</td>
-            <td>R</td>
-          </tr>
-          <tr>
-            <td>AI Configuration &amp; Tuning</td>
-            <td>I</td>
-            <td>C</td>
-            <td>R</td>
-            <td>C</td>
-            <td>A</td>
-          </tr>
-          <tr>
-            <td>Security &amp; Access Reviews</td>
-            <td>C</td>
-            <td>I</td>
-            <td>R</td>
-            <td>C</td>
-            <td>A</td>
-          </tr>
-          <tr>
-            <td>Training &amp; Change Management</td>
-            <td>A</td>
-            <td>R</td>
-            <td>C</td>
-            <td>R</td>
-            <td>C</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <h3>Training Plan</h3>
-      <ul>
-        <li>Milestones: onboarding modules, mid-phase refresher, capstone certification for power users.</li>
-        <li>Artifacts: quick reference guides, recorded walkthroughs, scenario-based labs.</li>
-        <li>Office Hours: weekly for first two months of each phase, then monthly.</li>
-        <li>Acceptance Criteria: staff complete proficiency checklist with ≥85% score and demonstrate evidence export workflow.</li>
+        <li><strong>Modules:</strong> SuttonCLERK, SuttonFIX, PERMIT (Sutton)</li>
+        <li><strong>Core Tenets:</strong> Compliance by construction, event-driven truth, modular autonomy.</li>
+        <li><strong>Stack:</strong> Azure Gov, AKS, Istio, Node/Nest, Postgres, Redis, Elasticsearch, React/TS.</li>
+        <li><strong>ROI:</strong> ≥$75k savings by FY27, 30–40% fewer staff interruptions, 100% PRR compliance.</li>
       </ul>
     </section>
 
-    <section id="funding">
-      <h2>Funding &amp; ROI</h2>
-      <table>
-        <caption>Grant Alignment and Evidence</caption>
-        <thead>
-          <tr>
-            <th scope="col">Program</th>
-            <th scope="col">Alignment</th>
-            <th scope="col">Evidence Output</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Community Compact</td>
-            <td>Supports modernization of municipal service delivery and transparency.</td>
-            <td>Quarterly export manifest (JSON/CSV) with retentionPolicy metrics.</td>
-          </tr>
-          <tr>
-            <td>One Stop for Growth</td>
-            <td>Accelerates development review and permitting.</td>
-            <td>Permit cycle analytics with archieveEvidenceId references.</td>
-          </tr>
-          <tr>
-            <td>MassWorks</td>
-            <td>Infrastructure coordination enabled by service desk and inspections.</td>
-            <td>Project status dashboards, evidence packages for field work.</td>
-          </tr>
-          <tr>
-            <td>LRPIP</td>
-            <td>Long-range planning data through integrated GIS overlays.</td>
-            <td>GIS-layered exports with retention tags and checksum receipts.</td>
-          </tr>
-          <tr>
-            <td>Shared Services</td>
-            <td>Cross-town collaboration potential via modular workflows.</td>
-            <td>Inter-municipal reporting bundles, export-ready binder (PDF-A).</td>
-          </tr>
-        </tbody>
-      </table>
-      <h3>Cost / Benefit Summary</h3>
+    <section id="architecture">
+      <h2>Foundational Architecture</h2>
+      <div class="callout">Residents → Polimorphic UI/AI → VAULT™/ARCHIEVE™ → Integrations (ERP, GIS, State) → Immutable Archive</div>
+      <h3>Design Principles</h3>
       <ul>
-        <li><strong>Cost Drivers:</strong> Platform subscription, integration development, change management staffing, accessibility validation.</li>
-        <li><strong>Operational Benefits:</strong> Reduced manual processing, automated retention enforcement, measurable SLA adherence.</li>
-        <li><strong>Compliance Benefits:</strong> Legal hold governance, evidence-ready exports, statute-aligned audit trails.</li>
-        <li><strong>Resident Impact:</strong> Faster response times, transparent status tracking, accessible engagement channels.</li>
+        <li>Least Privilege (RBAC + ABAC), scoped tokens.</li>
+        <li>Idempotent writes with keys; schema evolution with compatibility tests.</li>
+        <li>Fail-safe defaults — block non-compliant transitions; legal holds honored.</li>
+        <li>Golden signals and business SLOs tied to compliance timers.</li>
       </ul>
     </section>
 
-    <section id="vendor-guardrails">
-      <h2>Vendor Guardrails &amp; Ownership</h2>
+    <section id="tech-stack">
+      <h2>Technical Stack & Microservices</h2>
+      <table>
+        <thead><tr><th>Layer</th><th>Components</th></tr></thead>
+        <tbody>
+          <tr><td>Infrastructure</td><td>Azure Gov, AKS, Istio, Key Vault, cert-manager</td></tr>
+          <tr><td>Runtime</td><td>Node/Nest, Camunda, RabbitMQ, Redis</td></tr>
+          <tr><td>Data</td><td>Postgres+Timescale, Blob storage, Vector DB</td></tr>
+          <tr><td>AI</td><td>Azure OpenAI, embeddings, speech/vision, MLOps</td></tr>
+          <tr><td>Frontend</td><td>React/TS, React Aria, React Native</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="modules">
+      <h2>Module Implementations</h2>
+      <h3>SuttonCLERK</h3>
+      <p>Handles PRRs, OML agendas, licensing. Automated statutory clocks; immutable logs; redaction manifests. Integrated with CivicPlus and City Hall Systems.</p>
+      <h3>SuttonFIX</h3>
+      <p>DPW service desk. SLA-driven workflows; geo-tagged evidence; integration with MassGIS/CAI for validation.</p>
+      <h3>PERMIT (Sutton)</h3>
+      <p>Inspections &amp; building permits. Workflow-driven approvals; integration with OpenGov/ViewPoint and VGSI Vision for property validation.</p>
+    </section>
+
+    <section id="compliance">
+      <h2>Compliance & Security Architecture</h2>
+      <h3>Frameworks</h3>
       <ul>
-        <li>Municipality retains ownership of data, configurations, and workflows; vendors operate within municipal guardrails.</li>
-        <li>Export paths available in JSON, CSV, and PDF-A with checksum validation and export manifests.</li>
-        <li>Transition planning includes knowledge transfer, runbooks, and escrowed configuration bundles.</li>
-        <li>Vendor success criteria: meet SLA targets, sustain retention compliance, support accessibility commitments, and provide transparent release notes.</li>
+        <li>201 CMR 17.00 (Data Security)</li>
+        <li>M.G.L. c.66 (Public Records), c.30A (Open Meeting Law)</li>
+        <li>ADA Title II, WCAG 2.1 AA</li>
+        <li>NIST SP 800-53 alignment</li>
+      </ul>
+      <h3>Controls</h3>
+      <ul>
+        <li>Layered security: WAF, IDS/IPS, container scanning, patch automation.</li>
+        <li>OAuth2 API auth; MFA; SIEM monitoring; incident response ≤2h.</li>
+        <li>Audit-ready exports; immutable logs signed & chained.</li>
+      </ul>
+    </section>
+
+    <section id="integration">
+      <h2>Integration Architecture</h2>
+      <h3>Financial Systems</h3>
+      <p>VADAR/MUNIS integration for payment and ledger posting; daily CSV fallback.</p>
+      <h3>GIS</h3>
+      <p>ArcGIS/CAI validation for parcels, work zones, and routing.</p>
+      <h3>Other Systems</h3>
+      <ul>
+        <li>Microsoft 365 (email, SharePoint storage)</li>
+        <li>CivicPlus (agenda posting, notices)</li>
+        <li>RVRS, VRIS (state systems)</li>
+      </ul>
+    </section>
+
+    <section id="ai">
+      <h2>AI & Automation Framework</h2>
+      <ul>
+        <li>AI Copilot for staff support (search, drafting, compliance alerts).</li>
+        <li>Predictive alerts for SLA breaches; anomaly detection.</li>
+        <li>Limited autonomy for renewals and routine DPW tasks with human-in-loop safeguards.</li>
+      </ul>
+    </section>
+
+    <section id="deployment">
+      <h2>Infrastructure & Deployment</h2>
+      <ul>
+        <li>Environments: dev, test/UAT, prod — all changes ticketed and approved.</li>
+        <li>Helm chart deployment with semantic versioning.</li>
+        <li>Backup: hourly incrementals, daily fulls; RPO ≤1h, RTO ≤4h.</li>
+      </ul>
+    </section>
+
+    <section id="methodology">
+      <h2>Implementation Methodology</h2>
+      <p>Year-long phased rollout: pilot (PRR + DPW), expand (PERMIT + integrations), institutionalize (cross-training, DR, regional expansion). Governance council reviews monthly.</p>
+    </section>
+
+    <section id="metrics">
+      <h2>Success Metrics & ROI</h2>
+      <ul>
+        <li>≥99.9% uptime SLA; ≤300ms p95 API latency.</li>
+        <li>≥90% SLA compliance; ≥80% staff proficiency within 6 months.</li>
+        <li>≥$75k financial ROI by FY27; ≥20% PRR handling time reduction.</li>
       </ul>
     </section>
 
     <section id="appendices">
       <h2>Appendices</h2>
-      <h3>Retention Policy Stubs</h3>
-      <pre><code>policy:
-  id: VAULT-RULE-PRR-06
-  appliesTo: PublicRecordsRequest
-  trigger: case_closed
-  duration: 6y
-  disposition: export+destroy_with_certificate
-  legalHoldToggle: supported
-  evidenceBinding: archieveEvidenceId
-
-policy:
-  id: VAULT-RULE-LIC-04
-  appliesTo: LicensingRecord
-  trigger: license_expired
-  duration: [LICENSING_DURATION_YEARS]y  # Confirm with municipality
-  disposition: export_to_finance+destroy_with_certificate
-  legalHoldToggle: supported
-  evidenceBinding: archieveEvidenceId
-
-policy:
-  id: VAULT-RULE-SR-03
-  appliesTo: ServiceRequest
-  trigger: work_order_closed
-  duration: [SERVICE_DURATION_YEARS]y  # Confirm with municipality
-  disposition: retain_active_archive
-  legalHoldToggle: supported
-  evidenceBinding: archieveEvidenceId
-</code></pre>
-
-      <h3>API Contract Examples</h3>
-      <pre><code>{
-  "endpoint": "/api/v1/requests",
-  "method": "POST",
-  "payload": {
-    "requestId": "uuid",
-    "module": "[CLERK_MODULE_NAME]",  # Confirm with municipality
-    "submissionTimestamp": "2024-01-01T09:30:00-05:00",
-    "retentionPolicy": "VAULT-RULE-PRR-06",
-    "legalHoldFlag": false,
-    "attachments": [
-      {
-        "documentId": "uuid",
-        "archieveEvidenceId": null
-      }
-    ]
-  },
-  "response": {
-    "requestId": "uuid",
-    "status": "Received",
-    "archieveEvidenceId": null,
-    "slaDeadline": "2024-01-04T09:30:00-05:00"
-  }
-}
-</code></pre>
-      <pre><code>{
-  "endpoint": "/api/v1/documents/{documentId}",
-  "method": "PUT",
-  "payload": {
-    "archieveEvidenceId": "ARCHIEVE-EVID-1A2B3C4D",
-    "checksum": "sha256:...",
-    "retentionPolicy": "VAULT-RULE-SR-03"
-  },
-  "response": {
-    "documentId": "uuid",
-    "archieveEvidenceId": "ARCHIEVE-EVID-1A2B3C4D",
-    "exportReceipt": "https://[DOMAIN]/exports/ARCHIEVE-EVID-1A2B3C4D.pdfa"
-  }
-}
-</code></pre>
-
-      <h3>Disaster Recovery Note</h3>
-      <p>Quarterly continuity exercises validate backup restores, failover of workflow services, and re-application of retention policies. Evidence packages remain immutable and are cross-verified via checksum before resuming operations.</p>
-
-      <h3>Change-Log Convention</h3>
-      <p>All configuration changes recorded in a shared changelog with timestamps, responsible owner, policy references, and associated archieveEvidenceId for traceability.</p>
+      <h3>JSON Schemas</h3>
+      <pre>{
+  "caseId":"CLERK-2025-000123",
+  "department":"Clerk",
+  "type":"PUBLIC_RECORD_REQUEST",
+  "sla":{"ackDue":"2025-10-05T21:00:00Z"},
+  "retention":{"code":"3Y","legalBasis":"M.G.L. c.66"},
+  "auditRef":"AUD-abc123"
+}</pre>
+      <h3>Sample API</h3>
+      <pre>POST /api/v1/cases
+Payload: {"department": "Clerk", "type": "PUBLIC_RECORD", "requester": {"name": "Jane Doe"}}
+Response: {"caseId": "CLERK-2025-001", "status": "OPEN"}</pre>
+      <h3>Retention Map</h3>
+      <table>
+        <thead><tr><th>Record Type</th><th>Duration</th><th>Disposition</th></tr></thead>
+        <tbody>
+          <tr><td>PRR</td><td>3Y</td><td>Archive/Destroy</td></tr>
+          <tr><td>Vital Records</td><td>Permanent</td><td>Archive</td></tr>
+          <tr><td>DPW Tickets</td><td>7Y</td><td>Archive</td></tr>
+        </tbody>
+      </table>
     </section>
   </main>
   <footer>
-    <p>CONFIDENTIAL – PUBLICLOGIC</p>
-    <p>IP Notice: PublicLogic™, VAULT™, and ARCHIEVE™ are trademarks of PublicLogic. Concepts are presented at a high level to protect proprietary methods. Municipalities retain ownership of data, configurations, and workflows. Distribution is limited to authorized stakeholders under NDA.</p>
+    <p>PublicLogic™, VAULT™, and ARCHIEVE™ are trademarks of PublicLogic. Concepts are presented at a high level to protect proprietary methods; Sutton retains ownership of all data, configurations, and workflows.</p>
   </footer>
 </body>
 </html>
