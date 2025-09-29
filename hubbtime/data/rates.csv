@@ -1,0 +1,7 @@
+employee_id,code,rate_type,rate_value
+E001,REG,hourly,27.50
+E001,OT,hourly,41.25
+E002,REG,hourly,24.00
+E003,REG,hourly,21.75
+E005,REG,salary,86500
+E006,TRN,hourly,18.00
