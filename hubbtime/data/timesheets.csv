@@ -1,0 +1,7 @@
+timesheet_id,employee_id,pay_period_id,date,code,hours,notes,approved
+TS001,E001,PP2024-01,2024-05-13,REG,8.0,,yes
+TS002,E001,PP2024-01,2024-05-14,REG,7.5,Staff meeting,no
+TS003,E002,PP2024-01,2024-05-13,OT,2.0,Storm cleanup,yes
+TS004,E003,PP2024-01,2024-05-12,REG,6.5,Story hour prep,yes
+TS005,E005,PP2024-02,2024-05-20,REG,8.0,Payroll review,yes
+TS006,E006,PP2024-02,2024-05-21,TRN,4.0,Safety certification,no
