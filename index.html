@@ -1,656 +1,2407 @@
-/* =========================================================
-   HubbFISCAL · Global site scripts
-   - Mobile menu toggle
-   - Active link sync
-   - Quick search for module cards
-   - Theme toggle (persisted)
-   ========================================================= */
-(function(){
-  // Mobile nav
-  const nav = document.querySelector('.main-nav');
-  const toggle = document.querySelector('.nav-toggle');
-  if (toggle && nav){
-    toggle.addEventListener('click', () => {
-      const expanded = nav.getAttribute('aria-expanded') === 'true';
-      nav.setAttribute('aria-expanded', String(!expanded));
-      toggle.setAttribute('aria-expanded', String(!expanded));
-    });
-  }
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HubbTIME · Town of Hubbardston</title>
+  <meta name="description" content="Town of Hubbardston — Enhanced Biweekly Timesheet System" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏛️</text></svg>" />
+  <style>
+    /* =========================================================
+       HubbTIME · Municipal Timesheet System Styles
+       ========================================================= */
+    
+    :root {
+      /* Municipal Color Palette */
+      --forest-dark: #1a3d2e;
+      --forest: #2d5a47;
+      --sage: #4a7560;
+      --sage-light: #6b9080;
+      --meadow: #86a895;
+      --cream: #f4f1e8;
+      
+      /* Theme Variables */
+      --ink: #2c2416;
+      --bg: var(--cream);
+      --panel: #fefcf8;
+      --card: #ffffff;
+      --muted: #6b6b47;
+      --border: #d4cfc4;
+      --shadow: rgba(45, 90, 71, 0.08);
+      --accent: var(--forest);
+      --accent-light: var(--sage);
+      
+      /* Status Colors */
+      --success: #22c55e;
+      --warning: #f59e0b;
+      --error: #ef4444;
+      --info: #3b82f6;
+      
+      /* Spacing & Layout */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2rem;
+      --space-2xl: 3rem;
+      --radius: 8px;
+      --radius-lg: 12px;
+      --transition: 0.2s ease;
+    }
 
-  // Active link highlighting
-  try{
-    const here = location.pathname.split('/').filter(Boolean).pop() || 'index.html';
-    document.querySelectorAll('.main-nav a').forEach(a => {
-      const hrefLast = a.getAttribute('href').split('/').filter(Boolean).pop();
-      if (hrefLast === here){ a.classList.add('active'); }
-    });
-  }catch(e){/* noop */}
+    /* Dark Theme */
+    [data-theme="dark"] {
+      --bg: #0f1714;
+      --panel: #111d18;
+      --card: #13211b;
+      --ink: #e7f2ec;
+      --muted: #7aa892;
+      --border: #1f2c27;
+      --shadow: rgba(0, 0, 0, 0.25);
+    }
 
-  // Quick search (Modules grid)
-  const search = document.getElementById('quickSearch');
-  const grid = document.getElementById('moduleGrid');
-  if (search && grid){
-    const cards = Array.from(grid.querySelectorAll('.card'));
-    const filter = q => {
-      const needle = q.trim().toLowerCase();
-      cards.forEach(card => {
-        const hay = (card.innerText + ' ' + (card.dataset.tags||'')).toLowerCase();
-        card.style.display = hay.includes(needle) ? '' : 'none';
-      });
-    };
-    search.addEventListener('input', e => filter(e.target.value));
-  }
+    /* Base Styles */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
 
-  // Theme toggle (dark default)
-  const themeToggle = document.getElementById('themeToggle');
-  if (themeToggle){
-    const KEY = 'hubbfiscal-theme';
-    const root = document.documentElement;
-    const apply = mode => {
-      root.dataset.theme = mode;
-      themeToggle.setAttribute('aria-pressed', String(mode === 'light'));
-      themeToggle.textContent = mode === 'light' ? 'Dark' : 'Light';
-      if (mode === 'light'){
-        root.style.setProperty('--bg', '#f5faf7');
-        root.style.setProperty('--panel', '#ffffff');
-        root.style.setProperty('--card', '#ffffff');
-        root.style.setProperty('--ink', '#14271e');
-        root.style.setProperty('--muted', '#476457');
-      } else {
-        root.style.removeProperty('--bg');
-        root.style.removeProperty('--panel');
-        root.style.removeProperty('--card');
-        root.style.removeProperty('--ink');
-        root.style.removeProperty('--muted');
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.6;
+      min-height: 100vh;
+      font-size: 16px;
+    }
+
+    /* Typography */
+    h1, h2, h3, h4, h5, h6 {
+      margin: 0 0 var(--space-md) 0;
+      font-weight: 600;
+      line-height: 1.3;
+      color: var(--accent);
+    }
+
+    h1 { font-size: 2.2rem; }
+    h2 { font-size: 1.8rem; }
+    h3 { font-size: 1.4rem; }
+
+    p { margin: 0 0 var(--space-md) 0; }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    a:hover { text-decoration: underline; }
+
+    /* Layout */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: var(--space-lg);
+    }
+
+    /* Header */
+    .site-header {
+      background: linear-gradient(135deg, var(--forest-dark) 0%, var(--forest) 100%);
+      color: var(--cream);
+      padding: var(--space-lg);
+      box-shadow: 0 2px 8px var(--shadow);
+      display: flex;
+      align-items: center;
+      gap: var(--space-lg);
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+    }
+
+    .seal {
+      width: 3rem;
+      height: 3rem;
+      background: var(--sage-light);
+      color: var(--forest-dark);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1.2rem;
+      border: 2px solid var(--cream);
+    }
+
+    .site-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--cream);
+      margin: 0;
+    }
+
+    .tagline {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 0.9rem;
+      margin: 0;
+      font-style: italic;
+    }
+
+    .theme-toggle {
+      margin-left: auto;
+    }
+
+    /* Navigation */
+    .main-nav ul {
+      list-style: none;
+      display: flex;
+      gap: var(--space-md);
+      margin: 0;
+      padding: 0;
+    }
+
+    .main-nav a {
+      color: var(--cream);
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--radius);
+      transition: var(--transition);
+      font-weight: 500;
+    }
+
+    .main-nav a:hover,
+    .main-nav a.active {
+      background: rgba(255, 255, 255, 0.15);
+      text-decoration: none;
+    }
+
+    /* Page Header */
+    .page-header {
+      text-align: center;
+      margin-bottom: var(--space-2xl);
+      padding: var(--space-2xl) 0;
+    }
+
+    .page-header h1 {
+      font-size: 2.5rem;
+      margin-bottom: var(--space-md);
+    }
+
+    .page-header p {
+      font-size: 1.1rem;
+      color: var(--muted);
+    }
+
+    /* Cards */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--space-xl);
+      box-shadow: 0 2px 8px var(--shadow);
+      overflow: hidden;
+    }
+
+    .card-header {
+      padding: var(--space-lg);
+      border-bottom: 1px solid var(--border);
+      background: var(--panel);
+    }
+
+    .card-title {
+      margin: 0;
+      color: var(--accent);
+      font-size: 1.3rem;
+    }
+
+    .card > :not(.card-header) {
+      padding: var(--space-lg);
+    }
+
+    /* Forms */
+    .form-group {
+      margin-bottom: var(--space-lg);
+    }
+
+    .label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: var(--space-sm);
+      color: var(--ink);
+    }
+
+    .input, select, textarea {
+      width: 100%;
+      padding: var(--space-sm) var(--space-md);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--panel);
+      color: var(--ink);
+      font-size: 1rem;
+      transition: var(--transition);
+    }
+
+    .input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(45, 90, 71, 0.1);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--radius);
+      border: 1px solid transparent;
+      cursor: pointer;
+      font-weight: 500;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: var(--transition);
+      background: var(--accent);
+      color: white;
+      border: none;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 3px 8px var(--shadow);
+    }
+
+    .btn.primary { background: var(--accent); }
+    .btn.secondary { background: var(--sage-light); color: var(--forest-dark); }
+    .btn.danger { background: var(--error); }
+    .btn.ghost { 
+      background: transparent; 
+      border: 1px solid var(--border); 
+      color: var(--ink);
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Quick Actions */
+    .quick-actions {
+      display: flex;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+      margin-bottom: var(--space-lg);
+      padding: var(--space-md);
+      background: var(--panel);
+      border-radius: var(--radius);
+    }
+
+    /* Tables */
+    .table-container {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--card);
+    }
+
+    .tableWrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: var(--space-sm);
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+
+    th {
+      background: var(--panel);
+      font-weight: 600;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    tbody tr:hover {
+      background: rgba(45, 90, 71, 0.05);
+    }
+
+    /* Table Inputs */
+    .tableWrap input, .tableWrap select {
+      width: 100%;
+      min-width: 100px;
+      margin: 0;
+      padding: var(--space-xs) var(--space-sm);
+      font-size: 0.9rem;
+    }
+
+    .gl-cell {
+      min-width: 200px;
+    }
+
+    .gl-chooser {
+      width: 100%;
+      margin-top: 4px;
+      font-size: 12px;
+    }
+
+    /* Employee Info */
+    .employee-info {
+      background: linear-gradient(135deg, var(--sage-light) 0%, var(--meadow) 100%);
+      color: var(--forest-dark);
+      padding: var(--space-lg);
+      border-radius: var(--radius-lg);
+      margin-top: var(--space-md);
+    }
+
+    [data-theme="dark"] .employee-info {
+      background: linear-gradient(135deg, var(--forest) 0%, var(--sage) 100%);
+      color: var(--cream);
+    }
+
+    /* Totals */
+    .totals-panel {
+      background: linear-gradient(135deg, var(--forest) 0%, var(--sage) 100%);
+      color: var(--cream);
+      padding: var(--space-xl);
+      border-radius: var(--radius-lg);
+      margin: var(--space-lg) 0;
+    }
+
+    .totals-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: var(--space-md);
+    }
+
+    .total-item {
+      text-align: center;
+      padding: var(--space-md);
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius);
+    }
+
+    .total-label {
+      font-size: 0.85rem;
+      opacity: 0.9;
+      margin-bottom: var(--space-xs);
+    }
+
+    .total-value {
+      font-size: 1.2rem;
+      font-weight: 700;
+      font-family: 'Monaco', 'Consolas', monospace;
+    }
+
+    /* Alerts */
+    .alert {
+      padding: var(--space-md);
+      border-radius: var(--radius);
+      margin-bottom: var(--space-md);
+      border-left: 4px solid;
+    }
+
+    .alert.info { 
+      background: rgba(59, 130, 246, 0.1); 
+      border-color: var(--info);
+      color: var(--info);
+    }
+
+    .alert.success { 
+      background: rgba(34, 197, 94, 0.1); 
+      border-color: var(--success);
+      color: var(--success);
+    }
+
+    .alert.error { 
+      background: rgba(239, 68, 68, 0.1); 
+      border-color: var(--error);
+      color: var(--error);
+    }
+
+    .alert.warning {
+      background: rgba(245, 158, 11, 0.1);
+      border-color: var(--warning);
+      color: var(--warning);
+    }
+
+    /* Status Indicator */
+    .status-indicator {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: var(--space-sm);
+      border-radius: var(--radius);
+      font-size: 0.85rem;
+      background: var(--panel);
+      border: 1px solid var(--border);
+    }
+
+    .loading-spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid var(--border);
+      border-top: 2px solid var(--accent);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Utility Classes */
+    .text-center { text-align: center; }
+    .text-muted { color: var(--muted); }
+    .mt-md { margin-top: var(--space-md); }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      border: 0;
+    }
+
+    /* Footer */
+    .site-footer {
+      background: var(--panel);
+      border-top: 1px solid var(--border);
+      margin-top: var(--space-2xl);
+      padding: var(--space-lg);
+      text-align: center;
+      color: var(--muted);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .container { padding: var(--space-md); }
+      .site-header { padding: var(--space-md); flex-direction: column; }
+      .totals-grid { grid-template-columns: repeat(2, 1fr); }
+      .quick-actions { flex-direction: column; }
+      .tableWrap { font-size: 0.9rem; }
+    }
+
+    @media (max-width: 480px) {
+      .totals-grid { grid-template-columns: 1fr; }
+      .page-header h1 { font-size: 2rem; }
+    }
+
+    /* Action Buttons */
+    .row-actions {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+
+    .row-btn {
+      padding: 2px 6px;
+      font-size: 12px;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      border-radius: 4px;
+      cursor: pointer;
+      color: var(--muted);
+      transition: var(--transition);
+    }
+
+    .row-btn:hover {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+    /* GL Account Split Styles */
+    .gl-split-section {
+      margin-top: var(--space-xl);
+      padding: var(--space-lg);
+      border: 2px solid var(--accent);
+      background: var(--panel);
+      border-radius: var(--radius-lg);
+    }
+
+    .gl-split-row {
+      display: grid;
+      grid-template-columns: auto 1fr auto 120px auto;
+      gap: var(--space-md);
+      align-items: center;
+      margin-bottom: var(--space-md);
+      padding: var(--space-sm);
+      background: var(--card);
+      border-radius: var(--radius);
+    }
+
+    .gl-split-row select,
+    .gl-split-row input {
+      padding: var(--space-sm);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--panel);
+      color: var(--ink);
+    }
+
+    .gl-split-status {
+      margin-top: var(--space-lg);
+      padding: var(--space-md);
+      border-radius: var(--radius);
+      font-weight: 600;
+      text-align: center;
+      transition: var(--transition);
+    }
+
+    .gl-split-status.valid {
+      background: rgba(34, 197, 94, 0.1);
+      border: 2px solid var(--success);
+      color: var(--success);
+    }
+
+    .gl-split-status.over {
+      background: rgba(239, 68, 68, 0.1);
+      border: 2px solid var(--error);
+      color: var(--error);
+    }
+
+    .gl-split-status.under {
+      background: rgba(245, 158, 11, 0.1);
+      border: 2px solid var(--warning);
+      color: var(--warning);
+    }
+
+    @media (max-width: 768px) {
+      .gl-split-row {
+        grid-template-columns: 1fr;
       }
-      localStorage.setItem(KEY, mode);
-    };
-    const saved = localStorage.getItem(KEY);
-    apply(saved === 'light' ? 'light' : 'dark');
-    themeToggle.addEventListener('click', () => {
-      const next = (root.dataset.theme === 'light') ? 'dark' : 'light';
-      apply(next);
-    });
-  }
-})();
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link sr-only" href="#main">Skip to content</a>
 
+  <header class="site-header">
+    <div class="brand">
+      <div class="seal" aria-hidden="true">H</div>
+      <div class="brand-text">
+        <h1 class="site-title">HubbTIME</h1>
+        <p class="tagline">Town of Hubbardston · Municipal Timesheet System</p>
+      </div>
+    </div>
+    <nav class="main-nav" aria-label="Primary">
+      <ul>
+        <li><a href="#" class="active">Timesheet</a></li>
+      </ul>
+    </nav>
+    <div class="theme-toggle">
+      <button id="themeToggle" class="btn ghost" aria-pressed="false">Light</button>
+    </div>
+  </header>
+
+  <main id="main" class="container">
+    <div id="hubbtimeContainer">
+      <header class="page-header">
+        <h1>Enhanced Biweekly Timesheet</h1>
+        <p>Smart timesheet system with automated calculations and municipal GL integration</p>
+      </header>
+
+      <form id="timesheetForm">
+        <div id="systemMsg" class="alert info" role="status" aria-live="polite" style="display:none;"></div>
+
+        <!-- Employee Information -->
+        <section class="card">
+          <div class="card-header">
+            <h2 class="card-title">Employee Information</h2>
+          </div>
+          
+          <div class="form-group">
+            <label class="label" for="employeeSearch">Employee (search by name)</label>
+            <div style="display:flex; gap:var(--space-sm); align-items:center;">
+              <input 
+                id="employeeSearch" 
+                list="employeeList" 
+                placeholder="Start typing a name..." 
+                autocomplete="off" 
+                class="input"
+              >
+              <button type="button" class="btn secondary" id="clearEmployeeBtn">Clear</button>
+            </div>
+            <datalist id="employeeList"></datalist>
+            <input type="hidden" id="employeeIndex" value="">
+          </div>
+
+          <div class="employee-info" id="employeeDetails" style="display:none;">
+            <div class="totals-grid">
+              <div class="total-item">
+                <div class="total-label">Department</div>
+                <div class="total-value" id="department">—</div>
+              </div>
+              <div class="total-item">
+                <div class="total-label">Pay Type</div>
+                <div class="total-value" id="payType">—</div>
+              </div>
+              <div class="total-item">
+                <div class="total-label">Rate / Salary</div>
+                <div class="total-value" id="rate">—</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Pay Period Selection -->
+        <section class="card">
+          <div class="card-header">
+            <h2 class="card-title">Pay Period</h2>
+          </div>
+          
+          <div class="form-group">
+            <label class="label" for="warrant">Select Pay Period</label>
+            <select id="warrant" class="input">
+              <option value="">Select Pay Period...</option>
+            </select>
+          </div>
+        </section>
+
+        <!-- Time Entries -->
+        <section class="card">
+          <div class="card-header">
+            <h2 class="card-title">Time Entries</h2>
+          </div>
+
+          <div class="quick-actions">
+            <button type="button" class="btn primary" id="addRowBtn">Add Row</button>
+            <button type="button" class="btn secondary" id="townHallBtn">Town Hall Hours</button>
+            <button type="button" class="btn secondary" id="splitShiftBtn">Split Shift</button>
+            <button type="button" class="btn secondary" id="overtimeBtn">Overtime Day</button>
+            <button type="button" class="btn secondary" id="sickBtn">Sick Day</button>
+            <button type="button" class="btn secondary" id="personalBtn">Personal Day</button>
+            <button type="button" class="btn secondary" id="vacationBtn">Vacation Day</button>
+            <button type="button" class="btn secondary" id="holidayBtn">Holiday</button>
+            <button type="button" class="btn danger" id="clearAllBtn">Clear All</button>
+          </div>
+
+          <div class="table-container">
+            <div class="tableWrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Hours</th>
+                    <th>Type</th>
+                    <th style="display:none;">GL Code</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="timeBody">
+                  <!-- Dynamic rows -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- Summary -->
+        <section class="card">
+          <div class="card-header">
+            <h2 class="card-title">Summary</h2>
+          </div>
+
+          <div class="totals-panel">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:var(--space-md);">
+              <div>
+                <div class="total-label">Total Hours This Period</div>
+                <div id="totalHours" class="total-value">0.00</div>
+              </div>
+              <div style="text-align:right;">
+                <div class="total-label">Estimated Gross Pay</div>
+                <div id="grossPay" class="total-value">$0.00</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="totals-grid">
+            <div class="total-item">
+              <div class="total-label">Regular</div>
+              <div class="total-value" id="sumRegular">0.00</div>
+            </div>
+            <div class="total-item">
+              <div class="total-label">Sick</div>
+              <div class="total-value" id="sumSick">0.00</div>
+            </div>
+            <div class="total-item">
+              <div class="total-label">Personal</div>
+              <div class="total-value" id="sumPersonal">0.00</div>
+            </div>
+            <div class="total-item">
+              <div class="total-label">Vacation</div>
+              <div class="total-value" id="sumVacation">0.00</div>
+            </div>
+            <div class="total-item">
+              <div class="total-label">Holiday</div>
+              <div class="total-value" id="sumHoliday">0.00</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- GL Account Split Section (Leeanne & Patricia Only) -->
+        <section class="card" id="glSplitCard" style="display:none;">
+          <div class="card-header">
+            <h2 class="card-title">Split Hours by GL Account</h2>
+          </div>
+
+          <div class="alert info">
+            <strong>How to use:</strong> Your total hours from above need to be allocated across different GL account codes. 
+            Add as many GL accounts as needed and specify hours for each. The total must match your hours worked.
+          </div>
+
+          <div class="gl-split-section">
+            <div style="margin-bottom: var(--space-lg); padding: var(--space-md); background: rgba(45, 90, 71, 0.1); border-radius: var(--radius);">
+              <strong style="font-size: 1.1rem;">Total Hours to Allocate:</strong> 
+              <span id="glSplitTotalHours" style="font-size: 1.3rem; font-weight: 700; color: var(--accent);">0.00</span>
+            </div>
+
+            <div id="glSplitContainer">
+              <!-- Rows will be added dynamically -->
+            </div>
+
+            <button type="button" class="btn secondary" id="addGLAccountBtn" style="margin-top: var(--space-md);">
+              + Add Another Account
+            </button>
+
+            <div id="glSplitStatus" class="gl-split-status under" style="margin-top: var(--space-lg);">
+              <div style="font-size: 1.1rem; margin-bottom: var(--space-xs);">
+                <span id="glAllocatedHours">0.00</span> / <span id="glTotalHours">0.00</span> hours allocated
+              </div>
+              <div id="glStatusIcon" style="font-size: 1.5rem; margin-top: var(--space-sm);">⚠️</div>
+              <div id="glStatusText" style="font-size: 0.9rem; margin-top: var(--space-xs);">
+                Please allocate all hours before submitting
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- GL Review -->
+        <section class="card">
+          <div class="card-header">
+            <h2 class="card-title">GL Review — Hours & Cost Allocation</h2>
+          </div>
+          
+          <div id="glReviewWrap" class="table-container">
+            <p class="text-center text-muted" style="padding:var(--space-xl);">
+              Enter time entries above to see GL code breakdown and cost allocation
+            </p>
+          </div>
+          
+          <div class="alert info">
+            <strong>Smart Allocation:</strong> 
+            Hourly employees: Regular hours automatically convert to overtime (1.5x rate) when weekly total exceeds 40 hours. 
+            Salary employees: Biweekly salary split proportionally across GL codes based on time allocation.
+          </div>
+        </section>
+
+        <!-- Submit -->
+        <section class="card text-center">
+          <div class="alert info" role="note" aria-label="Compliance Notice" style="margin-bottom:var(--space-md); text-align:left;">
+            <p><strong>Compliance Notice:</strong></p>
+            <p>
+              By selecting "Submit Timesheet," you attest that the information provided is accurate and complete to the best of your knowledge. 
+              Your submission constitutes your electronic signature and certification in accordance with Massachusetts General Laws, including 
+              public records requirements (MGL c. 66) and attestations made under penalty of perjury (MGL c. 268 §6A).
+            </p>
+          </div>
+
+          <button type="submit" class="btn primary" id="submitBtn" style="padding:var(--space-md) var(--space-xl); font-size:1.1rem;">
+            Submit Timesheet
+          </button>
+          <div id="submitStatus" class="mt-md"></div>
+        </section>
+      </form>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2025 Town of Hubbardston, MA · <a href="mailto:admin@hubbardstonma.gov">admin@hubbardstonma.gov</a></p>
+  </footer>
+
+  <!-- Status Indicator -->
+  <div class="status-indicator" id="autoSaveIndicator" style="position:fixed; top:var(--space-md); right:var(--space-md); opacity:0; transition:opacity 0.3s ease; z-index:1000;" aria-live="polite">
+    <div class="loading-spinner"></div>
+    Auto-saved
+  </div>
+
+  <script>
 /* =========================================================
-   HubbTIME Module (namespaced; runs only on HubbTIME pages)
-   Pulls GL + roster from your master upload. :contentReference[oaicite:1]{index=1}
+   HubbTIME · Ultimate Municipal Timesheet System
+   Town of Hubbardston, Massachusetts
    ========================================================= */
-window.HubbTIME = (function(){
-  const container = document.getElementById('hubbtimeContainer');
-  const api = { addQuickTemplate: ()=>{}, addTownHallHours: ()=>{} };
-  if (!container) return api;
 
-  /********************
-   * HubbTIME – Hard-coded with GL Review
-   ********************/
-  // --- Config ---
-  var FLOW_URL = "https://prod-58.usgovtexas.logic.azure.us:443/workflows/ceefc1e6e256421c9a5a83416ff6c167/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lh1qRrhhVYUZ3ZhxuPpHYJPsdhdMmZDRSDndshkjiB0";
-  var NOTIFY = ["admin@hubbardstonma.gov", "accountant@hubbardstonma.gov"];
+window.HubbTIME = (function () {
+  'use strict';
 
-  var currentEmployee = null;
-  var currentWarrant = null;
+  // ---- Configuration ----
+  const FLOW_URL = "https://prod-58.usgovtexas.logic.azure.us:443/workflows/ceefc1e6e256421c9a5a83416ff6c167/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lh1qRrhhVYUZ3ZhxuPpHYJPsdhdMmZDRSDndshkjiB0";
+  const NOTIFY = ["admin@hubbardstonma.gov", "tacct@hubbardstonma.gov"];
 
-  // --- GL Codes (from master data) ---
-  var GL_CODES = {
-    "Select Board": "1000-122-5100",
-    "Accounting": "1000-135-5100",
-    "Assessors/Land Use": "1000-141-5100",
-    "Treasurer/Collector": "1000-149-5100",
-    "Town Clerk": "1000-161-5100",
-    "Building & Maintenance": "1000-192-5100",
-    "Police/Health": "1000-210-5100",
-    "Police": "1000-210-5100",
-    "Fire": "1000-220-5100",
-    "Land Use": "1000-241-5100",
-    "Building": "1000-241-5100",
-    "Public Works": "1000-420-5100",
-    "COA/MART": "1000-541-5100",
-    "Senior Center": "1000-541-5100",
-    "Senior Center / COA": "1000-541-5100",
-    "Library": "1000-610-5100"
+  // Special employees who need GL split functionality
+  const GL_SPLIT_EMPLOYEES = ["LEEANN E MOSES", "PATRICIA LOWE"];
+
+  // ---- Employee Database (Complete FY26 Roster) ----
+  const EMPLOYEES = [
+    {"name": "ALBERT AFONSO", "department": "School / Regional Assessment", "payType": "hourly", "rate": 16.13, "position": "MART Driver", "email": "admin@hubbardstonma.gov"},
+    {"name": "NANCY AFONSO", "department": "Senior Center / COA", "payType": "hourly", "rate": null, "position": null, "email": "coa@hubbardstonma.gov"},
+    {"name": "RICHARD J ANDERSON", "department": "Senior Center / COA", "payType": "hourly", "rate": null, "position": null, "email": "coa@hubbardstonma.gov"},
+    {"name": "ERIK ARES", "department": "Fire", "payType": "hourly", "rate": 23.12, "position": "Call LT/Paramedic", "email": "hubbardstonfire@gmail.com"},
+    {"name": "JAMES ARES", "department": "Fire", "payType": "hourly", "rate": 22.35, "position": "Per-Diem FF/Paramedic", "email": "hubbardstonfire@gmail.com"},
+    {"name": "CHRISTINE BARBERA", "department": "Library", "payType": "hourly", "rate": null, "position": null, "email": "library@hubbardstonma.gov"},
+    {"name": "BETTY BEGIN", "department": "Town Clerk", "payType": "hourly", "rate": null, "position": null, "email": "tclerk@hubbardstonma.gov"},
+    {"name": "DONALD BLOOD", "department": "Police", "payType": "hourly", "rate": null, "position": "Sergeant", "email": "sgtblood@hubpd.net"},
+    {"name": "NATHAN BOUDREAU", "department": "Administration", "payType": "salary", "rate": 115566, "position": "Town Administrator", "email": "admin@hubbardstonma.gov"},
+    {"name": "DANIEL BOURGEOIS", "department": "Police", "payType": "hourly", "rate": null, "position": null, "email": "pdclerk@hubpd.net"},
+    {"name": "DAVID BOWLEY", "department": "School / Regional Assessment", "payType": "hourly", "rate": 16.13, "position": "MART Driver", "email": "admin@hubbardstonma.gov"},
+    {"name": "ROBERT BRADY", "department": "Public Works", "payType": "hourly", "rate": 16.89, "position": "DPW Seasonal", "email": "highway@hubbardstonma.gov"},
+    {"name": "RICHARD BREAGY", "department": "School / Regional Assessment", "payType": "hourly", "rate": null, "position": null, "email": "admin@hubbardstonma.gov"},
+    {"name": "SUSAN BREAGY", "department": "Senior Center / COA", "payType": "hourly", "rate": null, "position": null, "email": "coa@hubbardstonma.gov"},
+    {"name": "ANDREW BRESCIANI", "department": "Police", "payType": "hourly", "rate": null, "position": null, "email": "pdclerk@hubpd.net"},
+    {"name": "TRAVIS BROWN", "department": "Public Works", "payType": "salary", "rate": 94242, "position": "DPW Director", "email": "highway@hubbardstonma.gov"},
+    {"name": "MICHAEL CAPPS", "department": "Police", "payType": "hourly", "rate": null, "position": null, "email": "pdclerk@hubpd.net"},
+    {"name": "TROY CASEY", "department": "Fire", "payType": "hourly", "rate": null, "position": null, "email": "hubbardstonfire@gmail.com"},
+    {"name": "ROBERT CHAMPAGNE", "department": "Police", "payType": "hourly", "rate": null, "position": null, "email": "pdclerk@hubpd.net"},
+    {"name": "SAMANTHA CHATTERTON", "department": "Accounting", "payType": "salary", "rate": 65000, "position": "Town Accountant", "email": "tacct@hubbardstonma.gov"},
+    {"name": "BRYAN COLWELL", "department": "Fire", "payType": "hourly", "rate": 17.84, "position": "Call FF/EMT-B", "email": "hubbardstonfire@gmail.com"},
+    {"name": "JEANNINE COMO", "department": "Senior Center / COA", "payType": "hourly", "rate": null, "position": null, "email": "coa@hubbardstonma.gov"},
+    {"name": "JULIA CONNERY", "department": "Senior Center / COA", "payType": "hourly", "rate": null, "position": null, "email": "coa@hubbardstonma.gov"},
+    {"name": "ANTHONY T. COPPOLA", "department": "School Transportation", "payType": "hourly", "rate": null, "position": null, "email": "admin@hubbardstonma.gov"},
+    {"name": "ELIZABETH CORMIER", "department": "Cable / PEG Access", "payType": "hourly", "rate": null, "position": null, "email": "admin@hubbardstonma.gov"},
+    {"name": "RYAN COUTURE", "department": "Police", "payType": "salary", "rate": 105000, "position": "Chief of Police", "email": "chiefcouture@hubpd.net"},
+    {"name": "BRIAN CUNNINGHAM", "department": "Police", "payType": "hourly", "rate": null, "position": null, "email": "pdclerk@hubpd.net"},
+    {"name": "JOHN DEMALIA", "department": "Fire", "payType": "hourly", "rate": 18.84, "position": "Call FF/EMT-B", "email": "hubbardstonfire@gmail.com"},
+    {"name": "TREVOR DION", "department": "Fire", "payType": "hourly", "rate": 15.93, "position": "Call FF", "email": "hubbardstonfire@gmail.com"},
+    {"name": "TINA DIXSON", "department": "Fire", "payType": "hourly", "rate": 22.21, "position": "Call FF/EMT-A", "email": "hubbardstonfire@gmail.com"},
+    {"name": "JAMES F DIXSON", "department": "Fire", "payType": "hourly", "rate": 24.67, "position": "Call LT/EMT-B", "email": "hubbardstonfire@gmail.com"},
+    {"name": "WILLIAM DOANE", "department": "Cable / PEG Access", "payType": "hourly", "rate": null, "position": null, "email": "admin@hubbardstonma.gov"},
+    {"name": "KAYLA FONTAINE", "department": "Police", "payType": "hourly", "rate": null, "position": null, "email": "pdclerk@hubpd.net"},
+    {"name": "ROBERT FORTE", "department": "Police", "payType": "hourly", "rate": null, "position": "Sergeant", "email": "sgtforte@hubpd.net"},
+    {"name": "EDWARD GALLANT", "department": "School / Regional Assessment", "payType": "hourly", "rate": 16.13, "position": "MART Driver", "email": "admin@hubbardstonma.gov"},
+    {"name": "ERIC GEMBORYS", "department": "IT / Communications", "payType": "hourly", "rate": null, "position": null, "email": "admin@hubbardstonma.gov"},
+    {"name": "ANNE GOEWEY", "department": "Library", "payType": "hourly", "rate": 17.57, "position": "Library Assistant", "email": "library@hubbardstonma.gov"},
+    {"name": "NEIL GOGUEN", "department": "Public Works", "payType": "hourly", "rate": null, "position": null, "email": "highway@hubbardstonma.gov"},
+    {"name": "GREGORY GOLDSMITH", "department": "School Debt/Capital", "payType": "hourly", "rate": null, "position": null, "email": "admin@hubbardstonma.gov"},
+    {"name": "IZAIAH GONZALEZ", "department": "Fire", "payType": "hourly", "rate": 15.93, "position": "Call Firefighter", "email": "hubbardstonfire@gmail.com"},
+    {"name": "JEREMY GOSCILA", "department": "Fire", "payType": "hourly", "rate": null, "position": null, "email": "hubbardstonfire@gmail.com"},
+    {"name": "EDWARD GOSSON", "department": "Senior Center / COA", "payType": "hourly", "rate": null, "position": null, "email": "coa@hubbardstonma.gov"},
+    {"name": "WENDY GOSSON", "department": "Senior Center / COA", "payType": "hourly", "rate": null, "position": null, "email": "coa@hubbardstonma.gov"},
+    {"name": "JOYCE GREEN", "department": "Elections", "payType": "hourly", "rate": null, "position": null, "email": "tclerk@hubbardstonma.gov"},
+    {"name": "RICHARD GREEN", "department": "Facilities / Building & Grounds", "payType": "hourly", "rate": null, "position": null, "email": "admin@hubbardstonma.gov"},
+    {"name": "MELODY GREEN", "department": "Town Clerk", "payType": "salary", "rate": 56610, "position": "Town Clerk", "email": "tclerk@hubbardstonma.gov"},
+    {"name": "JAMES HALKOLA", "department": "Police", "payType": "hourly", "rate": null, "position": null, "email": "pdclerk@hubpd.net"},
+    {"name": "DENNIS HAMEL", "department": "Fire", "payType": "hourly", "rate": 23.3, "position": "Call FF/Paramedic", "email": "hubbardstonfire@gmail.com"},
+    {"name": "SHARON HARDAKER", "department": "School / Regional Assessment", "payType": "hourly", "rate": 18.92, "position": "MART Supervisor", "email": "admin@hubbardstonma.gov"},
+    {"name": "LEROY HAWKINS", "department": "Police", "payType": "hourly", "rate": null, "position": null, "email": "pdclerk@hubpd.net"},
+    {"name": "ROBERT HAYES", "department": "Fire", "payType": "salary", "rate": 100500, "position": "Fire Chief", "email": "firechief@hubbardstonma.gov"},
+    {"name": "KENNETH HORVATH", "department": "Senior Center / COA", "payType": "hourly", "rate": null, "position": null, "email": "coa@hubbardstonma.gov"},
+    {"name": "JOHN HULETTE", "department": "Fire", "payType": "hourly", "rate": 17.52, "position": "Call FF/EMT-B", "email": "hubbardstonfire@gmail.com"},
+    {"name": "WENDY ISGRO", "department": "Town Clerk", "payType": "hourly", "rate": null, "position": null, "email": "tclerk@hubbardstonma.gov"},
+    {"name": "LINDA JENESKI", "department": "Senior Center / COA", "payType": "hourly", "rate": null, "position": null, "email": "coa@hubbardstonma.gov"},
+    {"name": "STANLEY JOHNSON", "department": "School / Regional Assessment", "payType": "hourly", "rate": null, "position": null, "email": "admin@hubbardstonma.gov"},
+    {"name": "ROBERT JOHNSON", "department": "Police", "payType": "hourly", "rate": null, "position": null, "email": "pdclerk@hubpd.net"},
+    {"name": "BELLA KALDERA", "department": "Town Clerk", "payType": "hourly", "rate": null, "position": null, "email": "tclerk@hubbardstonma.gov"},
+    {"name": "WILLIAM KAMATARIS", "department": "Police", "payType": "hourly", "rate": null, "position": null, "email": "pdclerk@hubpd.net"},
+    {"name": "BEVERLY KOHLSTROM", "department": "Senior Center / COA", "payType": "hourly", "rate": null, "position": null, "email": "coa@hubbardstonma.gov"},
+    {"name": "MICHAEL LABELLE", "department": "Public Works", "payType": "hourly", "rate": null, "position": null, "email": "highway@hubbardstonma.gov"},
+    {"name": "RENE LAFAYETTE", "department": "Town Clerk", "payType": "hourly", "rate": null, "position": null, "email": "tclerk@hubbardstonma.gov"},
+    {"name": "PATRICIA LAMOUREUX", "department": "Cable / PEG Access", "payType": "hourly", "rate": null, "position": null, "email": "admin@hubbardstonma.gov"},
+    {"name": "ROBERT LANCIANI", "department": "Building", "payType": "hourly", "rate": 41.09, "position": "Building Commissioner", "email": "hubbbuild@hubbardstonma.gov"},
+    {"name": "SHONNA LARSON", "department": "Town Clerk", "payType": "hourly", "rate": null, "position": null, "email": "tclerk@hubbardstonma.gov"},
+    {"name": "MARY LEROUX", "department": "Treasurer/Collector", "payType": "salary", "rate": 69993, "position": "Treasurer/Collector", "email": "treas@hubbardstonma.gov"},
+    {"name": "CYNTHIA LISTOVITCH", "department": "Cable / PEG Access", "payType": "hourly", "rate": null, "position": null, "email": "admin@hubbardstonma.gov"},
+    {"name": "PATRICIA LOWE", "department": "Select Board", "payType": "hourly", "rate": 23.38, "position": "Executive Assistant / Cable Clerk", "email": "bos@hubbardstonma.gov"},
+    {"name": "MITCHELL MABARDY", "department": "Fire", "payType": "hourly", "rate": 20.82, "position": "Per-Diem FF/Paramedic", "email": "hubbardstonfire@gmail.com"},
+    {"name": "EVONNE MALCOMSON", "department": "Senior Center / COA", "payType": "hourly", "rate": null, "position": null, "email": "coa@hubbardstonma.gov"},
+    {"name": "NICHOLAS MALNATI", "department": "Police", "payType": "hourly", "rate": null, "position": null, "email": "pdclerk@hubpd.net"},
+    {"name": "ISAIAH MCDANIEL", "department": "Public Works", "payType": "hourly", "rate": null, "position": null, "email": "highway@hubbardstonma.gov"},
+    {"name": "LORRAINE MICHALS", "department": "Cable / PEG Access", "payType": "hourly", "rate": null, "position": null, "email": "admin@hubbardstonma.gov"},
+    {"name": "LEEANN E MOSES", "department": "Assessors/Land Use", "payType": "hourly", "rate": 23.38, "position": "Administrative Services Coordinator", "email": "asc@hubbardstonma.gov"},
+    {"name": "JUDITH L O'DONNELL", "department": "Recreation (Grant)", "payType": "hourly", "rate": null, "position": null, "email": "admin@hubbardstonma.gov"},
+    {"name": "DEBORAH PAGE", "department": "Senior Center / COA", "payType": "hourly", "rate": null, "position": null, "email": "coa@hubbardstonma.gov"},
+    {"name": "MICHAEL PARKER", "department": "Fire", "payType": "hourly", "rate": 18.84, "position": "Call FF/EMT-B", "email": "hubbardstonfire@gmail.com"},
+    {"name": "JAMES PAYSON", "department": "Public Works", "payType": "hourly", "rate": null, "position": null, "email": "highway@hubbardstonma.gov"},
+    {"name": "NANCY PERRON", "department": "Police/Health", "payType": "hourly", "rate": 22.03, "position": "Police Admin / BOH Clerk", "email": "pdclerk@hubpd.net"},
+    {"name": "FLORENCE PERVIER", "department": "Cable / PEG Access", "payType": "hourly", "rate": null, "position": null, "email": "admin@hubbardstonma.gov"},
+    {"name": "PAUL PERVIER", "department": "Senior Center / COA", "payType": "hourly", "rate": null, "position": null, "email": "coa@hubbardstonma.gov"},
+    {"name": "MICHAEL PIERCE", "department": "Police", "payType": "hourly", "rate": null, "position": null, "email": "pdclerk@hubpd.net"},
+    {"name": "CLAUDIA PROVENCAL", "department": "Senior Center", "payType": "hourly", "rate": 25.0, "position": "COA Director", "email": "coa@hubbardstonma.gov"},
+    {"name": "SARA RISH", "department": "Treasurer/Collector", "payType": "hourly", "rate": 24.01, "position": "Assistant Treasurer", "email": "hubbtax@hubbardstonma.gov"},
+    {"name": "NANCY ROGAN", "department": "Senior Center / COA", "payType": "hourly", "rate": null, "position": null, "email": "coa@hubbardstonma.gov"},
+    {"name": "SADIE SAINT", "department": "Land Use", "payType": "hourly", "rate": 22, "position": "Inspectional Services Coordinator", "email": "inspect@hubbardstonma.gov"},
+    {"name": "SAMUEL SCARPATO", "department": "Fire", "payType": "hourly", "rate": null, "position": null, "email": "hubbardstonfire@gmail.com"},
+    {"name": "BENJAMIN SEITZ", "department": "Public Works", "payType": "hourly", "rate": null, "position": null, "email": "highway@hubbardstonma.gov"},
+    {"name": "JEFFREY SHAMPINE", "department": "Police", "payType": "hourly", "rate": null, "position": null, "email": "pdclerk@hubpd.net"},
+    {"name": "MARY ELLEN SHAUGHNESSY", "department": "Senior Center / COA", "payType": "hourly", "rate": null, "position": null, "email": "coa@hubbardstonma.gov"},
+    {"name": "BRIAN SICILIANO", "department": "Police", "payType": "hourly", "rate": null, "position": null, "email": "pdclerk@hubpd.net"},
+    {"name": "SHAUN SIEQUIST", "department": "Police", "payType": "hourly", "rate": null, "position": null, "email": "pdclerk@hubpd.net"},
+    {"name": "DARRELL SWEENEY", "department": "School Debt/Capital", "payType": "hourly", "rate": null, "position": null, "email": "admin@hubbardstonma.gov"},
+    {"name": "PAUL SWEENEY", "department": "Public Works", "payType": "hourly", "rate": 17.57, "position": "DPW Seasonal", "email": "highway@hubbardstonma.gov"},
+    {"name": "PHILLIP THERIAULT", "department": "Fire", "payType": "hourly", "rate": 17.8, "position": "Call FF/EMT-B", "email": "hubbardstonfire@gmail.com"},
+    {"name": "EDWARD TONET", "department": "School Transportation", "payType": "hourly", "rate": null, "position": null, "email": "admin@hubbardstonma.gov"},
+    {"name": "LOIS TYLER", "department": "Town Clerk", "payType": "hourly", "rate": null, "position": null, "email": "tclerk@hubbardstonma.gov"},
+    {"name": "KATHLEEN VINCENT", "department": "Town Clerk", "payType": "hourly", "rate": null, "position": null, "email": "tclerk@hubbardstonma.gov"},
+    {"name": "JAMES VINCENT", "department": "Facilities / Building & Grounds", "payType": "hourly", "rate": null, "position": null, "email": "admin@hubbardstonma.gov"},
+    {"name": "ALEXANDER WADE", "department": "Facilities / Building & Grounds", "payType": "hourly", "rate": null, "position": null, "email": "admin@hubbardstonma.gov"},
+    {"name": "TINA WHITE", "department": "Public Works", "payType": "hourly", "rate": 22.03, "position": "DPW Assistant", "email": "DPWadmin@hubbardstonma.gov"},
+    {"name": "CAROL WHITNEY", "department": "Town Clerk", "payType": "hourly", "rate": null, "position": null, "email": "tclerk@hubbardstonma.gov"},
+    {"name": "BRIANNA WHITNEY", "department": "Town Clerk", "payType": "hourly", "rate": null, "position": null, "email": "tclerk@hubbardstonma.gov"},
+    {"name": "LYNN WILKINSON", "department": "Town Clerk", "payType": "hourly", "rate": null, "position": null, "email": "tclerk@hubbardstonma.gov"},
+    {"name": "TAYLOR WILKINSON", "department": "Fire", "payType": "hourly", "rate": null, "position": null, "email": "hubbardstonfire@gmail.com"},
+    {"name": "LORRAINE WILLIAMS", "department": "Senior Center / COA", "payType": "hourly", "rate": null, "position": null, "email": "coa@hubbardstonma.gov"},
+    {"name": "KENNETH WINCHESTER", "department": "Public Works", "payType": "hourly", "rate": null, "position": null, "email": "highway@hubbardstonma.gov"},
+    {"name": "WILLIAM WITHYCOMBE", "department": "Police", "payType": "hourly", "rate": null, "position": null, "email": "pdclerk@hubpd.net"},
+    {"name": "KAREN WOLFE", "department": "Cable / PEG Access", "payType": "hourly", "rate": null, "position": null, "email": "admin@hubbardstonma.gov"},
+    {"name": "ANDREW WOODARD", "department": "Public Works", "payType": "hourly", "rate": null, "position": null, "email": "highway@hubbardstonma.gov"},
+    {"name": "PATRICIA WOODWARD", "department": "Cable / PEG Access", "payType": "hourly", "rate": null, "position": null, "email": "admin@hubbardstonma.gov"},
+    {"name": "LAUREN WRIGHT", "department": "Senior Center / COA (Grant)", "payType": "hourly", "rate": null, "position": null, "email": "coa@hubbardstonma.gov"},
+    {"name": "HUNTER YOUNG", "department": "Building & Maintenance", "payType": "hourly", "rate": 17.57, "position": "Facilities Maintenance", "email": "admin@hubbardstonma.gov"}
+  ];
+
+  // ---- Pay Periods ----
+  const WARRANTS = [
+    { number: 5, start: "2025-08-24", end: "2025-09-06", due: "2025-09-08", check: "2025-09-11" },
+    { number: 6, start: "2025-09-07", end: "2025-09-20", due: "2025-09-22", check: "2025-09-25" },
+    { number: 7, start: "2025-09-21", end: "2025-10-04", due: "2025-10-06", check: "2025-10-09" },
+    { number: 8, start: "2025-10-05", end: "2025-10-18", due: "2025-10-20", check: "2025-10-23" }
+  ];
+
+  // ---- GL Code Mappings ----
+  const DEPT_GLS = {
+    "Administration": "1000-129-5100-0000",
+    "Accounting": "1000-129-5100-0000",
+    "Treasurer/Collector": "1000-149-5100-0000",
+    "Select Board": "1000-122-5100-0000",
+    "Town Clerk": "1000-161-5100-0000",
+    "Assessors/Land Use": "1000-141-5100-0000",
+    "Land Use": "1000-241-5100-0000",
+    "Facilities / Building & Grounds": "1000-192-5100-0000",
+    "Building & Maintenance": "1000-192-5100-0000",
+    "IT / Communications": "1000-129-5100-0000",
+    "Cable / PEG Access": "1000-129-5100-0000",
+    "Elections": "1000-161-5100-0000",
+    "Public Works": "1000-420-5100-0000",
+    "Police": "1000-210-5100-0000",
+    "Police/Health": "1000-210-5100-0000",
+    "Fire": "1000-220-5100-0000",
+    "Building": "1000-241-5100-0000",
+    "Library": "1000-610-5100-0000",
+    "Recreation (Grant)": "1000-129-5100-0000",
+    "Senior Center / COA": "1000-541-5100-0000",
+    "Senior Center": "1000-541-5100-0000",
+    "Senior Center / COA (Grant)": "1000-541-5100-0000",
+    "School / Regional Assessment": "1000-129-5100-0000",
+    "School Debt/Capital": "1000-129-5100-0000",
+    "School Transportation": "1000-129-5100-0000"
   };
 
-  // --- Complete Employee List (from master CSV data) ---
-  var EMPLOYEES = [
-    {"name":"ALBERT AFONSO","department":"COA/MART","payType":"hourly","rate":16.13,"isAdmin":false,"position":"MART Driver","id":"E017"},
-    {"name":"ANNE GOEWEY","department":"Library","payType":"hourly","rate":17.57,"isAdmin":false,"position":"Library Assistant","id":"E014"},
-    {"name":"BRYAN COLWELL","department":"Fire","payType":"hourly","rate":17.84,"isAdmin":false,"position":"Call Firefighter","id":"E022"},
-    {"name":"CLAUDIA PROVENCAL","department":"Senior Center","payType":"hourly","rate":25.00,"isAdmin":false,"position":"COA Director","id":"E013"},
-    {"name":"DAVID HORNE","department":"Building","payType":"salary","rate":42734,"isAdmin":false,"position":"Building Commissioner","id":"E009"},
-    {"name":"DAVIS BOWLEY","department":"COA/MART","payType":"hourly","rate":16.13,"isAdmin":false,"position":"MART Driver","id":"E018"},
-    {"name":"DENNIS HAMEL","department":"Fire","payType":"hourly","rate":23.30,"isAdmin":false,"position":"Firefighter/Paramedic","id":"E025"},
-    {"name":"EDWARD GALLANT","department":"COA/MART","payType":"hourly","rate":16.13,"isAdmin":false,"position":"MART Driver","id":"E019"},
-    {"name":"ERIK ARES","department":"Fire","payType":"hourly","rate":23.12,"isAdmin":false,"position":"Call LT/Paramedic","id":"E029"},
-    {"name":"HUNTER YOUNG","department":"Building & Maintenance","payType":"hourly","rate":17.57,"isAdmin":false,"position":"Facilities Maintenance","id":"E012"},
-    {"name":"IZAIAH GONZALEZ","department":"Fire","payType":"hourly","rate":15.93,"isAdmin":false,"position":"Call Firefighter","id":"E028"},
-    {"name":"JAMES DIXSON","department":"Fire","payType":"hourly","rate":24.67,"isAdmin":false,"position":"Call LT/EMT","id":"E030"},
-    {"name":"JOHN DEMALIA JR","department":"Fire","payType":"hourly","rate":18.84,"isAdmin":false,"position":"Call Firefighter/EMT","id":"E023"},
-    {"name":"LEEANNE MOSES","department":"Assessors/Land Use","payType":"hourly","rate":23.38,"isAdmin":true,"position":"Administrative Services Coordinator","id":"E002"},
-    {"name":"MARY LEROUX","department":"Treasurer/Collector","payType":"salary","rate":70914,"isAdmin":false,"position":"Treasurer/Collector","id":"E007"},
-    {"name":"MELODY GREEN","department":"Town Clerk","payType":"hourly","rate":32.36,"isAdmin":false,"position":"Town Clerk","id":"E006"},
-    {"name":"MITCHELL MABARDY","department":"Fire","payType":"hourly","rate":20.82,"isAdmin":false,"position":"Call Firefighter/Paramedic","id":"E026"},
-    {"name":"NANCY PERRON","department":"Police/Health","payType":"hourly","rate":22.03,"isAdmin":true,"position":"Police Admin / BOH Clerk","id":"E004"},
-    {"name":"PATRICIA LOWE","department":"Select Board","payType":"hourly","rate":23.38,"isAdmin":true,"position":"Executive Assistant / Cable Clerk","id":"E001"},
-    {"name":"PAUL SWEENEY","department":"Public Works","payType":"hourly","rate":17.57,"isAdmin":false,"position":"DPW Seasonal","id":"E021"},
-    {"name":"PHILLIP THERIAULT JR","department":"Fire","payType":"hourly","rate":17.80,"isAdmin":false,"position":"Call Firefighter","id":"E027"},
-    {"name":"ROBERT HAYES JR","department":"Fire","payType":"salary","rate":100500,"isAdmin":false,"position":"Fire Chief","id":"E011"},
-    {"name":"ROBERT M BRADY","department":"Public Works","payType":"hourly","rate":16.89,"isAdmin":false,"position":"DPW Seasonal","id":"E020"},
-    {"name":"SADIE SAINT","department":"Land Use","payType":"hourly","rate":22.00,"isAdmin":true,"position":"Inspectional Services Coordinator","id":"E005"},
-    {"name":"SAMANTHA CHATTERTON","department":"Accounting","payType":"salary","rate":33800,"isAdmin":false,"position":"Town Accountant","id":"E008"},
-    {"name":"SARA RISH","department":"Treasurer/Collector","payType":"hourly","rate":24.01,"isAdmin":true,"position":"Assistant Treasurer Collector","id":"E015"},
-    {"name":"SHARON HARDAKER","department":"COA/MART","payType":"hourly","rate":18.92,"isAdmin":false,"position":"MART Supervisor","id":"E016"},
-    {"name":"TINA DIXSON","department":"Fire","payType":"hourly","rate":22.22,"isAdmin":false,"position":"Firefighter/AEMT","id":"E024"},
-    {"name":"TINA WHITE","department":"Public Works","payType":"hourly","rate":22.03,"isAdmin":true,"position":"DPW Assistant","id":"E003"},
-    {"name":"TRAVIS BROWN","department":"Public Works","payType":"salary","rate":94369,"isAdmin":false,"position":"DPW Director","id":"E010"}
-  ];
+  const POSITION_GLS = {
+    "Town Administrator": "1000-129-5100-0000",
+    "Executive Assistant / Cable Clerk": "1000-122-5100-0000",
+    "Town Accountant": "1000-129-5100-0000",
+    "Treasurer/Collector": "1000-149-5100-0000",
+    "Assistant Treasurer": "1000-149-5100-0000",
+    "Chief of Police": "1000-210-5100-0000",
+    "Fire Chief": "1000-220-5100-0000",
+    "DPW Director": "1000-420-5100-0000",
+    "Library Assistant": "1000-610-5100-0000",
+    "Inspectional Services Coordinator": "1000-241-5100-0000",
+    "COA Director": "1000-541-5100-0000",
+    "Building Commissioner": "1000-241-5100-0000",
+    "Police Admin / BOH Clerk": "1000-210-5100-0000",
+    "Administrative Services Coordinator": "1000-141-5100-0000"
+  };
 
-  // --- Hard-coded Warrant periods ---
-  var WARRANTS = [
-    {number: 5, start: "2025-08-24", end: "2025-09-06", due: "2025-09-08", check: "2025-09-11"},
-    {number: 6, start: "2025-09-07", end: "2025-09-20", due: "2025-09-22", check: "2025-09-25"},
-    {number: 7, start: "2025-09-21", end: "2025-10-04", due: "2025-10-06", check: "2025-10-09"},
-    {number: 8, start: "2025-10-05", end: "2025-10-18", due: "2025-10-20", check: "2025-10-23"}
-  ];
+  // Multi-position employees
+  const EMPLOYEE_POSITIONS = {
+    "PATRICIA LOWE": [
+      { title: "Executive Assistant (Select Board)", gl: "1000-122-5100-0000", rate: 23.38, proportion: 26 },
+      { title: "Library Assistant", gl: "1000-610-5100-0000", rate: 17.57, proportion: 10 }
+    ],
+    "LEEANN E MOSES": [
+      { title: "Land Use Administrative", gl: "1000-241-5100-0000", proportion: 37 },
+      { title: "Assessor Administrative", gl: "1000-141-5100-0000", proportion: 31 }
+    ]
+  };
 
-  // --- Utils ---
-  function $(s){ return document.querySelector(s); }
-  function currency(n){ return new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(Number(n||0)); }
-  function fmt(n){ return (Number(n||0)).toFixed(2); }
-  function showMessage(text, type, show){
-    var msgEl = $('#systemMsg');
-    if(!show){ if(msgEl) msgEl.style.display='none'; return; }
-    if(!msgEl) return;
-    msgEl.className = 'alert ' + (type||'info');
-    msgEl.textContent = text;
-    msgEl.style.display='block';
-  }
-  function getGLCode(emp){ return emp && emp.department ? (GL_CODES[emp.department] || '') : ''; }
-  function toMinutes(hhmm){ if(!hhmm) return null; var p = hhmm.split(':'); return (parseInt(p[0],10)*60)+parseInt(p[1],10); }
-  function hoursBetween(start, end){
-    if(!start || !end) return 0;
-    var s = toMinutes(start), e = toMinutes(end);
-    if(s==null || e==null) return 0;
-    if(e < s) e += 24*60;
-    return Math.round(((e - s)/60)*100)/100;
-  }
-  function dateISO(d){ return (d instanceof Date)? d.toISOString().slice(0,10) : d; }
-
-  // --- Build GL select widget ---
-  function buildGLSelect(selectedValue){
-    var sel = document.createElement('select');
-    var opt = document.createElement('option'); opt.value=""; opt.textContent="Select…"; sel.appendChild(opt);
-    Object.keys(GL_CODES).forEach(function(k){
-      var o = document.createElement('option');
-      o.value = GL_CODES[k];
-      o.textContent = k + " — " + GL_CODES[k];
-      if(selectedValue && selectedValue === o.value) o.selected = true;
-      sel.appendChild(o);
-    });
-    return sel;
-  }
-
-  // --- Table row ops ---
-  function addTimeRow(date, start, end, hours, type, glCode, description, insertAfterRow){
-    var tbody = $('#timeBody'); if(!tbody) return null;
-    var tr = document.createElement('tr');
-    var glDefault = glCode || (currentEmployee ? getGLCode(currentEmployee) : "");
-
-    tr.innerHTML = ''
-      + '<td><input type="date" value="'+(date||'')+'"></td>'
-      + '<td><input type="time" value="'+(start||'')+'"></td>'
-      + '<td><input type="time" value="'+(end||'')+'"></td>'
-      + '<td><input type="number" step="0.25" min="0" value="'+(hours||'')+'" placeholder="0.00"></td>'
-      + '<td>'
-        + '<select>'
-          + '<option value="Regular">Regular</option>'
-          + '<option value="Sick">Sick</option>'
-          + '<option value="Personal">Personal</option>'
-          + '<option value="Vacation">Vacation</option>'
-          + '<option value="Holiday">Holiday</option>'
-          + '<option value="Overtime">Overtime</option>'
-        + '</select>'
-      + '</td>'
-      + '<td class="glcell"></td>'
-      + '<td><input type="text" placeholder="Optional description" value="'+(description||'')+'"></td>'
-      + '<td>'
-        + '<div class="action-btns">'
-          + '<button type="button" class="btn secondary btn-insert-above">Insert ↑</button>'
-          + '<button type="button" class="btn secondary btn-insert-below">Insert ↓</button>'
-          + '<button type="button" class="btn secondary btn-dup">Duplicate</button>'
-          + '<button type="button" class="btn danger btn-del">Delete</button>'
-        + '</div>'
-      + '</td>';
-
-    if(type){ tr.querySelector('td:nth-child(5) select').value = type; }
-
-    var glCell = tr.querySelector('.glcell');
-    var glSel = buildGLSelect(glDefault);
-    glCell.appendChild(glSel);
-
-    if(insertAfterRow && insertAfterRow.parentNode === tbody){
-      insertAfterRow.insertAdjacentElement('afterend', tr);
-    } else {
-      tbody.appendChild(tr);
+  // Auto-allocation for Town Hall Hours
+  const AUTO_SPLITS = {
+    "PATRICIA LOWE": {
+      mode: "weekly",
+      targets: [
+        { gl: "1000-610-5100-0000", hours: 8.00, label: "Library" },
+        { gl: "1000-122-5100-0000", hours: 26.00, label: "Select Board" }
+      ]
+    },
+    "LEEANN E MOSES": {
+      mode: "biweekly", 
+      targets: [
+        { gl: "1000-241-5100-0000", hours: 37.00, label: "Land Use" },
+        { gl: "1000-141-5100-0000", hours: 31.00, label: "Assessors" }
+      ]
     }
+  };
 
-    tr.addEventListener('input', function(){
-      var s = tr.querySelector('td:nth-child(2) input').value;
-      var e = tr.querySelector('td:nth-child(3) input').value;
-      var hrsEl = tr.querySelector('td:nth-child(4) input');
-      if(s && e){ hrsEl.value = fmt(hoursBetween(s,e)); }
-      calculateTotals();
-    });
-    tr.querySelector('.btn-del').addEventListener('click', function(){ tr.remove(); calculateTotals(); });
-    tr.querySelector('.btn-dup').addEventListener('click', function(){
-      var v = getRowValues(tr);
-      addTimeRow(v.date, v.start, v.end, v.hours, v.type, v.gl, v.desc, tr);
-      calculateTotals();
-    });
-    tr.querySelector('.btn-insert-above').addEventListener('click', function(){
-      addTimeRow('', '', '', '', 'Regular', glSel.value || glDefault, '', tr.previousElementSibling || null);
-    });
-    tr.querySelector('.btn-insert-below').addEventListener('click', function(){
-      addTimeRow('', '', '', '', 'Regular', glSel.value || glDefault, '', tr);
-    });
+  // GL accounts available for split
+  const GL_ACCOUNT_OPTIONS = [
+    { value: "1000-122-5100-0000", label: "Select Board" },
+    { value: "1000-129-5100-0000", label: "Administration" },
+    { value: "1000-141-5100-0000", label: "Assessors" },
+    { value: "1000-149-5100-0000", label: "Treasurer/Collector" },
+    { value: "1000-161-5100-0000", label: "Town Clerk" },
+    { value: "1000-192-5100-0000", label: "Facilities" },
+    { value: "1000-210-5100-0000", label: "Police" },
+    { value: "1000-220-5100-0000", label: "Fire" },
+    { value: "1000-241-5100-0000", label: "Land Use/Building" },
+    { value: "1000-420-5100-0000", label: "Public Works" },
+    { value: "1000-541-5100-0000", label: "Senior Center/COA" },
+    { value: "1000-610-5100-0000", label: "Library" }
+  ];
 
-    return tr;
-  }
-  function getRowValues(tr){
-    var tds = tr.children;
-    return {
-      date: tds[0].querySelector('input').value,
-      start: tds[1].querySelector('input').value,
-      end: tds[2].querySelector('input').value,
-      hours: parseFloat(tds[3].querySelector('input').value || 0),
-      type: tds[4].querySelector('select').value,
-      gl: tds[5].querySelector('select').value || '',
-      desc: tds[6].querySelector('input').value || ''
-    };
-  }
-  function getAllRows(){ return Array.from(document.querySelectorAll('#timeBody tr')).map(getRowValues); }
+  // ---- State Variables ----
+  let currentEmployee = null;
+  let currentWarrant = null;
+  let autoSaveTimeout = null;
+  let glSplitAllocations = [];
 
-  // --- Employee select / clear ---
-  function handleEmployeeSelect(e){
-    var name = e.target.value.trim();
-    var emp = EMPLOYEES.find(x => x.name && x.name.toLowerCase() === name.toLowerCase());
-    if(!emp) return;
-    currentEmployee = emp;
-    var dep = $('#department'), ptype = $('#payType'), rateEl = $('#rate');
-    if(dep) dep.value = emp.department || '';
-    if(ptype) ptype.value = emp.payType ? (emp.payType.charAt(0).toUpperCase()+emp.payType.slice(1)) : '';
-    if(rateEl) rateEl.value = emp.payType === 'salary'
-      ? (emp.rate ? (currency(emp.rate) + ' annually') : '—')
-      : (emp.rate ? (currency(emp.rate) + ' per hour') : '—');
-
-    var gl = getGLCode(emp);
-    document.querySelectorAll('#timeBody tr').forEach(function(tr){
-      var sel = tr.querySelector('td:nth-child(6) select');
-      if(sel && !sel.value){ sel.value = gl; }
-    });
-
-    calculateTotals();
-    showMessage('Selected: ' + emp.name + ' (' + (emp.department||'') + ') GL: ' + (gl||'—'), 'success', true);
-  }
-  function clearEmployee(){
-    currentEmployee = null;
-    var es = $('#employeeSearch'), d = $('#department'), p = $('#payType'), r = $('#rate');
-    if(es) es.value = '';
-    if(d) d.value = '';
-    if(p) p.value = '';
-    if(r) r.value = '';
-    calculateTotals();
+  // ---- Utility Functions ----
+  const $ = s => document.querySelector(s);
+  const currency = n =>new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(Number(n || 0));
+  
+  function setMsg(text, type = 'info', show = true) {
+    const el = $('#systemMsg');
+    if (!el) return;
+    if (!show) { 
+      el.style.display = 'none'; 
+      return; 
+    }
+    el.className = 'alert ' + type;
+    el.textContent = text;
+    el.style.display = 'block';
+    setTimeout(() => el.style.display = 'none', 5000);
   }
 
-  // --- Warrants select ---
-  function handleWarrantSelect(e){
-    var idx = e.target.value;
-    currentWarrant = (idx === '') ? null : WARRANTS[parseInt(idx,10)];
-    calculateTotals();
+  function timeDiffHours(start, end) {
+    if (!start || !end) return 0;
+    const [sh, sm] = start.split(':').map(Number);
+    const [eh, em] = end.split(':').map(Number);
+    let s = sh * 60 + sm, e = eh * 60 + em;
+    if (e < s) e += 24 * 60; // overnight
+    return Math.round(((e - s) / 60) * 100) / 100;
   }
 
-  // --- Week key (Mon-based) for OT calc ---
-  function weekKey(isoDate){
-    if(!isoDate) return 'unknown';
-    var d = new Date(isoDate + 'T00:00:00');
-    var day = d.getDay(); // 0..6
-    var diffToMon = (day === 0 ? -6 : 1 - day);
-    var monday = new Date(d); monday.setDate(d.getDate() + diffToMon);
-    var y = monday.getFullYear();
-    var jan4 = new Date(y,0,4);
-    var mondayOfWeek1 = new Date(jan4);
-    var dow = jan4.getDay()||7;
-    mondayOfWeek1.setDate(jan4.getDate() - dow + 1);
-    var week = Math.floor((monday - mondayOfWeek1)/(7*24*3600*1000)) + 1;
-    return y + '-W' + String(week).padStart(2,'0');
+  function getWeekIndex(dateStr) {
+    if (!currentWarrant || !dateStr) return 1;
+    const start = new Date(currentWarrant.start + 'T00:00:00');
+    const d = new Date(dateStr + 'T00:00:00');
+    const diffDays = Math.floor((d - start) / 86400000);
+    return diffDays < 7 ? 1 : 2;
   }
 
-  // --- Totals, Gross, and GL Review ---
-  function calculateTotals(){
-    var rows = getAllRows();
+  function showAutoSave() {
+    const indicator = $('#autoSaveIndicator');
+    if (indicator) {
+      indicator.style.opacity = '1';
+      setTimeout(() => indicator.style.opacity = '0', 2000);
+    }
+  }
 
-    // Sum by type (display)
-    var sums = { Regular:0, Sick:0, Personal:0, Vacation:0, Holiday:0, Overtime:0 };
-    rows.forEach(function(r){ if(sums[r.type]==null) sums[r.type]=0; sums[r.type] += (r.hours||0); });
+  // ---- GL Split Management ----
+  function showGLSplitSection() {
+    const card = $('#glSplitCard');
+    if (card) card.style.display = 'block';
+  }
 
-    var totalHours = Object.values(sums).reduce((a,b)=>a+b,0);
+  function hideGLSplitSection() {
+    const card = $('#glSplitCard');
+    if (card) card.style.display = 'none';
+    glSplitAllocations = [];
+  }
 
-    // Gross pay & OT handling
-    var gross = 0;
-    var rate = currentEmployee && currentEmployee.rate ? currentEmployee.rate : 0;
+  function initializeGLSplit() {
+    const container = $('#glSplitContainer');
+    if (!container) return;
+    
+    container.innerHTML = '';
+    glSplitAllocations = [];
+    addGLSplitRow();
+  }
 
-    // Build per-GL aggregates for review
-    var glAgg = {}; // glCode -> { label, reg, sick, pers, vac, hol, otEntered, otAuto, totalHrs, cost }
-    function ensureGL(glCode){
-      if(!glAgg[glCode]){
-        var label = Object.keys(GL_CODES).find(k => GL_CODES[k]===glCode) || 'Unknown';
-        glAgg[glCode] = { label: label, gl: glCode, reg:0, sick:0, pers:0, vac:0, hol:0, otEntered:0, otAuto:0 };
+  function addGLSplitRow() {
+    const container = $('#glSplitContainer');
+    if (!container) return;
+
+    const rowDiv = document.createElement('div');
+    rowDiv.className = 'gl-split-row';
+    
+    const rowId = 'gl-split-' + Date.now();
+    
+    rowDiv.innerHTML = `
+      <label style="font-weight: 600;">GL Account:</label>
+      <select class="gl-split-account input" data-row-id="${rowId}" required>
+        <option value="">-- Select Account --</option>
+        ${GL_ACCOUNT_OPTIONS.map(opt => `<option value="${opt.value}">${opt.label} — ${opt.value}</option>`).join('')}
+      </select>
+      <label style="font-weight: 600;">Hours:</label>
+      <input type="number" class="gl-split-hours input" data-row-id="${rowId}" step="0.25" min="0" placeholder="0.00" required />
+      <button type="button" class="btn danger" style="padding: 6px 12px; font-size: 0.85rem;" onclick="window.HubbTIME.removeGLSplitRow('${rowId}')">Remove</button>
+    `;
+
+    container.appendChild(rowDiv);
+    
+    // Wire up event listeners
+    const accountSelect = rowDiv.querySelector('.gl-split-account');
+    const hoursInput = rowDiv.querySelector('.gl-split-hours');
+    
+    accountSelect.addEventListener('change', validateGLSplit);
+    hoursInput.addEventListener('input', validateGLSplit);
+    
+    validateGLSplit();
+  }
+
+  function removeGLSplitRow(rowId) {
+    const container = $('#glSplitContainer');
+    if (!container) return;
+    
+    const rows = container.querySelectorAll('.gl-split-row');
+    if (rows.length <= 1) {
+      setMsg('You must have at least one GL account allocation.', 'warning', true);
+      return;
+    }
+    
+    const row = container.querySelector(`[data-row-id="${rowId}"]`)?.closest('.gl-split-row');
+    if (row) {
+      row.remove();
+      validateGLSplit();
+    }
+  }
+
+  function calculateGLSplitTotals() {
+    let totalAllocated = 0;
+    const allocations = [];
+    
+    const container = $('#glSplitContainer');
+    if (!container) return { totalAllocated: 0, allocations: [] };
+    
+    const rows = container.querySelectorAll('.gl-split-row');
+    rows.forEach(row => {
+      const account = row.querySelector('.gl-split-account')?.value || '';
+      const hours = parseFloat(row.querySelector('.gl-split-hours')?.value || 0) || 0;
+      
+      if (account && hours > 0) {
+        totalAllocated += hours;
+        allocations.push({ account, hours });
       }
-      return glAgg[glCode];
+    });
+    
+    return { totalAllocated, allocations };
+  }
+
+  function validateGLSplit() {
+    const totalHoursEl = $('#totalHours');
+    const totalHours = parseFloat(totalHoursEl?.textContent || 0) || 0;
+    
+    const { totalAllocated, allocations } = calculateGLSplitTotals();
+    
+    // Update display
+    const glSplitTotalHoursEl = $('#glSplitTotalHours');
+    const glAllocatedHoursEl = $('#glAllocatedHours');
+    const glTotalHoursEl = $('#glTotalHours');
+    const glStatusEl = $('#glSplitStatus');
+    const glStatusIconEl = $('#glStatusIcon');
+    const glStatusTextEl = $('#glStatusText');
+    
+    if (glSplitTotalHoursEl) glSplitTotalHoursEl.textContent = totalHours.toFixed(2);
+    if (glAllocatedHoursEl) glAllocatedHoursEl.textContent = totalAllocated.toFixed(2);
+    if (glTotalHoursEl) glTotalHoursEl.textContent = totalHours.toFixed(2);
+    
+    glSplitAllocations = allocations;
+    
+    if (!glStatusEl) return false;
+    
+    const diff = Math.abs(totalAllocated - totalHours);
+    const isValid = diff < 0.01 && totalHours > 0;
+    
+    if (isValid) {
+      glStatusEl.className = 'gl-split-status valid';
+      if (glStatusIconEl) glStatusIconEl.textContent = '✓';
+      if (glStatusTextEl) glStatusTextEl.textContent = 'Perfect! All hours allocated correctly.';
+      return true;
+    } else if (totalAllocated > totalHours) {
+      glStatusEl.className = 'gl-split-status over';
+      if (glStatusIconEl) glStatusIconEl.textContent = '✗';
+      if (glStatusTextEl) glStatusTextEl.textContent = `Over-allocated by ${(totalAllocated - totalHours).toFixed(2)} hours. Please adjust.`;
+      return false;
+    } else {
+      glStatusEl.className = 'gl-split-status under';
+      if (glStatusIconEl) glStatusIconEl.textContent = '⚠️';
+      if (glStatusTextEl) glStatusTextEl.textContent = totalHours > 0 
+        ? `Under-allocated by ${(totalHours - totalAllocated).toFixed(2)} hours. Please add more.`
+        : 'Please allocate all hours before submitting.';
+      return false;
+    }
+  }
+
+  // ---- GL Code Management ----
+  function getDefaultGL(emp) {
+    if (!emp) return "";
+    if (emp.position && POSITION_GLS[emp.position]) return POSITION_GLS[emp.position];
+    if (DEPT_GLS[emp.department]) return DEPT_GLS[emp.department];
+    return "";
+  }
+
+  function getEmployeeGLChoices(emp) {
+    if (!emp) return [];
+    const choices = (EMPLOYEE_POSITIONS[emp.name] || []).map(x => ({ 
+      label: `${x.title} — ${x.gl}`, 
+      value: x.gl 
+    }));
+
+    if (emp.position && POSITION_GLS[emp.position]) {
+      const gl = POSITION_GLS[emp.position];
+      if (!choices.some(c => c.value === gl)) {
+        choices.push({ label: `Position (${emp.position}) — ${gl}`, value: gl });
+      }
     }
 
-    rows.forEach(function(r){
-      var g = ensureGL(r.gl || '');
-      if(r.type==='Regular') g.reg += (r.hours||0);
-      else if(r.type==='Sick') g.sick += (r.hours||0);
-      else if(r.type==='Personal') g.pers += (r.hours||0);
-      else if(r.type==='Vacation') g.vac += (r.hours||0);
-      else if(r.type==='Holiday') g.hol += (r.hours||0);
-      else if(r.type==='Overtime') g.otEntered += (r.hours||0);
-    });
+    const deptGL = DEPT_GLS[emp.department];
+    if (deptGL && !choices.some(c => c.value === deptGL)) {
+      choices.push({ label: `Department (${emp.department}) — ${deptGL}`, value: deptGL });
+    }
 
-    // Hourly: compute weekly OT and allocate proportionally per GL within each week
-    if(currentEmployee && currentEmployee.payType === 'hourly'){
-      var weekGLReg = {}; // week -> gl -> reg hours
-      rows.forEach(function(r){
-        if(r.type!=='Regular' || !r.date) return;
-        var wk = weekKey(r.date);
-        if(!weekGLReg[wk]) weekGLReg[wk] = {};
-        var store = weekGLReg[wk];
-        store[r.gl||''] = (store[r.gl||'']||0) + (r.hours||0);
+    const seen = new Set();
+    return choices.filter(c => (seen.has(c.value) ? false : seen.add(c.value)));
+  }
+
+  function rebuildGLDatalistFor(emp) {
+    let dl = document.getElementById('glList');
+    if (!dl) {
+      dl = document.createElement('datalist');
+      dl.id = 'glList';
+      document.body.appendChild(dl);
+    }
+    dl.innerHTML = '';
+    
+    if (emp) {
+      const choices = getEmployeeGLChoices(emp);
+      choices.forEach(choice => {
+        const option = document.createElement('option');
+        option.value = choice.value;
+        option.label = choice.label;
+        dl.appendChild(option);
       });
-      Object.keys(weekGLReg).forEach(function(wk){
-        var glMap = weekGLReg[wk];
-        var weekTotalReg = Object.values(glMap).reduce((a,b)=>a+b,0);
-        var over = Math.max(0, weekTotalReg - 40);
-        if(over>0 && weekTotalReg>0){
-          Object.keys(glMap).forEach(function(gl){
-            var share = over * (glMap[gl] / weekTotalReg);
-            ensureGL(gl).otAuto += share; // proportional reclass from regular
-          });
+    }
+  }
+
+  function createGLInput(initialGL = '', emp = null) {
+    const hasMulti = emp && EMPLOYEE_POSITIONS[emp.name] && EMPLOYEE_POSITIONS[emp.name].length;
+    
+    const glDiv = document.createElement('div');
+    glDiv.className = 'gl-cell';
+    glDiv.style.display = 'none'; // Hidden for Leeanne and Patricia
+    
+    const glInput = document.createElement('input');
+    glInput.type = 'text';
+    glInput.setAttribute('list', 'glList');
+    glInput.className = 'gl-input input';
+    glInput.placeholder = 'Type GL code...';
+    glInput.value = initialGL || getDefaultGL(emp);
+    glInput.style.minWidth = '15ch';
+    glInput.setAttribute('autocomplete', 'off');
+    
+    glDiv.appendChild(glInput);
+    
+    // Add multi-position dropdown for special employees
+    if (hasMulti) {
+      const glChooser = document.createElement('select');
+      glChooser.className = 'gl-chooser input';
+      glChooser.style.marginTop = '4px';
+      glChooser.style.fontSize = '12px';
+      
+      const defaultOption = document.createElement('option');
+      defaultOption.value = '';
+      defaultOption.textContent = '↓ Quick select role';
+      glChooser.appendChild(defaultOption);
+      
+      EMPLOYEE_POSITIONS[emp.name].forEach(position => {
+        const option = document.createElement('option');
+        option.value = position.gl;
+        const rateText = position.rate ? ` @ $${position.rate}/hr` : '';
+        const proportionText = position.proportion ? ` (${position.proportion} parts)` : '';
+        option.textContent = `${position.title}${rateText}${proportionText}`;
+        glChooser.appendChild(option);
+      });
+      
+      glChooser.addEventListener('change', function() {
+        if (this.value) {
+          glInput.value = this.value;
+          glInput.dispatchEvent(new Event('input', { bubbles: true }));
         }
       });
+      
+      glDiv.appendChild(glChooser);
+    }
+    
+    return glDiv;
+  }
 
-      // Compute gross & per-GL cost
-      var totalCost = 0;
-      Object.keys(glAgg).forEach(function(gl){
-        var a = glAgg[gl];
-        var regForPay = Math.max(0, a.reg - a.otAuto);
-        var otForPay  = a.otEntered + a.otAuto;
-        var leave1x = a.sick + a.pers + a.vac + a.hol;
-        a.totalHrs = a.reg + a.sick + a.pers + a.vac + a.hol + a.otEntered; // display total (entered)
-        a.cost = (regForPay * rate) + (otForPay * rate * 1.5) + (leave1x * rate);
-        totalCost += a.cost;
-      });
-      gross = totalCost;
-    } else if(currentEmployee && currentEmployee.payType === 'salary'){
-      // Salary: biweekly check
-      var biweekly = (rate||0)/26;
-      // allocate by share of hours across GLs (if no hours, show 0; gross shows full)
-      var byGLHours = {};
-      var totalEnteredHours = 0;
-      Object.keys(glAgg).forEach(function(gl){
-        var a = glAgg[gl];
-        var hrs = a.reg + a.sick + a.pers + a.vac + a.hol + a.otEntered;
-        byGLHours[gl] = hrs; totalEnteredHours += hrs;
-        a.totalHrs = hrs;
-      });
-      Object.keys(glAgg).forEach(function(gl){
-        var a = glAgg[gl];
-        a.cost = totalEnteredHours>0 ? biweekly * (byGLHours[gl]/totalEnteredHours) : 0;
-      });
-      gross = biweekly;
+  // ---- Employee Management ----
+  function handleEmployeeSelection(e) {
+    const name = (e.target.value || '').trim();
+    const emp = EMPLOYEES.find(x => x.name.toLowerCase() === name.toLowerCase());
+    if (!emp) return;
+    
+    currentEmployee = emp;
+    
+    const details = $('#employeeDetails');
+    if (details) details.style.display = 'block';
+    
+    const dep = $('#department'); 
+    if (dep) dep.textContent = emp.department || '—';
+    
+    const pty = $('#payType');    
+    if (pty) pty.textContent = emp.payType ? (emp.payType[0].toUpperCase() + emp.payType.slice(1)) : '—';
+    
+    const rate = $('#rate');
+    if (rate) {
+      rate.textContent = emp.payType === 'salary'
+        ? (emp.rate ? (currency(emp.rate) + ' annually') : '—')
+        : (emp.rate ? (currency(emp.rate) + ' per hour') : '—');
+    }
+
+    rebuildGLDatalistFor(emp);
+    reseedBlankGLs();
+    
+    // Show/hide GL split section for Leeanne and Patricia
+    if (GL_SPLIT_EMPLOYEES.includes(emp.name)) {
+      showGLSplitSection();
+      initializeGLSplit();
+      hideGLColumnInTable();
+      setMsg(`${emp.name}: GL account split enabled. You'll allocate hours by account at the bottom of the form.`, 'info', true);
     } else {
-      gross = 0;
-      Object.keys(glAgg).forEach(gl => {
-        var a = glAgg[gl];
-        a.totalHrs = a.reg + a.sick + a.pers + a.vac + a.hol + a.otEntered;
-      });
+      hideGLSplitSection();
+      showGLColumnInTable();
     }
-
-    // Render totals
-    var sr = $('#sumRegular'), ss = $('#sumSick'), sp = $('#sumPersonal'),
-        sv = $('#sumVacation'), sh = $('#sumHoliday'), th = $('#totalHours'), gp = $('#grossPay');
-    if(sr) sr.textContent = fmt(sums.Regular);
-    if(ss) ss.textContent = fmt(sums.Sick);
-    if(sp) sp.textContent = fmt(sums.Personal);
-    if(sv) sv.textContent = fmt(sums.Vacation);
-    if(sh) sh.textContent = fmt(sums.Holiday);
-    if(th) th.textContent = fmt(totalHours);
-    if(gp) gp.textContent = currency(gross);
-
-    // Render GL Review
-    renderGLReview(glAgg, gross);
+    
+    calculateTotals();
+    
+    // Show message about multi-position functionality
+    if (EMPLOYEE_POSITIONS[emp.name]) {
+      const positions = EMPLOYEE_POSITIONS[emp.name];
+      const positionText = positions.map(p => `${p.title} (${p.proportion} parts)`).join(' & ');
+      setMsg(`${emp.name} has multiple positions: ${positionText}. Quick day buttons will auto-split hours.`, 'info', true);
+    }
   }
 
-  function renderGLReview(glAgg, gross){
-    var wrap = $('#glReviewWrap'); if(!wrap) return;
-    var keys = Object.keys(glAgg);
-    var rows = keys.map(k => glAgg[k]).filter(a => a.totalHrs && a.totalHrs>0);
-    rows.sort((a,b)=> (b.cost||0) - (a.cost||0));
-    var totalCost = rows.reduce((s,a)=>s+(a.cost||0), 0) || gross || 0;
-
-    var html = '<table><thead><tr>'
-      + '<th>GL Code</th><th>Label</th>'
-      + '<th style="text-align:right;">Regular</th>'
-      + '<th style="text-align:right;">Sick</th>'
-      + '<th style="text-align:right;">Personal</th>'
-      + '<th style="text-align:right;">Vacation</th>'
-      + '<th style="text-align:right;">Holiday</th>'
-      + '<th style="text-align:right;">Overtime (incl. auto)</th>'
-      + '<th style="text-align:right;">Total Hrs</th>'
-      + '<th style="text-align:right;">Allocated Cost</th>'
-      + '<th style="text-align:right;">% of Cost</th>'
-      + '</tr></thead><tbody>';
-
-    rows.forEach(function(a){
-      var otTotal = a.otEntered + a.otAuto;
-      var pct = totalCost>0 ? (a.cost/totalCost*100) : 0;
-      html += '<tr>'
-        + '<td>'+ (a.gl||'') +'</td>'
-        + '<td>'+ a.label +'</td>'
-        + '<td style="text-align:right;">'+ fmt(a.reg) +'</td>'
-        + '<td style="text-align:right;">'+ fmt(a.sick) +'</td>'
-        + '<td style="text-align:right;">'+ fmt(a.pers) +'</td>'
-        + '<td style="text-align:right;">'+ fmt(a.vac) +'</td>'
-        + '<td style="text-align:right;">'+ fmt(a.hol) +'</td>'
-        + '<td style="text-align:right;">'+ fmt(otTotal) +'</td>'
-        + '<td style="text-align:right;">'+ fmt(a.totalHrs||0) +'</td>'
-        + '<td style="text-align:right; font-weight:600;">'+ currency(a.cost||0) +'</td>'
-        + '<td style="text-align:right;">'+ fmt(pct) +'%</td>'
-        + '</tr>';
+  function hideGLColumnInTable() {
+    const headers = document.querySelectorAll('th');
+    headers.forEach(th => {
+      if (th.textContent.trim() === 'GL Code') {
+        th.style.display = 'none';
+      }
     });
-
-    var totals = {
-      reg: rows.reduce((s,a)=>s+a.reg,0),
-      sick: rows.reduce((s,a)=>s+a.sick,0),
-      pers: rows.reduce((s,a)=>s+a.pers,0),
-      vac: rows.reduce((s,a)=>s+a.vac,0),
-      hol: rows.reduce((s,a)=>s+a.hol,0),
-      ot: rows.reduce((s,a)=>s+a.otEntered+a.otAuto,0),
-      hrs: rows.reduce((s,a)=>s+(a.totalHrs||0),0),
-      cost: rows.reduce((s,a)=>s+(a.cost||0),0)
-    };
-
-    html += '</tbody><tfoot><tr>'
-      + '<th colspan="2" style="text-align:right;">Totals:</th>'
-      + '<th style="text-align:right;">'+ fmt(totals.reg) +'</th>'
-      + '<th style="text-align:right;">'+ fmt(totals.sick) +'</th>'
-      + '<th style="text-align:right;">'+ fmt(totals.pers) +'</th>'
-      + '<th style="text-align:right;">'+ fmt(totals.vac) +'</th>'
-      + '<th style="text-align:right;">'+ fmt(totals.hol) +'</th>'
-      + '<th style="text-align:right;">'+ fmt(totals.ot) +'</th>'
-      + '<th style="text-align:right;">'+ fmt(totals.hrs) +'</th>'
-      + '<th style="text-align:right;">'+ currency(totals.cost) +'</th>'
-      + '<th style="text-align:right;">'+ (totals.cost>0? '100.00%':'0.00%') +'</th>'
-      + '</tr></tfoot></table>';
-
-    wrap.innerHTML = html;
   }
 
-  // --- Quick templates ---
-  function addQuickTemplate(kind){
-    var today = dateISO(new Date());
-    var gl = currentEmployee ? getGLCode(currentEmployee) : '';
-    if(kind==='split'){
-      var r1 = addTimeRow(today,'08:00','12:00','', 'Regular', gl, 'AM shift');
-      var r2 = addTimeRow(today,'13:00','17:00','', 'Regular', gl, 'PM shift');
-      [r1,r2].forEach(r=>{
-        var s=r.querySelector('td:nth-child(2) input').value;
-        var e=r.querySelector('td:nth-child(3) input').value;
-        r.querySelector('td:nth-child(4) input').value = fmt(hoursBetween(s,e));
-      });
-    } else if(kind==='overtime'){
-      var a = addTimeRow(today,'08:00','16:00','', 'Regular', gl, 'Extended day (regular)');
-      var b = addTimeRow(today,'16:00','18:00','', 'Overtime', gl, 'Extended day (OT)');
-      [a,b].forEach(r=>{
-        var s=r.querySelector('td:nth-child(2) input').value;
-        var e=r.querySelector('td:nth-child(3) input').value;
-        r.querySelector('td:nth-child(4) input').value = fmt(hoursBetween(s,e));
-      });
-    } else if(kind==='sick'){
-      addTimeRow(today,'','',8,'Sick',gl,'Sick leave (full day)');
-    } else if(kind==='vacation'){
-      addTimeRow(today,'','',8,'Vacation',gl,'Vacation (full day)');
-    }
+  function showGLColumnInTable() {
+    const headers = document.querySelectorAll('th');
+    headers.forEach(th => {
+      if (th.textContent.trim() === 'GL Code') {
+        th.style.display = '';
+      }
+    });
+  }
+
+  function clearEmployee() {
+    currentEmployee = null;
+    ['employeeIndex','employeeSearch'].forEach(id => { 
+      const el = document.getElementById(id); 
+      if (el) el.value = ''; 
+    });
+    ['department','payType','rate'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = '—';
+    });
+    const details = $('#employeeDetails');
+    if (details) details.style.display = 'none';
+    
+    const dl = document.getElementById('glList'); 
+    if (dl) dl.innerHTML = '';
+    
+    hideGLSplitSection();
+    showGLColumnInTable();
     calculateTotals();
   }
 
-  // --- Town Hall Hours (Mon–Thu 8:00–16:30, Fri 8:00–13:00) ---
-  function addTownHallHours(){
-    if(!currentWarrant){ showMessage('Select a Pay Period first to add Town Hall hours.', 'error', true); return; }
-    var start = new Date(currentWarrant.start+'T00:00:00');
-    var end   = new Date(currentWarrant.end+'T00:00:00');
-    var gl = currentEmployee ? getGLCode(currentEmployee) : '';
-    for(var d=new Date(start); d<=end; d.setDate(d.getDate()+1)){
-      var dow = d.getDay(), iso = dateISO(new Date(d));
-      if(dow>=1 && dow<=4){
-        var r = addTimeRow(iso,'08:00','16:30','', 'Regular', gl, 'Town Hall');
-        r.querySelector('td:nth-child(4) input').value = fmt(hoursBetween('08:00','16:30')); // 8.5
-      } else if(dow===5){
-        var r2 = addTimeRow(iso,'08:00','13:00','', 'Regular', gl, 'Town Hall');
-        r2.querySelector('td:nth-child(4) input').value = fmt(hoursBetween('08:00','13:00')); // 5
+  function reseedBlankGLs() {
+    const rows = Array.from(document.querySelectorAll('#timeBody tr'));
+    const def = getDefaultGL(currentEmployee);
+    rows.forEach(r => {
+      const glIn = r.querySelector('.gl-input');
+      if (glIn && !glIn.value && def) glIn.value = def;
+    });
+  }
+
+  // ---- Time Entry Management ----
+  function addTimeRowWith(date, start, end, hours, type, glCode, description) {
+    const tbody = $('#timeBody'); 
+    if (!tbody) return;
+
+    const tr = document.createElement('tr');
+    
+    const isGLSplitEmployee = currentEmployee && GL_SPLIT_EMPLOYEES.includes(currentEmployee.name);
+    
+    tr.innerHTML =
+      `<td><input type="date" class="date-cell input" value="${date || ''}"></td>
+       <td><input type="time" class="time-start input" value="${start || ''}"></td>
+       <td><input type="time" class="time-end input" value="${end || ''}"></td>
+       <td><input type="number" step="0.25" min="0" placeholder="0.00" class="time-hours input" value="${hours || ''}"></td>
+       <td>
+         <select class="time-type input">
+           <option${type==='Regular'?' selected':''}>Regular</option>
+           <option${type==='Sick'?' selected':''}>Sick</option>
+           <option${type==='Personal'?' selected':''}>Personal</option>
+           <option${type==='Vacation'?' selected':''}>Vacation</option>
+           <option${type==='Holiday'?' selected':''}>Holiday</option>
+         </select>
+       </td>
+       <td style="${isGLSplitEmployee ? 'display:none;' : ''}"></td>
+       <td><input type="text" class="input" placeholder="Describe work or leave" value="${description || ''}"></td>
+       <td>
+         <div class="row-actions">
+           <button type="button" class="row-btn insert-above">↑ Above</button>
+           <button type="button" class="row-btn insert-below">↓ Below</button>
+           <button type="button" class="row-btn remove-row" style="background: var(--error); color: white;">Remove</button>
+         </div>
+       </td>`;
+
+    // Insert the custom GL cell (hidden for GL split employees)
+    const glCell = tr.children[5];
+    const glInput = createGLInput(glCode || getDefaultGL(currentEmployee), currentEmployee);
+    glCell.appendChild(glInput);
+
+    tbody.appendChild(tr);
+
+    if (start && end && type === 'Regular') {
+      tr.querySelector('.time-hours').value = timeDiffHours(start, end).toFixed(2);
+    }
+
+    wireRowEvents(tr);
+    return tr;
+  }
+
+  function wireRowEvents(tr) {
+    tr.querySelector('.remove-row').addEventListener('click', () => { 
+      tr.remove(); 
+      calculateTotals(); 
+      scheduleAutoSave();
+    });
+
+    tr.querySelector('.insert-above').addEventListener('click', () => insertRow(tr, 'above'));
+    tr.querySelector('.insert-below').addEventListener('click', () => insertRow(tr, 'below'));
+    
+    tr.querySelectorAll('input, select').forEach(inp => {
+      inp.addEventListener('input', function () {
+        const rowType = tr.querySelector('.time-type')?.value || 'Regular';
+        if ((this.classList.contains('time-start') || this.classList.contains('time-end')) && rowType === 'Regular') {
+          const s = tr.querySelector('.time-start')?.value || '';
+          const e = tr.querySelector('.time-end')?.value || '';
+          if (s && e) tr.querySelector('.time-hours').value = timeDiffHours(s, e).toFixed(2);
+        }
+        calculateTotals();
+        scheduleAutoSave();
+      });
+    });
+  }
+
+  function insertRow(tr, position) {
+    const newRow = document.createElement('tr');
+    newRow.innerHTML = tr.innerHTML;
+    
+    newRow.querySelectorAll('input').forEach(input => {
+      if (input.type === 'date') {
+        input.value = tr.querySelector('.date-cell').value;
+      } else if (input.classList.contains('gl-input')) {
+        input.value = tr.querySelector('.gl-input').value;
+      } else {
+        input.value = '';
+      }
+    });
+    
+    newRow.querySelectorAll('select').forEach(select => {
+      if (select.classList.contains('time-type')) {
+        select.value = tr.querySelector('.time-type').value;
+      } else {
+        select.selectedIndex = 0;
+      }
+    });
+
+    const glCell = newRow.children[5];
+    glCell.innerHTML = '';
+    const glInput = createGLInput(tr.querySelector('.gl-input').value, currentEmployee);
+    glCell.appendChild(glInput);
+
+    if (position === 'above') {
+      tr.parentNode.insertBefore(newRow, tr);
+    } else {
+      tr.parentNode.insertBefore(newRow, tr.nextSibling);
+    }
+    
+    wireRowEvents(newRow);
+    calculateTotals();
+  }
+
+  function addTimeRow() {
+    const seedGL = getDefaultGL(currentEmployee);
+    addTimeRowWith('', '', '', '', 'Regular', seedGL, '');
+  }
+
+  function clearAllRows() {
+    const tb = $('#timeBody'); 
+    if (tb) tb.innerHTML = '';
+    calculateTotals();
+  }
+
+  // ---- Quick Actions ----
+  function addQuickDay(kind, label, defaultHours = '8.00') {
+    if (!currentEmployee) {
+      setMsg('Please select an employee first.', 'error', true);
+      return;
+    }
+    const today = new Date().toISOString().slice(0, 10);
+    
+    // Auto-split hours for multi-position employees (but not GL split employees)
+    if (EMPLOYEE_POSITIONS[currentEmployee.name] && !GL_SPLIT_EMPLOYEES.includes(currentEmployee.name)) {
+      const positions = EMPLOYEE_POSITIONS[currentEmployee.name];
+      const totalParts = positions.reduce((sum, pos) => sum + pos.proportion, 0);
+      const totalHours = parseFloat(defaultHours);
+      
+      positions.forEach((position) => {
+        const proportionalHours = (totalHours * position.proportion / totalParts).toFixed(2);
+        const positionLabel = `${label} (${position.title})`;
+        addTimeRowWith(today, '', '', proportionalHours, kind, position.gl, positionLabel);
+      });
+      
+      calculateTotals();
+      setMsg(`${label} split: ${positions.map(p => `${(parseFloat(defaultHours) * p.proportion / totalParts).toFixed(2)}h ${p.title}`).join(' + ')}`, 'success', true);
+    } else {
+      // Regular single-position employee or GL split employee
+      const gl = getDefaultGL(currentEmployee);
+      addTimeRowWith(today, '', '', defaultHours, kind, gl, label);
+      calculateTotals();
+      setMsg(`${label} added successfully.`, 'success', true);
+    }
+    scheduleAutoSave();
+  }
+
+  function addSplitShift() {
+    const tbody = document.getElementById('timeBody');
+    if (!tbody || tbody.children.length === 0) {
+      setMsg('Add a time entry first before splitting shifts.', 'error', true);
+      return;
+    }
+
+    const lastRow = tbody.children[tbody.children.length - 1];
+    const date = lastRow.querySelector('.date-cell')?.value || '';
+    const start = lastRow.querySelector('.time-start')?.value || '';
+    const end = lastRow.querySelector('.time-end')?.value || '';
+    const gl = lastRow.querySelector('.gl-input')?.value || getDefaultGL(currentEmployee);
+    const type = lastRow.querySelector('.time-type')?.value || 'Regular';
+    const desc = lastRow.children[6]?.querySelector('input')?.value || '';
+    
+    if (!date || !start || !end) {
+      setMsg('Please complete the date, start time, and end time in the last row first.', 'error', true);
+      return;
+    }
+
+    if (type !== 'Regular') {
+      setMsg('Split Shift only works with Regular time entries.', 'error', true);
+      return;
+    }
+
+    const hhmmToMin = (hhmm) => {
+      if (!hhmm) return null;
+      const [h, m] = hhmm.split(':').map(Number);
+      return h * 60 + m;
+    };
+
+    const minToHHMM = (mins) => {
+      const h = Math.floor(mins / 60);
+      const m = mins % 60;
+      return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
+    };
+
+    const s = hhmmToMin(start);
+    const e = hhmmToMin(end);
+    
+    if (s == null || e == null || e <= s) {
+      setMsg('Invalid time range. End time must be after start time.', 'error', true);
+      return;
+    }
+
+    const mid = Math.floor((s + e) / 2);
+    const midTime = minToHHMM(mid);
+
+    lastRow.remove();
+    addTimeRowWith(date, start, midTime, '', 'Regular', gl, `${desc} (Split 1/2)`.trim());
+    addTimeRowWith(date, midTime, end, '', 'Regular', gl, `${desc} (Split 2/2)`.trim());
+
+    calculateTotals();
+    setMsg(`Shift split successfully: ${start}-${midTime} and ${midTime}-${end}`, 'success', true);
+    scheduleAutoSave();
+  }
+
+  function addTownHallHours() {
+    if (!currentWarrant) { 
+      setMsg("Select a pay period first.", "info", true); 
+      return; 
+    }
+    clearAllRows();
+    const start = new Date(currentWarrant.start + 'T00:00:00');
+    const end = new Date(currentWarrant.end + 'T00:00:00');
+
+    // Mon/Wed/Thu 8-4, Tuesday 8-6
+    const schedule = {
+      1: { start: "08:00", end: "16:00" }, // Monday
+      2: { start: "08:00", end: "18:00" }, // Tuesday
+      3: { start: "08:00", end: "16:00" }, // Wednesday
+      4: { start: "08:00", end: "16:00" }  // Thursday
+    };
+
+    for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
+      const dow = d.getDay();
+      if (schedule[dow]) {
+        const iso = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+        addTimeRowWith(iso, schedule[dow].start, schedule[dow].end, '', 'Regular', getDefaultGL(currentEmployee), 'Town Hall hours');
       }
     }
     calculateTotals();
+    setMsg(`Town Hall hours template applied for ${currentWarrant.start} to ${currentWarrant.end} (M/W/Th 8-4, Tu 8-6).`, "success", true);
+
+    // Auto-allocation for specific employees (but not GL split employees)
+    if (currentEmployee && AUTO_SPLITS[currentEmployee.name] && !GL_SPLIT_EMPLOYEES.includes(currentEmployee.name)) {
+      const splitConfig = AUTO_SPLITS[currentEmployee.name];
+      const allRows = Array.from(document.querySelectorAll('#timeBody tr'));
+      const regularRows = allRows.filter(row => {
+        const type = row.querySelector('.time-type')?.value || 'Regular';
+        return type === 'Regular';
+      });
+      
+      if (splitConfig.mode === "weekly") {
+        const week1Rows = regularRows.filter(row => {
+          const date = row.querySelector('.date-cell')?.value || '';
+          return getWeekIndex(date) === 1;
+        });
+        const week2Rows = regularRows.filter(row => {
+          const date = row.querySelector('.date-cell')?.value || '';
+          return getWeekIndex(date) === 2;
+        });
+        
+        allocateHoursToTargets(week1Rows, splitConfig.targets);
+        allocateHoursToTargets(week2Rows, splitConfig.targets);
+      } else if (splitConfig.mode === "biweekly") {
+        allocateHoursToTargets(regularRows, splitConfig.targets);
+      }
+      
+      calculateTotals();
+      const targetSummary = splitConfig.targets.map(t => `${t.hours}h ${t.label}`).join(' + ');
+      setMsg(`Town Hall hours allocated for ${currentEmployee.name}: ${targetSummary} ${splitConfig.mode === 'weekly' ? 'per week' : 'total'}.`, "success", true);
+    }
+    scheduleAutoSave();
   }
 
-  // --- Clear all ---
-  function clearAllTimeRows(){ var tb = $('#timeBody'); if(tb){ tb.innerHTML=''; } calculateTotals(); }
+  function allocateHoursToTargets(rows, targets) {
+    if (!rows.length || !targets.length) return;
+    
+    let currentTargetIndex = 0;
+    let remainingHours = targets[currentTargetIndex].hours;
+    const tbody = document.getElementById('timeBody');
+    
+    for (let i = 0; i < rows.length; i++) {
+      const row = rows[i];
+      const hoursInput = row.querySelector('.time-hours');
+      const rowHours = parseFloat(hoursInput?.value || 0);
+      
+      if (rowHours <= 0) continue;
+      if (currentTargetIndex >= targets.length) continue;
+      
+      const currentTarget = targets[currentTargetIndex];
+      
+      if (rowHours <= remainingHours) {
+        const glInput = row.querySelector('.gl-input');
+        if (glInput) glInput.value = currentTarget.gl;
+        remainingHours -= rowHours;
+        
+        if (remainingHours <= 0.01) {
+          currentTargetIndex++;
+          if (currentTargetIndex < targets.length) {
+            remainingHours = targets[currentTargetIndex].hours;
+          }
+        }
+      } else {
+        const date = row.querySelector('.date-cell')?.value || '';
+        const type = row.querySelector('.time-type')?.value || 'Regular';
+        const desc = row.children[6]?.querySelector('input')?.value || '';
+        
+        const glInput = row.querySelector('.gl-input');
+        if (glInput) glInput.value = currentTarget.gl;
+        hoursInput.value = remainingHours.toFixed(2);
+        
+        const startInput = row.querySelector('.time-start');
+        const endInput = row.querySelector('.time-end');
+        if (startInput) startInput.value = '';
+        if (endInput) endInput.value = '';
+        
+        const leftoverHours = rowHours - remainingHours;
+        currentTargetIndex++;
+        
+        if (currentTargetIndex < targets.length) {
+          const nextTarget = targets[currentTargetIndex];
+          const newRow = addTimeRowWith(date, '', '', leftoverHours.toFixed(2), type, nextTarget.gl, desc);
+          
+          if (row.nextSibling) {
+            tbody.insertBefore(newRow, row.nextSibling);
+          } else {
+            tbody.appendChild(newRow);
+          }
+          
+          remainingHours = targets[currentTargetIndex].hours - leftoverHours;
+          if (remainingHours <= 0.01) {
+            currentTargetIndex++;
+            if (currentTargetIndex < targets.length) {
+              remainingHours = targets[currentTargetIndex].hours;
+            }
+          }
+        } else {
+          const defaultGL = getDefaultGL(currentEmployee);
+          const newRow = addTimeRowWith(date, '', '', leftoverHours.toFixed(2), type, defaultGL, desc);
+          
+          if (row.nextSibling) {
+            tbody.insertBefore(newRow, row.nextSibling);
+          } else {
+            tbody.appendChild(newRow);
+          }
+        }
+      }
+    }
+  }
 
-  // --- Submit to Flow ---
-  async function handleFormSubmit(e){
+  // ---- Calculations ----
+  function calculateTotals() {
+    let totalHours = 0, reg = 0, sick = 0, pers = 0, vac = 0, hol = 0;
+    let w1Reg = 0, w2Reg = 0;
+
+    const rows = Array.from(document.querySelectorAll('#timeBody tr'));
+    rows.forEach(row => {
+      const date = row.querySelector('.date-cell')?.value || '';
+      const hours = parseFloat(row.querySelector('.time-hours')?.value || 0) || 0;
+      const type = row.querySelector('.time-type')?.value || 'Regular';
+      if (!hours) return;
+      totalHours += hours;
+      if (type === 'Regular') {
+        reg += hours;
+        const wk = getWeekIndex(date);
+        if (wk === 1) w1Reg += hours; else w2Reg += hours;
+      } else if (type === 'Sick') sick += hours;
+      else if (type === 'Personal') pers += hours;
+      else if (type === 'Vacation') vac += hours;
+      else if (type === 'Holiday') hol += hours;
+    });
+
+    // Overtime calculation
+    let overtime = 0;
+    let regPayable = reg;
+    if (currentEmployee && currentEmployee.payType === 'hourly') {
+      const w1OT = Math.max(0, w1Reg - 40);
+      const w2OT = Math.max(0, w2Reg - 40);
+      overtime = w1OT + w2OT;
+      regPayable = Math.max(0, reg - overtime);
+    }
+
+    // Update display
+    const setTxt = (id, v) => { 
+      const el = document.getElementById(id); 
+      if (el) el.textContent = v.toFixed(2); 
+    };
+    setTxt('totalHours', totalHours);
+    setTxt('sumRegular', regPayable);
+    setTxt('sumSick', sick);
+    setTxt('sumPersonal', pers);
+    setTxt('sumVacation', vac);
+    setTxt('sumHoliday', hol);
+
+    // Pay calculation with multi-position rate support
+    let gross = 0;
+    if (currentEmployee && currentEmployee.rate) {
+      if (currentEmployee.payType === 'hourly') {
+        // For GL split employees, use split allocations
+        if (GL_SPLIT_EMPLOYEES.includes(currentEmployee.name) && glSplitAllocations.length > 0) {
+          let totalPay = 0;
+          glSplitAllocations.forEach(alloc => {
+            const position = EMPLOYEE_POSITIONS[currentEmployee.name]?.find(pos => pos.gl === alloc.account);
+            const rate = position && position.rate ? position.rate : currentEmployee.rate;
+            totalPay += alloc.hours * rate;
+          });
+          gross = totalPay;
+        } else {
+          const hasPositionRates = currentEmployee.name && EMPLOYEE_POSITIONS[currentEmployee.name] && 
+                                  EMPLOYEE_POSITIONS[currentEmployee.name].some(pos => pos.rate);
+          if (hasPositionRates) {
+            let totalPay = 0;
+            rows.forEach(row => {
+              const hours = parseFloat(row.querySelector('.time-hours')?.value || 0) || 0;
+              const gl = row.querySelector('.gl-input')?.value || '';
+              if (hours > 0) {
+                const position = EMPLOYEE_POSITIONS[currentEmployee.name].find(pos => pos.gl === gl);
+                const rate = position && position.rate ? position.rate : currentEmployee.rate;
+                totalPay += hours * rate;
+              }
+            });
+            gross = totalPay;
+          } else {
+            const r = currentEmployee.rate;
+            const regPay = regPayable * r;
+            const otPay  = overtime * r * 1.5;
+            const leavePay = (sick + pers + vac + hol) * r;
+            gross = regPay + otPay + leavePay;
+          }
+        }
+      } else if (currentEmployee.payType === 'salary') {
+        gross = currentEmployee.rate / 26; // biweekly
+      }
+    }
+    const gp = document.getElementById('grossPay'); 
+    if (gp) gp.textContent = currency(gross);
+    
+    updateGLReview();
+    
+    // Validate GL split if applicable
+    if (currentEmployee && GL_SPLIT_EMPLOYEES.includes(currentEmployee.name)) {
+      validateGLSplit();
+    }
+  }
+
+  function updateGLReview() {
+    const glBreakdown = {};
+    
+    // For GL split employees, use their split allocations
+    if (currentEmployee && GL_SPLIT_EMPLOYEES.includes(currentEmployee.name) && glSplitAllocations.length > 0) {
+      glSplitAllocations.forEach(alloc => {
+        if (!glBreakdown[alloc.account]) {
+          glBreakdown[alloc.account] = { regular: 0, sick: 0, personal: 0, vacation: 0, holiday: 0, total: 0 };
+        }
+        // Assume all split hours are regular for now
+        glBreakdown[alloc.account].regular += alloc.hours;
+        glBreakdown[alloc.account].total += alloc.hours;
+      });
+    } else {
+      // Regular employees - use GL codes from rows
+      const rows = Array.from(document.querySelectorAll('#timeBody tr'));
+      
+      rows.forEach(row => {
+        const hours = parseFloat(row.querySelector('.time-hours')?.value || 0) || 0;
+        const type = row.querySelector('.time-type')?.value || 'Regular';
+        const gl = row.querySelector('.gl-input')?.value || '';
+        
+        if (hours > 0 && gl) {
+          if (!glBreakdown[gl]) {
+            glBreakdown[gl] = { regular: 0, sick: 0, personal: 0, vacation: 0, holiday: 0, total: 0 };
+          }
+          glBreakdown[gl][type.toLowerCase()] += hours;
+          glBreakdown[gl].total += hours;
+        }
+      });
+    }
+
+    const reviewWrap = $('#glReviewWrap');
+    if (!reviewWrap) return;
+
+    if (Object.keys(glBreakdown).length === 0) {
+      reviewWrap.innerHTML = `
+        <p class="text-center text-muted" style="padding:var(--space-xl);">
+          Enter time entries above to see GL code breakdown and cost allocation
+        </p>`;
+      return;
+    }
+
+    let costCalculation = '';
+    if (currentEmployee && currentEmployee.rate) {
+      costCalculation = currentEmployee.payType === 'hourly' 
+        ? `<th>Regular Cost</th><th>Leave Cost</th><th>Total Cost</th>`
+        : `<th>Salary Allocation</th>`;
+    }
+
+    let tableHTML = `
+      <div class="tableWrap">
+        <table>
+          <thead>
+            <tr>
+              <th>GL Code</th>
+              <th>Regular</th>
+              <th>Sick</th>
+              <th>Personal</th>
+              <th>Vacation</th>
+              <th>Holiday</th>
+              <th>Total Hours</th>
+              ${costCalculation}
+            </tr>
+          </thead>
+          <tbody>`;
+
+    Object.entries(glBreakdown).forEach(([gl, breakdown]) => {
+      let costCells = '';
+      if (currentEmployee && currentEmployee.rate) {
+        if (currentEmployee.payType === 'hourly') {
+          let rate = currentEmployee.rate;
+          if (currentEmployee.name && EMPLOYEE_POSITIONS[currentEmployee.name]) {
+            const position = EMPLOYEE_POSITIONS[currentEmployee.name].find(pos => pos.gl === gl && pos.rate);
+            if (position) rate = position.rate;
+          }
+          const regularCost = breakdown.regular * rate;
+          const leaveCost = (breakdown.sick + breakdown.personal + breakdown.vacation + breakdown.holiday) * rate;
+          const totalCost = regularCost + leaveCost;
+          costCells = `
+            <td>${currency(regularCost)}</td>
+            <td>${currency(leaveCost)}</td>
+            <td><strong>${currency(totalCost)}</strong></td>`;
+        } else {
+          const totalHours = Object.values(glBreakdown).reduce((sum, b) => sum + b.total, 0);
+          const allocation = totalHours > 0 ? (breakdown.total / totalHours) * (currentEmployee.rate / 26) : 0;
+          costCells = `<td><strong>${currency(allocation)}</strong></td>`;
+        }
+      }
+
+      tableHTML += `
+        <tr>
+          <td><strong>${gl}</strong></td>
+          <td>${breakdown.regular.toFixed(2)}</td>
+          <td>${breakdown.sick.toFixed(2)}</td>
+          <td>${breakdown.personal.toFixed(2)}</td>
+          <td>${breakdown.vacation.toFixed(2)}</td>
+          <td>${breakdown.holiday.toFixed(2)}</td>
+          <td><strong>${breakdown.total.toFixed(2)}</strong></td>
+          ${costCells}
+        </tr>`;
+    });
+
+    tableHTML += `</tbody></table></div>`;
+    reviewWrap.innerHTML = tableHTML;
+  }
+
+  // ---- Auto-save ----
+  function scheduleAutoSave() {
+    if (autoSaveTimeout) {
+      clearTimeout(autoSaveTimeout);
+    }
+    autoSaveTimeout = setTimeout(() => {
+      saveToLocalStorage();
+      showAutoSave();
+    }, 2000);
+  }
+
+  function saveToLocalStorage() {
+    const rows = Array.from(document.querySelectorAll('#timeBody tr'));
+    const entries = rows.map(row => ({
+      date: row.querySelector('.date-cell')?.value || '',
+      start: row.querySelector('.time-start')?.value || '',
+      end: row.querySelector('.time-end')?.value || '',
+      hours: row.querySelector('.time-hours')?.value || '',
+      type: row.querySelector('.time-type')?.value || 'Regular',
+      gl: row.querySelector('.gl-input')?.value || '',
+      description: row.children[6]?.querySelector('input')?.value || ''
+    }));
+
+    const data = {
+      currentEmployee: currentEmployee,
+      entries: entries,
+      warrant: $('#warrant')?.value || '',
+      glSplitAllocations: glSplitAllocations,
+      timestamp: Date.now()
+    };
+    
+    try {
+      localStorage.setItem('hubbtime_data', JSON.stringify(data));
+    } catch (error) {
+      console.error('Error saving to localStorage:', error);
+    }
+  }
+
+  function loadFromLocalStorage() {
+    try {
+      const saved = localStorage.getItem('hubbtime_data');
+      if (saved) {
+        const data = JSON.parse(saved);
+        
+        if (data.currentEmployee) {
+          currentEmployee = data.currentEmployee;
+          const empSearch = $('#employeeSearch');
+          if (empSearch) {
+            empSearch.value = data.currentEmployee.name;
+            handleEmployeeSelection({ target: empSearch });
+          }
+        }
+        
+        if (data.entries && Array.isArray(data.entries)) {
+          data.entries.forEach(entry => {
+            addTimeRowWith(entry.date, entry.start, entry.end, entry.hours, entry.type, entry.gl, entry.description);
+          });
+          calculateTotals();
+        }
+        
+        if (data.warrant) {
+          const warrantSelect = $('#warrant');
+          if (warrantSelect) warrantSelect.value = data.warrant;
+        }
+        
+        if (data.glSplitAllocations && Array.isArray(data.glSplitAllocations)) {
+          glSplitAllocations = data.glSplitAllocations;
+          // Rebuild GL split UI
+          if (currentEmployee && GL_SPLIT_EMPLOYEES.includes(currentEmployee.name)) {
+            const container = $('#glSplitContainer');
+            if (container) {
+              container.innerHTML = '';
+              data.glSplitAllocations.forEach(alloc => {
+                addGLSplitRow();
+                const lastRow = container.lastElementChild;
+                if (lastRow) {
+                  const accountSelect = lastRow.querySelector('.gl-split-account');
+                  const hoursInput = lastRow.querySelector('.gl-split-hours');
+                  if (accountSelect) accountSelect.value = alloc.account;
+                  if (hoursInput) hoursInput.value = alloc.hours;
+                }
+              });
+              validateGLSplit();
+            }
+          }
+        }
+        
+        setMsg('Previous work restored', 'success');
+      }
+    } catch (error) {
+      console.error('Error loading saved data:', error);
+    }
+  }
+
+  // ---- Form Submission ----
+  async function handleSubmit(e) {
     e.preventDefault();
-    if(!currentEmployee){ showMessage('Please select an employee before submitting.', 'error', true); return; }
-    if(!currentWarrant){ showMessage('Please select a Pay Period before submitting.', 'error', true); return; }
+    
+    if (!currentEmployee) { 
+      setMsg("Please select an employee.", "error", true); 
+      return; 
+    }
+    if (!currentWarrant) { 
+      setMsg("Please select a pay period.", "error", true); 
+      return; 
+    }
 
-    var payload = {
-      meta: { submittedAt: new Date().toISOString(), notify: NOTIFY },
+    // Validate GL split for applicable employees
+    if (currentEmployee && GL_SPLIT_EMPLOYEES.includes(currentEmployee.name)) {
+      if (!validateGLSplit()) {
+        setMsg("Please ensure all hours are properly allocated to GL accounts before submitting.", "error", true);
+        return;
+      }
+    }
+
+    const entries = [];
+    const rows = Array.from(document.querySelectorAll('#timeBody tr'));
+    rows.forEach(row => {
+      const date = row.querySelector('.date-cell')?.value || '';
+      const start = row.querySelector('.time-start')?.value || '';
+      const end = row.querySelector('.time-end')?.value || '';
+      const hours = parseFloat(row.querySelector('.time-hours')?.value || 0) || 0;
+      const type = row.querySelector('.time-type')?.value || 'Regular';
+      const gl = row.querySelector('.gl-input')?.value || '';
+      const desc = row.children[6]?.querySelector('input')?.value || '';
+      if (date && hours > 0) {
+        entries.push({ date, start, end, hours, type, gl, description: desc });
+      }
+    });
+
+    if (!entries.length) { 
+      setMsg("Add at least one time entry.", "error", true); 
+      return; 
+    }
+
+    const totals = {
+      totalHours: parseFloat(document.getElementById('totalHours')?.textContent || 0),
+      regularHours: parseFloat(document.getElementById('sumRegular')?.textContent || 0),
+      sickHours: parseFloat(document.getElementById('sumSick')?.textContent || 0),
+      personalHours: parseFloat(document.getElementById('sumPersonal')?.textContent || 0),
+      vacationHours: parseFloat(document.getElementById('sumVacation')?.textContent || 0),
+      holidayHours: parseFloat(document.getElementById('sumHoliday')?.textContent || 0),
+      grossPay: document.getElementById('grossPay')?.textContent || "$0.00"
+    };
+
+    const payload = {
+      meta: {
+        submittedAt: new Date().toISOString(),
+        notify: NOTIFY,
+        source: "HubbTIME (Ultimate)",
+        hasGLSplit: GL_SPLIT_EMPLOYEES.includes(currentEmployee.name)
+      },
       employee: {
         name: currentEmployee.name,
         department: currentEmployee.department,
         payType: currentEmployee.payType,
         rate: currentEmployee.rate,
-        id: currentEmployee.id || null
+        position: currentEmployee.position || null,
+        email: currentEmployee.email || 'admin@hubbardstonma.gov'
       },
       warrant: currentWarrant,
-      totals: {
-        regular: parseFloat((document.getElementById('sumRegular')||{}).textContent||0),
-        sick: parseFloat((document.getElementById('sumSick')||{}).textContent||0),
-        personal: parseFloat((document.getElementById('sumPersonal')||{}).textContent||0),
-        vacation: parseFloat((document.getElementById('sumVacation')||{}).textContent||0),
-        holiday: parseFloat((document.getElementById('sumHoliday')||{}).textContent||0),
-        totalHours: parseFloat((document.getElementById('totalHours')||{}).textContent||0),
-        grossPay: (document.getElementById('grossPay')||{}).textContent||"$0.00"
-      },
-      rows: getAllRows()
+      entries,
+      totals,
+      glSplitAllocations: GL_SPLIT_EMPLOYEES.includes(currentEmployee.name) ? glSplitAllocations : null
     };
 
-    try{
-      var btn = document.getElementById('submitBtn'), status = document.getElementById('submitStatus');
-      if(btn) btn.disabled = true;
-      showMessage('Submitting timesheet…', 'info', true);
-      if(status) status.textContent = 'Sending to payroll…';
-      var res = await fetch(FLOW_URL, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
-      if(!res.ok) throw new Error('Submission failed with status ' + res.status);
-      showMessage('Timesheet submitted successfully.', 'success', true);
-      if(status) status.textContent = 'Submitted ✔';
-    } catch(err){
+    const btn = document.getElementById('submitBtn');
+    const status = document.getElementById('submitStatus');
+    try {
+      if (btn) btn.disabled = true;
+      if (status) status.textContent = 'Sending to payroll…';
+      setMsg('Submitting timesheet…', 'info', true);
+
+      const res = await fetch(FLOW_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      
+      if (!res.ok) throw new Error('Submission failed with status ' + res.status);
+
+      setMsg('Timesheet submitted successfully.', 'success', true);
+      if (status) status.textContent = 'Submitted ✓';
+      
+      // Clear saved data after successful submission
+      localStorage.removeItem('hubbtime_data');
+      
+      // Reset form after a delay
+      setTimeout(() => {
+        if (confirm('Timesheet submitted successfully! Would you like to start a new timesheet?')) {
+          resetForm();
+        }
+      }, 2000);
+      
+    } catch (err) {
       console.error(err);
-      showMessage('Error submitting timesheet: ' + err.message, 'error', true);
-      var status2 = document.getElementById('submitStatus');
-      if(status2) status2.textContent = 'There was a problem submitting. Please try again.';
+      setMsg('Error submitting timesheet: ' + err.message, 'error', true);
+      if (status) status.textContent = 'There was a problem submitting. Please try again.';
     } finally {
-      var btn2 = document.getElementById('submitBtn');
-      if(btn2) btn2.disabled = false;
+      if (btn) btn.disabled = false;
     }
   }
 
-  // --- Init ---
-  window.addEventListener('DOMContentLoaded', function(){
-    // Employees list <datalist id="employeeList">
-    var list = document.getElementById('employeeList');
-    if(list){
-      EMPLOYEES.forEach(function(emp){
-        var o = document.createElement('option');
-        o.value = emp.name;
-        list.appendChild(o);
+  function resetForm() {
+    clearEmployee();
+    const warrantSelect = $('#warrant');
+    if (warrantSelect) warrantSelect.value = '';
+    currentWarrant = null;
+    clearAllRows();
+    calculateTotals();
+    setMsg('Ready for new timesheet', 'info');
+  }
+
+  // ---- Theme Toggle ----
+  function initThemeToggle() {
+    const themeToggle = $('#themeToggle');
+    if (!themeToggle) return;
+
+    // Get saved theme preference or default to dark
+    const savedTheme = localStorage.getItem('hubbtime_theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    updateThemeButton(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('hubbtime_theme', newTheme);
+      updateThemeButton(newTheme);
+      
+      // Update button pressed state for accessibility
+      themeToggle.setAttribute('aria-pressed', newTheme === 'light');
+    });
+  }
+
+  function updateThemeButton(theme) {
+    const themeToggle = $('#themeToggle');
+    if (!themeToggle) return;
+    
+    themeToggle.textContent = theme === 'dark' ? 'Light' : 'Dark';
+    themeToggle.setAttribute('aria-pressed', theme === 'light');
+  }
+
+  // ---- Initialization ----
+  function init() {
+    // Populate employee datalist
+    const employeeList = $('#employeeList');
+    if (employeeList) {
+      EMPLOYEES.forEach(emp => {
+        const option = document.createElement('option');
+        option.value = emp.name;
+        option.label = `${emp.name} — ${emp.department}`;
+        employeeList.appendChild(option);
       });
     }
 
-    // Warrants <select id="warrant">
-    var warrantSel = document.getElementById('warrant');
-    if(warrantSel){
-      WARRANTS.forEach(function(w, idx){
-        var o = document.createElement('option');
-        o.value = idx;
-        o.textContent = 'Warrant #' + w.number + ' — ' + w.start + ' to ' + w.end + ' — Due ' + w.due;
-        warrantSel.appendChild(o);
+    // Populate warrant select
+    const warrantSelect = $('#warrant');
+    if (warrantSelect) {
+      WARRANTS.forEach(warrant => {
+        const option = document.createElement('option');
+        option.value = warrant.number;
+        const startDate = new Date(warrant.start).toLocaleDateString();
+        const endDate = new Date(warrant.end).toLocaleDateString();
+        option.textContent = `Warrant ${warrant.number} (${startDate} - ${endDate})`;
+        warrantSelect.appendChild(option);
       });
     }
 
-    // Bind UI
-    var es = document.getElementById('employeeSearch');
-    if(es) es.addEventListener('input', handleEmployeeSelect);
-    var ceb = document.getElementById('clearEmployeeBtn');
-    if(ceb) ceb.addEventListener('click', clearEmployee);
-    if(warrantSel) warrantSel.addEventListener('change', handleWarrantSelect);
-    var arb = document.getElementById('addRowBtn');
-    if(arb) arb.addEventListener('click', function(){ addTimeRow(); });
-    var thb = document.getElementById('townHallBtn');
-    if(thb) thb.addEventListener('click', addTownHallHours);
-    var cab = document.getElementById('clearAllBtn');
-    if(cab) cab.addEventListener('click', clearAllTimeRows);
-    var form = document.getElementById('timesheetForm');
-    if(form) form.addEventListener('submit', handleFormSubmit);
+    // Employee search handler
+    const employeeSearch = $('#employeeSearch');
+    if (employeeSearch) {
+      employeeSearch.addEventListener('input', handleEmployeeSelection);
+    }
 
-    // Enter advances fields
-    document.addEventListener('keydown', function(ev){
-      if(ev.key === 'Enter' && ev.target.matches && ev.target.matches('#timeBody input, #timeBody select')){
-        ev.preventDefault();
-        var fields = Array.from(document.querySelectorAll('#timeBody input, #timeBody select'));
-        var idx = fields.indexOf(ev.target);
-        if(idx >= 0 && idx < fields.length - 1){ fields[idx+1].focus(); }
-      }
+    // Clear employee button
+    const clearEmployeeBtn = $('#clearEmployeeBtn');
+    if (clearEmployeeBtn) {
+      clearEmployeeBtn.addEventListener('click', clearEmployee);
+    }
+
+    // Warrant selection handler
+    if (warrantSelect) {
+      warrantSelect.addEventListener('change', function() {
+        const warrantNum = parseInt(this.value);
+        currentWarrant = WARRANTS.find(w => w.number === warrantNum) || null;
+        if (currentWarrant) {
+          setMsg(`Selected pay period: ${currentWarrant.start} to ${currentWarrant.end}`, 'info', true);
+        }
+      });
+    }
+
+    // Quick action buttons
+    const quickButtons = [
+      { id: 'addRowBtn', handler: addTimeRow },
+      { id: 'townHallBtn', handler: addTownHallHours },
+      { id: 'splitShiftBtn', handler: addSplitShift },
+      { id: 'overtimeBtn', handler: () => addQuickDay('Regular', 'Overtime Day', '12.00') },
+      { id: 'sickBtn', handler: () => addQuickDay('Sick', 'Sick Day') },
+      { id: 'personalBtn', handler: () => addQuickDay('Personal', 'Personal Day') },
+      { id: 'vacationBtn', handler: () => addQuickDay('Vacation', 'Vacation Day') },
+      { id: 'holidayBtn', handler: () => addQuickDay('Holiday', 'Holiday') },
+      { id: 'clearAllBtn', handler: () => {
+        if (confirm('Clear all time entries? This cannot be undone.')) {
+          clearAllRows();
+          setMsg('All entries cleared.', 'info', true);
+        }
+      }}
+    ];
+
+    quickButtons.forEach(({ id, handler }) => {
+      const btn = document.getElementById(id);
+      if (btn) btn.addEventListener('click', handler);
     });
 
-    showMessage('Select an employee and pay period to begin.', 'info', true);
-  });
+    // GL Split add button
+    const addGLAccountBtn = $('#addGLAccountBtn');
+    if (addGLAccountBtn) {
+      addGLAccountBtn.addEventListener('click', addGLSplitRow);
+    }
 
-  // Expose for HTML buttons
-  api.addQuickTemplate = addQuickTemplate;
-  api.addTownHallHours = addTownHallHours;
-  return api;
+    // Form submission
+    const form = $('#timesheetForm');
+    if (form) {
+      form.addEventListener('submit', handleSubmit);
+    }
+
+    // Initialize theme toggle
+    initThemeToggle();
+
+    // Load saved data
+    loadFromLocalStorage();
+
+    // Add initial empty row
+    addTimeRow();
+
+    // Set initial message
+    setMsg('HubbTIME system ready. Select an employee and pay period to begin.', 'info', true);
+  }
+
+  // ---- Public API ----
+  return {
+    init,
+    addTimeRow,
+    clearAllRows,
+    calculateTotals,
+    handleSubmit,
+    addQuickDay,
+    resetForm,
+    removeGLSplitRow,
+    
+    // Expose for debugging
+    get currentEmployee() { return currentEmployee; },
+    get currentWarrant() { return currentWarrant; },
+    get employees() { return EMPLOYEES; },
+    get warrants() { return WARRANTS; },
+    get glSplitAllocations() { return glSplitAllocations; }
+  };
 })();
+
+// ---- Auto-initialize when DOM is ready ----
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    window.HubbTIME.init();
+  });
+} else {
+  window.HubbTIME.init();
+}
+
+// ---- Keyboard shortcuts ----
+document.addEventListener('keydown', function(e) {
+  // Ctrl/Cmd + Enter to add new row
+  if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+    e.preventDefault();
+    window.HubbTIME.addTimeRow();
+  }
+  
+  // Ctrl/Cmd + S to save (trigger auto-save)
+  if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+    e.preventDefault();
+    // Auto-save is already handled by input events, just show indicator
+    const indicator = document.getElementById('autoSaveIndicator');
+    if (indicator) {
+      indicator.style.opacity = '1';
+      setTimeout(() => indicator.style.opacity = '0', 2000);
+    }
+  }
+});
+
+// ---- Service Worker Registration (Optional) ----
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    // Uncomment to enable offline functionality
+    // navigator.serviceWorker.register('/sw.js')
+    //   .then(registration => console.log('SW registered'))
+    //   .catch(registrationError => console.log('SW registration failed'));
+  });
+}
+  </script>
+</body>
+</html>
