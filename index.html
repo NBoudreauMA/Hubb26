@@ -226,6 +226,41 @@
       margin-bottom: var(--space-lg);
     }
 
+    .pay-period-details {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: var(--space-sm);
+      padding: var(--space-md);
+      margin-top: var(--space-sm);
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 0.95rem;
+    }
+
+    .pay-period-details strong {
+      display: block;
+      font-size: 0.8rem;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: var(--space-xs);
+    }
+
+    .pay-period-details span {
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    [data-theme="dark"] .pay-period-details {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: var(--border);
+    }
+
+    [data-theme="dark"] .pay-period-details span {
+      color: var(--cream);
+    }
+
     .label {
       display: block;
       font-weight: 600;
@@ -668,6 +703,20 @@
             <select id="warrant" class="input">
               <option value="">Select Pay Period...</option>
             </select>
+            <div id="warrantDetails" class="pay-period-details" style="display:none;" aria-live="polite">
+              <div>
+                <strong>Dates</strong>
+                <span id="warrantDates">—</span>
+              </div>
+              <div>
+                <strong>Warrant Due</strong>
+                <span id="warrantDue">—</span>
+              </div>
+              <div>
+                <strong>Check Date</strong>
+                <span id="warrantCheck">—</span>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -1083,11 +1132,17 @@ window.HubbTIME = (function () {
   // ---- Utility Functions ----
   const $ = s => document.querySelector(s);
   const currency = n =>new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(Number(n || 0));
-  
+  const formatDate = isoDate => {
+    if (!isoDate) return '—';
+    const date = new Date(isoDate + 'T00:00:00');
+    if (Number.isNaN(date.getTime())) return '—';
+    return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+  };
+
   function setMsg(text, type = 'info', show = true) {
     const el = $('#systemMsg');
     if (!el) return;
-    if (!show) { 
+    if (!show) {
       el.style.display = 'none'; 
       return; 
     }
@@ -1095,6 +1150,28 @@ window.HubbTIME = (function () {
     el.textContent = text;
     el.style.display = 'block';
     setTimeout(() => el.style.display = 'none', 5000);
+  }
+
+  function updateWarrantDetails() {
+    const detailWrap = $('#warrantDetails');
+    const datesEl = $('#warrantDates');
+    const dueEl = $('#warrantDue');
+    const checkEl = $('#warrantCheck');
+
+    if (!detailWrap || !datesEl || !dueEl || !checkEl) return;
+
+    if (!currentWarrant) {
+      detailWrap.style.display = 'none';
+      datesEl.textContent = '—';
+      dueEl.textContent = '—';
+      checkEl.textContent = '—';
+      return;
+    }
+
+    detailWrap.style.display = 'grid';
+    datesEl.textContent = `${formatDate(currentWarrant.start)} – ${formatDate(currentWarrant.end)}`;
+    dueEl.textContent = formatDate(currentWarrant.due);
+    checkEl.textContent = formatDate(currentWarrant.check);
   }
 
   function timeDiffHours(start, end) {
@@ -2029,7 +2106,7 @@ window.HubbTIME = (function () {
     const data = {
       currentEmployee: currentEmployee,
       entries: entries,
-      warrant: $('#warrant')?.value || '',
+      warrant: currentWarrant ? currentWarrant.number : '',
       glSplitAllocations: glSplitAllocations,
       timestamp: Date.now()
     };
@@ -2065,8 +2142,11 @@ window.HubbTIME = (function () {
         
         if (data.warrant) {
           const warrantSelect = $('#warrant');
-          if (warrantSelect) warrantSelect.value = data.warrant;
+          if (warrantSelect) warrantSelect.value = String(data.warrant);
+          currentWarrant = WARRANTS.find(w => String(w.number) === String(data.warrant)) || null;
         }
+
+        updateWarrantDetails();
         
         if (data.glSplitAllocations && Array.isArray(data.glSplitAllocations)) {
           glSplitAllocations = data.glSplitAllocations;
@@ -2211,6 +2291,7 @@ window.HubbTIME = (function () {
     const warrantSelect = $('#warrant');
     if (warrantSelect) warrantSelect.value = '';
     currentWarrant = null;
+    updateWarrantDetails();
     clearAllRows();
     calculateTotals();
     setMsg('Ready for new timesheet', 'info');
@@ -2288,13 +2369,23 @@ window.HubbTIME = (function () {
     // Warrant selection handler
     if (warrantSelect) {
       warrantSelect.addEventListener('change', function() {
-        const warrantNum = parseInt(this.value);
-        currentWarrant = WARRANTS.find(w => w.number === warrantNum) || null;
+        const warrantNum = parseInt(this.value, 10);
+        currentWarrant = Number.isNaN(warrantNum)
+          ? null
+          : (WARRANTS.find(w => w.number === warrantNum) || null);
         if (currentWarrant) {
-          setMsg(`Selected pay period: ${currentWarrant.start} to ${currentWarrant.end}`, 'info', true);
+          setMsg(
+            `Selected pay period: ${formatDate(currentWarrant.start)} – ${formatDate(currentWarrant.end)} · Due ${formatDate(currentWarrant.due)}`,
+            'info',
+            true
+          );
         }
+        updateWarrantDetails();
+        scheduleAutoSave();
       });
     }
+
+    updateWarrantDetails();
 
     // Quick action buttons
     const quickButtons = [
