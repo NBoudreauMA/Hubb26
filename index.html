@@ -334,6 +334,43 @@
       border-radius: var(--radius);
     }
 
+    .stipend-hours {
+      background: rgba(59, 130, 246, 0.12);
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .stipend-dialog-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      padding: var(--space-lg);
+    }
+
+    .stipend-dialog {
+      background: var(--card);
+      padding: var(--space-xl);
+      border-radius: var(--radius-lg);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+      width: min(480px, 100%);
+    }
+
+    .stipend-dialog h3 {
+      margin-top: 0;
+      color: var(--accent);
+    }
+
+    .stipend-dialog-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: var(--space-sm);
+      margin-top: var(--space-lg);
+    }
+
     /* Tables */
     .table-container {
       overflow-x: auto;
@@ -735,6 +772,7 @@
             <button type="button" class="btn secondary" id="personalBtn">Personal Day</button>
             <button type="button" class="btn secondary" id="vacationBtn">Vacation Day</button>
             <button type="button" class="btn secondary" id="holidayBtn">Holiday</button>
+            <button type="button" class="btn secondary" id="fireStipendBtn" hidden>Fire Stipend</button>
             <button type="button" class="btn danger" id="clearAllBtn">Clear All</button>
           </div>
 
@@ -1128,6 +1166,8 @@ window.HubbTIME = (function () {
   let currentWarrant = null;
   let autoSaveTimeout = null;
   let glSplitAllocations = [];
+  let stipendDialogEl = null;
+  let pendingStipendAmount = null;
 
   // ---- Utility Functions ----
   const $ = s => document.querySelector(s);
@@ -1182,6 +1222,8 @@ window.HubbTIME = (function () {
     if (e < s) e += 24 * 60; // overnight
     return Math.round(((e - s) / 60) * 100) / 100;
   }
+
+  const isFireEmployee = emp => (emp?.department || '').toLowerCase() === 'fire';
 
   function getWeekIndex(dateStr) {
     if (!currentWarrant || !dateStr) return 1;
@@ -1443,9 +1485,10 @@ window.HubbTIME = (function () {
     const name = (e.target.value || '').trim();
     const emp = EMPLOYEES.find(x => x.name.toLowerCase() === name.toLowerCase());
     if (!emp) return;
-    
+
     currentEmployee = emp;
-    
+    closeStipendDialog();
+
     const details = $('#employeeDetails');
     if (details) details.style.display = 'block';
     
@@ -1464,7 +1507,8 @@ window.HubbTIME = (function () {
 
     rebuildGLDatalistFor(emp);
     reseedBlankGLs();
-    
+    toggleFireStipendButton(emp);
+
     // Show/hide GL split section for Leeanne and Patricia
     if (GL_SPLIT_EMPLOYEES.includes(emp.name)) {
       showGLSplitSection();
@@ -1517,11 +1561,13 @@ window.HubbTIME = (function () {
     const details = $('#employeeDetails');
     if (details) details.style.display = 'none';
     
-    const dl = document.getElementById('glList'); 
+    const dl = document.getElementById('glList');
     if (dl) dl.innerHTML = '';
-    
+
     hideGLSplitSection();
     showGLColumnInTable();
+    toggleFireStipendButton(null);
+    closeStipendDialog();
     calculateTotals();
   }
 
@@ -1684,6 +1730,114 @@ window.HubbTIME = (function () {
       setMsg(`${label} added successfully.`, 'success', true);
     }
     scheduleAutoSave();
+  }
+
+  function applyStipendRowStyles(row, amount) {
+    if (!row) return;
+    row.dataset.isStipend = 'true';
+    if (amount !== undefined && amount !== null && !Number.isNaN(Number(amount))) {
+      row.dataset.stipendAmount = Number(amount);
+    }
+    const hoursCell = row.querySelector('.time-hours');
+    if (hoursCell) {
+      hoursCell.value = '0.00';
+      hoursCell.readOnly = true;
+      hoursCell.classList.add('stipend-hours');
+    }
+  }
+
+  function closeStipendDialog() {
+    if (stipendDialogEl && stipendDialogEl.parentElement) {
+      stipendDialogEl.parentElement.removeChild(stipendDialogEl);
+    }
+    stipendDialogEl = null;
+    pendingStipendAmount = null;
+  }
+
+  function confirmFireStipend() {
+    if (!stipendDialogEl) return;
+    const select = stipendDialogEl.querySelector('#fireStipendGLSelect');
+    if (!select) return;
+    const glValue = select.value;
+    if (!glValue) {
+      setMsg('Please choose a GL account for the stipend.', 'error', true);
+      return;
+    }
+
+    const amount = Number(pendingStipendAmount || 0);
+    const glLabel = select.options[select.selectedIndex]?.textContent || glValue;
+    closeStipendDialog();
+
+    const today = new Date().toISOString().slice(0, 10);
+    const description = `Fire stipend ${currency(amount)} — ${glLabel}`;
+    const row = addTimeRowWith(today, '', '', '0.00', 'Regular', glValue, description);
+    applyStipendRowStyles(row, amount);
+    calculateTotals();
+    scheduleAutoSave();
+    setMsg(`Fire stipend of ${currency(amount)} noted for ${glLabel}.`, 'success', true);
+  }
+
+  function addFireStipend() {
+    if (!currentEmployee) {
+      setMsg('Please select an employee first.', 'error', true);
+      return;
+    }
+
+    if (!isFireEmployee(currentEmployee)) {
+      setMsg('Fire stipends are only available for Fire Department staff.', 'error', true);
+      return;
+    }
+
+    const amountInput = prompt('Enter fire stipend amount (dollars):');
+    if (amountInput === null) return;
+    const amount = Number(parseFloat(amountInput));
+    if (!Number.isFinite(amount) || amount <= 0) {
+      setMsg('Enter a valid positive stipend amount.', 'error', true);
+      return;
+    }
+
+    const choices = getEmployeeGLChoices(currentEmployee);
+    const optionSource = choices.length ? choices : GL_ACCOUNT_OPTIONS;
+    const optionsHtml = ['<option value="">-- Select GL Account --</option>']
+      .concat(optionSource.map(choice => {
+        const value = choice.value;
+        const label = choice.label || choice.value;
+        const display = choices.length ? label : `${label} — ${value}`;
+        return `<option value="${value}">${display}</option>`;
+      }))
+      .join('');
+
+    pendingStipendAmount = amount;
+    closeStipendDialog();
+
+    stipendDialogEl = document.createElement('div');
+    stipendDialogEl.className = 'stipend-dialog-overlay';
+    stipendDialogEl.innerHTML = `
+      <div class="stipend-dialog" role="dialog" aria-modal="true" aria-labelledby="fireStipendTitle">
+        <h3 id="fireStipendTitle">Add Fire Stipend</h3>
+        <p style="color: var(--muted);">Amount: <strong>${currency(amount)}</strong></p>
+        <label class="label" for="fireStipendGLSelect">Charge to GL Account</label>
+        <select id="fireStipendGLSelect" class="input">${optionsHtml}</select>
+        <div class="stipend-dialog-actions">
+          <button type="button" class="btn ghost" data-action="cancel">Cancel</button>
+          <button type="button" class="btn primary" data-action="confirm">Add Stipend</button>
+        </div>
+      </div>`;
+
+    document.body.appendChild(stipendDialogEl);
+
+    stipendDialogEl.querySelector('[data-action="cancel"]')?.addEventListener('click', closeStipendDialog);
+    stipendDialogEl.querySelector('[data-action="confirm"]')?.addEventListener('click', confirmFireStipend);
+    stipendDialogEl.querySelector('#fireStipendGLSelect')?.focus();
+  }
+
+  function toggleFireStipendButton(emp) {
+    const btn = document.getElementById('fireStipendBtn');
+    if (!btn) return;
+    const shouldShow = isFireEmployee(emp);
+    btn.hidden = !shouldShow;
+    btn.disabled = !shouldShow;
+    btn.setAttribute('aria-hidden', shouldShow ? 'false' : 'true');
   }
 
   function addSplitShift() {
@@ -2100,7 +2254,9 @@ window.HubbTIME = (function () {
       hours: row.querySelector('.time-hours')?.value || '',
       type: row.querySelector('.time-type')?.value || 'Regular',
       gl: row.querySelector('.gl-input')?.value || '',
-      description: row.children[6]?.querySelector('input')?.value || ''
+      description: row.children[6]?.querySelector('input')?.value || '',
+      isStipend: row.dataset.isStipend === 'true',
+      stipendAmount: row.dataset.stipendAmount ? Number(row.dataset.stipendAmount) : null
     }));
 
     const data = {
@@ -2135,7 +2291,10 @@ window.HubbTIME = (function () {
         
         if (data.entries && Array.isArray(data.entries)) {
           data.entries.forEach(entry => {
-            addTimeRowWith(entry.date, entry.start, entry.end, entry.hours, entry.type, entry.gl, entry.description);
+            const row = addTimeRowWith(entry.date, entry.start, entry.end, entry.hours, entry.type, entry.gl, entry.description);
+            if (row && entry.isStipend) {
+              applyStipendRowStyles(row, entry.stipendAmount);
+            }
           });
           calculateTotals();
         }
@@ -2397,6 +2556,7 @@ window.HubbTIME = (function () {
       { id: 'personalBtn', handler: () => addQuickDay('Personal', 'Personal Day') },
       { id: 'vacationBtn', handler: () => addQuickDay('Vacation', 'Vacation Day') },
       { id: 'holidayBtn', handler: () => addQuickDay('Holiday', 'Holiday') },
+      { id: 'fireStipendBtn', handler: addFireStipend },
       { id: 'clearAllBtn', handler: () => {
         if (confirm('Clear all time entries? This cannot be undone.')) {
           clearAllRows();
@@ -2430,6 +2590,7 @@ window.HubbTIME = (function () {
 
     // Add initial empty row
     addTimeRow();
+    toggleFireStipendButton(null);
 
     // Set initial message
     setMsg('HubbTIME system ready. Select an employee and pay period to begin.', 'info', true);
@@ -2445,7 +2606,8 @@ window.HubbTIME = (function () {
     addQuickDay,
     resetForm,
     removeGLSplitRow,
-    
+    addFireStipend,
+
     // Expose for debugging
     get currentEmployee() { return currentEmployee; },
     get currentWarrant() { return currentWarrant; },
