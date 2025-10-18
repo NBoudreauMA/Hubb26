@@ -232,7 +232,7 @@ table input, table select { width: 100%; min-width: 100px; margin: 0; padding: 4
       <section class="card" id="glSplitCard" style="display:none;">
         <div class="card-header"><h2 class="card-title">GL Account Split Required</h2></div>
         <div class="alert info">
-          <strong>Multiple GL Accounts:</strong> Your hours must be allocated across different department GL codes below.
+          <strong>Multiple GL Accounts:</strong> For multi-position employees, split your total hours across the correct GL codes below. <em>Leave hours included.</em>
         </div>
         <div style="padding: var(--space-lg); background: var(--panel); border-radius: var(--radius); margin-bottom: var(--space-lg);">
           <div style="font-size: 1.1rem; margin-bottom: var(--space-sm);">
@@ -424,6 +424,7 @@ table input, table select { width: 100%; min-width: 100px; margin: 0; padding: 4
     glSplitAllocations = [];
   }
 
+  // No default hours; staff must enter them.
   function initializeGLSplit() {
     const container = $('#glSplitContainer');
     if (!container) return;
@@ -431,10 +432,10 @@ table input, table select { width: 100%; min-width: 100px; margin: 0; padding: 4
     if (currentEmployee && MULTI_POSITION_EMPLOYEES[currentEmployee.name]) {
       const positions = MULTI_POSITION_EMPLOYEES[currentEmployee.name];
       positions.forEach(pos => {
-        addGLSplitRow(pos.glCode, pos.weeklyHours * 2);
+        addGLSplitRow(pos.glCode, ''); // no preset number
       });
     } else {
-      addGLSplitRow();
+      addGLSplitRow('', ''); // single row if ever needed
     }
   }
 
@@ -503,10 +504,12 @@ table input, table select { width: 100%; min-width: 100px; margin: 0; padding: 4
     const total = $('#glTotalHours');
     if (total) total.textContent = totalHours.toFixed(2);
     glSplitAllocations = allocations;
+
     const status = $('#glSplitStatus');
     if (!status) return false;
     const diff = Math.abs(totalAllocated - totalHours);
     const isValid = diff < 0.01 && totalHours > 0;
+
     if (isValid) {
       status.style.cssText = 'margin-top:var(--space-lg); padding:var(--space-md); border-radius:var(--radius); text-align:center; font-weight:600; border:2px solid var(--success); background:rgba(34,197,94,0.1); color:var(--success);';
       status.innerHTML = '<div style="font-size: 1.1rem;"><span id="glAllocatedHours">' + totalAllocated.toFixed(2) + '</span> / <span id="glTotalHours">' + totalHours.toFixed(2) + '</span> hours allocated</div><div style="font-size: 0.9rem; margin-top: var(--space-xs);">✓ Perfect! All hours allocated correctly.</div>';
@@ -530,43 +533,36 @@ table input, table select { width: 100%; min-width: 100px; margin: 0; padding: 4
       currentEmployee = employee;
       const details = $('#employeeDetails');
       if (details) details.style.display = 'block';
-      const empId = $('#empId');
-      if (empId) empId.textContent = employee.id;
-      const empName = $('#empName');
-      if (empName) empName.textContent = employee.name;
+      const empId = $('#empId'); if (empId) empId.textContent = employee.id;
+      const empName = $('#empName'); if (empName) empName.textContent = employee.name;
       const rate = $('#rate');
-      if (rate) {
-        if (employee.payType === 'salary') {
-          rate.textContent = currency(employee.rate) + ' annual';
-        } else {
-          rate.textContent = currency(employee.rate) + '/hr';
-        }
-      }
+      if (rate) rate.textContent = employee.payType === 'salary' ? (currency(employee.rate) + ' annual') : (currency(employee.rate) + '/hr');
+
       const payCalcText = $('#payCalcText');
       if (payCalcText) {
         if (employee.payType === 'salary') {
           payCalcText.textContent = 'Salary: ' + currency(employee.rate) + ' annual = ' + currency(employee.rate/26) + ' biweekly (26 pay periods)';
         } else if (MULTI_POSITION_EMPLOYEES[employee.name]) {
           const positions = MULTI_POSITION_EMPLOYEES[employee.name];
-          const desc = positions.map(p => p.weeklyHours + 'h/wk @ ' + currency(p.rate) + '/hr').join(' + ');
-          payCalcText.textContent = 'Multi-position: ' + desc + '. Overtime at 1.5x over 80h per pay period.';
+          const desc = positions.map(p => p.title + ' @ ' + currency(p.rate) + '/hr').join(' + ');
+          payCalcText.textContent = 'Multi-position: ' + desc + '. Overtime at 1.5x over 80h per pay period. GL split required.';
         } else {
           payCalcText.textContent = 'Hourly at ' + currency(employee.rate) + '/hr. Overtime (1.5x) over 80h per pay period.';
         }
       }
+
       if (MULTI_POSITION_EMPLOYEES[employee.name]) {
         showGLSplitSection();
         const multiAlert = $('#multiPositionAlert');
         const multiText = $('#multiPositionText');
         const positions = MULTI_POSITION_EMPLOYEES[employee.name];
-        const posText = positions.map(p => p.title + ' (' + p.weeklyHours + 'h/wk @ ' + currency(p.rate) + '/hr)').join(' + ');
+        const posText = positions.map(p => p.title + ' (' + p.glCode + ' @ ' + currency(p.rate) + '/hr)').join(' • ');
         if (multiText) multiText.textContent = posText;
         if (multiAlert) multiAlert.style.display = 'block';
         showMessage(employee.name + ' requires GL account split. Allocate hours at bottom.', 'info');
       } else {
         hideGLSplitSection();
-        const multiAlert = $('#multiPositionAlert');
-        if (multiAlert) multiAlert.style.display = 'none';
+        const multiAlert = $('#multiPositionAlert'); if (multiAlert) multiAlert.style.display = 'none';
       }
       calculateTotals();
       showMessage('Selected: ' + employee.name, 'success');
@@ -584,10 +580,7 @@ table input, table select { width: 100%; min-width: 100px; margin: 0; padding: 4
       let candidateDate = new Date(periodStart);
       while (candidateDate <= periodEnd) {
         const dateStr = candidateDate.toISOString().slice(0, 10);
-        if (!existingDates.includes(dateStr)) {
-          date = dateStr;
-          break;
-        }
+        if (!existingDates.includes(dateStr)) { date = dateStr; break; }
         candidateDate.setDate(candidateDate.getDate() + 1);
       }
       if (!date) date = currentWarrant.start;
@@ -600,31 +593,24 @@ table input, table select { width: 100%; min-width: 100px; margin: 0; padding: 4
       '<td><input type="time" class="time-end input" value="' + end + '"></td>' +
       '<td><input type="number" step="0.25" min="0" class="time-hours input" value="' + hours + '" placeholder="0.00"></td>' +
       '<td><select class="time-type input">' +
-        '<option' + (type === 'Regular' ? ' selected' : '') + '>Regular</option>' +
-        '<option' + (type === 'Sick' ? ' selected' : '') + '>Sick</option>' +
-        '<option' + (type === 'Vacation' ? ' selected' : '') + '>Vacation</option>' +
-        '<option' + (type === 'Holiday' ? ' selected' : '') + '>Holiday</option>' +
+        '<option' + (type === "Regular" ? " selected" : "") + '>Regular</option>' +
+        '<option' + (type === "Sick" ? " selected" : "") + '>Sick</option>' +
+        '<option' + (type === "Vacation" ? " selected" : "") + '>Vacation</option>' +
+        '<option' + (type === "Holiday" ? " selected" : "") + '>Holiday</option>' +
       '</select></td>' +
       '<td><input type="text" class="input" placeholder="Description" value="' + desc + '"></td>' +
       '<td><button type="button" class="row-btn remove-row" style="background:var(--error);color:white;">Remove</button></td>';
     tbody.appendChild(tr);
     
     updateDayOfWeek(tr);
-    
     if (start && end && type === 'Regular') {
       tr.querySelector('.time-hours').value = timeDiffHours(start, end).toFixed(2);
     }
-    tr.querySelector('.remove-row').addEventListener('click', () => {
-      tr.remove();
-      calculateTotals();
-    });
+    tr.querySelector('.remove-row').addEventListener('click', () => { tr.remove(); calculateTotals(); });
     
     const dateInput = tr.querySelector('.date-cell');
     if (dateInput) {
-      dateInput.addEventListener('change', function() {
-        updateDayOfWeek(tr);
-        validateDateInPeriod(this);
-      });
+      dateInput.addEventListener('change', function() { updateDayOfWeek(tr); validateDateInPeriod(this); });
     }
     
     tr.querySelectorAll('input, select').forEach(input => {
@@ -633,9 +619,7 @@ table input, table select { width: 100%; min-width: 100px; margin: 0; padding: 4
         if ((this.classList.contains('time-start') || this.classList.contains('time-end')) && rowType === 'Regular') {
           const s = tr.querySelector('.time-start')?.value || '';
           const e = tr.querySelector('.time-end')?.value || '';
-          if (s && e) {
-            tr.querySelector('.time-hours').value = timeDiffHours(s, e).toFixed(2);
-          }
+          if (s && e) tr.querySelector('.time-hours').value = timeDiffHours(s, e).toFixed(2);
         }
         calculateTotals();
       });
@@ -647,7 +631,7 @@ table input, table select { width: 100%; min-width: 100px; margin: 0; padding: 4
     const dayDisplay = row.querySelector('.day-of-week');
     if (dateInput && dayDisplay && dateInput.value) {
       const date = new Date(dateInput.value + 'T00:00:00');
-      const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
       dayDisplay.textContent = days[date.getDay()];
     }
   }
@@ -660,11 +644,9 @@ table input, table select { width: 100%; min-width: 100px; margin: 0; padding: 4
     
     if (enteredDate < periodStart || enteredDate > periodEnd) {
       showMessage('Warning: Date ' + dateInput.value + ' is outside selected pay period (' + currentWarrant.start + ' to ' + currentWarrant.end + ')', 'warning');
-      dateInput.style.borderColor = 'var(--warning)';
-      dateInput.style.borderWidth = '2px';
+      dateInput.style.borderColor = 'var(--warning)'; dateInput.style.borderWidth = '2px';
     } else {
-      dateInput.style.borderColor = '';
-      dateInput.style.borderWidth = '';
+      dateInput.style.borderColor = ''; dateInput.style.borderWidth = '';
     }
   }
 
@@ -675,10 +657,7 @@ table input, table select { width: 100%; min-width: 100px; margin: 0; padding: 4
   }
 
   function addQuickDay(type, label, hours = '8.00') {
-    if (!currentEmployee) {
-      showMessage('Please select an employee first', 'error');
-      return;
-    }
+    if (!currentEmployee) { showMessage('Please select an employee first', 'error'); return; }
     const today = new Date().toISOString().slice(0, 10);
     addTimeRow(today, '', '', hours, type, label);
     calculateTotals();
@@ -686,27 +665,19 @@ table input, table select { width: 100%; min-width: 100px; margin: 0; padding: 4
   }
 
   function addTownHallHours() {
-    if (!currentEmployee) {
-      showMessage('Please select an employee first', 'error');
-      return;
-    }
-    if (!currentWarrant) {
-      showMessage('Please select a pay period first', 'error');
-      return;
-    }
+    if (!currentEmployee) { showMessage('Please select an employee first', 'error'); return; }
+    if (!currentWarrant) { showMessage('Please select a pay period first', 'error'); return; }
     
     clearAllRows();
     
     const periodStart = new Date(currentWarrant.start + 'T00:00:00');
     const periodEnd = new Date(currentWarrant.end + 'T00:00:00');
-    
     const schedule = {
       1: {start: "08:00", end: "16:00"},
       2: {start: "08:00", end: "18:00"},
       3: {start: "08:00", end: "16:00"},
       4: {start: "08:00", end: "16:00"}
     };
-    
     for (let date = new Date(periodStart); date <= periodEnd; date.setDate(date.getDate() + 1)) {
       const dayOfWeek = date.getDay();
       if (schedule[dayOfWeek]) {
@@ -714,7 +685,6 @@ table input, table select { width: 100%; min-width: 100px; margin: 0; padding: 4
         addTimeRow(dateStr, schedule[dayOfWeek].start, schedule[dayOfWeek].end, '', 'Regular', 'Town Hall hours');
       }
     }
-    
     calculateTotals();
     showMessage('Town Hall hours added for pay period (Mon/Wed/Thu 8-4, Tue 8-6)', 'success');
   }
@@ -733,39 +703,56 @@ table input, table select { width: 100%; min-width: 100px; margin: 0; padding: 4
       else if (type === 'Holiday') holiday += hours;
     });
 
-    const setValue = (id, value) => {
-      const el = document.getElementById(id);
-      if (el) el.textContent = value.toFixed(2);
-    };
+    const setValue = (id, value) => { const el = document.getElementById(id); if (el) el.textContent = value.toFixed(2); };
     setValue('totalHours', total);
     setValue('sumRegular', regular);
     setValue('sumSick', sick);
     setValue('sumVacation', vacation);
     setValue('sumHoliday', holiday);
 
+    // Update GL totals display and validity if multi-position is active
     if (currentEmployee && MULTI_POSITION_EMPLOYEES[currentEmployee.name]) {
       validateGLSplit();
     }
 
+    // --- Pay calc ---
     let grossPay = 0;
     if (currentEmployee) {
       if (currentEmployee.payType === 'salary') {
         grossPay = currentEmployee.rate / 26;
-      } else if (currentEmployee.payType === 'hourly') {
-        if (MULTI_POSITION_EMPLOYEES[currentEmployee.name] && glSplitAllocations.length > 0) {
-          glSplitAllocations.forEach(allocation => {
-            const position = MULTI_POSITION_EMPLOYEES[currentEmployee.name].find(p => p.glCode === allocation.account);
-            const rate = position ? position.rate : currentEmployee.rate;
-            grossPay += allocation.hours * rate;
-          });
+      } else {
+        const leaveHours = sick + vacation + holiday;
+        const baseRegular = Math.min(regular, 80);
+        const overtime = Math.max(0, regular - 80);
+
+        const isMulti = !!MULTI_POSITION_EMPLOYEES[currentEmployee.name];
+        if (isMulti) {
+          const totalHours = total;
+          const totalAllocated = (glSplitAllocations || []).reduce((s,a)=>s + (a.hours||0), 0);
+          // If no/invalid allocations yet, show $0 until they enter GL splits (prevents inflated previews)
+          if (totalHours <= 0 || Math.abs(totalAllocated - totalHours) > 0.01 || glSplitAllocations.length === 0) {
+            grossPay = 0;
+          } else {
+            // Distribute each pay component across positions by allocation share, apply each position's rate
+            glSplitAllocations.forEach(a => {
+              const share = (a.hours || 0) / totalHours;
+              if (share <= 0) return;
+              const pos = MULTI_POSITION_EMPLOYEES[currentEmployee.name].find(p => p.glCode === a.account);
+              const rate = pos ? pos.rate : currentEmployee.rate;
+
+              const posRegular = baseRegular * share;
+              const posOT = overtime * share;
+              const posLeave = leaveHours * share;
+
+              grossPay += (posRegular * rate) + (posOT * rate * 1.5) + (posLeave * rate);
+            });
+          }
         } else {
-          // ✅ Overtime only after 80 regular hours in the biweekly pay period
-          let overtime = 0;
-          if (regular > 80) overtime = regular - 80;
-          const regularPay = (regular - overtime) * currentEmployee.rate;
-          const overtimePay = overtime * currentEmployee.rate * 1.5;
-          const leavePay = (sick + vacation + holiday) * currentEmployee.rate;
-          grossPay = regularPay + overtimePay + leavePay;
+          // Single-position hourly
+          grossPay =
+            (baseRegular * currentEmployee.rate) +
+            (overtime * currentEmployee.rate * 1.5) +
+            (leaveHours * currentEmployee.rate);
         }
       }
     }
@@ -780,25 +767,13 @@ table input, table select { width: 100%; min-width: 100px; margin: 0; padding: 4
 
   async function handleSubmit(e) {
     e.preventDefault();
-    if (!currentEmployee) {
-      showMessage('Please select an employee', 'error');
-      return;
-    }
-    if (!currentWarrant) {
-      showMessage('Please select a pay period', 'error');
-      return;
-    }
+    if (!currentEmployee) { showMessage('Please select an employee', 'error'); return; }
+    if (!currentWarrant) { showMessage('Please select a pay period', 'error'); return; }
 
-    if ($('#glSplitCard') && $('#glSplitCard').style.display !== 'none') {
-      if (!validateGLSplit()) {
-        showMessage('Please allocate all hours across GL accounts at the bottom.', 'error');
-        return;
-      }
-    }
-
+    // For multi-position staff, GL split must exactly match total hours
     if (currentEmployee && MULTI_POSITION_EMPLOYEES[currentEmployee.name]) {
       if (!validateGLSplit()) {
-        showMessage('Please allocate all hours across GL accounts', 'error');
+        showMessage('Please allocate GL split hours to exactly match total hours before submitting.', 'error');
         return;
       }
     }
@@ -812,29 +787,14 @@ table input, table select { width: 100%; min-width: 100px; margin: 0; padding: 4
       const hours = parseFloat(row.querySelector('.time-hours')?.value || 0) || 0;
       const type = row.querySelector('.time-type')?.value || 'Regular';
       const description = row.children[5]?.querySelector('input')?.value || '';
-      if (date && hours > 0) {
-        entries.push({ date, start, end, hours, type, description });
-      }
+      if (date && hours > 0) entries.push({ date, start, end, hours, type, description });
     });
-    if (!entries.length) {
-      showMessage('Add at least one time entry', 'error');
-      return;
-    }
+    if (!entries.length) { showMessage('Add at least one time entry', 'error'); return; }
+
     const payload = {
-      employee: {
-        id: currentEmployee.id,
-        name: currentEmployee.name,
-        rate: currentEmployee.rate,
-        payType: currentEmployee.payType
-      },
-      payPeriod: {
-        warrantNumber: currentWarrant.number,
-        periodStart: currentWarrant.start,
-        periodEnd: currentWarrant.end,
-        dueDate: currentWarrant.due,
-        checkDate: currentWarrant.check
-      },
-      entries: entries,
+      employee: { id: currentEmployee.id, name: currentEmployee.name, rate: currentEmployee.rate, payType: currentEmployee.payType },
+      payPeriod: { warrantNumber: currentWarrant.number, periodStart: currentWarrant.start, periodEnd: currentWarrant.end, dueDate: currentWarrant.due, checkDate: currentWarrant.check },
+      entries,
       totals: {
         totalHours: parseFloat($('#totalHours')?.textContent || 0),
         regularHours: parseFloat($('#sumRegular')?.textContent || 0),
@@ -849,6 +809,7 @@ table input, table select { width: 100%; min-width: 100px; margin: 0; padding: 4
       submittedAt: new Date().toISOString(),
       source: "HubbTIME v1.0"
     };
+
     const submitBtn = document.getElementById('timesheetForm').querySelector('button[type="submit"]');
     const statusEl = $('#submitStatus');
     try {
@@ -922,19 +883,15 @@ table input, table select { width: 100%; min-width: 100px; margin: 0; padding: 4
         option.textContent = 'Warrant ' + w.number + ' (' + startDate + ' - ' + endDate + ')';
         warrantSelect.appendChild(option);
       });
-      
       warrantSelect.addEventListener('change', function() {
         const warrantNum = parseInt(this.value);
         currentWarrant = WARRANTS.find(w => w.number === warrantNum) || null;
         const details = $('#warrantDetails');
         if (currentWarrant && details) {
           details.style.display = 'block';
-          const datesEl = $('#warrantDates');
-          const dueEl = $('#warrantDue');
-          const checkEl = $('#warrantCheck');
-          if (datesEl) datesEl.textContent = formatDate(currentWarrant.start) + ' – ' + formatDate(currentWarrant.end);
-          if (dueEl) dueEl.textContent = formatDate(currentWarrant.due);
-          if (checkEl) checkEl.textContent = formatDate(currentWarrant.check);
+          $('#warrantDates').textContent = formatDate(currentWarrant.start) + ' – ' + formatDate(currentWarrant.end);
+          $('#warrantDue').textContent = formatDate(currentWarrant.due);
+          $('#warrantCheck').textContent = formatDate(currentWarrant.check);
           showMessage('Selected: Warrant ' + currentWarrant.number + ' (' + currentWarrant.start + ' to ' + currentWarrant.end + ')', 'info');
         } else if (details) {
           details.style.display = 'none';
@@ -948,28 +905,17 @@ table input, table select { width: 100%; min-width: 100px; margin: 0; padding: 4
       empSearch.addEventListener('change', handleEmployeeSelection);
     }
     addTimeRow();
-    const addBtn = $('#addRowBtn');
-    if (addBtn) addBtn.addEventListener('click', () => addTimeRow());
-    const townHallBtn = $('#townHallBtn');
-    if (townHallBtn) townHallBtn.addEventListener('click', addTownHallHours);
-    const sickBtn = $('#sickBtn');
-    if (sickBtn) sickBtn.addEventListener('click', () => addQuickDay('Sick', 'Sick Day'));
-    const vacationBtn = $('#vacationBtn');
-    if (vacationBtn) vacationBtn.addEventListener('click', () => addQuickDay('Vacation', 'Vacation Day'));
-    const holidayBtn = $('#holidayBtn');
-    if (holidayBtn) holidayBtn.addEventListener('click', () => addQuickDay('Holiday', 'Holiday'));
-    const clearBtn = $('#clearAllBtn');
-    if (clearBtn) clearBtn.addEventListener('click', () => {
-      if (confirm('Clear all entries?')) {
-        clearAllRows();
-        addTimeRow();
-        showMessage('Cleared', 'info');
-      }
+
+    $('#addRowBtn')?.addEventListener('click', () => addTimeRow());
+    $('#townHallBtn')?.addEventListener('click', addTownHallHours);
+    $('#sickBtn')?.addEventListener('click', () => addQuickDay('Sick', 'Sick Day'));
+    $('#vacationBtn')?.addEventListener('click', () => addQuickDay('Vacation', 'Vacation Day'));
+    $('#holidayBtn')?.addEventListener('click', () => addQuickDay('Holiday', 'Holiday'));
+    $('#clearAllBtn')?.addEventListener('click', () => {
+      if (confirm('Clear all entries?')) { clearAllRows(); addTimeRow(); showMessage('Cleared', 'info'); }
     });
-    const addGLBtn = $('#addGLAccountBtn');
-    if (addGLBtn) addGLBtn.addEventListener('click', () => addGLSplitRow());
-    const form = $('#timesheetForm');
-    if (form) form.addEventListener('submit', handleSubmit);
+    $('#addGLAccountBtn')?.addEventListener('click', () => addGLSplitRow());
+    $('#timesheetForm')?.addEventListener('submit', handleSubmit);
 
     // Recalculate when stipend changes
     $('#stipendAmount')?.addEventListener('input', calculateTotals);
