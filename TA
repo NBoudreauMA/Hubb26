@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Town Administrator's Report – Fall 2025</title>
+<style>
+  body {
+    font-family: "Segoe UI", Tahoma, sans-serif;
+    background: linear-gradient(135deg, #f5f7f0 0%, #e8ede0 100%);
+    margin: 0;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+
+  .slide-container {
+    scroll-snap-type: y mandatory;
+    overflow-y: scroll;
+    height: 100vh;
+  }
+
+  .slide {
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 60px 40px;
+    animation: fadeIn 0.5s ease-in;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .slide-content {
+    background: #fff;
+    border-left: 6px solid #6B8E23;
+    box-shadow: 0 20px 60px rgba(85, 107, 47, 0.15);
+    border-radius: 20px;
+    padding: 50px;
+    max-width: 900px;
+    width: 100%;
+  }
+
+  .title-slide .slide-content {
+    background: linear-gradient(135deg, #556B2F 0%, #6B8E23 100%);
+    color: #fff;
+    text-align: center;
+    border: none;
+  }
+
+  h1 { font-size: 3em; font-weight: 700; color: #556B2F; margin-bottom: 20px; }
+  .title-slide h1 { color: #fff; font-size: 3.2em; }
+  h2 { font-size: 2.2em; color: #556B2F; margin-bottom: 25px; border-bottom: 3px solid #9ACD32; padding-bottom: 10px; }
+
+  .subtitle { font-size: 1.3em; color: rgba(255,255,255,0.95); margin: 10px 0; }
+  .contact-info { margin-top: 20px; font-size: 1.1em; color: rgba(255,255,255,0.9); }
+
+  ul { list-style: none; padding: 0; }
+  li { font-size: 1.15em; line-height: 1.8; color: #333; margin-left: 30px; position: relative; padding: 8px 0; }
+  li:before { content: "●"; color: #9ACD32; position: absolute; left: -25px; top: 8px; }
+
+  .highlight-box {
+    background: linear-gradient(135deg, #f0f8e8 0%, #e8f5e0 100%);
+    padding: 20px;
+    border-left: 5px solid #6B8E23;
+    border-radius: 12px;
+    margin: 20px 0;
+  }
+
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+  }
+  .stat-box {
+    background: #f8fbf5;
+    border: 2px solid #9ACD32;
+    border-radius: 12px;
+    padding: 25px;
+    text-align: center;
+  }
+  .stat-number { font-size: 2.5em; color: #556B2F; font-weight: 700; }
+  .stat-label { font-size: 1em; color: #555; }
+
+  .slide-number { position: absolute; bottom: 25px; right: 35px; color: #6B8E23; font-weight: 600; }
+
+  .final-message { text-align: center; font-size: 1.4em; color: #556B2F; line-height: 1.8; }
+
+  @media (max-width: 768px) {
+    .slide-content { padding: 30px; }
+    h1 { font-size: 2.2em; }
+    h2 { font-size: 1.6em; }
+  }
+</style>
+</head>
+<body>
+<div class="slide-container">
+
+  <!-- 1 -->
+  <div class="slide title-slide">
+    <div class="slide-content">
+      <h1>Town Administrator's Report</h1>
+      <div class="subtitle">Fall 2025</div>
+      <div class="subtitle">Presented October 20, 2025</div>
+      <div class="contact-info">
+        <strong>Nathan R. Boudreau, MPA, MCPPO</strong><br>
+        admin@hubbardstonma.gov | (978) 928-1400 x200
+      </div>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="slide">
+    <div class="slide-content">
+      <h2>Three-Year Transformation: FY23–FY25</h2>
+      <div class="highlight-box"><strong>From Stabilization to Modernization</strong><br>Building systems designed to last.</div>
+      <div class="stat-grid">
+        <div class="stat-box"><div class="stat-number">-66%</div><div class="stat-label">Staff Turnover</div></div>
+        <div class="stat-box"><div class="stat-number">157</div><div class="stat-label">SOPs Documented</div></div>
+        <div class="stat-box"><div class="stat-number">850+</div><div class="stat-label">Training Hours</div></div>
+        <div class="stat-box"><div class="stat-number">$1.6M</div><div class="stat-label">Grants Secured</div></div>
+      </div>
+      <ul>
+        <li>HubbCONNECT platform deployed across all departments</li>
+        <li>48 Gardner Road campus consolidation (91% voter support)</li>
+        <li>Recognized at the 2025 MA Digital Government Summit</li>
+      </ul>
+    </div>
+    <div class="slide-number">2 / 17</div>
+  </div>
+
+  <!-- 3 -->
+  <div class="slide">
+    <div class="slide-content">
+      <h2>Seasonal Overview</h2>
+      <ul>
+        <li>30% through FY26 — all departments on track</li>
+        <li>Strong alignment between Board goals and execution</li>
+        <li>Stable operations and efficient coordination</li>
+        <li>Momentum from major grants and capital progress</li>
+      </ul>
+    </div>
+    <div class="slide-number">3 / 17</div>
+  </div>
+
+  <!-- 4 -->
+  <div class="slide">
+    <div class="slide-content">
+      <h2>Budget Health Check</h2>
+      <ul>
+        <li>Most departments 17–35% spent (ideal for Q1)</li>
+        <li>IT (38%) – early software renewals</li>
+        <li>Facilities (34%) – seasonal utility costs</li>
+        <li>No reserve transfers to date</li>
+        <li>Midyear variance review in January</li>
+      </ul>
+      <div class="highlight-box"><strong>Status:</strong> Expenditures exactly where expected for fall 2025.</div>
+    </div>
+    <div class="slide-number">4 / 17</div>
+  </div>
+
+  <!-- 5 -->
+  <div class="slide">
+    <div class="slide-content">
+      <h2>HubbCONNECT Platform</h2>
+      <div class="highlight-box"><strong>Built In-House:</strong> CivicOptimize + Microsoft 365 + Power Automate – a statewide model for digital government.</div>
+      <div class="stat-grid">
+        <div class="stat-box"><div class="stat-number">1,000+</div><div class="stat-label">Requests Processed</div></div>
+        <div class="stat-box"><div class="stat-number">10–20</div><div class="stat-label">Minutes Saved per Request</div></div>
+      </div>
+      <ul>
+        <li><strong>The Hubb:</strong> staff intranet and knowledge hub (live)</li>
+        <li><strong>HubbFIX:</strong> DPW & Facilities requests unified</li>
+        <li><strong>HubbTIME:</strong> digital timesheet and payroll workflow</li>
+        <li><strong>HubbAPEX:</strong> AP automation live</li>
+        <li><strong>Licenses & Permits:</strong> dynamic routing in beta</li>
+      </ul>
+    </div>
+    <div class="slide-number">5 / 17</div>
+  </div>
+
+  <!-- 6 -->
+  <div class="slide">
+    <div class="slide-content">
+      <h2>Workflow Spotlight: Digital Government in Action</h2>
+      <div class="highlight-box">Three workflows redefining daily operations.</div>
+      <ul>
+        <li><strong>HubbTIME:</strong> biweekly automation, conditional logic, supervisor routing → <em>50% faster payroll processing.</em></li>
+        <li><strong>General License Application:</strong> one form for all license types → <em>simplified approvals and public access.</em></li>
+        <li><strong>Turnover Workflow:</strong> digital receipts, GL mapping, retention → <em>zero paper, full transparency.</em></li>
+      </ul>
+    </div>
+    <div class="slide-number">6 / 17</div>
+  </div>
+
+  <!-- 7 -->
+  <div class="slide">
+    <div class="slide-content">
+      <h2>Staff Development</h2>
+      <ul>
+        <li>Active participation in MCPPO, HR, and Clerk trainings</li>
+        <li>Growing regional mentorships and leadership networks</li>
+        <li>Long-term investment in staff capacity and training</li>
+      </ul>
+      <div class="highlight-box">Building confident, capable municipal professionals.</div>
+    </div>
+    <div class="slide-number">7 / 17</div>
+  </div>
+
+  <!-- 8 -->
+  <div class="slide">
+    <div class="slide-content">
+      <h2>DPW & Facilities</h2>
+      <ul>
+        <li>Brigham & Elm Street repairs complete</li>
+        <li>Plumtree Lane in design and engineering</li>
+        <li>Slade Building & Library renovations underway</li>
+        <li>CPA-funded Library basement expansion approved</li>
+        <li>Facilities inspections now fully digital</li>
+      </ul>
+      <div class="highlight-box">Infrastructure upgrades improving quality of service.</div>
+    </div>
+    <div class="slide-number">8 / 17</div>
+  </div>
+
+  <!-- 9 -->
+  <div class="slide">
+    <div class="slide-content">
+      <h2>48 Gardner Road Municipal Campus</h2>
+      <div class="highlight-box"><strong>Phase I Complete:</strong> Town Hall relocation successful.</div>
+      <ul>
+        <li>Phase II design in progress (Fire & Police wings)</li>
+        <li>HVAC and network optimization underway</li>
+        <li>Campus signage, security, and access planning</li>
+        <li>Hybrid-ready meeting room launching November</li>
+      </ul>
+      <div class="highlight-box">Goal: Most modern rural municipal meeting space in Central MA.</div>
+    </div>
+    <div class="slide-number">9 / 17</div>
+  </div>
+
+  <!-- 10 -->
+  <div class="slide">
+    <div class="slide-content">
+      <h2>Digital Infrastructure & Connectivity</h2>
+      <ul>
+        <li><strong>Municipal Broadband:</strong> MBI partnership advancing, engineering complete</li>
+        <li><strong>Internet Upgrades:</strong> Town Hall, Library, Public Safety</li>
+        <li><strong>Network Modernization:</strong> redundant fiber for uptime</li>
+        <li><strong>HubbINSPECT:</strong> streamlined inspection scheduling and tracking</li>
+      </ul>
+      <div class="highlight-box">Connectivity investments strengthening reliability and access.</div>
+    </div>
+    <div class="slide-number">10 / 17</div>
+  </div>
+
+  <!-- 11 -->
+  <div class="slide">
+    <div class="slide-content">
+      <h2>Regional Partnerships & Services</h2>
+      <ul>
+        <li><strong>Municipal Aggregation:</strong> Colonial Power contract active – Spring 2026 launch</li>
+        <li><strong>Dispatch Regionalization:</strong> Rutland RECC feasibility in progress</li>
+        <li><strong>Trash & Recycling:</strong> regional service model under review</li>
+        <li><strong>Veterans Services District:</strong> launch targeted January 2026</li>
+      </ul>
+      <div class="highlight-box">Regional collaboration for efficiency and shared success.</div>
+    </div>
+    <div class="slide-number">11 / 17</div>
+  </div>
+
+  <!-- 12 -->
+  <div class="slide">
+    <div class="slide-content">
+      <h2>Grant Success</h2>
+      <div class="stat-grid">
+        <div class="stat-box"><div class="stat-number">$120K</div><div class="stat-label">Community Planning Grant</div></div>
+        <div class="stat-box"><div class="stat-number">$75K</div><div class="stat-label">Rural Development Fund</div></div>
+        <div class="stat-box"><div class="stat-number">$59K</div><div class="stat-label">Digital Equity Grant</div></div>
+      </div>
+      <div class="highlight-box"><strong>Total New Funding:</strong> $254,000 secured FY25–26.</div>
+    </div>
+    <div class="slide-number">12 / 17</div>
+  </div>
+
+  <!-- 13 -->
+  <div class="slide">
+    <div class="slide-content">
+      <h2>FY27 Budget Development Timeline</h2>
+      <div class="highlight-box"><strong>Adopted October 20, 2025:</strong> clear roadmap to a balanced FY27 budget.</div>
+      <ul>
+        <li><strong>Nov 3:</strong> Select Board & Finance Committee set goals</li>
+        <li><strong>Dec 15:</strong> Five-Year Financial Forecast presented</li>
+        <li><strong>Jan 20:</strong> TA Proposed Budget released</li>
+        <li><strong>Feb–Apr:</strong> Department hearings & warrant prep</li>
+        <li><strong>May 5:</strong> Finance Committee recommendations</li>
+        <li><strong>June 1:</strong> Annual Town Meeting (HCS, 7 PM)</li>
+        <li><strong>June 8:</strong> Annual Town Election</li>
+      </ul>
+    </div>
+    <div class="slide-number">13 / 17</div>
+  </div>
+
+  <!-- 14 -->
+  <div class="slide">
+    <div class="slide-content">
+      <h2>Land Use & Regional Advocacy</h2>
+      <ul>
+        <li>Battery storage concerns submitted to EFSB</li>
+        <li>Support for iron-air energy alternatives</li>
+        <li>Bratko Conservation Restriction under review</li>
+        <li>Zoning modernization (Option C) in progress</li>
+      </ul>
+    </div>
+    <div class="slide-number">14 / 17</div>
+  </div>
+
+  <!-- 15 -->
+  <div class="slide">
+    <div class="slide-content">
+      <h2>Community & Governance</h2>
+      <ul>
+        <li>Committee appointments confirmed</li>
+        <li>High turnout for fall community events</li>
+        <li>LWCF and DER grant submissions pending</li>
+        <li>Next key meetings: Nov 3, 6 & 17</li>
+      </ul>
+      <div class="highlight-box">Civic engagement remains the backbone of progress.</div>
+    </div>
+    <div class="slide-number">15 / 17</div>
+  </div>
+
+  <!-- 16 -->
+  <div class="slide">
+    <div class="slide-content">
+      <h2>Looking Ahead</h2>
+      <ul>
+        <li>Continued rollout of HubbCONNECT modules</li>
+        <li>Facility Phase II design milestones</li>
+        <li>Preparation for 2026 Town Meeting and budget cycle</li>
+        <li>Community Compact, MVP, and broadband expansion next steps</li>
+      </ul>
+    </div>
+    <div class="slide-number">16 / 17</div>
+  </div>
+
+  <!-- 17 -->
+  <div class="slide">
+    <div class="slide-content">
+      <h2>Moving Forward Together</h2>
+      <div class="final-message">
+        <p>From stabilization to modernization — systems built to last.</p>
+        <p>Clean audits, faster processing, stronger engagement.</p>
+        <p>Always open to collaboration and feedback.</p>
+        <p style="font-size:1.6em;color:#6B8E23;margin-top:40px;"><strong>Thank you for your continued support.</strong></p>
+      </div>
+    </div>
+    <div class="slide-number">17 / 17</div>
+  </div>
+
+</div>
+</body>
+</html>
