@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Polimorphic Comprehensive Technical Site — Sutton Deployment</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docVersion" content="v2.0" />
+  <meta name="lastReviewedBy" content="Nathan Boudreau, MPA, MCPPO" />
+  <meta name="reviewDate" content="2025-09-27" />
+  <style>
+    body { font-family: "Segoe UI", Helvetica, Arial, sans-serif; background: #f8fafc; color: #1e293b; line-height: 1.6; margin: 0; }
+    header { background: linear-gradient(135deg, #0b5c4d, #128063); color: #fff; padding: 2.5rem 1.5rem; text-align: center; }
+    header h1 { margin: 0 0 0.5rem; font-size: 2rem; letter-spacing: 0.05em; text-transform: uppercase; }
+    header p { margin: 0.25rem 0; font-size: 1rem; }
+    main { max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+    h2 { border-bottom: 3px solid #0b5c4d; padding-bottom: 0.3rem; margin-top: 2.5rem; font-size: 1.6rem; color: #0b5c4d; }
+    h3 { margin-top: 1.5rem; font-size: 1.25rem; color: #128063; }
+    h4 { margin-top: 1rem; font-size: 1.1rem; }
+    .callout { border-left: 6px solid #0b5c4d; background: #ecfdf5; padding: 1rem 1.25rem; border-radius: 0.5rem; margin: 1rem 0; }
+    table { width: 100%; border-collapse: collapse; margin: 1.25rem 0; background: #fff; border: 1px solid #cbd5e1; }
+    th, td { border: 1px solid #cbd5e1; padding: 0.75rem 1rem; text-align: left; vertical-align: top; }
+    thead th { background: #0b5c4d; color: #fff; }
+    tbody tr:nth-child(even) { background: #f1f5f9; }
+    pre { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; font-family: "Fira Code", monospace; }
+    footer { background: #0c2f25; color: #fff; padding: 2rem 1.5rem; text-align: center; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <p>CONFIDENTIAL – PUBLICLOGIC</p>
+    <h1>Polimorphic Comprehensive Technical Site — Sutton Deployment</h1>
+    <p>Prepared by Nathan Boudreau, MPA, MCPPO — Town Administrator (Hubbardston, MA) &amp; Founder, PublicLogic™</p>
+  </header>
+  <main>
+    <section id="overview">
+      <h2>Executive Technical Overview</h2>
+      <p>This site consolidates blueprint, integration, compliance, and operational specifications for Sutton’s deployment of the Polimorphic platform with PublicLogic’s VAULT™ and ARCHIEVE™ frameworks.</p>
+      <ul>
+        <li><strong>Modules:</strong> SuttonCLERK, SuttonFIX, PERMIT (Sutton)</li>
+        <li><strong>Core Tenets:</strong> Compliance by construction, event-driven truth, modular autonomy.</li>
+        <li><strong>Stack:</strong> Azure Gov, AKS, Istio, Node/Nest, Postgres, Redis, Elasticsearch, React/TS.</li>
+        <li><strong>ROI:</strong> ≥$75k savings by FY27, 30–40% fewer staff interruptions, 100% PRR compliance.</li>
+      </ul>
+    </section>
+
+    <section id="architecture">
+      <h2>Foundational Architecture</h2>
+      <div class="callout">Residents → Polimorphic UI/AI → VAULT™/ARCHIEVE™ → Integrations (ERP, GIS, State) → Immutable Archive</div>
+      <h3>Design Principles</h3>
+      <ul>
+        <li>Least Privilege (RBAC + ABAC), scoped tokens.</li>
+        <li>Idempotent writes with keys; schema evolution with compatibility tests.</li>
+        <li>Fail-safe defaults — block non-compliant transitions; legal holds honored.</li>
+        <li>Golden signals and business SLOs tied to compliance timers.</li>
+      </ul>
+    </section>
+
+    <section id="tech-stack">
+      <h2>Technical Stack & Microservices</h2>
+      <table>
+        <thead><tr><th>Layer</th><th>Components</th></tr></thead>
+        <tbody>
+          <tr><td>Infrastructure</td><td>Azure Gov, AKS, Istio, Key Vault, cert-manager</td></tr>
+          <tr><td>Runtime</td><td>Node/Nest, Camunda, RabbitMQ, Redis</td></tr>
+          <tr><td>Data</td><td>Postgres+Timescale, Blob storage, Vector DB</td></tr>
+          <tr><td>AI</td><td>Azure OpenAI, embeddings, speech/vision, MLOps</td></tr>
+          <tr><td>Frontend</td><td>React/TS, React Aria, React Native</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="modules">
+      <h2>Module Implementations</h2>
+      <h3>SuttonCLERK</h3>
+      <p>Handles PRRs, OML agendas, licensing. Automated statutory clocks; immutable logs; redaction manifests. Integrated with CivicPlus and City Hall Systems.</p>
+      <h3>SuttonFIX</h3>
+      <p>DPW service desk. SLA-driven workflows; geo-tagged evidence; integration with MassGIS/CAI for validation.</p>
+      <h3>PERMIT (Sutton)</h3>
+      <p>Inspections &amp; building permits. Workflow-driven approvals; integration with OpenGov/ViewPoint and VGSI Vision for property validation.</p>
+    </section>
+
+    <section id="compliance">
+      <h2>Compliance & Security Architecture</h2>
+      <h3>Frameworks</h3>
+      <ul>
+        <li>201 CMR 17.00 (Data Security)</li>
+        <li>M.G.L. c.66 (Public Records), c.30A (Open Meeting Law)</li>
+        <li>ADA Title II, WCAG 2.1 AA</li>
+        <li>NIST SP 800-53 alignment</li>
+      </ul>
+      <h3>Controls</h3>
+      <ul>
+        <li>Layered security: WAF, IDS/IPS, container scanning, patch automation.</li>
+        <li>OAuth2 API auth; MFA; SIEM monitoring; incident response ≤2h.</li>
+        <li>Audit-ready exports; immutable logs signed & chained.</li>
+      </ul>
+    </section>
+
+    <section id="integration">
+      <h2>Integration Architecture</h2>
+      <h3>Financial Systems</h3>
+      <p>VADAR/MUNIS integration for payment and ledger posting; daily CSV fallback.</p>
+      <h3>GIS</h3>
+      <p>ArcGIS/CAI validation for parcels, work zones, and routing.</p>
+      <h3>Other Systems</h3>
+      <ul>
+        <li>Microsoft 365 (email, SharePoint storage)</li>
+        <li>CivicPlus (agenda posting, notices)</li>
+        <li>RVRS, VRIS (state systems)</li>
+      </ul>
+    </section>
+
+    <section id="ai">
+      <h2>AI & Automation Framework</h2>
+      <ul>
+        <li>AI Copilot for staff support (search, drafting, compliance alerts).</li>
+        <li>Predictive alerts for SLA breaches; anomaly detection.</li>
+        <li>Limited autonomy for renewals and routine DPW tasks with human-in-loop safeguards.</li>
+      </ul>
+    </section>
+
+    <section id="deployment">
+      <h2>Infrastructure & Deployment</h2>
+      <ul>
+        <li>Environments: dev, test/UAT, prod — all changes ticketed and approved.</li>
+        <li>Helm chart deployment with semantic versioning.</li>
+        <li>Backup: hourly incrementals, daily fulls; RPO ≤1h, RTO ≤4h.</li>
+      </ul>
+    </section>
+
+    <section id="methodology">
+      <h2>Implementation Methodology</h2>
+      <p>Year-long phased rollout: pilot (PRR + DPW), expand (PERMIT + integrations), institutionalize (cross-training, DR, regional expansion). Governance council reviews monthly.</p>
+    </section>
+
+    <section id="metrics">
+      <h2>Success Metrics & ROI</h2>
+      <ul>
+        <li>≥99.9% uptime SLA; ≤300ms p95 API latency.</li>
+        <li>≥90% SLA compliance; ≥80% staff proficiency within 6 months.</li>
+        <li>≥$75k financial ROI by FY27; ≥20% PRR handling time reduction.</li>
+      </ul>
+    </section>
+
+    <section id="appendices">
+      <h2>Appendices</h2>
+      <h3>JSON Schemas</h3>
+      <pre>{
+  "caseId":"CLERK-2025-000123",
+  "department":"Clerk",
+  "type":"PUBLIC_RECORD_REQUEST",
+  "sla":{"ackDue":"2025-10-05T21:00:00Z"},
+  "retention":{"code":"3Y","legalBasis":"M.G.L. c.66"},
+  "auditRef":"AUD-abc123"
+}</pre>
+      <h3>Sample API</h3>
+      <pre>POST /api/v1/cases
+Payload: {"department": "Clerk", "type": "PUBLIC_RECORD", "requester": {"name": "Jane Doe"}}
+Response: {"caseId": "CLERK-2025-001", "status": "OPEN"}</pre>
+      <h3>Retention Map</h3>
+      <table>
+        <thead><tr><th>Record Type</th><th>Duration</th><th>Disposition</th></tr></thead>
+        <tbody>
+          <tr><td>PRR</td><td>3Y</td><td>Archive/Destroy</td></tr>
+          <tr><td>Vital Records</td><td>Permanent</td><td>Archive</td></tr>
+          <tr><td>DPW Tickets</td><td>7Y</td><td>Archive</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+  <footer>
+    <p>PublicLogic™, VAULT™, and ARCHIEVE™ are trademarks of PublicLogic. Concepts are presented at a high level to protect proprietary methods; Sutton retains ownership of all data, configurations, and workflows.</p>
+  </footer>
+</body>
+</html>
