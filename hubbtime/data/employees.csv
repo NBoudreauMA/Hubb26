@@ -1,0 +1,7 @@
+employee_id,first,last,department,email,status
+E001,Avery,Jensen,FIN,avery.jensen@example.org,active
+E002,Morgan,Lopez,PW,morgan.lopez@example.org,active
+E003,Casey,Nguyen,LIB,casey.nguyen@example.org,active
+E004,Jordan,Knight,PW,jordan.knight@example.org,leave
+E005,Riley,Patel,ADMIN,riley.patel@example.org,active
+E006,Harper,Brooks,REC,harper.brooks@example.org,active

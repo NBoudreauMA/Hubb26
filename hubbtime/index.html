@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HubbTIME (Shell)</title>
+  <link rel="stylesheet" href="./assets/styles.css">
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div>
+        <h1>HubbTIME <span class="badge">Shell</span></h1>
+        <p class="sr-only" id="status-summary">Data status summary</p>
+      </div>
+      <div class="status-pill" role="status" aria-live="polite" id="status-pill">
+        <span>Data: CSV</span>
+        <span class="chip" id="status-chip">OK</span>
+        <span class="sr-only">No warnings</span>
+      </div>
+    </div>
+  </header>
+  <main>
+    <section class="landing" aria-labelledby="landing-title">
+      <h2 id="landing-title" class="sr-only">Landing</h2>
+      <div class="grid columns-3">
+        <a class="card" href="#timesheets">
+          <h2>Timesheets</h2>
+          <p>Review logged hours, approvals, and pay code summaries.</p>
+        </a>
+        <a class="card" href="#employees">
+          <h2>Employees</h2>
+          <p>Directory of active staff with department quick filters.</p>
+        </a>
+        <a class="card" href="#payperiods">
+          <h2>Pay Periods</h2>
+          <p>Reference current and upcoming pay period deadlines.</p>
+        </a>
+      </div>
+    </section>
+
+    <section class="section data-sources" aria-labelledby="data-sources-title">
+      <div>
+        <h2 id="data-sources-title">Data Sources</h2>
+        <p>Files are loaded from <code>/data/</code> within this folder.</p>
+      </div>
+      <div id="data-source-status" class="grid"></div>
+    </section>
+
+    <section class="section" data-view="timesheets" aria-labelledby="timesheets-title">
+      <div class="controls" role="region" aria-labelledby="timesheets-filters">
+        <h2 id="timesheets-title">Timesheets</h2>
+        <span class="sr-only" id="timesheets-filters">Timesheet filters</span>
+        <label>
+          Pay period
+          <select id="filter-pay-period">
+            <option value="all">All</option>
+          </select>
+        </label>
+        <label>
+          Department
+          <select id="filter-department">
+            <option value="all">All</option>
+          </select>
+        </label>
+        <label>
+          Approved
+          <select id="filter-approved">
+            <option value="all">All</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+        </label>
+        <label>
+          Search
+          <input type="search" id="filter-search" placeholder="Search name or code">
+        </label>
+        <button id="clear-employee-filter" type="button" class="link-button" hidden>Viewing specific employee · Clear</button>
+        <button class="export-button" id="export-timesheets" type="button">Download current table as CSV</button>
+      </div>
+      <div id="timesheets-content" class="table-wrapper" role="region" aria-live="polite"></div>
+    </section>
+
+    <section class="section" data-view="employees" aria-labelledby="employees-title">
+      <div class="controls">
+        <h2 id="employees-title">Employees</h2>
+        <label>
+          Search
+          <input type="search" id="search-employees" placeholder="Search employees">
+        </label>
+      </div>
+      <div id="employees-content" class="table-wrapper" role="region" aria-live="polite"></div>
+    </section>
+
+    <section class="section" data-view="payperiods" aria-labelledby="payperiods-title">
+      <div class="controls">
+        <h2 id="payperiods-title">Pay Periods</h2>
+      </div>
+      <div id="payperiods-content" class="table-wrapper" role="region" aria-live="polite"></div>
+    </section>
+  </main>
+  <script src="./assets/app.js"></script>
+</body>
+</html>
